@@ -25,14 +25,46 @@
   </header>
 
   <main>
-    <section class="hero wrap">
-      <h1 class="rise">How <span class="elite-cycle"><span class="elite-base">elite</span><span class="elite-skin sk-basketball" aria-hidden="true">elite</span><span class="elite-skin sk-football" aria-hidden="true">elite</span><span class="elite-skin sk-soccer" aria-hidden="true">elite</span><span class="elite-skin sk-hockey" aria-hidden="true">elite</span><span class="elite-skin sk-baseball" aria-hidden="true">elite</span></span> is your ball knowledge, <span class="hero-name" id="hero-name">guest</span>?</h1>
-      <div class="logo-strip rise d1" id="logo-strip" aria-hidden="true"></div>
+    <section class="hero">
+      <canvas id="hero3d" class="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero-fade" aria-hidden="true"></div>
+      <div class="hero-inner wrap">
+        <h1 class="rise">How <span class="elite-cycle"><span class="elite-base">elite</span><span class="elite-skin sk-basketball" aria-hidden="true">elite</span><span class="elite-skin sk-football" aria-hidden="true">elite</span><span class="elite-skin sk-soccer" aria-hidden="true">elite</span><span class="elite-skin sk-hockey" aria-hidden="true">elite</span><span class="elite-skin sk-baseball" aria-hidden="true">elite</span></span> is your ball knowledge, <span class="hero-name" id="hero-name">guest</span>?</h1>
+        <a class="hero-scroll rise d2" href="#sports" aria-label="Jump to games">▾</a>
+      </div>
     </section>
 
     <div class="wrap">
+      <section class="replay-band" aria-label="Keep playing">
+        <a class="replay-card daily" href="/nfl/player-grid">
+          <span class="rc-ic">🔲</span>
+          <span class="rc-body"><span class="rc-title">Daily Grid</span>
+            <span class="rc-desc">A fresh 9-square grid in every sport. One shot a day.</span></span>
+          <span class="rc-foot" id="daily-reset">New grids daily</span>
+        </a>
+        <a class="replay-card h2h" href="/h2h">
+          <span class="rc-ic">⚔️</span>
+          <span class="rc-body"><span class="rc-title">Head-to-Head</span>
+            <span class="rc-desc">Challenge a friend or climb the ranked ladder, live.</span></span>
+          <span class="rc-foot">Ranked &amp; private rooms</span>
+        </a>
+        <a class="replay-card board" href="/leaderboard">
+          <span class="rc-ic">🏆</span>
+          <span class="rc-body"><span class="rc-title">Leaderboards</span>
+            <span class="rc-desc">See where you rank across every game and sport.</span></span>
+          <span class="rc-foot">Global top 100</span>
+        </a>
+      </section>
+      <p class="replay-you" id="replay-you" hidden></p>
+
       <section class="sport-section" id="sports" aria-label="Choose your sport">
+        <h2 class="section-eyebrow">Choose your sport</h2>
         <div class="game-grid" id="sports-grid"></div>
+      </section>
+
+      <section class="teams-strip" aria-label="Browse teams">
+        <h2 class="section-eyebrow">Browse every team</h2>
+        <div class="logo-strip" id="logo-strip" aria-hidden="true"></div>
       </section>
     </div>
   </main>
@@ -54,5 +86,6 @@
   <script src="/js/home.js"></script>
   <script src="/js/fx.js"></script>
   <script src="/js/ebk-sound.js"></script>
+  <script type="module" src="/js/hero3d.js"></script>
 </body>
 </html>
