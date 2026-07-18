@@ -234,11 +234,12 @@ service cloud.firestore {
     // admin-only so the raw stream is never public.
     match /hits/{id} {
       allow read, update, delete: if isAdmin();
-      allow create: if request.resource.data.keys().hasOnly(['p', 's', 'e', 't'])
+      allow create: if request.resource.data.keys().hasOnly(['p', 's', 'e', 't', 'x'])
         && request.resource.data.p is string && request.resource.data.p.size() <= 100
         && request.resource.data.s is string && request.resource.data.s.size() <= 30
         && request.resource.data.e in ['view', 'start', 'finish']
-        && request.resource.data.t is int && request.resource.data.t > 0;
+        && request.resource.data.t is int && request.resource.data.t > 0
+        && (!('x' in request.resource.data) || request.resource.data.x is timestamp);
     }
 
     // name reports: any signed-in user can file; only admins can read/resolve.

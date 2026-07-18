@@ -41,6 +41,9 @@
             s: { stringValue: src.slice(0, 30) },
             e: { stringValue: event },
             t: { integerValue: String(Date.now()) },
+            // TTL field: with a Firestore TTL policy on `x`, raw events
+            // self-delete after ~6 months
+            x: { timestampValue: new Date(Date.now() + 15552000000).toISOString() },
           } }),
         });
       }).catch(function () {});

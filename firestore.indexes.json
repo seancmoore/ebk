@@ -8,6 +8,23 @@
         { "fieldPath": "game", "order": "ASCENDING" },
         { "fieldPath": "best", "order": "DESCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "hits",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "e", "order": "ASCENDING" },
+        { "fieldPath": "t", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "hits",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "s", "order": "ASCENDING" },
+        { "fieldPath": "e", "order": "ASCENDING" },
+        { "fieldPath": "t", "order": "ASCENDING" }
+      ]
     }
   ],
   "fieldOverrides": []

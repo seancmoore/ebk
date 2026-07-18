@@ -5,7 +5,6 @@
   <script src="/js/ebk-loader.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0e1c" />
-  <meta name="robots" content="noindex" />
   <meta name="description" content="EBK admin." />
   <title>Admin · EBK</title>
   <meta name="robots" content="noindex" />
@@ -49,6 +48,10 @@
       <div id="loading" class="center muted" style="padding:var(--sp-lg)">Loading…</div>
       <p id="none" hidden class="center muted" style="padding:var(--sp-lg)">No open reports. 🎉</p>
       <div id="reports"></div>
+      <div id="traffic" hidden style="margin-top:var(--sp-xl);border-top:1px solid var(--line);padding-top:var(--sp-md)">
+        <h3>Traffic</h3>
+        <div id="traffic-body" class="muted">Loading…</div>
+      </div>
       <div id="tools" hidden style="margin-top:var(--sp-xl);border-top:1px solid var(--line);padding-top:var(--sp-md)">
         <h3>Tools</h3>
         <p class="muted" style="font-size:var(--fs-sm)">Rebuild every player's aggregate totals

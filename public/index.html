@@ -111,7 +111,14 @@
         s.type = "module"; s.src = "/js/hero3d.js";
         document.body.appendChild(s);
       }
-      if ("requestIdleCallback" in window) requestIdleCallback(mount, { timeout: 1500 });
+      // phones (where cold social traffic lands): wait for the full page load
+      // so the 3D scene never competes with content; desktop: first idle
+      var mobile = window.matchMedia("(max-width: 820px)").matches ||
+                   window.matchMedia("(pointer: coarse)").matches;
+      if (mobile) {
+        if (document.readyState === "complete") setTimeout(mount, 300);
+        else window.addEventListener("load", function () { setTimeout(mount, 300); });
+      } else if ("requestIdleCallback" in window) requestIdleCallback(mount, { timeout: 1500 });
       else setTimeout(mount, 200);
     })();
   </script>

@@ -60,6 +60,9 @@
       seed: seedHex(), rated: !!opts.rated, cap: opts.cap || (opts.rated ? 2 : 8),
       status: "lobby", hostElo: elo, players: players,
       created: fv().serverTimestamp(),
+      // TTL field: with a Firestore TTL policy on `expires`, abandoned rooms
+      // clean themselves up a day later (harmless extra field until enabled)
+      expires: firebase.firestore.Timestamp.fromMillis(Date.now() + 86400000),
     };
     await ref.set(data);
     return Object.assign({ id: ref.id, role: "host" }, data);

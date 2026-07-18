@@ -36,8 +36,15 @@ source of truth for sports, games, and live status.
   question sequence locally, so only live streaks sync (`public/js/ebk-h2h.js`).
 - **Analytics** — first-party, cookieless counter (`public/js/ebk-analytics.js`)
   writing anonymous `{path, source, event, ts}` docs to the admin-read-only
-  `hits` collection. Tag campaign links with `?utm_source=ig` etc.; query
-  counts in the Firebase console (`hits` where `s == "ig"`).
+  `hits` collection. Tag campaign links with `?utm_source=ig` etc. `/admin`
+  shows view/game-start counts (24h / 7d / Instagram) via aggregation queries;
+  the raw stream is also queryable in the Firebase console.
+
+  One-time setup: in Firebase console → Firestore → **TTL policies**, enable
+  TTL on `rooms.expires` (abandoned H2H rooms self-delete after a day) and
+  `hits.x` (raw analytics events self-delete after ~6 months). Both fields are
+  already written by the clients; until the policies are enabled the docs just
+  accumulate harmlessly.
 
 ## Data
 
