@@ -284,6 +284,7 @@
   }
 
   function startDaily() {
+    try { window.EBKA && EBKA.send("start"); } catch (e) {}
     S.date = etDate();
     const saved = loadLocalPlay();
     if (saved && saved.done) { showCompleted(saved); return; }   // already played today

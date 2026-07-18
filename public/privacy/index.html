@@ -26,6 +26,7 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
   <link rel="stylesheet" href="/css/base.css" />
   <link rel="stylesheet" href="/css/home.css" />
+  <script src="/js/ebk-analytics.js" defer></script>
 </head>
 <body>
   <header class="site-header">
@@ -38,7 +39,7 @@
   <main>
     <div class="wrap legal-page">
       <h1>Privacy Policy</h1>
-      <p class="muted updated">Last updated: June 13, 2026</p>
+      <p class="muted updated">Last updated: July 18, 2026</p>
 
       <p class="lead">EBK ("Elite Ball Knowledge", "we", "us", "our") runs a free sports trivia
         arcade at eliteballknowledge.web.app (the "Service"). This policy explains, in plain
@@ -76,6 +77,12 @@
           reported, and your account identifier so we can review it.</li>
         <li><strong>On-device data.</strong> Best scores, sound settings, and similar preferences are
           stored in your browser's local storage. This data stays on your device.</li>
+        <li><strong>Aggregate usage counts.</strong> To understand which games people play and where
+          visitors come from, we record anonymous usage events in our own database: the page path, an
+          event type (page view or game start), a campaign tag if you arrived through a tagged link
+          (for example a social media link), and a timestamp. These events use no cookies, contain no
+          IP address, and are not linked to your account or identity. You can opt out at any time by
+          setting <code>ebk_optout</code> to <code>1</code> in your browser's local storage.</li>
         <li><strong>Technical and log data.</strong> Our hosting provider (Google Firebase) records
           standard server logs such as IP address, browser type, and timestamps, which we use for
           security, abuse prevention, and reliability. We do not use this data to build advertising
@@ -95,7 +102,9 @@
 
       <h2 id="cookies">3. Cookies and Tracking</h2>
       <ul>
-        <li>We do not use advertising cookies, analytics cookies, or third-party tracking pixels.</li>
+        <li>We do not use advertising cookies, analytics cookies, or third-party tracking pixels.
+          Our only usage measurement is the cookieless, first-party counter described in
+          Section&nbsp;1, which stores no personal data.</li>
         <li>We use your browser's local storage and the authentication tokens set by Firebase
           (stored locally on your device) to keep you signed in and remember your preferences and
           scores. These are strictly necessary for the Service to function.</li>

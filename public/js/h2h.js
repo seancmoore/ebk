@@ -213,6 +213,7 @@
 
   // ===================== MATCH =====================
   async function beginMatch(room) {
+    try { window.EBKA && EBKA.send("start"); } catch (e) {}
     M.sport = room.sport; M.mode = room.mode; M.cat = room.cat;
     M.league = window[room.sport.toUpperCase()];
     if (!M.league) throw new Error("Unknown sport \"" + room.sport + "\" — try refreshing.");

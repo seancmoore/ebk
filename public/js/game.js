@@ -137,6 +137,7 @@
   // ---- game flow ------------------------------------------------------------
 
   function startRun(cat) {
+    try { window.EBKA && EBKA.send("start"); } catch (e) {}
     state.category = cat;
     state.pool = state.data.players.filter((p) => p.stats[cat.key] != null);
     state.streak = 0;

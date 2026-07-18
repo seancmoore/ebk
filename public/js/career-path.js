@@ -179,6 +179,7 @@
       $("#best").textContent = S.best;
       $("#loading").hidden = true;
       $("#game").hidden = false;
+      try { window.EBKA && EBKA.send("start"); } catch (e) {}
       newRun();
     } catch (e) {
       $("#loading").textContent = "Couldn't load player data. " + e.message;
