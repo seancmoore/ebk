@@ -137,10 +137,10 @@
     return db().collection("rooms").doc(id).update(patch).catch(function (e) { console.warn("progress", e); });
   };
 
-  EBKH.listen = function (id, cb) {
+  EBKH.listen = function (id, cb, onErr) {
     return db().collection("rooms").doc(id).onSnapshot(function (d) {
       if (d.exists) cb(Object.assign({ id: d.id }, d.data()));
-    }, function (e) { console.warn("h2h listen", e); });
+    }, function (e) { console.warn("h2h listen", e); if (onErr) onErr(e); });
   };
   EBKH.get = async function (id) {
     await EBKF.ready;

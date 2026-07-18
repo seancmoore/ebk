@@ -47,6 +47,10 @@
     }
   })();
 
+  // keep a handled branch so pages that never await EBKF.ready don't get an
+  // unhandled-rejection console error when Firebase can't initialize
+  EBKF.ready.catch(function () {});
+
   EBKF.onChange = function (cb) {
     EBKF._cbs.push(cb);
     if (EBKF.user !== undefined) cb(EBKF.user);

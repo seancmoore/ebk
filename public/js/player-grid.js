@@ -616,7 +616,10 @@
     saveLocalPlay({ cells, score: S.score, rarity: total, pts, done: true, ts: Date.now() });
     try {
       if (window.EBKF)
-        EBKF.saveGridPlay(SPORT, S.date, { cells, score: S.score, rarity: total, pts }).catch(() => {});
+        EBKF.saveGridPlay(SPORT, S.date, { cells, score: S.score, rarity: total, pts }).catch(() => {
+          const el = $("#status-line");
+          if (el) el.innerHTML += ' <span class="muted">· ⚠ couldn\'t sync to the leaderboard</span>';
+        });
     } catch (e) {}
   }
 

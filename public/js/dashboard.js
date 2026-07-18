@@ -118,8 +118,16 @@
       });
   });
 
+  var connTries = 0;
   function start() {
-    if (!(window.EBKF && EBKF.onChange)) return setTimeout(start, 60);
+    if (!(window.EBKF && EBKF.onChange)) {
+      if (++connTries > 130) {
+        var el = $("#loading");
+        if (el) el.textContent = "Can't reach EBK right now — check your connection and refresh.";
+        return;
+      }
+      return setTimeout(start, 60);
+    }
     EBKF.onChange(function (user) {
       if (!user) { show("signedout"); return; }
       show("loading");

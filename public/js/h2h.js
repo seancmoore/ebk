@@ -144,7 +144,13 @@
   }
 
   // ===================== ROOM CONTROL =====================
-  function enterRoom(id, role) { M.id = id; M.role = role; if (M.unsub) M.unsub(); M.unsub = EBKH.listen(id, onRoom); }
+  function enterRoom(id, role) { M.id = id; M.role = role; if (M.unsub) M.unsub(); M.unsub = EBKH.listen(id, onRoom, connLost); }
+
+  function connLost() {
+    if (!$("#lobby").hidden) { lobbyMsg("Connection lost — check your internet and refresh.", true); return; }
+    const sub = $("#h2h-sub");
+    if (sub) sub.textContent = "⚠ Connection lost — progress may not sync. Check your internet.";
+  }
 
   function onRoom(room) {
     M.room = room;
@@ -209,6 +215,7 @@
   async function beginMatch(room) {
     M.sport = room.sport; M.mode = room.mode; M.cat = room.cat;
     M.league = window[room.sport.toUpperCase()];
+    if (!M.league) throw new Error("Unknown sport \"" + room.sport + "\" — try refreshing.");
     M.data = await loadData(room.sport);
     if (room.mode === "career-path" && CP[room.sport].facts.includes("college")) await loadColleges();
     M.seq = room.mode === "higher-lower" ? genHL(room) : genCP(room);
@@ -315,7 +322,7 @@
       const result = mine > (opp ? opp.streak : 0) ? 1 : mine < (opp ? opp.streak : 0) ? 0 : 0.5;
       EBKH.applyElo(M.sport, myPre, oppPre, result).then((nw) => {
         if (nw != null) { const d = nw - myPre; const e = $("#elo-line"); if (e) e.textContent = `${M.sport.toUpperCase()} Elo: ${nw} (${d >= 0 ? "+" : ""}${d})`; }
-      });
+      }).catch(() => { const e = $("#elo-line"); if (e) e.textContent = "Elo update didn't sync."; });
       eloHtml = '<div class="h2h-elo" id="elo-line">Updating Elo…</div>';
     }
     if (M.role === "host") EBKH.finishRoom(M.id);

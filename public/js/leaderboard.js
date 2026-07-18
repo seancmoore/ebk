@@ -51,11 +51,16 @@
       "</td><td>" + (r.plays || 0) + "</td></tr>";
   }
 
+  var connTries = 0;
   function load() {
     var cat = catSel.value, sport = sportSel.value, game = gameSel.value;
     board.innerHTML = "";
     status.textContent = "Loading…";
-    if (!window.EBKF) { status.textContent = "Connecting…"; return setTimeout(load, 200); }
+    if (!window.EBKF) {
+      if (++connTries > 40) { status.textContent = "Can't reach EBK right now — check your connection and refresh."; return; }
+      status.textContent = "Connecting…"; return setTimeout(load, 200);
+    }
+    connTries = 0;
 
     var p, valueOf;
     if (cat === "game") {
@@ -99,6 +104,11 @@
   catSel.addEventListener("change", applyCat);
   sportSel.addEventListener("change", function () { fillGames(); load(); });
   gameSel.addEventListener("change", load);
-  // refresh once auth resolves (to highlight the user's row)
-  var t = setInterval(function () { if (window.EBKF && EBKF.onChange) { clearInterval(t); EBKF.onChange(function () { load(); }); } }, 100);
+  // refresh once auth resolves (to highlight the user's row); give up quietly
+  // after ~10s — the board itself already shows a connection error via load()
+  var ticks = 0;
+  var t = setInterval(function () {
+    if (window.EBKF && EBKF.onChange) { clearInterval(t); EBKF.onChange(function () { load(); }); }
+    else if (++ticks > 100) clearInterval(t);
+  }, 100);
 })();
