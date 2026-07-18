@@ -86,13 +86,13 @@
       '<div id="signgate" class="center" hidden><p class="muted">Sign in to play head-to-head.</p>' +
       '<button class="gbtn primary" id="h2h-signin">Sign in</button></div>' +
       '<div id="setup" hidden>' +
-      '  <div class="h2h-panel"><h2>⚡ Ranked Quick Match</h2>' +
+      '  <div class="h2h-panel ranked"><h2>⚡ Ranked Quick Match</h2>' +
       '    <p class="muted h2h-note">Random mode &amp; category. Win to climb your per-sport Elo.</p>' +
       '    <div class="h2h-field"><label>Sport</label><select id="rk-sport" class="search">' +
       SPORTS.map((s) => `<option value="${s}"${s === preSport ? " selected" : ""}>${s.toUpperCase()}</option>`).join("") + "</select></div>" +
       '    <p class="h2h-elo" id="rk-elo"></p>' +
       '    <button class="gbtn primary" id="btn-ranked">Find ranked match</button></div>' +
-      '  <div class="h2h-panel"><h2>🔒 Private Room</h2>' +
+      '  <div class="h2h-panel private"><h2>🔒 Private Room</h2>' +
       '    <p class="muted h2h-note">Create a room, share the code, and the host picks the mode. Multiple players welcome.</p>' +
       '    <button class="gbtn" id="btn-create">Create a room</button>' +
       '    <div class="h2h-join"><input id="join-code" class="search" placeholder="Enter code" maxlength="6" autocapitalize="characters" />' +
@@ -357,10 +357,11 @@
     const a = M.seq[M.idx], c = M.seq[M.idx + 1], cat = M._cat;
     $("#stage").innerHTML =
       `<div class="hl2"><div class="hl2-card anchor">${hlCard(a, a.stats[cat.key])}</div>` +
+      '<div class="hl2-vs"><span>VS</span></div>' +
       `<div class="hl2-q">Did <b>${esc(c.name)}</b> have <b>higher</b> or <b>lower</b> ${esc(cat.label)}?</div>` +
       `<div class="hl2-card challenger" id="hl-ch">${hlCard(c, null)}` +
-      '<div class="hl2-btns"><button class="gbtn primary" data-dir="higher">▲ Higher</button>' +
-      '<button class="gbtn primary" data-dir="lower">▼ Lower</button></div></div></div>';
+      '<div class="hl2-btns"><button class="gbtn hl-up" data-dir="higher">▲ Higher</button>' +
+      '<button class="gbtn hl-down" data-dir="lower">▼ Lower</button></div></div></div>';
     $$("#hl-ch .hl2-btns button").forEach((b) => b.addEventListener("click", () => onAnswer(b.dataset.dir)));
   }
   function checkHL(choice) {
