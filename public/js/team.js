@@ -120,7 +120,7 @@
   async function load() {
     S.teamKey = new URLSearchParams(location.search).get("t") || "";
     try {
-      const res = await fetch(DATA_URL, { cache: "no-cache" });
+      const res = await fetch(DATA_URL);
       if (!res.ok) throw new Error("HTTP " + res.status);
       const data = await res.json();
       S.rows = data.players.filter((p) => LEAGUE.keyOf(p.team) === S.teamKey);

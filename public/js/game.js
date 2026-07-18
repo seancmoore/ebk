@@ -89,7 +89,7 @@
 
   async function load() {
     try {
-      const res = await fetch(DATA_URL, { cache: "no-cache" });
+      const res = await fetch(DATA_URL);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       state.data = await res.json();
       buildCategoryGrid();

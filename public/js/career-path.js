@@ -143,12 +143,12 @@
 
   async function load() {
     try {
-      const res = await fetch(DATA_URL, { cache: "no-cache" });
+      const res = await fetch(DATA_URL);
       if (!res.ok) throw new Error("HTTP " + res.status);
       const data = await res.json();
       const people = data.people || {};
       if (CFG.facts.includes("college")) {
-        try { const cr = await fetch("/data/colleges.json", { cache: "no-cache" }); if (cr.ok) S.colleges = await cr.json(); } catch {}
+        try { const cr = await fetch("/data/colleges.json"); if (cr.ok) S.colleges = await cr.json(); } catch {}
       }
 
       for (const p of data.players) {

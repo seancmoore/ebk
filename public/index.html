@@ -101,6 +101,18 @@
   <script src="/js/home.js"></script>
   <script src="/js/fx.js"></script>
   <script src="/js/ebk-sound.js"></script>
-  <script type="module" src="/js/hero3d.js"></script>
+  <!-- decorative 3D hero: injected after first paint so the (~600KB) three.js
+       module download never blocks DOMContentLoaded / the preloader reveal -->
+  <script>
+    (function () {
+      function mount() {
+        var s = document.createElement("script");
+        s.type = "module"; s.src = "/js/hero3d.js";
+        document.body.appendChild(s);
+      }
+      if ("requestIdleCallback" in window) requestIdleCallback(mount, { timeout: 1500 });
+      else setTimeout(mount, 200);
+    })();
+  </script>
 </body>
 </html>

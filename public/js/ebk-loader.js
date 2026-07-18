@@ -91,7 +91,9 @@
       setTimeout(function () { if (o.parentNode) o.parentNode.removeChild(o); }, 500);
     }, wait);
   }
-  if (document.readyState === "complete") hide();
-  else window.addEventListener("load", hide);
+  // reveal at DOMContentLoaded (CSS is applied by then — end-of-body scripts
+  // gate it) rather than window load, which waits on the 3D hero and images
+  if (document.readyState !== "loading") hide();
+  else document.addEventListener("DOMContentLoaded", hide);
   setTimeout(hide, MAX);
 })();
