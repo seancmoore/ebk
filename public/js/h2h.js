@@ -82,7 +82,7 @@
     const preSport = SPORTS.includes(params.get("sport")) ? params.get("sport") : "nfl";
     $("#lobby").innerHTML =
       '<div class="h2h-intro"><h1>⚔️ Head-to-Head</h1>' +
-      '<p class="muted">Same questions for everyone. Highest streak wins.</p></div>' +
+      '<p class="muted">Same questions for everyone. Highest streak wins. Jump into a ranked quick match, or make a private room and share the code with friends.</p></div>' +
       '<div id="signgate" class="center" hidden><p class="muted">Sign in to play head-to-head.</p>' +
       '<button class="gbtn primary" id="h2h-signin">Sign in</button></div>' +
       '<div id="setup" hidden>' +
