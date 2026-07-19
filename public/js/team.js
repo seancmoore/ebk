@@ -7,7 +7,7 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=2";
 
   const CFG = {
     nfl: {
@@ -122,7 +122,7 @@
     try {
       const res = await fetch(DATA_URL);
       if (!res.ok) throw new Error("HTTP " + res.status);
-      const data = await res.json();
+      const data = EBKD.inflate(await res.json());
       S.rows = data.players.filter((p) => LEAGUE.keyOf(p.team) === S.teamKey);
       if (!S.rows.length) { $("#loading").textContent = "Unknown team."; return; }
       const seasons = S.rows.map((r) => r.season);

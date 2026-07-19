@@ -51,10 +51,10 @@
   const dataCache = {};
   async function loadData(sport) {
     if (dataCache[sport]) return dataCache[sport];
-    const url = sport === "nfl" ? "/data/players.json" : "/data/" + sport + "/players.json";
+    const url = (sport === "nfl" ? "/data/players.json" : "/data/" + sport + "/players.json") + "?v=2";
     const res = await fetch(url, { cache: "force-cache" });
     if (!res.ok) throw new Error("data " + res.status);
-    dataCache[sport] = await res.json();
+    dataCache[sport] = EBKD.inflate(await res.json());
     return dataCache[sport];
   }
   let colleges = null;

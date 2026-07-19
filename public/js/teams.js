@@ -1,5 +1,6 @@
 /* Shared NFL franchise helper. Canonicalizes historical abbreviations
    (OAK->Raiders, SD->Chargers, STL/LA->Rams, JAC->Jaguars) and gives names. */
+
 window.NFL = (function () {
   "use strict";
   const FRANCHISES = [

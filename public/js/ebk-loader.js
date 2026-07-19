@@ -1,4 +1,28 @@
 /* EBK · preloader + scroll behavior (loaded in <head> on every page). */
+
+/* EBKD.inflate — reverses the lossless compaction that tools/slim_players.py
+   applies to the players.json files (headshot prefix hoisted to `hsPrefix`,
+   zero stat entries omitted with the key union in `statCols`). After this
+   runs the in-memory data is identical to the pre-slim shape, so every game
+   engine works unchanged. Idempotent; safe on unslimmed files too. Lives here
+   because this file is in the <head> of every page. */
+window.EBKD = {
+  inflate: function (d) {
+    if (!d || d.__inflated) return d;
+    var pre = d.hsPrefix || "";
+    var cols = d.statCols || [];
+    (d.players || []).forEach(function (r) {
+      if (pre && r.headshot && r.headshot.charAt(0) === "~")
+        r.headshot = pre + r.headshot.slice(1);
+      var s = r.stats || (r.stats = {});
+      for (var i = 0; i < cols.length; i++)
+        if (!(cols[i] in s)) s[cols[i]] = 0;
+    });
+    d.__inflated = true;
+    return d;
+  },
+};
+
 (function () {
   "use strict";
 

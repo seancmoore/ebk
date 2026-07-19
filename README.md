@@ -59,8 +59,14 @@ python build_players.py            # NFL, full 1999–2025
 python build_players.py 2010 2025  # custom season range
 ```
 
-Datasets are large (NFL ~13 MB, CFB ~19 MB raw; ~1–3 MB gzipped on the wire).
-They're cached for 24h (`firebase.json`) and fetched once per session.
+After any rebuild, run `python tools/slim_players.py` — it prunes bench
+player-seasons whose every stat is under 5, hoists the shared headshot URL
+prefix, and drops zero stat entries (the last two are losslessly reversed at
+load time by `EBKD.inflate` in `js/ebk-loader.js`, so game code sees the
+original shape). Slimmed sizes: NFL ~9.6 MB / CFB ~11 MB raw, ~0.2–1.7 MB
+gzipped on the wire. Cached for 24h (`firebase.json`), fetched once per
+session; bump the `?v=N` suffix on DATA_URL in the game JS if a data change
+must reach all clients at once (H2H needs both players on the same data).
 
 ## Run locally
 
