@@ -70,6 +70,31 @@
     Promise.all([preloadImg(p && p.headshot),
                  preloadImg(p && p.team && LEAGUE ? LEAGUE.logo(p.team) : null, 1200)]);
 
+  // Entrance animations are enhancement only: content is visible by default,
+  // and every animated element is force-settled to its natural state after the
+  // animation window — so a stalled rAF (background tab, GPU jank) can never
+  // leave the game invisible.
+  function fxTargets(targets) {
+    const out = [];
+    (Array.isArray(targets) ? targets : [targets]).forEach((t) => {
+      if (typeof t === "string") out.push(...document.querySelectorAll(t));
+      else if (t && t.length != null && !t.nodeType) out.push(...t);
+      else if (t) out.push(t);
+    });
+    return out;
+  }
+  function fxSettle(targets, ms) {
+    setTimeout(() => fxTargets(targets).forEach((el) => {
+      el.style.opacity = ""; el.style.transform = "";
+    }), ms);
+  }
+  function entrance(params, settleMs) {
+    const anime = A();
+    if (!anime || document.hidden) return;
+    anime(params);
+    fxSettle(params.targets, settleMs);
+  }
+
   // Count a number element from 0 -> value with anime.js, or set instantly.
   function countTo(el, value, decimals) {
     const anime = A();
@@ -122,15 +147,15 @@
 
     // staggered entrance
     const anime = A();
-    if (anime) {
-      anime({
+    if (anime && !document.hidden) {
+      entrance({
         targets: grid.children,
         opacity: [0, 1],
         translateY: [16, 0],
         delay: anime.stagger(45),
         duration: 420,
         easing: "easeOutCubic",
-      });
+      }, 420 + 45 * grid.children.length + 300);
     }
   }
 
@@ -266,16 +291,19 @@
     const vs = $(".vs-badge");
     if (vs && !reduceMotion) { vs.classList.remove("spin"); void vs.offsetWidth; vs.classList.add("spin"); }
 
+    // panels must be visible even if a prior fade-out was interrupted
+    fxTargets(["#panel-anchor .panel-body", "#panel-challenger .panel-body"])
+      .forEach((el) => { el.style.opacity = ""; el.style.transform = ""; });
     const anime = A();
-    if (animateIn && anime) {
-      anime({
+    if (animateIn && anime && !document.hidden) {
+      entrance({
         targets: ["#panel-anchor .panel-body", "#panel-challenger .panel-body"],
         opacity: [0, 1],
         translateY: [18, 0],
         delay: anime.stagger(90),
         duration: 420,
         easing: "easeOutCubic",
-      });
+      }, 420 + 90 * 2 + 300);
     }
     startTimer();
   }
@@ -334,8 +362,17 @@
     state.challenger = state.next || pickChallenger(state.anchor);
     const ready = state.nextReady || Promise.resolve();
     state.next = null; state.nextReady = null;
+    // the next round must NEVER depend on anime's rAF-driven complete callback
+    // firing (a stalled rAF would freeze the game mid-run) — a plain timeout
+    // watchdog advances regardless, whichever comes first
+    let advanced = false;
+    const go = () => {
+      if (advanced) return;
+      advanced = true;
+      ready.then(() => renderRound(true));
+    };
     const anime = A();
-    if (anime) {
+    if (anime && !document.hidden) {
       // slide the round upward: anchor takes over, fresh challenger enters
       anime({
         targets: "#panel-challenger .panel-body",
@@ -343,10 +380,11 @@
         translateY: [0, -12],
         duration: 180,
         easing: "easeInCubic",
-        complete: () => ready.then(() => renderRound(true)),
+        complete: go,
       });
+      setTimeout(go, 500);
     } else {
-      ready.then(() => renderRound(true));
+      go();
     }
   }
 
@@ -367,15 +405,15 @@
       `<strong>${fmt(statValue(a), cat.decimals)}</strong>.`;
     showScreen("screen-over");
     const anime = A();
-    if (anime) {
-      anime({
+    if (anime && !document.hidden) {
+      entrance({
         targets: "#screen-over .over-inner > *",
         opacity: [0, 1],
         translateY: [16, 0],
         delay: anime.stagger(60),
         duration: 380,
         easing: "easeOutCubic",
-      });
+      }, 380 + 60 * 8 + 300);
     }
   }
 
