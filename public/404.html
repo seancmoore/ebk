@@ -24,6 +24,25 @@
     .nf-links a.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
   </style>
   <script src="/js/ebk-analytics.js" defer></script>
+  <script>
+    // Self-heal transient 404s: Firebase Hosting's CDN can briefly serve the
+    // 404 page for a VALID route while a new release propagates across edges.
+    // If the path we were served for matches a known site route, retry once
+    // (sessionStorage-guarded, so a genuinely dead route never reload-loops).
+    (function () {
+      var p = location.pathname.replace(/\/+$/, "") || "/";
+      var valid =
+        /^\/(nfl|nba|mlb|nhl|cfb|soccer)(\/(higher-lower|stat-line|career-path|player-grid|team|teams))?$/.test(p) ||
+        /^\/(h2h|leaderboard|dashboard|privacy|terms|admin)$/.test(p) || p === "/";
+      if (!valid) return;
+      var key = "ebk_404_retry:" + p;
+      try {
+        if (sessionStorage.getItem(key)) return;
+        sessionStorage.setItem(key, "1");
+      } catch (e) { return; }
+      setTimeout(function () { location.reload(); }, 900);
+    })();
+  </script>
 </head>
 <body>
   <header class="site-header">
