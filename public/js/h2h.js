@@ -413,11 +413,14 @@
       if (!c) { const bio = people[p.id] || {}; c = { id: p.id, name: p.name, pos: p.pos, headshot: p.headshot, college: bio.college || "", dy: bio.draftYear, dr: bio.draftRound, dp: bio.draftPick, dt: bio.draftTeam || "", years: new Map(), notable: false }; careers.set(p.id, c); }
       c.years.set(p.season, p.team);
       if (p.headshot && !c.headshot) c.headshot = p.headshot;
-      if (cfg.notable.some(([k, thr]) => (p.stats[k] || 0) >= thr)) c.notable = true;
+      if (cfg.notable.some(([k, thr]) => (p.stats[k] || 0) >= thr)) c.nSeasons = (c.nSeasons || 0) + 1;
+      if (cfg.notable.some(([k, thr]) => (p.stats[k] || 0) >= thr * 2)) c.star = true;
     }
     const pool = [];
     for (const c of careers.values()) {
-      if (!c.notable) continue;
+      // same household-name rule as solo career path (deterministic, so both
+      // clients build the identical pool): a star season or 3+ notable ones
+      if (!(c.star || (c.nSeasons || 0) >= 3)) continue;
       const yrs = [...c.years.keys()].sort((a, b) => a - b);
       c.min = yrs[0]; c.max = yrs[yrs.length - 1]; c.count = yrs.length;
       const path = []; for (const y of yrs) { const k = L.keyOf(c.years.get(y)); if (path[path.length - 1] !== k) path.push(k); }

@@ -14,8 +14,7 @@
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "career-path", score); } catch (e) {} };
   const sfx = (n) => { try { window.EBKS && EBKS.play(n); } catch (e) {} };
-  const REVEALS = 5;
-  const ROUND_MS = 7000;                // per-round clock; timeout ends the run
+  const ROUND_MS = 12000;               // per-round clock; timeout ends the run
 
   // ---- round timer ----
   let rtTO = null, rtLowTO = null, rtEl = null;
@@ -133,11 +132,13 @@
   const getBest = () => { try { return +localStorage.getItem(BEST_KEY) || 0; } catch { return 0; } };
   const setBest = (v) => { try { localStorage.setItem(BEST_KEY, v); } catch {} };
   const isNotable = (s) => CFG.notable.some(([k, thr]) => (s[k] || 0) >= thr);
+  // star season = double a notability bar in anything (a year people remember)
+  const isStar = (s) => CFG.notable.some(([k, thr]) => (s[k] || 0) >= thr * 2);
   const posName = (p) => CFG.posNames[p] || p;
 
   const S = {
     careers: new Map(), pool: [], colleges: {},
-    mystery: null, options: [], hiddenIdx: 0, revealed: false, revealsLeft: REVEALS,
+    mystery: null, options: [],
     score: 0, best: 0, locked: false,
   };
 
@@ -163,10 +164,13 @@
         }
         c.years.set(p.season, p.team);
         if (p.headshot && !c.headshot) c.headshot = p.headshot;
-        if (isNotable(p.stats)) c.notable = true;
+        if (isNotable(p.stats)) c.nSeasons = (c.nSeasons || 0) + 1;
+        if (isStar(p.stats)) c.star = true;
       }
       for (const c of S.careers.values()) {
-        if (!c.notable) continue;
+        // household-name filter: at least one star season, or a multi-year
+        // run of notable ones — no one-week wonders as the mystery player
+        if (!(c.star || (c.nSeasons || 0) >= 3)) continue;
         const yrs = [...c.years.keys()].sort((a, b) => a - b);
         c.min = yrs[0]; c.max = yrs[yrs.length - 1]; c.count = yrs.length;
         const path = [];
@@ -222,12 +226,10 @@
     return shuffle(opts);
   }
 
-  function newRun() { S.score = 0; S.revealsLeft = REVEALS; $("#score").textContent = "0"; nextRound(); }
+  function newRun() { S.score = 0; $("#score").textContent = "0"; nextRound(); }
 
   function nextRound() {
     S.mystery = rand(S.pool);
-    S.hiddenIdx = (Math.random() * CFG.facts.length) | 0;
-    S.revealed = false;
     S.options = pickOptions(S.mystery);
     S.solved = false;
     S.wrongId = null;
@@ -243,20 +245,13 @@
     const fs = facts(S.mystery);
     const cl = $("#facts");
     cl.innerHTML = "";
-    fs.forEach((f, i) => {
-      const hidden = i === S.hiddenIdx && !S.revealed && !S.solved;
+    fs.forEach((f) => {
       const div = document.createElement("div");
-      div.className = "clue" + (hidden ? " locked" : "");
-      div.innerHTML = `<span class="c-icon">${hidden ? "🔒" : f.icon}</span>` +
-        `<div><div class="c-k">${f.k}</div><div class="c-v">${hidden ? "hidden — use a reveal" : f.v}</div></div>`;
+      div.className = "clue";
+      div.innerHTML = `<span class="c-icon">${f.icon}</span>` +
+        `<div><div class="c-k">${f.k}</div><div class="c-v">${f.v}</div></div>`;
       cl.appendChild(div);
     });
-
-    $("#lifelines").hidden = S.solved;
-    const pb = $("#reveal-fact");
-    if (S.revealed) { pb.disabled = true; pb.textContent = "🔎 fact revealed"; }
-    else if (S.revealsLeft <= 0) { pb.disabled = true; pb.textContent = "🔎 no reveals left"; }
-    else { pb.disabled = false; pb.textContent = `🔎 Reveal ${fs[S.hiddenIdx].k} (${S.revealsLeft})`; }
 
     const ol = $("#options");
     ol.innerHTML = "";
@@ -316,12 +311,6 @@
     b.className = "gbtn " + kind; b.textContent = label;
     b.addEventListener("click", fn); row.appendChild(b);
   }
-
-  $("#reveal-fact").addEventListener("click", () => {
-    if (S.solved || S.revealed || S.revealsLeft <= 0) return;
-    S.revealed = true; S.revealsLeft--;
-    render();
-  });
 
   load();
 })();
