@@ -262,7 +262,7 @@
     $("#pos-line").textContent = posName(m.pos);
     $("#team-line").innerHTML = `Team: <img class="tlogo" src="${LEAGUE.logo(m.team)}" alt="" /> ${LEAGUE.name(m.team)}`;
     $("#season-badge").textContent = S.exactShown ? CFG.seasonFmt(m.season)
-      : `Between ${CFG.seasonFmt(S.range[0])} and ${CFG.seasonFmt(S.range[1])}`;
+      : `Sometime between ${CFG.seasonFmt(S.range[0])} and ${CFG.seasonFmt(S.range[1])}`;
 
     const rows = [`<div class="s-k">Games</div><div class="s-v">${m.games || "—"}</div>`];
     for (const [k, label] of CFG.display) {
