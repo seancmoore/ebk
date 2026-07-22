@@ -43,7 +43,7 @@ window.EBKD = {
   // Lock page scroll when the content fits the viewport on desktop; allow
   // scrolling on mobile, on touch, or whenever content is taller than the
   // viewport (so nothing is ever unreachable).
-  function applyScroll() {
+  function applyScrollNow() {
     var el = document.documentElement;
     var mobile = window.matchMedia("(max-width: 820px)").matches ||
                  window.matchMedia("(pointer: coarse)").matches;
@@ -52,12 +52,24 @@ window.EBKD = {
       desired = "";
     } else {
       var content = Math.max(el.scrollHeight, document.body ? document.body.scrollHeight : 0);
-      desired = content > window.innerHeight + 1 ? "auto" : "hidden";
+      // Hysteresis: the scrollbar appearing/disappearing reflows the page, and
+      // this runs FROM a ResizeObserver on <body> — without a dead zone the
+      // two states feed each other in a relayout loop whenever content height
+      // hovers near the viewport height (which game rounds cause constantly).
+      // Once scrollable, stay scrollable until content is clearly shorter.
+      if (content > window.innerHeight + 1) desired = "auto";
+      else if (el.style.overflowY === "auto" && content > window.innerHeight - 32) desired = "auto";
+      else desired = "hidden";
     }
     if (el.style.overflowY !== desired) el.style.overflowY = desired;
   }
+  var scrollTO = null;
+  function applyScroll() {
+    clearTimeout(scrollTO);
+    scrollTO = setTimeout(applyScrollNow, 80);
+  }
   function initScroll() {
-    applyScroll();
+    applyScrollNow();
     window.addEventListener("resize", applyScroll);
     window.addEventListener("load", applyScroll);
     if (window.ResizeObserver && document.body) {
