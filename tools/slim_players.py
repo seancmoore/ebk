@@ -7,9 +7,11 @@
 #   2. HEADSHOT TEMPLATE: the shared URL prefix is hoisted to a top-level
 #      `hsPrefix`; each record keeps "~<suffix>". Rebuilt at load time by
 #      EBKD.inflate() (public/js/teams.js).
-#   3. SPARSE STATS: zero-valued stat entries are dropped; the union of stat
-#      keys is stored as top-level `statCols` and EBKD.inflate() re-adds
-#      missing keys as 0 — so the in-memory data is identical to before.
+#   3. SPARSE STATS: zero-valued stat entries are dropped; each record keeps
+#      `z` = the statCols indices of exactly the keys that were dropped, so
+#      EBKD.inflate() restores the record's ORIGINAL key set bit-for-bit.
+#      (Key presence is semantic: "threw for 0 yards" has passing_yards: 0,
+#      "never threw" has no key at all — game pools depend on the difference.)
 import gzip
 import json
 import os
@@ -79,19 +81,23 @@ def slim(sport, path):
     else:
         prefix = ""
 
-    # 3. sparse stats
+    # 3. sparse stats (key presence preserved via per-record z indices)
     cols = set()
     for r in recs:
         cols.update(r.get("stats", {}).keys())
     d["statCols"] = sorted(cols)
+    idx = {k: i for i, k in enumerate(d["statCols"])}
     zeros = 0
     for r in recs:
         s = r.get("stats", {})
-        for k in [k for k, v in s.items() if v == 0]:
-            del s[k]
-            zeros += 1
+        removed = sorted(idx[k] for k, v in s.items() if v == 0)
+        if removed:
+            r["z"] = removed
+            for k in [k for k, v in s.items() if v == 0]:
+                del s[k]
+            zeros += len(removed)
 
-    d["slimmed"] = 2  # matches the ?v=2 data-URL version in the game JS
+    d["slimmed"] = 3  # matches the ?v=3 data-URL version in the game JS
     out = json.dumps(d, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
     path.write_bytes(out)
     print(f"{sport}: {n0} -> {len(recs)} records (-{dropped}, {100*dropped/n0:.0f}%), "

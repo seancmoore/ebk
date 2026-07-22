@@ -5,7 +5,7 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL; // team logo/name helper
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=2";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=3";
   const BEST_KEY = SPORT === "nfl" ? "ebk_best" : "ebk_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "higher-lower", score); } catch (e) {} };
@@ -124,8 +124,8 @@
     }
   }
 
-  const eligibleCount = (catKey) =>
-    state.data.players.reduce((n, p) => (p.stats[catKey] != null ? n + 1 : n), 0);
+  const eligibleCount = (cat) =>
+    state.data.players.reduce((n, p) => (EBKD.hlEligible(p, cat.key, cat.label) ? n + 1 : n), 0);
 
   function buildCategoryGrid() {
     const grid = $("#category-grid");
@@ -136,7 +136,7 @@
       el.innerHTML =
         `<span class="cat-icon">${cat.icon}</span>` +
         `<span class="cat-label">${cat.label}</span>` +
-        `<span class="cat-count">${eligibleCount(cat.key).toLocaleString()} seasons</span>`;
+        `<span class="cat-count">${eligibleCount(cat).toLocaleString()} seasons</span>`;
       el.addEventListener("click", () => startRun(cat));
       grid.appendChild(el);
     });
@@ -164,7 +164,7 @@
   function startRun(cat) {
     try { window.EBKA && EBKA.send("start"); } catch (e) {}
     state.category = cat;
-    state.pool = state.data.players.filter((p) => p.stats[cat.key] != null);
+    state.pool = state.data.players.filter((p) => EBKD.hlEligible(p, cat.key, cat.label));
     state.streak = 0;
     state.best = getBest(cat.key);
     state.anchor = randItem(state.pool);
@@ -180,15 +180,14 @@
     });
   }
 
-  // Different player-season whose value isn't an exact tie with the anchor.
+  // Different player-season whose value isn't an exact tie with the anchor —
+  // guaranteed: ties are unanswerable (only higher/lower can be picked), so
+  // pick from the tie-free candidates directly instead of retry-and-hope.
   function pickChallenger(anchor) {
     const key = state.category.key;
-    let pick;
-    for (let i = 0; i < 60; i++) {
-      pick = randItem(state.pool);
-      if (pick !== anchor && pick.stats[key] !== anchor.stats[key]) return pick;
-    }
-    return pick;
+    const cands = state.pool.filter((p) => p !== anchor && p.stats[key] !== anchor.stats[key]);
+    if (cands.length) return randItem(cands);
+    return state.pool.find((p) => p !== anchor) || anchor; // degenerate pool; unreachable in practice
   }
 
   const statValue = (p) => p.stats[state.category.key];

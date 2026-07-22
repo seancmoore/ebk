@@ -51,7 +51,7 @@
   const dataCache = {};
   async function loadData(sport) {
     if (dataCache[sport]) return dataCache[sport];
-    const url = (sport === "nfl" ? "/data/players.json" : "/data/" + sport + "/players.json") + "?v=2";
+    const url = (sport === "nfl" ? "/data/players.json" : "/data/" + sport + "/players.json") + "?v=3";
     const res = await fetch(url, { cache: "force-cache" });
     if (!res.ok) throw new Error("data " + res.status);
     dataCache[sport] = EBKD.inflate(await res.json());
@@ -342,13 +342,24 @@
   // ===================== HIGHER / LOWER =====================
   function genHL(room) {
     const rng = seededRng(room.seed + "|hl|" + room.cat);
-    const pool = M.data.players.filter((p) => p.stats[room.cat] != null);
     M._cat = (M.data.categories || []).find((c) => c.key === room.cat) || { key: room.cat, label: room.cat, decimals: 0 };
+    // same eligibility rule as solo play; deterministic given identical data,
+    // so both clients still generate the identical sequence from the seed
+    const pool = M.data.players.filter((p) => EBKD.hlEligible(p, room.cat, M._cat.label));
     const chain = []; let prev = null, prevVal = null;
     for (let i = 0; i < SEQ_MAX + 1 && pool.length; i++) {
+      // ties are unanswerable (higher/lower only): bounded retries, then a
+      // deterministic forward scan that guarantees a non-tying pick
       let pick = null;
       for (let t = 0; t < 80; t++) { const c = pool[(rng() * pool.length) | 0]; if (c !== prev && c.stats[room.cat] !== prevVal) { pick = c; break; } }
-      if (!pick) pick = pool[(rng() * pool.length) | 0];
+      if (!pick) {
+        const start = (rng() * pool.length) | 0;
+        for (let t = 0; t < pool.length; t++) {
+          const c = pool[(start + t) % pool.length];
+          if (c !== prev && c.stats[room.cat] !== prevVal) { pick = c; break; }
+        }
+      }
+      if (!pick) break; // every remaining value ties — end the sequence early
       chain.push(pick); prev = pick; prevVal = pick.stats[room.cat];
     }
     return chain;

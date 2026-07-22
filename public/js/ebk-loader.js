@@ -2,10 +2,11 @@
 
 /* EBKD.inflate — reverses the lossless compaction that tools/slim_players.py
    applies to the players.json files (headshot prefix hoisted to `hsPrefix`,
-   zero stat entries omitted with the key union in `statCols`). After this
-   runs the in-memory data is identical to the pre-slim shape, so every game
-   engine works unchanged. Idempotent; safe on unslimmed files too. Lives here
-   because this file is in the <head> of every page. */
+   zero stat entries omitted per record via `z` = statCols indices of exactly
+   the dropped keys). Restores each record's ORIGINAL stat key set — presence
+   of a key is semantic ("threw for 0 yards" vs "never threw"), and category
+   pools depend on the difference. Idempotent; safe on unslimmed files too.
+   Lives here because this file is in the <head> of every page. */
 window.EBKD = {
   inflate: function (d) {
     if (!d || d.__inflated) return d;
@@ -14,12 +15,24 @@ window.EBKD = {
     (d.players || []).forEach(function (r) {
       if (pre && r.headshot && r.headshot.charAt(0) === "~")
         r.headshot = pre + r.headshot.slice(1);
-      var s = r.stats || (r.stats = {});
-      for (var i = 0; i < cols.length; i++)
-        if (!(cols[i] in s)) s[cols[i]] = 0;
+      if (r.z) {
+        var s = r.stats || (r.stats = {});
+        for (var i = 0; i < r.z.length; i++) s[cols[r.z[i]]] = 0;
+        delete r.z;
+      }
     });
     d.__inflated = true;
     return d;
+  },
+  // Higher/Lower pool eligibility (shared by game.js and h2h.js so solo play
+  // and both H2H clients agree): the stat must have applied AND be meaningful
+  // — nonzero everywhere, and at least 10 for yardage categories so trick-play
+  // passing lines etc. don't enter the pool.
+  hlEligible: function (p, key, label) {
+    var v = p.stats[key];
+    if (v == null || v <= 0) return false;
+    if (/yard|yds/i.test(key + " " + (label || "")) && v < 10) return false;
+    return true;
   },
 };
 
