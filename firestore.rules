@@ -229,14 +229,20 @@ service cloud.firestore {
     }
 
     // first-party usage counter (see /js/ebk-analytics.js): anonymous
-    // {path, source, event, ts} docs, one per event, written by any visitor
-    // (traffic measurement must work signed-out). No personal data. Reads are
-    // admin-only so the raw stream is never public.
+    // {path, source, visitor, referrer, event, ts} docs, one per event, written
+    // by any visitor (traffic measurement must work signed-out). `v` is a
+    // random id the browser mints for itself and rotates monthly — it makes
+    // unique visitors countable and identifies nobody. No personal data.
+    // Reads are admin-only so the raw stream is never public.
     match /hits/{id} {
       allow read, update, delete: if isAdmin();
-      allow create: if request.resource.data.keys().hasOnly(['p', 's', 'e', 't', 'x'])
+      allow create: if request.resource.data.keys().hasOnly(['p', 's', 'v', 'r', 'e', 't', 'x'])
         && request.resource.data.p is string && request.resource.data.p.size() <= 100
         && request.resource.data.s is string && request.resource.data.s.size() <= 30
+        && (!('v' in request.resource.data)
+            || (request.resource.data.v is string && request.resource.data.v.size() <= 32))
+        && (!('r' in request.resource.data)
+            || (request.resource.data.r is string && request.resource.data.r.size() <= 40))
         && request.resource.data.e in ['view', 'start', 'finish']
         && request.resource.data.t is int && request.resource.data.t > 0
         && (!('x' in request.resource.data) || request.resource.data.x is timestamp);
