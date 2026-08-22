@@ -1,0 +1,84 @@
+# Deploy EBK to Firebase Hosting on every push to master.
+#
+# Why this exists: the two EBK agents work from a cloud container and can only
+# reach `firebase deploy` through Sean's PC, which is not always on. With this
+# workflow a push is a deploy, so a fix found at 3am ships at 3am.
+#
+# It needs ONE of two repo secrets, and fails loudly if neither is set:
+#
+#   FIREBASE_SERVICE_ACCOUNT_EBK  (preferred) the full JSON key of a service
+#       account on nfl-higher-lower-game with Firebase Hosting Admin, Firebase
+#       Rules Admin, Cloud Datastore Index Admin and Firebase Viewer.
+#   FIREBASE_TOKEN  the output of `firebase login:ci`. Quicker to produce — one
+#       browser confirmation, no console — but it is a personal credential with
+#       Sean's full access, and Google has it on a deprecation path. Fine to
+#       start with; move to the service account when convenient.
+
+name: Deploy EBK
+
+on:
+  push:
+    branches: [master]
+    # Docs and the agents' own notes don't change what's served.
+    paths-ignore:
+      - '**/*.md'
+      - '.ops/**'
+  workflow_dispatch:
+
+concurrency:
+  group: ebk-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # Cheap guards against the two failures that would actually hurt: shipping
+      # a syntax error to a site with no build step to catch it, or shipping a
+      # tree where the player data has gone missing.
+      - name: Check the payload
+        run: |
+          set -e
+          test -s public/index.html
+          test -s public/data/players.json
+          for f in public/js/*.js; do node --check "$f"; done
+          echo "public/ is $(du -sh public | cut -f1) across $(find public -type f | wc -l) files"
+
+      - name: Deploy hosting and Firestore rules
+        env:
+          FIREBASE_SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EBK }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          set -e
+          if [ -n "$FIREBASE_SA" ]; then
+            printf '%s' "$FIREBASE_SA" > /tmp/ebk-sa.json
+            export GOOGLE_APPLICATION_CREDENTIALS=/tmp/ebk-sa.json
+            echo "authenticating with the service account"
+          elif [ -n "$FIREBASE_TOKEN" ]; then
+            echo "authenticating with FIREBASE_TOKEN"
+          else
+            echo "::error::Neither FIREBASE_SERVICE_ACCOUNT_EBK nor FIREBASE_TOKEN is set - see .github/workflows/deploy.yml"
+            exit 1
+          fi
+          npm i -g firebase-tools@15
+          firebase deploy --only hosting,firestore \
+            --project nfl-higher-lower-game --non-interactive
+
+      # A green deploy that serves a broken site is the failure mode worth
+      # catching, so check the real URLs rather than trusting the exit code.
+      - name: Smoke-test the live site
+        run: |
+          set -e
+          sleep 20
+          for p in / /nfl/player-grid /nba/higher-lower /h2h /leaderboard /js/ebk-analytics.js; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "https://eliteballknowledge.web.app$p")
+            echo "$p -> $code"
+            [ "$code" = "200" ]
+          done
