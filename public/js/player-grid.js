@@ -448,7 +448,8 @@
       " · score <b>" + total + "</b> · new grid in " + hoursToReset();
     render();
     const row = $("#end-row"); row.hidden = false; row.innerHTML = "";
-    addBtn(row, "Back to EBK", "primary", () => (location.href = "/" + SPORT));
+    addShareBtn(row, total);
+    addBtn(row, "Back to EBK", "ghost", () => (location.href = "/" + SPORT));
   }
 
   function critLabel(c) {
@@ -613,6 +614,9 @@
     $("#status-line").innerHTML =
       `Daily ${S.date}: <b>${S.score}/9</b> · rarity score <b>${total}</b> / 900 ` +
       `<span class="muted">(rarer picks score more)</span> · new grid in ${hoursToReset()}`;
+    const erow = $("#end-row"); erow.hidden = false; erow.innerHTML = "";
+    addShareBtn(erow, total);
+    addBtn(erow, "Back to EBK", "ghost", () => (location.href = "/" + SPORT));
     const cells = serializeCells();
     saveLocalPlay({ cells, score: S.score, rarity: total, pts, done: true, ts: Date.now() });
     try {
@@ -622,6 +626,55 @@
           if (el) el.innerHTML += ' <span class="muted">· ⚠ couldn\'t sync to the leaderboard</span>';
         });
     } catch (e) {}
+  }
+
+  // ---- spoiler-free share -----------------------------------------------
+  // Emoji-only board: filled squares are green, misses white. No player names,
+  // so a result can be pasted into a group chat without ruining the grid.
+  function shareText(total) {
+    const meta = window.EBK && EBK.sport ? EBK.sport(SPORT) : null;
+    const name = meta ? meta.name : SPORT.toUpperCase();
+    let board = "";
+    for (let r = 0; r < 3; r++) {
+      for (let c = 0; c < 3; c++) {
+        const cell = S.cells[r * 3 + c];
+        board += cell && cell !== "dead" ? "\u{1F7E9}" : "⬜";
+      }
+      board += "\n";
+    }
+    return "EBK Player Grid · " + name + " · " + S.date + "\n" +
+           S.score + "/9" + (total != null ? " · " + total + "/900" : "") + "\n\n" +
+           board + "\nhttps://eliteballknowledge.web.app/" + SPORT +
+           "/player-grid?utm_source=share";
+  }
+
+  async function doShare(total) {
+    const text = shareText(total);
+    try {
+      if (navigator.share) { await navigator.share({ text: text }); return; }
+    } catch (e) { if (e && e.name === "AbortError") return; }
+    try {
+      await navigator.clipboard.writeText(text);
+      flash("Result copied — paste it anywhere.", true);
+      return;
+    } catch (e) {}
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.cssText = "position:fixed;top:-1000px;opacity:0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      flash("Result copied — paste it anywhere.", true);
+    } catch (e) {
+      flash("Couldn't copy — long-press to select your result.", false);
+    }
+  }
+
+  function addShareBtn(row, total) {
+    addBtn(row, "Share result", "primary", function () { doShare(total); });
   }
 
   function addBtn(row, label, kind, fn) {

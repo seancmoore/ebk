@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EBK — axis swaps on the dealt hand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Space+Grotesk:wght@400;500;700&family=Archivo+Black&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --neutral-1:#fdfdfc; --neutral-2:#f9f9f7; --neutral-3:#f1f0ed; --neutral-6:#d4d2cb;
+  --neutral-8:#adaba1; --neutral-11:#65635d; --neutral-12:#2e2e2a;
+  --night:#131312; --night-2:#1a1918; --night-text:#e9e8e3;
+}
+*{box-sizing:border-box;margin:0}
+body{background:var(--neutral-3);font-family:'Space Grotesk',sans-serif;color:var(--neutral-12);padding:40px 20px}
+h1{font-family:Unbounded;font-size:22px;margin-bottom:6px}
+p.note{color:var(--neutral-11);margin-bottom:30px;font-size:14px}
+main{display:flex;gap:28px;flex-wrap:wrap}
+.v{ --acc:#d1b800; --acc-hot:#e7cb14; --on-acc:#0f0d04; --disp:'Unbounded'; --numf:'Unbounded'; }
+.v.green{ --acc:#91ce00; --acc-hot:#a1e314; --on-acc:#0b0f06; }
+.v.red{ --acc:#ff002b; --acc-hot:#ff5c58; --on-acc:#fff; }
+.v.fontswap{ --disp:'Archivo Black'; --numf:'Space Mono'; }
+article.card{width:330px;background:var(--neutral-2);border:1px solid var(--neutral-6);border-radius:30px;padding:14px 12px;box-shadow:0 2px 12px rgba(20,20,15,.10)}
+.lbl{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--neutral-11);text-align:center;margin:12px 0 0;font-weight:700}
+.bd{background:var(--night);border-radius:20px 20px 0 0;color:var(--night-text);padding:13px 15px;display:flex;justify-content:space-between;align-items:center}
+.bd .wm{font-family:var(--disp);font-weight:900;font-size:17px}
+.bd .wm i{color:var(--acc-hot);font-style:normal}
+.bd .sc{font-family:var(--numf);font-weight:700;font-size:12.5px;color:var(--acc-hot)}
+.fld{border:1px solid var(--neutral-6);border-top:none;padding:16px 14px 6px;position:relative}
+.fld::after{content:"";position:absolute;top:0;right:26px;bottom:0;border-right:2px solid var(--neutral-6)}
+.kick{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--neutral-11);font-weight:700;margin-bottom:8px}
+.fld h3{font-family:var(--disp);font-weight:900;font-size:16px;line-height:1.3;margin-bottom:12px}
+.sc1{border:2px solid var(--night);border-radius:12px;padding:11px 13px;margin-bottom:10px;background:var(--night);color:var(--night-text)}
+.sc2{border:2px solid var(--neutral-12);border-radius:12px;padding:11px 13px;margin-bottom:6px;background:var(--neutral-1)}
+.who{font-weight:700;font-size:14px}
+.season{font-size:11.5px;margin-top:1px;color:var(--neutral-8)}
+.sc2 .season{color:var(--neutral-11)}
+.stat{font-family:var(--numf);font-weight:900;font-size:24px;margin-top:6px}
+.sc1 .stat{color:var(--acc-hot)}
+.btns{display:flex;gap:10px;padding:10px 2px 6px}
+.btns button{flex:1;font-family:var(--disp);font-weight:900;font-size:12px;padding:13px 0;border-radius:999px;border:none;cursor:pointer}
+.btns .hi{background:var(--acc);color:var(--on-acc)}
+.btns .lo{background:var(--neutral-12);color:var(--neutral-1)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Axis swaps — same dealt hand, one axis moved at a time</h1>
+  <p class="note">Base: RF × Split Stage × baseline-ruler. Swapping hue (A, B) and type (C). Everything else held constant per the dealer contract.</p>
+</header>
+<main>
+  <article class="card v">
+    <div class="bd"><span class="wm">EBK<i>.</i></span><span class="sc">STREAK 12</span></div>
+    <section class="fld">
+      <div class="kick">Higher or Lower · MLB · 4/10</div>
+      <h3>SOSA '01 — HIGHER OR LOWER?</h3>
+      <div class="sc1"><div class="who">Barry Bonds</div><div class="season">2001 · Giants</div><div class="stat">73 HR</div></div>
+      <div class="sc2"><div class="who">Sammy Sosa</div><div class="season">2001 · Cubs</div><div class="stat">??</div></div>
+    </section>
+    <div class="btns"><button class="hi">▲ HIGHER</button><button class="lo">▼ LOWER</button></div>
+    <div class="lbl">BASE — dealt acid yellow</div>
+  </article>
+
+  <article class="card v green">
+    <div class="bd"><span class="wm">EBK<i>.</i></span><span class="sc">STREAK 12</span></div>
+    <section class="fld">
+      <div class="kick">Higher or Lower · MLB · 4/10</div>
+      <h3>SOSA '01 — HIGHER OR LOWER?</h3>
+      <div class="sc1"><div class="who">Barry Bonds</div><div class="season">2001 · Giants</div><div class="stat">73 HR</div></div>
+      <div class="sc2"><div class="who">Sammy Sosa</div><div class="season">2001 · Cubs</div><div class="stat">??</div></div>
+    </section>
+    <div class="btns"><button class="hi">▲ HIGHER</button><button class="lo">▼ LOWER</button></div>
+    <div class="lbl">SWAP A — acid green (seed 128)</div>
+  </article>
+
+  <article class="card v red">
+    <div class="bd"><span class="wm">EBK<i>.</i></span><span class="sc">STREAK 12</span></div>
+    <section class="fld">
+      <div class="kick">Higher or Lower · MLB · 4/10</div>
+      <h3>SOSA '01 — HIGHER OR LOWER?</h3>
+      <div class="sc1"><div class="who">Barry Bonds</div><div class="season">2001 · Giants</div><div class="stat">73 HR</div></div>
+      <div class="sc2"><div class="who">Sammy Sosa</div><div class="season">2001 · Cubs</div><div class="stat">??</div></div>
+    </section>
+    <div class="btns"><button class="hi">▲ HIGHER</button><button class="lo">▼ LOWER</button></div>
+    <div class="lbl">SWAP B — signal red (seed 25)</div>
+  </article>
+
+  <article class="card v fontswap">
+    <div class="bd"><span class="wm">EBK<i>.</i></span><span class="sc">STREAK 12</span></div>
+    <section class="fld">
+      <div class="kick">Higher or Lower · MLB · 4/10</div>
+      <h3>SOSA '01 — HIGHER OR LOWER?</h3>
+      <div class="sc1"><div class="who">Barry Bonds</div><div class="season">2001 · Giants</div><div class="stat">73 HR</div></div>
+      <div class="sc2"><div class="who">Sammy Sosa</div><div class="season">2001 · Cubs</div><div class="stat">??</div></div>
+    </section>
+    <div class="btns"><button class="hi">▲ HIGHER</button><button class="lo">▼ LOWER</button></div>
+    <div class="lbl">SWAP C — Archivo Black + mono numerals</div>
+  </article>
+</main>
+</body>
+</html>

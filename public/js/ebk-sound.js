@@ -88,22 +88,32 @@
     },
   };
 
-  // floating mute toggle
+  // mute toggle — rides inside the page's top bar (.gtop / .hud /
+  // .site-header) as a flex child so it can never cover gameplay buttons;
+  // floats bottom-right only on pages with no top bar at all
   var btn = document.createElement("button");
   btn.id = "ebk-mute";
   btn.setAttribute("aria-label", "Toggle sound");
   function paint() { btn.textContent = on ? "🔊" : "🔇"; btn.classList.toggle("off", !on); }
   var css = document.createElement("style");
   css.textContent =
-    "#ebk-mute{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:80;" +
-    "width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);" +
-    "background:rgba(16,22,44,0.85);color:#f3f6ff;font-size:1.05rem;cursor:pointer;" +
+    "#ebk-mute{flex:none;width:42px;height:42px;border-radius:50%;" +
+    "border:1px solid rgba(255,255,255,0.18);background:rgba(16,22,44,0.85);" +
+    "color:#f3f6ff;font-size:1.05rem;cursor:pointer;padding:0;line-height:1;}" +
+    "#ebk-mute.floating{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:80;" +
     "box-shadow:0 6px 18px rgba(0,0,0,0.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}" +
+    /* always last in the header row, even though the account nav is injected async */
+    ".site-header #ebk-mute{order:99;}" +
+    ".gtop #ebk-mute{width:38px;height:38px;font-size:0.95rem;}" +
+    "@media (max-width:420px){.gtop #ebk-mute{width:32px;height:32px;font-size:0.85rem;}}" +
     "#ebk-mute.off{opacity:0.55;}#ebk-mute:active{transform:scale(0.92);}";
   function mount() {
     (document.head || document.documentElement).appendChild(css);
     paint();
-    document.body.appendChild(btn);
+    var host = document.querySelector(".gtop") || document.querySelector(".hud") ||
+               document.querySelector(".site-header");
+    if (host) host.appendChild(btn);
+    else { btn.classList.add("floating"); document.body.appendChild(btn); }
     btn.addEventListener("click", function () { EBKS.toggle(); });
   }
   if (document.body) mount();
