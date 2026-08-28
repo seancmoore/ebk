@@ -377,8 +377,19 @@
     return false;
   }
 
+  // Attempts before generate() gives up on a difficulty floor. 400 was too low
+  // for leagues whose club pool is sparse: soccer (Premier League, FPL data,
+  // 2016-17..2024-25) has clubs with only one or two seasons in the window, so a
+  // random 6-club draw rarely clears min=2. Measured over the 30 days from
+  // 2026-08-24, soccer fell through to min=1 on 13 of them, and every one of
+  // those days had a min=2 board waiting between attempts 417 and 752. The
+  // other sports return inside the first few dozen attempts and are unaffected:
+  // the loop returns on first success, so a board that already generates cannot
+  // change.
+  const GEN_ATTEMPTS = 4000;
+
   function generate(min, rnd) {
-    for (let attempt = 0; attempt < 400; attempt++) {
+    for (let attempt = 0; attempt < GEN_ATTEMPTS; attempt++) {
       const teams = shuffle(S.teams.slice(), rnd).slice(0, 6);
       const picks = teams.slice();
       const nSpecial = 1 + ((rnd() * 2) | 0); // 1..2 special axes for variety
@@ -400,10 +411,33 @@
     return null;
   }
 
+  // Difficulty floors, hardest first: every cell on the board must have at
+  // least this many valid answers. buildBoard walks the ladder and keeps the
+  // first floor the day's data can actually satisfy, so the board is as fair as
+  // the rosters allow rather than merely legal. The old ladder was [2, 1],
+  // which accepted the FIRST board clearing two answers per cell and so kept
+  // landing on cells with exactly two — soccer did it on 27 of the 30 days from
+  // 2026-08-26, and the live boards on 24, 25 and 26 Aug each shipped cells
+  // with one or two. Measured over those same 30 days, [4, 3, 2, 1] removes
+  // every thinnest-2 and thinnest-3 day from nfl, nba, mlb and nhl outright and
+  // cuts soccer's thinnest-2 days from 27 to 2.
+  //
+  // Cost is bounded and paid after the data is already loaded, so it is nowhere
+  // near first paint: nfl/nba/mlb/nhl stay at ~0.1ms because they clear min=4
+  // within a few dozen attempts, and soccer — the only league that has to
+  // exhaust a floor before stepping down — goes from 1.2ms to 12.6ms average,
+  // 36ms worst case.
+  const FLOORS = [4, 3, 2, 1];
+
   // deterministic board for today
   function buildBoard() {
-    const rnd = seededRng(SPORT + "|" + S.date);
-    const g = generate(2, rnd) || generate(1, seededRng(SPORT + "|" + S.date));
+    let g = null;
+    // Each floor restarts from the same seed, so the board stays a pure
+    // function of SPORT and the date.
+    for (const floor of FLOORS) {
+      g = generate(floor, seededRng(SPORT + "|" + S.date));
+      if (g) break;
+    }
     S.rows = g.rows; S.cols = g.cols;
     S.cells = Array(9).fill(null);
     S.used = new Set();
@@ -450,11 +484,18 @@
     const row = $("#end-row"); row.hidden = false; row.innerHTML = "";
     addShareBtn(row, total);
     addBtn(row, "Back to EBK", "ghost", () => (location.href = "/" + SPORT));
+    // Returning to a grid already played is the highest-value moment to point
+    // at the four still open, not to show a countdown and a way out.
+    try { window.EBKDaily && EBKDaily.markPlayed(S.date); } catch (e) {}
+    showDailyCard();
   }
 
   function critLabel(c) {
     if (c.type === "team")
-      return `<img class="gh-logo" src="${LEAGUE.logo(c.key)}" alt="${c.label}" loading="lazy" />` +
+      // Team logos are hotlinked to third-party CDNs and can fail without notice.
+      // Drop the broken image rather than render a broken-image glyph — the axis
+      // name alone is still a complete, playable header.
+      return `<img class="gh-logo" src="${LEAGUE.logo(c.key)}" alt="${c.label}" loading="lazy" onerror="this.remove()" />` +
              `<span class="gh-name">${c.label}</span>`;
     return `<span class="gh-name">${c.label}</span>`;
   }
@@ -617,6 +658,8 @@
     const erow = $("#end-row"); erow.hidden = false; erow.innerHTML = "";
     addShareBtn(erow, total);
     addBtn(erow, "Back to EBK", "ghost", () => (location.href = "/" + SPORT));
+    try { window.EBKDaily && EBKDaily.markPlayed(S.date); } catch (e) {}
+    showDailyCard();
     const cells = serializeCells();
     saveLocalPlay({ cells, score: S.score, rarity: total, pts, done: true, ts: Date.now() });
     try {
@@ -642,8 +685,16 @@
       }
       board += "\n";
     }
+    // The streak is the only line in the share that gives a reader a reason to
+    // be impressed and a reason to start one of their own. It is derived from
+    // this browser's own completed days, so it is honest and needs no account.
+    let streakLine = "";
+    try {
+      const st = window.EBKDaily && EBKDaily.streak();
+      if (st && st.days > 1) streakLine = " · day " + st.days + " streak \u{1F525}";
+    } catch (e) {}
     return "EBK Player Grid · " + name + " · " + S.date + "\n" +
-           S.score + "/9" + (total != null ? " · " + total + "/900" : "") + "\n\n" +
+           S.score + "/9" + (total != null ? " · " + total + "/900" : "") + streakLine + "\n\n" +
            board + "\nhttps://eliteballknowledge.web.app/" + SPORT +
            "/player-grid?utm_source=share";
   }
@@ -675,6 +726,24 @@
 
   function addShareBtn(row, total) {
     addBtn(row, "Share result", "primary", function () { doShare(total); });
+  }
+
+  // Finishing a grid used to dead-end on "Back to EBK" while four other daily
+  // grids sat live and unmentioned. Show what is still open today, and the
+  // streak this play just extended, at the one moment the player is engaged.
+  function showDailyCard() {
+    try {
+      if (!window.EBKDaily) return;
+      const shell = $("#game");
+      if (!shell) return;
+      const old = shell.querySelector(".daily-card");
+      if (old) old.remove();
+      const card = EBKDaily.card({ exclude: SPORT });
+      // sit directly under the end buttons, above the eligibility footnote
+      const foot = shell.querySelector("p.center.muted:last-of-type");
+      if (foot && foot !== $("#status-line")) shell.insertBefore(card, foot);
+      else shell.appendChild(card);
+    } catch (e) {}
   }
 
   function addBtn(row, label, kind, fn) {

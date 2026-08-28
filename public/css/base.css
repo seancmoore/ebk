@@ -161,3 +161,70 @@ body[data-sport="soccer"] .wordmark span {
     scroll-behavior: auto !important;
   }
 }
+
+/* ============================================================
+   Daily Card — streak + today's five grids. Shared by the home
+   page and the player-grid end screen (both load base.css).
+   ============================================================ */
+.daily-card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: linear-gradient(180deg, var(--glass-strong), var(--glass));
+  box-shadow: var(--elev-1);
+  padding: var(--sp-md);
+  display: grid;
+  gap: var(--sp-sm);
+}
+.dc-head { display: flex; align-items: center; gap: var(--sp-sm); flex-wrap: wrap; }
+.dc-flame { font-size: 1.5rem; line-height: 1; }
+.dc-num {
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+  font-weight: 900; line-height: 0.9; color: var(--accent);
+  font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
+}
+.dc-lab { display: grid; gap: 2px; min-width: 0; }
+.dc-lab-k {
+  font-size: var(--fs-xs); font-weight: 800; letter-spacing: 0.10em;
+  text-transform: uppercase; color: var(--text);
+}
+.dc-lab-v { font-size: var(--fs-xs); color: var(--muted); }
+.dc-risk {
+  margin-left: auto; align-self: center;
+  font-size: var(--fs-xs); font-weight: 800; letter-spacing: 0.08em;
+  color: var(--gold); border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  border-radius: 999px; padding: 3px 9px; white-space: nowrap;
+}
+.dc-row { display: grid; gap: 6px; }
+.dc-row-k {
+  font-size: var(--fs-xs); font-weight: 800; letter-spacing: 0.10em;
+  text-transform: uppercase; color: var(--muted);
+}
+.dc-chips {
+  display: grid; gap: 6px;
+  grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
+}
+.dc-chip {
+  min-height: 46px;
+  display: grid; place-content: center; gap: 2px; text-align: center;
+  padding: 6px 10px; border-radius: 12px; text-decoration: none;
+  border: 1px solid var(--line); background: var(--glass);
+  color: var(--text); transition: border-color .15s ease, transform .15s ease;
+}
+.dc-chip:hover, .dc-chip:focus-visible { border-color: var(--accent); transform: translateY(-1px); }
+.dc-chip-s {
+  font-size: var(--fs-xs); font-weight: 800; letter-spacing: 0.06em; color: var(--muted);
+}
+.dc-chip-v { font-size: var(--fs-sm); font-weight: 900; font-variant-numeric: tabular-nums; }
+.dc-chip.is-done { border-color: color-mix(in srgb, var(--accent) 55%, transparent); }
+.dc-chip.is-done .dc-chip-s { color: var(--accent); }
+.dc-chip.is-partial { border-color: color-mix(in srgb, var(--gold) 55%, transparent); }
+.dc-chip.is-partial .dc-chip-v { color: var(--gold); }
+.dc-chip.is-none .dc-chip-v { color: var(--muted); }
+.dc-foot {
+  margin: 0; font-size: var(--fs-xs); color: var(--muted);
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.dc-dot { opacity: 0.6; }
+/* end-screen variant sits inside the game shell */
+.grid-shell .daily-card { margin-top: var(--sp-md); text-align: left; }

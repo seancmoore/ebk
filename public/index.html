@@ -51,6 +51,10 @@
     </section>
 
     <div class="wrap">
+      <!-- streak + today's five daily grids; filled by /js/ebk-daily.js.
+           Stays hidden if localStorage is unavailable (private windows). -->
+      <section id="daily-card" hidden></section>
+
       <section class="replay-band" aria-label="Keep playing">
         <a class="replay-card daily" href="/nfl/player-grid">
           <span class="rc-ic">🔲</span>
@@ -99,6 +103,7 @@
   <script src="/js/cfb-teams.js"></script>
   <script src="/js/soccer-teams.js"></script>
   <script src="/js/sport-banner.js"></script>
+  <script src="/js/ebk-daily.js"></script>
   <script src="/js/home.js"></script>
   <script src="/js/fx.js"></script>
   <script src="/js/ebk-sound.js"></script>
