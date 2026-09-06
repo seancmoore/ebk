@@ -85,6 +85,10 @@ def build():
         pts = float(g["points"].sum()); reb = float(g["rebounds"].sum())
         ast = float(g["assists"].sum()); stl = float(g["steals"].sum())
         blk = float(g["blocks"].sum()); tpm = float(g["three_point_field_goals_made"].sum())
+        # Every team a player suited up for that season, in the order they
+        # first appeared for it — not just the most-common one, so a
+        # mid-season trade still registers on both teams' grids.
+        teams = list(dict.fromkeys(g["team_abbreviation"]))
         team = g["team_abbreviation"].mode()
         team = team.iloc[0] if len(team) else (g["team_abbreviation"].iloc[-1] or "")
         pos = g["athlete_position_abbreviation"].mode()
@@ -107,6 +111,8 @@ def build():
         }
         if len(head):
             rec["headshot"] = head.iloc[-1]
+        if len(teams) > 1:
+            rec["teams"] = teams
         players.append(rec)
 
     players.sort(key=lambda r: (r["season"], r["name"]))

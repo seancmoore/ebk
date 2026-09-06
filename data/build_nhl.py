@@ -35,8 +35,11 @@ def fetch(kind, sid):
         return json.load(f).get("data", [])
 
 
-def lastteam(s):
-    return (s or "").split(",")[-1].strip()
+def allteams(s):
+    """teamAbbrevs is a comma-separated list of every team a player suited up
+    for that season (order = chronological) — keep all of them, not just the
+    last, so mid-season trades still register on both teams' grids."""
+    return [t.strip() for t in (s or "").split(",") if t.strip()]
 
 
 def build():
@@ -50,10 +53,11 @@ def build():
         if not sk and not go:
             print(f"  {label}: (no data — skipped)"); continue
         for r in sk:
-            team = lastteam(r.get("teamAbbrevs"))
+            teams = allteams(r.get("teamAbbrevs"))
+            team = teams[-1] if teams else ""
             pos = r.get("positionCode") or "F"
             gp = r.get("gamesPlayed") or 0
-            players.append({
+            rec = {
                 "id": "s" + str(r["playerId"]), "name": r.get("skaterFullName"),
                 "pos": pos, "grp": "D" if pos == "D" else "F",
                 "season": y, "seasonLabel": label, "team": team, "games": gp,
@@ -64,20 +68,27 @@ def build():
                     "ppg_g": r.get("ppGoals") or 0,
                     "ppg": round(r.get("pointsPerGame") or 0, 2),
                 },
-            })
+            }
+            if len(teams) > 1:
+                rec["teams"] = teams
+            players.append(rec)
         for r in go:
-            team = lastteam(r.get("teamAbbrevs"))
+            teams = allteams(r.get("teamAbbrevs"))
+            team = teams[-1] if teams else ""
             gp = r.get("gamesPlayed") or 0
             st = {"w": r.get("wins") or 0, "sv": r.get("saves") or 0, "so": r.get("shutouts") or 0}
             if r.get("savePct") is not None: st["svpct"] = round(r["savePct"], 3)
             if r.get("goalsAgainstAverage") is not None: st["gaa"] = round(r["goalsAgainstAverage"], 2)
-            players.append({
+            rec = {
                 "id": "g" + str(r["playerId"]), "name": r.get("goalieFullName"),
                 "pos": "G", "grp": "G", "season": y, "seasonLabel": label,
                 "team": team, "games": gp,
                 "headshot": f"https://assets.nhle.com/mugs/nhl/{sid}/{team}/{r['playerId']}.png",
                 "stats": st,
-            })
+            }
+            if len(teams) > 1:
+                rec["teams"] = teams
+            players.append(rec)
         print(f"  {label}: {len(sk)} skaters + {len(go)} goalies")
 
     players.sort(key=lambda r: (r["season"], r["name"] or ""))

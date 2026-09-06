@@ -336,7 +336,12 @@
               min: p.season, max: p.season };
         byId.set(p.id, a);
       }
-      a.teams.add(LEAGUE.keyOf(p.team));
+      // "teams" (plural) is only present on a player-season split across
+      // multiple clubs (e.g. a mid-season trade) — the season-aggregate
+      // stat row alone can't tell us that, so build_players.py fills it in
+      // from per-week rosters. Fall back to the single "team" otherwise.
+      for (const t of p.teams && p.teams.length ? p.teams : [p.team])
+        if (t) a.teams.add(LEAGUE.keyOf(t));
       a.min = Math.min(a.min, p.season); a.max = Math.max(a.max, p.season);
       if (p.headshot && !a.headshot) a.headshot = p.headshot;
       for (const [key, , col, thr] of ACH) if ((p.stats[col] || 0) >= thr) a.ach.add(key);

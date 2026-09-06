@@ -39,6 +39,16 @@ BASE_URL = (
     "https://github.com/nflverse/nflverse-data/releases/download/"
     "stats_player/stats_player_reg_{year}.csv"
 )
+# Per-game file: one row per player per week, with that week's team. The
+# season-aggregate file above collapses a whole season into a single row per
+# player keyed on "recent_team" (their LAST team that year) — a player traded
+# mid-season loses the earlier team entirely if we only read that file. We use
+# this per-week file just to recover the full set of teams played for each
+# season; the aggregate file remains the source of stat totals.
+WEEK_URL = (
+    "https://github.com/nflverse/nflverse-data/releases/download/"
+    "stats_player/stats_player_week_{year}.csv"
+)
 PLAYERS_URL = (
     "https://github.com/nflverse/nflverse-data/releases/download/players/players.csv"
 )
@@ -134,6 +144,49 @@ def fetch_season_csv(year):
     with open(cache, "w", encoding="utf-8") as f:
         f.write(text)
     return text
+
+
+def fetch_week_csv(year):
+    """Return the per-week CSV text for a season, caching under raw/."""
+    os.makedirs(RAW_DIR, exist_ok=True)
+    cache = os.path.join(RAW_DIR, f"stats_player_week_{year}.csv")
+    if os.path.exists(cache) and os.path.getsize(cache) > 0:
+        with open(cache, "r", encoding="utf-8") as f:
+            return f.read()
+
+    url = WEEK_URL.format(year=year)
+    req = urllib.request.Request(url, headers={"User-Agent": "ebk/1.0"})
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        text = resp.read().decode("utf-8")
+    with open(cache, "w", encoding="utf-8") as f:
+        f.write(text)
+    return text
+
+
+def build_season_teams(year):
+    """(player_id, season) -> ordered list of distinct teams played for that
+    season (regular season only), read from the per-week file. Captures every
+    team a player suited up for, independent of whether they recorded any
+    stat that week — the thing the season-aggregate file cannot do."""
+    try:
+        text = fetch_week_csv(year)
+    except Exception as exc:  # noqa: BLE001
+        print(f"  ! {year}: week file download failed ({exc}) — team history for "
+              f"mid-season trades will be incomplete this season")
+        return {}
+    out = {}
+    reader = csv.DictReader(io.StringIO(text))
+    for row in reader:
+        if (row.get("season_type") or "") != "REG":
+            continue
+        team = (row.get("team") or "").strip()
+        if not team:
+            continue
+        key = (row.get("player_id"), row.get("season"))
+        teams = out.setdefault(key, [])
+        if team not in teams:
+            teams.append(team)
+    return out
 
 
 def fetch_players_csv():
@@ -281,6 +334,7 @@ def build():
             print(f"  ! {year}: download failed ({exc}) — skipping")
             continue
 
+        season_teams = build_season_teams(year)
         reader = csv.DictReader(io.StringIO(text))
         kept = 0
         for row in reader:
@@ -317,8 +371,18 @@ def build():
                 stats[col] = round_stat(value, decimals)
                 cat_counts[col] += 1
 
-            if not stats:
+            recent_team = row.get("recent_team") or ""
+            teams = season_teams.get(key) or ([recent_team] if recent_team else [])
+            if not teams:
+                # No week-level appearance and no recent_team — nothing to
+                # place this player-season on a roster with, skip it.
                 continue
+
+            # Keep every player-season that made a roster, even with no
+            # qualifying stat (e.g. a backup traded mid-year with zero
+            # touches on either team) — the EBK grid needs every team a
+            # player suited up for, not just the seasons they racked up
+            # stats. Only the stat pools stay gated by `active`.
 
             seen.add(key)
             record = {
@@ -327,10 +391,12 @@ def build():
                 "pos": pos,
                 "grp": grp,
                 "season": int(row["season"]),
-                "team": row.get("recent_team") or "",
+                "team": recent_team or teams[-1],
                 "games": int(games),
                 "stats": stats,
             }
+            if len(teams) > 1:
+                record["teams"] = teams
             headshot = (row.get("headshot_url") or "").strip()
             if headshot:
                 record["headshot"] = headshot

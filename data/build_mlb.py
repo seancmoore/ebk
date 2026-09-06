@@ -134,6 +134,12 @@ def build():
         franch = teamFranch.get(teamID, teamID)
         if franch not in ESPN:           # skip defunct/unmapped (keeps logos valid)
             continue
+        # Every franchise the player appeared for that season (by games
+        # played, most-played first) — not just the one with the most
+        # games, so a mid-season trade still registers on both teams' grids.
+        franchises = list(dict.fromkeys(
+            teamFranch.get(t, t) for t, _gp in sorted(tg.items(), key=lambda kv: -kv[1])
+            if teamFranch.get(t, t) in ESPN))
         b, p = bat.get(k), pit.get(k)
         ipouts = p["IPouts"] if p else 0
         isPitcher = bool(p) and ipouts >= 30 and (not b or b["AB"] < 50)
@@ -146,7 +152,7 @@ def build():
             stats["w"] = int(p["W"]); stats["k"] = int(p["SO"]); stats["sv"] = int(p["SV"])
             if ipouts > 0:
                 stats["era"] = round(p["ER"] * 27.0 / ipouts, 2)
-        if not stats:
+        if not franchises:
             continue
         for c in stats:
             cat_counts[c] += 1
@@ -157,6 +163,8 @@ def build():
             "pos": pos, "grp": "P" if isPitcher else "H",
             "season": yr, "team": franch, "games": games, "stats": stats,
         }
+        if len(franchises) > 1:
+            rec["teams"] = franchises
         if pid in mlbam:
             rec["headshot"] = HEADSHOT.format(mlbam[pid])
         players.append(rec)
