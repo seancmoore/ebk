@@ -506,6 +506,7 @@ footer.site-footer a { color: var(--accent); }
 .replay-card.daily { --rc: var(--accent); }
 .replay-card.h2h { --rc: var(--accent-2); }
 .replay-card.board { --rc: var(--gold); }
+.replay-card.deepbag { --rc: #c77dff; }
 .rc-ic { font-size: 1.9rem; line-height: 1; }
 .rc-title { font-size: var(--fs-lg); font-weight: 800; }
 .rc-desc { color: var(--muted); font-size: var(--fs-sm); line-height: 1.45; }

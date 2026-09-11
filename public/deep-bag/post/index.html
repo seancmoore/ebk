@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script src="/js/ebk-loader.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0e1c" />
+  <meta name="description" content="EBK Deep Bag." />
+  <title id="doc-title">Deep Bag · EBK</title>
+  <meta name="robots" content="noindex" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="EBK — Elite Ball Knowledge" />
+  <meta property="og:title" content="Deep Bag · EBK" id="og-title" />
+  <meta property="og:description" content="EBK Deep Bag." id="og-desc" />
+  <meta property="og:image" content="https://eliteballknowledge.web.app/img/og.png" id="og-image" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="icon" type="image/svg+xml" href="/img/icon.svg" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/home.css" />
+  <link rel="stylesheet" href="/css/deep-bag.css" />
+  <script src="/js/ebk-analytics.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="wordmark" aria-label="EBK">E<span>B</span>K</span>
+      <span class="brand-sub">Elite Ball Knowledge</span>
+    </a>
+    <a class="header-tag" href="/deep-bag">← Deep Bag</a>
+  </header>
+
+  <main>
+    <div class="wrap" style="max-width:760px">
+      <div id="loading" class="muted center" style="padding:var(--sp-lg) 0">Loading…</div>
+      <p id="notfound" hidden class="muted center" style="padding:var(--sp-lg) 0">Couldn't find that post.</p>
+      <article id="post" hidden>
+        <div class="db-post-head">
+          <h1 id="p-title"></h1>
+          <div class="db-meta" id="p-meta"></div>
+        </div>
+        <img id="p-cover" class="db-post-cover" hidden alt="" />
+        <div class="db-body" id="p-body"></div>
+      </article>
+    </div>
+  </main>
+
+  <script src="/js/catalog.js"></script>
+  <script src="/js/ebk-ui.js"></script>
+  <script src="/js/ebk-firebase.js"></script>
+  <script src="/js/deep-bag-render.js"></script>
+  <script src="/js/deep-bag-post.js"></script>
+  <script src="/js/ebk-sound.js"></script>
+</body>
+</html>

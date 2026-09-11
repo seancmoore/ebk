@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script src="/js/ebk-loader.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0e1c" />
+  <meta name="description" content="EBK Deep Bag — write a post." />
+  <title>Write · Deep Bag · EBK</title>
+  <meta name="robots" content="noindex" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="icon" type="image/svg+xml" href="/img/icon.svg" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/home.css" />
+  <link rel="stylesheet" href="/css/ebk-ui.css" />
+  <link rel="stylesheet" href="/css/deep-bag.css" />
+  <script src="/js/ebk-analytics.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="wordmark" aria-label="EBK">E<span>B</span>K</span>
+      <span class="brand-sub">Elite Ball Knowledge</span>
+    </a>
+    <a class="header-tag" href="/deep-bag">← Deep Bag</a>
+  </header>
+
+  <main>
+    <section class="hero wrap" style="padding-bottom: var(--sp-md)">
+      <h1 class="rise">✎ Write</h1>
+      <p class="rise d1">Markdown, images, tables — publish whenever it's ready.</p>
+    </section>
+    <div class="wrap" style="max-width:1000px">
+      <div id="denied" hidden class="center muted" style="padding:var(--sp-lg)">
+        Authors only. <button class="ebk-signin" onclick="window.EBKopenAuth&&EBKopenAuth()">Sign in</button>
+      </div>
+      <div id="loading" class="center muted" style="padding:var(--sp-lg)">Loading…</div>
+
+      <div id="editor" hidden class="db-editor">
+        <input type="hidden" id="f-slug-orig" />
+        <label for="f-title">Title</label>
+        <input class="ebk-field" id="f-title" maxlength="140" placeholder="What's the post called?" />
+
+        <label for="f-slug">URL slug</label>
+        <input class="ebk-field" id="f-slug" maxlength="140" placeholder="auto-generated-from-title" />
+
+        <label for="f-cover">Cover image URL (optional)</label>
+        <input class="ebk-field" id="f-cover" maxlength="500" placeholder="https://…" />
+
+        <label for="f-tags">Tags (comma-separated, up to 8)</label>
+        <input class="ebk-field" id="f-tags" maxlength="200" placeholder="nfl, film-study, contracts" />
+
+        <label for="f-excerpt">Excerpt (optional — shown on the post list)</label>
+        <input class="ebk-field" id="f-excerpt" maxlength="300" placeholder="One or two sentences." />
+
+        <label for="f-body">Body (Markdown)</label>
+        <div class="db-split">
+          <textarea class="ebk-field" id="f-body" placeholder="## Heading&#10;&#10;Write your research here…"></textarea>
+          <div class="db-preview db-body" id="f-preview"></div>
+        </div>
+
+        <div class="db-actions">
+          <button class="hero-cta" id="btn-draft">Save draft</button>
+          <button class="hero-cta" id="btn-publish">Publish</button>
+          <button class="ebk-signin" id="btn-new" hidden>New post</button>
+          <span class="muted" id="save-msg"></span>
+        </div>
+      </div>
+
+      <div class="db-my-posts" id="my-posts" hidden>
+        <h3>Your posts</h3>
+        <div id="my-posts-list"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/catalog.js"></script>
+  <script src="/js/ebk-ui.js"></script>
+  <script src="/js/ebk-firebase.js"></script>
+  <script src="/js/deep-bag-render.js"></script>
+  <script src="/js/deep-bag-write.js"></script>
+  <script src="/js/ebk-sound.js"></script>
+</body>
+</html>

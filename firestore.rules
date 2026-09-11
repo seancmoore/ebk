@@ -7,6 +7,12 @@ service cloud.firestore {
     function isAdmin() {
       return request.auth != null && request.auth.token.name == 'seanzie';
     }
+    // Deep Bag authors — a small, hand-maintained allowlist (mirrors
+    // AUTHOR_NAMES in public/js/ebk-firebase.js). Add a name to both places
+    // to grant someone publish access; no schema change needed.
+    function isAuthor() {
+      return request.auth != null && request.auth.token.name in ['seanzie'];
+    }
     function signedIn() {
       return request.auth != null;
     }
@@ -259,6 +265,29 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(
              ['targetUid', 'targetName', 'reporter', 'reporterName', 'reason', 'ts']);
       allow read, update, delete: if isAdmin();
+    }
+
+    // EBK Deep Bag — long-form posts, doc id IS the slug (same "id is the
+    // unique key" idiom as /usernames above). Public may only ever see
+    // published posts; authors (see isAuthor()) see and manage everything.
+    // Listing drafts publicly is prevented at the query level: a signed-out
+    // list request can only satisfy this rule by filtering status ==
+    // 'published' itself, so the client always queries with that where().
+    match /posts/{slug} {
+      allow read: if resource.data.status == 'published' || (signedIn() && isAuthor());
+      allow create, update: if isAuthor()
+        && request.resource.data.slug == slug
+        && request.resource.data.title is string
+        && request.resource.data.title.size() >= 1 && request.resource.data.title.size() <= 140
+        && request.resource.data.body is string && request.resource.data.body.size() <= 50000
+        && request.resource.data.status in ['draft', 'published']
+        && request.resource.data.authorUid == request.auth.uid
+        && request.resource.data.authorName is string && request.resource.data.authorName.size() <= 40
+        && request.resource.data.tags is list && request.resource.data.tags.size() <= 8
+        && request.resource.data.updatedAt == request.time
+        && (!('excerpt' in request.resource.data) || (request.resource.data.excerpt is string && request.resource.data.excerpt.size() <= 300))
+        && (!('coverImage' in request.resource.data) || (request.resource.data.coverImage is string && request.resource.data.coverImage.size() <= 500));
+      allow delete: if isAuthor();
     }
   }
 }

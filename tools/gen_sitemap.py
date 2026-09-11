@@ -6,7 +6,7 @@ from pathlib import Path
 
 SITE = "https://eliteballknowledge.web.app"
 PUB = Path("public")
-SKIP = ("admin/", "dashboard/", "404.html")
+SKIP = ("admin/", "dashboard/", "404.html", "deep-bag/write/", "deep-bag/post/")
 
 
 def clean_url(p: Path) -> str:

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script src="/js/ebk-loader.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0e1c" />
+  <meta name="description" content="EBK Deep Bag — sports research, deep dives and hot takes." />
+  <title>Deep Bag · EBK</title>
+  <link rel="canonical" href="https://eliteballknowledge.web.app/deep-bag" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="EBK — Elite Ball Knowledge" />
+  <meta property="og:title" content="Deep Bag · EBK" />
+  <meta property="og:description" content="EBK Deep Bag — sports research, deep dives and hot takes." />
+  <meta property="og:url" content="https://eliteballknowledge.web.app/deep-bag" />
+  <meta property="og:image" content="https://eliteballknowledge.web.app/img/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="EBK — Elite Ball Knowledge. Prove it." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Deep Bag · EBK" />
+  <meta name="twitter:description" content="EBK Deep Bag — sports research, deep dives and hot takes." />
+  <meta name="twitter:image" content="https://eliteballknowledge.web.app/img/og.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="icon" type="image/svg+xml" href="/img/icon.svg" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/home.css" />
+  <link rel="stylesheet" href="/css/deep-bag.css" />
+  <script src="/js/ebk-analytics.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="wordmark" aria-label="EBK">E<span>B</span>K</span>
+      <span class="brand-sub">Elite Ball Knowledge</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:14px">
+      <a class="header-tag" href="/deep-bag/write" id="write-link" hidden>✎ Write</a>
+      <a class="header-tag" href="/">← Home</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap" style="padding-bottom: var(--sp-md)">
+      <h1 class="rise">🎒 Deep Bag</h1>
+      <p class="rise d1">Sports research, deep dives and hot takes.</p>
+    </section>
+    <div class="wrap">
+      <div class="db-filters" id="filters" hidden></div>
+      <div id="loading" class="muted center" style="padding:var(--sp-lg) 0">Loading…</div>
+      <p id="empty" hidden class="muted center" style="padding:var(--sp-lg) 0">Nothing posted yet — check back soon.</p>
+      <div class="db-grid" id="grid"></div>
+    </div>
+  </main>
+
+  <script src="/js/catalog.js"></script>
+  <script src="/js/ebk-ui.js"></script>
+  <script src="/js/ebk-firebase.js"></script>
+  <script src="/js/deep-bag.js"></script>
+  <script src="/js/ebk-sound.js"></script>
+</body>
+</html>

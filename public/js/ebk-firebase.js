@@ -389,6 +389,62 @@
   var ADMIN_NAMES = ["seanzie"];
   EBKF.isAdmin = function () { return !!(EBKF.user && ADMIN_NAMES.indexOf(EBKF.user.displayName) > -1); };
 
+  // ---- EBK Deep Bag (posts) ----
+  // Mirrors the AUTHOR_NAMES allowlist in firestore.rules' isAuthor(). Add a
+  // display name to both places to grant someone publish access.
+  var AUTHOR_NAMES = ["seanzie"];
+  EBKF.isAuthor = function () { return !!(EBKF.user && AUTHOR_NAMES.indexOf(EBKF.user.displayName) > -1); };
+
+  EBKF.listPublishedPosts = async function (tag) {
+    await EBKF.ready;
+    var q = EBKF.db.collection("posts").where("status", "==", "published");
+    if (tag) q = q.where("tags", "array-contains", tag);
+    q = q.orderBy("publishedAt", "desc");
+    var snap = await q.get();
+    return snap.docs.map(function (d) { return d.data(); });
+  };
+  EBKF.getPost = async function (slug) {
+    await EBKF.ready;
+    var d = await EBKF.db.collection("posts").doc(slug).get();
+    return d.exists ? d.data() : null;
+  };
+  EBKF.myPosts = async function () {
+    await EBKF.ready;
+    if (!EBKF.user) return [];
+    var snap = await EBKF.db.collection("posts")
+      .where("authorUid", "==", EBKF.user.uid).orderBy("updatedAt", "desc").get();
+    return snap.docs.map(function (d) { return d.data(); });
+  };
+  EBKF.savePost = async function (slug, data) {
+    await EBKF.ready;
+    if (!EBKF.user) throw new Error("Sign in to publish.");
+    var ref = EBKF.db.collection("posts").doc(slug);
+    var existing = await ref.get();
+    var now = firebase.firestore.FieldValue.serverTimestamp();
+    var payload = {
+      slug: slug,
+      title: data.title,
+      body: data.body,
+      excerpt: data.excerpt || "",
+      tags: data.tags || [],
+      coverImage: data.coverImage || "",
+      status: data.status,
+      authorUid: EBKF.user.uid,
+      authorName: EBKF.user.displayName || "",
+      updatedAt: now,
+      createdAt: existing.exists ? existing.data().createdAt : now,
+      publishedAt: data.status === "published"
+        ? (existing.exists && existing.data().publishedAt ? existing.data().publishedAt : now)
+        : (existing.exists ? existing.data().publishedAt || null : null),
+    };
+    await ref.set(payload);
+    return payload;
+  };
+  EBKF.deletePost = async function (slug) {
+    await EBKF.ready;
+    return EBKF.db.collection("posts").doc(slug).delete();
+  };
+
   EBKF.reportName = async function (targetUid, targetName, reason) {
     await EBKF.ready;
     if (!EBKF.user) throw new Error("Sign in to report.");
