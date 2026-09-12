@@ -32,6 +32,19 @@ CATEGORIES = [
 ]
 
 
+# Every real franchise code seen in this window, incl. relocated/renamed
+# historical ones (SEA->OKC, NJ->BKN, NOH/NOK->NO's hurricane-relocation
+# seasons) — mirrors public/js/nba-teams.js's alias lists. Anything outside
+# this set is an exhibition-game artifact (All-Star, Rising Stars), not a
+# real team a player was traded to.
+VALID_TEAMS = {
+    "ATL", "BOS", "BKN", "NJ", "CHA", "CHI", "CLE", "DAL", "DEN", "DET",
+    "GS", "HOU", "IND", "LAC", "LAL", "MEM", "MIA", "MIL", "MIN",
+    "NO", "NOH", "NOK", "NY", "OKC", "SEA", "ORL", "PHI", "PHX", "POR",
+    "SA", "SAC", "TOR", "UTAH", "WSH",
+}
+
+
 def grp_of(pos):
     p = (pos or "").upper()
     if p in ("PG", "SG", "G"): return "G"
@@ -67,6 +80,13 @@ def build():
             continue
         df = df[df["season_type"] == 2]                      # regular season
         df = df[df["did_not_play"] != True]                  # noqa: E712 — actually played
+        # season_type == 2 still includes All-Star/Rising Stars exhibition
+        # games, logged under fictional "teams" (draft captains, conferences)
+        # rather than real franchises — e.g. Joel Embiid's 2018 box scores
+        # include a "STE"/"WORLD" Rising Stars game alongside PHI. These
+        # would otherwise fabricate extra "teams played for" for every
+        # All-Star. Filter by real franchise code instead of a name guess.
+        df = df[df["team_abbreviation"].isin(VALID_TEAMS)]
         frames.append(df)
         print(f"  {y}: {len(df):,} player-games")
     allg = pd.concat(frames, ignore_index=True)
