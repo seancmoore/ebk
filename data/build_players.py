@@ -163,11 +163,28 @@ def fetch_week_csv(year):
     return text
 
 
+# nflverse's 2001 and 2002 stats_player_week files have a confirmed team/
+# opponent mixup for at least the JAX/JAC franchise: e.g. Mark Brunell (JAC's
+# full-season starting QB both years, never traded) comes out with 8-9
+# "teams" that season, and Fred Taylor (JAX's starting RB both years) shows
+# up on TEN/PIT. Until that's root-caused upstream, don't trust per-week team
+# data for these two seasons at all — fall back to the season-aggregate
+# file's single recent_team, same as every year before this feature existed.
+BROKEN_WEEK_YEARS = {2001, 2002}
+# Defense in depth for years we haven't individually audited: across the
+# other 25 seasons (1999-2025 minus the two above), the real single-season
+# max is 3 different teams (e.g. Randy Moss's NE->MIN->TEN 2010). Anything
+# longer is certainly the same kind of data corruption, not a real player.
+MAX_PLAUSIBLE_TEAMS = 3
+
+
 def build_season_teams(year):
     """(player_id, season) -> ordered list of distinct teams played for that
     season (regular season only), read from the per-week file. Captures every
     team a player suited up for, independent of whether they recorded any
     stat that week — the thing the season-aggregate file cannot do."""
+    if year in BROKEN_WEEK_YEARS:
+        return {}
     try:
         text = fetch_week_csv(year)
     except Exception as exc:  # noqa: BLE001
@@ -186,7 +203,7 @@ def build_season_teams(year):
         teams = out.setdefault(key, [])
         if team not in teams:
             teams.append(team)
-    return out
+    return {k: v for k, v in out.items() if len(v) <= MAX_PLAUSIBLE_TEAMS}
 
 
 def fetch_players_csv():
