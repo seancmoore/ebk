@@ -1,0 +1,1616 @@
+[
+  {
+    "id": "nba-001",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 4,
+    "q": "The night Wilt Chamberlain scored 100 points in March 1962, which Knicks guard led New York in scoring with 39?",
+    "answer": "Richie Guerin",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "richie guerin",
+      "guerin",
+      "richard guerin"
+    ],
+    "hints": [
+      "He was a six-time All-Star guard who later coached the St. Louis/Atlanta Hawks.",
+      "He played college ball at Iona and served as a Marine officer."
+    ],
+    "fact": "Richie Guerin dropped 39 on the Warriors in Hershey, Pennsylvania, and nobody remembers it because Wilt went 36-for-63 with 28 free throws. Philadelphia won 169-147.",
+    "source": "https://en.wikipedia.org/wiki/Wilt_Chamberlain%27s_100-point_game",
+    "verified": true
+  },
+  {
+    "id": "nba-002",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Michael Jordan's 1989 series-winning buzzer beater in Cleveland, known simply as The Shot, went up over which Cavaliers defender?",
+    "answer": "Craig Ehlo",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "craig ehlo",
+      "ehlo"
+    ],
+    "hints": [
+      "He was a Cavaliers wing, and he had just scored to give Cleveland the lead.",
+      "He played his college ball at Washington State."
+    ],
+    "fact": "Craig Ehlo had just scored a layup to put Cleveland up 100-99 with three seconds left in Game 5. Jordan hung in the air at the foul line and won it 101-100, finishing with 44.",
+    "source": "https://en.wikipedia.org/wiki/The_Shot_(Bulls%E2%80%93Cavaliers)",
+    "verified": true
+  },
+  {
+    "id": "nba-003",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Derek Fisher's famous 0.4-second game winner against the Spurs in 2004 started with an inbounds pass from which Lakers teammate?",
+    "answer": "Gary Payton",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "gary payton",
+      "payton",
+      "the glove",
+      "glove"
+    ],
+    "hints": [
+      "He was a future Hall of Fame point guard in his only season as a Laker.",
+      "He won Defensive Player of the Year with Seattle in 1996."
+    ],
+    "fact": "Gary Payton found Fisher after Tim Duncan's fadeaway had put San Antonio up 73-72 with 0.4 left in Game 5 of the 2004 West semis. The Lakers won 74-73 and took the series in six.",
+    "source": "https://en.wikipedia.org/wiki/Derek_Fisher",
+    "verify_note": "Removed unverified 'over Shaq' detail from fact. Hint 2 spelled out a nickname that is in the accept list (free third guess); rewrote hint.",
+    "verified": true
+  },
+  {
+    "id": "nba-004",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 2,
+    "q": "In Game 6 of the 2013 Finals, who grabbed the offensive rebound and kicked it to Ray Allen for the game-tying corner three?",
+    "answer": "Chris Bosh",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "chris bosh",
+      "bosh"
+    ],
+    "hints": [
+      "He was the third member of Miami's Big Three.",
+      "He came to Miami from the Toronto Raptors in 2010."
+    ],
+    "fact": "Chris Bosh snagged the miss and found Allen, who backpedaled into the right corner and tied it with 5.2 seconds left. Miami won in overtime and took Game 7 for the title.",
+    "source": "https://en.wikipedia.org/wiki/2013_NBA_Finals",
+    "verified": true
+  },
+  {
+    "id": "nba-005",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Who is the only player in NBA history to win Finals MVP while playing for the losing team?",
+    "answer": "Jerry West",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jerry west",
+      "west",
+      "mr clutch"
+    ],
+    "hints": [
+      "It happened in the very first year the award was handed out, 1969.",
+      "He was a Lakers guard, and his silhouette is widely believed to be the NBA logo."
+    ],
+    "fact": "Jerry West won the first Finals MVP in 1969 even though Boston beat his Lakers in seven. It remains the only time the award went to someone on the losing side.",
+    "source": "https://en.wikipedia.org/wiki/NBA_Finals_Most_Valuable_Player_Award",
+    "verify_note": "Hint 2 spelled out a nickname that is in the accept list (free third guess); rewrote hint.",
+    "verified": true
+  },
+  {
+    "id": "nba-006",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 3,
+    "q": "With the No. 6 pick in 1995, the expansion Vancouver Grizzlies made their first-ever college draft selection. Who did they take?",
+    "answer": "Bryant Reeves",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "bryant reeves",
+      "reeves",
+      "big country"
+    ],
+    "hints": [
+      "He was a 7-foot center, picked one spot ahead of Toronto's first pick.",
+      "He came out of Oklahoma State, which he led to the 1995 Final Four."
+    ],
+    "fact": "Big Country Bryant Reeves went sixth, one spot before Toronto took Damon Stoudamire. Kevin Garnett went fifth in that same draft.",
+    "source": "https://en.wikipedia.org/wiki/1995_NBA_draft",
+    "verify_note": "Hint 2 spelled out a nickname that is in the accept list (free third guess); rewrote hint.",
+    "verified": true
+  },
+  {
+    "id": "nba-007",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Who was the first player the Charlotte Bobcats ever selected in an NBA Draft (not counting the expansion draft)?",
+    "answer": "Emeka Okafor",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "emeka okafor",
+      "okafor"
+    ],
+    "hints": [
+      "He went No. 2 overall in 2004, right after Dwight Howard.",
+      "He had just won a national title at UConn."
+    ],
+    "fact": "Emeka Okafor went second overall in 2004 and won Rookie of the Year for the brand-new Bobcats. That franchise history now belongs to today's Charlotte Hornets.",
+    "source": "https://en.wikipedia.org/wiki/2004_NBA_draft",
+    "verified": true
+  },
+  {
+    "id": "nba-008",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 2,
+    "q": "In July 1996 the Charlotte Hornets traded the draft rights to 18-year-old Kobe Bryant to the Lakers. Which player did they get back?",
+    "answer": "Vlade Divac",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "vlade divac",
+      "divac"
+    ],
+    "hints": [
+      "He was the Lakers' starting center at the time.",
+      "He was a Serbian big man who later starred for the Sacramento Kings."
+    ],
+    "fact": "Vlade Divac went to Charlotte for the No. 13 pick, which the Hornets had used on Kobe. The Lakers needed the cap room to sign Shaquille O'Neal that same summer.",
+    "source": "https://en.wikipedia.org/wiki/Vlade_Divac",
+    "verified": true
+  },
+  {
+    "id": "nba-009",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Who holds the NBA record for assists in a single game?",
+    "answer": "Scott Skiles",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "scott skiles",
+      "skiles"
+    ],
+    "hints": [
+      "He did it for the Orlando Magic in December 1990.",
+      "He was a gritty Michigan State point guard who later coached the Bulls, Suns, Bucks and Magic."
+    ],
+    "fact": "Scott Skiles dished 30 assists against Denver on December 30, 1990, breaking Kevin Porter's record of 29. Orlando won 155-116.",
+    "source": "https://en.wikipedia.org/wiki/Scott_Skiles",
+    "verified": true
+  },
+  {
+    "id": "nba-010",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 4,
+    "q": "In October 1974, one season after steals and blocks became official stats, who recorded the first quadruple-double in NBA history?",
+    "answer": "Nate Thurmond",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "nate thurmond",
+      "thurmond",
+      "nate the great"
+    ],
+    "hints": [
+      "He did it in his Chicago Bulls debut after a long career with the Warriors.",
+      "A Hall of Fame center from Bowling Green."
+    ],
+    "fact": "Nate Thurmond put up 22 points, 14 rebounds, 13 assists and 12 blocks against Atlanta on October 18, 1974. Only three more players have done it since.",
+    "source": "https://en.wikipedia.org/wiki/Quadruple-double",
+    "verify_note": "Hint 2 spelled out a nickname that is in the accept list (free third guess); rewrote hint.",
+    "verified": true
+  },
+  {
+    "id": "nba-011",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 3,
+    "q": "On October 12, 1979, the NBA's three-point line debuted. Which Celtics guard does the league credit with its first made three?",
+    "answer": "Chris Ford",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "chris ford",
+      "ford"
+    ],
+    "hints": [
+      "He hit it against the Houston Rockets in Larry Bird's rookie opener.",
+      "He later became the Celtics' head coach in the 1990s."
+    ],
+    "fact": "Chris Ford hit it with 3:48 left in the first quarter against Houston. Kevin Grevey of the Bullets also made one that night, but the NBA gave Ford the credit because his game tipped off 35 minutes earlier.",
+    "source": "https://en.wikipedia.org/wiki/Chris_Ford",
+    "verify_note": "Verified: NBA press release credited Ford because his game started first; Grevey's game started 35 minutes later. Tightened wording.",
+    "verified": true
+  },
+  {
+    "id": "nba-012",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Who won the first NBA Slam Dunk Contest in 1984, beating Julius Erving in the final?",
+    "answer": "Larry Nance",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "larry nance",
+      "nance",
+      "larry nance sr"
+    ],
+    "hints": [
+      "He was a Phoenix Suns forward out of Clemson.",
+      "His son, with the same name, also played for the Lakers and Cavs."
+    ],
+    "fact": "Larry Nance beat Dr. J in Denver and earned the nickname The High-Ayatollah of Slamola. The Cavs retired his No. 22 and later let Larry Nance Jr. wear it.",
+    "source": "https://en.wikipedia.org/wiki/NBA_Slam_Dunk_Contest",
+    "verified": true
+  },
+  {
+    "id": "nba-013",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 3,
+    "q": "The 1998 draft produced Vince Carter, Dirk Nowitzki and Paul Pierce. Who went No. 1 overall ahead of all of them?",
+    "answer": "Michael Olowokandi",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "michael olowokandi",
+      "olowokandi",
+      "the kandi man",
+      "kandi man"
+    ],
+    "hints": [
+      "He was a center picked by the Los Angeles Clippers.",
+      "Born in Nigeria, raised in London, played college ball at Pacific."
+    ],
+    "fact": "Michael Olowokandi, The Kandi Man, averaged 8.3 points for his career. The next eight picks included Mike Bibby, Vince Carter and Dirk.",
+    "source": "https://en.wikipedia.org/wiki/1998_NBA_draft",
+    "verified": true
+  },
+  {
+    "id": "nba-014",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 3,
+    "q": "On the last day of 1977-78, George Gervin scored 63 to win the scoring title. Which Nuggets star had scored 73 earlier that same day trying to steal it?",
+    "answer": "David Thompson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "david thompson",
+      "thompson",
+      "skywalker",
+      "the skywalker"
+    ],
+    "hints": [
+      "He was a legendary leaper who led NC State to the 1974 national title.",
+      "Michael Jordan chose him as his Hall of Fame presenter in 2009."
+    ],
+    "fact": "David Thompson dropped 73 on the Pistons. Gervin answered with 63 later that day, including a then-record 33 in one quarter, and won the title 27.22 to 27.15.",
+    "source": "https://en.wikipedia.org/wiki/David_Thompson_(basketball)",
+    "verify_note": "Removed unverified Gervin opponent; added verified margin 27.22 to 27.15. Hint 2 spelled out a nickname that is in the accept list (free third guess); rewrote hint.",
+    "verified": true
+  },
+  {
+    "id": "nba-015",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Which New Jersey Nets guard, named All-NBA Third Team for 1992-93, died in a car crash in Germany in June 1993 at age 28?",
+    "answer": "Drazen Petrovic",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "drazen petrovic",
+      "petrovic",
+      "dražen petrović"
+    ],
+    "hints": [
+      "He was a Croatian sharpshooter who began his NBA career in Portland.",
+      "He averaged 22.3 points in his final season."
+    ],
+    "fact": "Drazen Petrovic shot .437 from three for his career. The Nets retired his No. 3 that November, and he is in the Naismith Hall of Fame.",
+    "source": "https://en.wikipedia.org/wiki/Dra%C5%BEen_Petrovi%C4%87",
+    "verified": true
+  },
+  {
+    "id": "nba-016",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 4,
+    "q": "Only four official quadruple-doubles exist in NBA history. Who is the only player to get one using steals instead of blocks?",
+    "answer": "Alvin Robertson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "alvin robertson",
+      "robertson"
+    ],
+    "hints": [
+      "He did it for the San Antonio Spurs in February 1986.",
+      "He was an Arkansas guard who won Defensive Player of the Year that same season."
+    ],
+    "fact": "Alvin Robertson went for 20 points, 11 rebounds, 10 assists and 10 steals against Phoenix on February 18, 1986. That season he also became the only player ever with 300 steals.",
+    "source": "https://en.wikipedia.org/wiki/Alvin_Robertson",
+    "verified": true
+  },
+  {
+    "id": "nba-017",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In December 1977, which Lakers forward threw the punch that shattered Rudy Tomjanovich's face and drew a 60-day suspension?",
+    "answer": "Kermit Washington",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "kermit washington",
+      "washington",
+      "kermit"
+    ],
+    "hints": [
+      "He was a rugged power forward who played college ball at American University.",
+      "His first name is shared with a famous Muppet."
+    ],
+    "fact": "Kermit Washington missed 26 games, then the longest suspension ever for an on-court incident. The punch is why any NBA fighter now gets an automatic ejection.",
+    "source": "https://en.wikipedia.org/wiki/Kermit_Washington",
+    "verified": true
+  },
+  {
+    "id": "nba-018",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Game 7, 1995 West semis at Phoenix: which Rockets role player buried the go-ahead three with 7.1 seconds left, then blew the Suns bench a kiss?",
+    "answer": "Mario Elie",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "mario elie",
+      "elie"
+    ],
+    "hints": [
+      "He was a journeyman wing who played Division II ball at American International College.",
+      "He later won a third ring with the 1999 Spurs."
+    ],
+    "fact": "Mario Elie's Kiss of Death broke a tie and sent Houston on to a second straight title as a 6 seed. He started in the 1995 Finals and shot 65 percent.",
+    "source": "https://en.wikipedia.org/wiki/Mario_Elie",
+    "verified": true
+  },
+  {
+    "id": "nba-019",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 4,
+    "q": "In 1978 the Trail Blazers made history by drafting the first foreign-born player ever taken No. 1 overall. Who was it?",
+    "answer": "Mychal Thompson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "mychal thompson",
+      "michael thompson"
+    ],
+    "hints": [
+      "He was born in the Bahamas and played college ball at Minnesota.",
+      "He later won two titles with the Showtime Lakers, and his son became a Splash Brother."
+    ],
+    "fact": "Mychal Thompson, born in Nassau, Bahamas, went first in 1978. His son Klay became a four-time champion, and another son, Trayce, made it to MLB.",
+    "source": "https://en.wikipedia.org/wiki/Mychal_Thompson",
+    "verify_note": "Fixed birthplace: Wikipedia says Nassau, not Eleuthera.",
+    "verified": true
+  },
+  {
+    "id": "nba-020",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Which 5-foot-9 guard was the very last pick (No. 60) of the 2011 NBA Draft and later averaged 28.9 points for the Celtics?",
+    "answer": "Isaiah Thomas",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "isaiah thomas",
+      "it",
+      "isaiah"
+    ],
+    "hints": [
+      "He was drafted by the Sacramento Kings out of Washington.",
+      "He shares his name, with a different spelling, with a Pistons legend."
+    ],
+    "fact": "Isaiah Thomas went from pick 60 to a two-time All-Star, finishing fifth in MVP voting in 2016-17. His dad named him after the Pistons Hall of Famer because of a lost bet.",
+    "source": "https://en.wikipedia.org/wiki/Isaiah_Thomas_(basketball)",
+    "verified": true
+  },
+  {
+    "id": "nba-021",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 4,
+    "q": "Portland took which Loyola Chicago center No. 1 overall in 1972, one spot ahead of future MVP Bob McAdoo?",
+    "answer": "LaRue Martin",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "larue martin",
+      "la rue martin",
+      "martin"
+    ],
+    "hints": [
+      "He lasted only four seasons, averaging 5.3 points.",
+      "He later had a long career as an executive at UPS."
+    ],
+    "fact": "LaRue Martin is often called one of the biggest busts ever, averaging 5.3 points in four years. Julius Erving went 12th in that same draft.",
+    "source": "https://en.wikipedia.org/wiki/LaRue_Martin",
+    "verified": true
+  },
+  {
+    "id": "nba-022",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Who hit the tiptoe corner three known as the Memorial Day Miracle in the 1999 West Finals against Portland?",
+    "answer": "Sean Elliott",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "sean elliott",
+      "elliott"
+    ],
+    "hints": [
+      "He was a Spurs forward who played college ball at Arizona.",
+      "He was playing with a serious kidney disease and later needed a transplant."
+    ],
+    "fact": "Sean Elliott's three over Rasheed Wallace gave San Antonio its first lead of the night, 86-85, with 9 seconds left. The Spurs swept Portland and won their first title.",
+    "source": "https://en.wikipedia.org/wiki/Memorial_Day_Miracle",
+    "verified": true
+  },
+  {
+    "id": "nba-023",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Who holds the NBA single-season record for blocked shots, set in 1984-85?",
+    "answer": "Mark Eaton",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "mark eaton",
+      "eaton"
+    ],
+    "hints": [
+      "He was a 7-foot-4 Utah Jazz center.",
+      "He worked as an auto mechanic before a junior college coach discovered him."
+    ],
+    "fact": "Mark Eaton swatted 456 shots in 1984-85, an absurd 5.56 per game. He won Defensive Player of the Year that season and again in 1989.",
+    "source": "https://en.wikipedia.org/wiki/Mark_Eaton",
+    "verified": true
+  },
+  {
+    "id": "nba-024",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Damian Lillard's 37-foot series-ending buzzer beater against OKC in 2019, followed by a wave goodbye, went up over which Thunder defender?",
+    "answer": "Paul George",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "paul george",
+      "pg13",
+      "pg",
+      "george"
+    ],
+    "hints": [
+      "He had 36 points of his own that night.",
+      "He was a former Indiana Pacers star who wore No. 13 in OKC."
+    ],
+    "fact": "Paul George called it a bad shot afterward. Lillard finished with exactly 50 points, and Portland won 118-115 to take the series in five.",
+    "source": "https://www.espn.com/nba/story/_/id/26592185/lillard-37-foot-buzzer-shot-last-word",
+    "verify_note": "Removed unverified '10 threes' detail; George's 36 points and quote verified via ESPN. Hint 2 spelled out a nickname that is in the accept list (free third guess); rewrote hint.",
+    "verified": true
+  },
+  {
+    "id": "nba-025",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 4,
+    "q": "Seattle drafted Scottie Pippen No. 5 in 1987, then swapped him to Chicago for the No. 8 pick. Who was that No. 8 pick?",
+    "answer": "Olden Polynice",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "olden polynice",
+      "polynice"
+    ],
+    "hints": [
+      "He was a Haitian-born center out of Virginia.",
+      "He played for five NBA teams, including the Sacramento Kings from 1994 to 1998."
+    ],
+    "fact": "Olden Polynice, born in Port-au-Prince, played 15 NBA seasons and 1,058 games. Pippen won six rings in Chicago.",
+    "source": "https://en.wikipedia.org/wiki/Olden_Polynice",
+    "verify_note": "Fixed fact: Polynice played 1,058 games, not 758; removed unverified 'first Haitian drafted' claim.",
+    "verified": true
+  },
+  {
+    "id": "nba-026",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In 1980 Boston sent the No. 1 pick to Golden State in a deal for Robert Parish and the No. 3 pick (Kevin McHale). Who did the Warriors take first?",
+    "answer": "Joe Barry Carroll",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "joe barry carroll",
+      "carroll",
+      "jbc"
+    ],
+    "hints": [
+      "He was a 7-foot center out of Purdue.",
+      "Critics nicknamed him Joe Barely Cares."
+    ],
+    "fact": "Joe Barry Carroll made one All-Star team. Parish and McHale anchored three Celtics titles, and Parish later called the trade going from the penitentiary to the penthouse.",
+    "source": "https://en.wikipedia.org/wiki/Robert_Parish",
+    "verified": true
+  },
+  {
+    "id": "nba-027",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 3,
+    "q": "On 1998 draft night, Dallas traded the No. 6 pick to Milwaukee for Dirk Nowitzki and Pat Garrity. Who was that No. 6 pick?",
+    "answer": "Robert Traylor",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "robert traylor",
+      "traylor",
+      "tractor traylor",
+      "tractor"
+    ],
+    "hints": [
+      "He was a burly big man from Michigan.",
+      "His nickname came from a piece of farm machinery."
+    ],
+    "fact": "Robert Tractor Traylor went to the Bucks, and Dirk became a Maverick for 21 seasons. Dallas then flipped Garrity to Phoenix in the deal for Steve Nash.",
+    "source": "https://en.wikipedia.org/wiki/1998_NBA_draft",
+    "verify_note": "Hint 2 spelled out a nickname that is in the accept list (free third guess); rewrote hint.",
+    "verified": true
+  },
+  {
+    "id": "nba-028",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In 1983 the Lakers traded starting guard Norm Nixon to the San Diego Clippers for which No. 4 overall rookie?",
+    "answer": "Byron Scott",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "byron scott",
+      "scott"
+    ],
+    "hints": [
+      "He became the shooting guard on three Showtime title teams.",
+      "He later coached the Nets to back-to-back Finals in 2002 and 2003."
+    ],
+    "fact": "Byron Scott won three rings in LA and came back to coach the Lakers from 2014 to 2016. As a coach he also won Coach of the Year with the 2007-08 Hornets.",
+    "source": "https://en.wikipedia.org/wiki/Byron_Scott",
+    "verified": true
+  },
+  {
+    "id": "nba-029",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 4,
+    "q": "Game 5 of the 1976 Finals, end of the second overtime: which Suns forward hit the turnaround buzzer beater from the top of the key to force a third OT against Boston?",
+    "answer": "Garfield Heard",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "garfield heard",
+      "gar heard",
+      "heard"
+    ],
+    "hints": [
+      "He caught the inbounds pass from Curtis Perry.",
+      "He usually went by a shortened first name, Gar."
+    ],
+    "fact": "Gar Heard's jumper tied it 112-112. Boston still won 128-126 in triple overtime in what is often called the greatest game ever played.",
+    "source": "https://en.wikipedia.org/wiki/1976_NBA_Finals",
+    "verified": true
+  },
+  {
+    "id": "nba-030",
+    "sport": "nba",
+    "type": "player-season",
+    "difficulty": 2,
+    "q": "Who edged out Michael Jordan to win the 1996-97 NBA MVP award?",
+    "answer": "Karl Malone",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "karl malone",
+      "malone",
+      "the mailman",
+      "mailman"
+    ],
+    "hints": [
+      "He was a power forward whose team then lost the Finals to Jordan's Bulls.",
+      "The Utah Jazz star whose nickname said he always delivered."
+    ],
+    "fact": "Karl Malone won the first of his two MVPs, then lost the Finals to Chicago in six games, a series that included the Flu Game and Steve Kerr's title-clinching jumper.",
+    "source": "https://en.wikipedia.org/wiki/1997_NBA_Finals",
+    "verify_note": "Hint 2 spelled out a nickname that is in the accept list (free third guess); rewrote hint.",
+    "verified": true
+  },
+  {
+    "id": "nba-031",
+    "sport": "nba",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Who won 2001-02 NBA Rookie of the Year, becoming the first European to win the award?",
+    "answer": "Pau Gasol",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "pau gasol",
+      "gasol",
+      "pau"
+    ],
+    "hints": [
+      "He played for the Grizzlies in their first season in Memphis.",
+      "A Spanish big man drafted No. 3 by Atlanta and traded for Shareef Abdur-Rahim."
+    ],
+    "fact": "Pau Gasol averaged 17.6 points and 8.9 rebounds and played all 82 games. Memphis later traded him to the Lakers in a deal that included the rights to his brother Marc.",
+    "source": "https://en.wikipedia.org/wiki/Pau_Gasol",
+    "verify_note": "Rewrote: 'first international player' is wrong (Jamaica-born Patrick Ewing won in 1985-86). Gasol was the first European winner.",
+    "verified": true
+  },
+  {
+    "id": "nba-032",
+    "sport": "nba",
+    "type": "player-season",
+    "difficulty": 4,
+    "q": "Who won the NBA Sixth Man of the Year award for the 1993-94 season?",
+    "answer": "Dell Curry",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "dell curry",
+      "wardell curry",
+      "curry"
+    ],
+    "hints": [
+      "He was a Charlotte Hornets sharpshooter, the team's first pick in the 1988 expansion draft.",
+      "He played at Virginia Tech, and both of his sons became NBA guards."
+    ],
+    "fact": "Dell Curry left Charlotte in 1998 as the franchise's all-time leading scorer with 9,839 points. His son Stephen would later redefine the three-pointer.",
+    "source": "https://en.wikipedia.org/wiki/NBA_Sixth_Man_of_the_Year",
+    "verify_note": "Fact tweak: Curry left Charlotte in 1998 as franchise scoring leader (9,839 pts); he retired later in Toronto.",
+    "verified": true
+  },
+  {
+    "id": "nba-033",
+    "sport": "nba",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Who was Finals MVP in 1979, when the Seattle SuperSonics won their only NBA title?",
+    "answer": "Dennis Johnson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "dennis johnson",
+      "dj"
+    ],
+    "hints": [
+      "He was a guard Seattle drafted in the second round out of Pepperdine.",
+      "He later won two titles with the Celtics and went by his initials."
+    ],
+    "fact": "Dennis Johnson averaged nearly 23 points as Seattle beat Washington 4-1. In Boston he caught Larry Bird's famous steal in the 1987 East Finals and scored the winning layup.",
+    "source": "https://en.wikipedia.org/wiki/1979_NBA_Finals",
+    "verified": true
+  },
+  {
+    "id": "nba-034",
+    "sport": "nba",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Who won 2000-01 Defensive Player of the Year after a midseason trade sent him to the Philadelphia 76ers?",
+    "answer": "Dikembe Mutombo",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "dikembe mutombo",
+      "mutombo",
+      "deke"
+    ],
+    "hints": [
+      "He came over from Atlanta in a deal built around Theo Ratliff.",
+      "He was famous for wagging his finger after blocks."
+    ],
+    "fact": "It was the fourth DPOY of Dikembe Mutombo's career. He helped the Sixers reach the 2001 Finals, where they stole Game 1 from the Lakers.",
+    "source": "https://en.wikipedia.org/wiki/Dikembe_Mutombo",
+    "verified": true
+  },
+  {
+    "id": "nba-035",
+    "sport": "nba",
+    "type": "player-season",
+    "difficulty": 2,
+    "q": "In 2009-10, who became the youngest scoring champion in NBA history at age 21?",
+    "answer": "Kevin Durant",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "kevin durant",
+      "durant",
+      "kd"
+    ],
+    "hints": [
+      "He averaged 30.1 points for Oklahoma City.",
+      "A former Texas Longhorn drafted No. 2 by Seattle in 2007."
+    ],
+    "fact": "Kevin Durant broke a record held by Max Zaslofsky since 1947-48. He went on to win three more scoring titles.",
+    "source": "https://en.wikipedia.org/wiki/2009%E2%80%9310_NBA_season",
+    "verified": true
+  },
+  {
+    "id": "nba-036",
+    "sport": "nba",
+    "type": "player-season",
+    "difficulty": 4,
+    "q": "Which Washington Bullets center won the 1991-92 Most Improved Player award after averaging 20.0 points and 11.4 rebounds?",
+    "answer": "Pervis Ellison",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "pervis ellison",
+      "ellison",
+      "never nervous pervis"
+    ],
+    "hints": [
+      "He was the No. 1 overall pick of the 1989 draft, by Sacramento.",
+      "At Louisville he earned the nickname Never Nervous."
+    ],
+    "fact": "Pervis Ellison flopped as a rookie in Sacramento, got traded to Washington, and broke out in year three. Injuries wrecked the rest of his career.",
+    "source": "https://en.wikipedia.org/wiki/Pervis_Ellison",
+    "verified": true
+  },
+  {
+    "id": "nba-037",
+    "sport": "nba",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Who won the 2024-25 NBA Defensive Player of the Year award, the first in his franchise's history?",
+    "answer": "Evan Mobley",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "evan mobley",
+      "mobley"
+    ],
+    "hints": [
+      "He plays for the Cleveland Cavaliers.",
+      "A 7-footer from USC, taken No. 3 overall in 2021."
+    ],
+    "fact": "Evan Mobley won it at 23, and the award bumped his max contract from 25 to 30 percent of the cap, worth roughly $45 million more.",
+    "source": "https://en.wikipedia.org/wiki/Evan_Mobley",
+    "verified": true
+  },
+  {
+    "id": "nba-038",
+    "sport": "nba",
+    "type": "player-season",
+    "difficulty": 2,
+    "q": "Who was Finals MVP in 2004, when Detroit stunned the Shaq-and-Kobe Lakers?",
+    "answer": "Chauncey Billups",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "chauncey billups",
+      "billups",
+      "mr big shot"
+    ],
+    "hints": [
+      "He was the Pistons' point guard, a former No. 3 overall pick who bounced around the league.",
+      "A Colorado product whose nickname came from hitting clutch shots."
+    ],
+    "fact": "Chauncey Billups had played for four teams before landing in Detroit. The Pistons won the series 4-1.",
+    "source": "https://en.wikipedia.org/wiki/NBA_Finals_Most_Valuable_Player_Award",
+    "verify_note": "Hint 2 spelled out a nickname that is in the accept list (free third guess); rewrote hint.",
+    "verified": true
+  },
+  {
+    "id": "nba-039",
+    "sport": "nba",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Who won Rookie of the Year for 1995-96, the expansion Toronto Raptors' first season?",
+    "answer": "Damon Stoudamire",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "damon stoudamire",
+      "stoudamire",
+      "mighty mouse"
+    ],
+    "hints": [
+      "He was an Arizona point guard listed at 5-foot-10.",
+      "His nickname came from a cartoon superhero rodent."
+    ],
+    "fact": "Damon Stoudamire averaged 19 points and 9.3 assists and hit 133 threes, a rookie record at the time.",
+    "source": "https://en.wikipedia.org/wiki/Damon_Stoudamire",
+    "verify_note": "Hint 2 spelled out a nickname that is in the accept list (free third guess); rewrote hint.",
+    "verified": true
+  },
+  {
+    "id": "nba-040",
+    "sport": "nba",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "In April 1994, which center scored 71 points against the Clippers to snatch the scoring title from Shaquille O'Neal?",
+    "answer": "David Robinson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "david robinson",
+      "robinson",
+      "the admiral",
+      "admiral"
+    ],
+    "hints": [
+      "He played for the San Antonio Spurs.",
+      "A former Navy officer who wore No. 50."
+    ],
+    "fact": "David Robinson finished at 29.8 points per game. Earlier that season he posted a quadruple-double against Detroit: 34 points, 10 rebounds, 10 assists and 10 blocks.",
+    "source": "https://en.wikipedia.org/wiki/David_Robinson",
+    "verify_note": "Hint 2 spelled out a nickname that is in the accept list (free third guess); rewrote hint.",
+    "verified": true
+  },
+  {
+    "id": "nba-041",
+    "sport": "nba",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Besides Wilt Chamberlain, who is the only player to win MVP and Rookie of the Year in the same season?",
+    "answer": "Wes Unseld",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "wes unseld",
+      "unseld",
+      "westley unseld"
+    ],
+    "hints": [
+      "He did it in 1968-69 with the Baltimore Bullets.",
+      "A 6-foot-7 center from Louisville famous for bone-crushing screens and outlet passes."
+    ],
+    "fact": "Wes Unseld did it in 1968-69 with Baltimore. He later coached the Bullets and also ran the franchise's front office.",
+    "source": "https://en.wikipedia.org/wiki/Wes_Unseld",
+    "verified": true
+  },
+  {
+    "id": "nba-042",
+    "sport": "nba",
+    "type": "number",
+    "difficulty": 3,
+    "q": "Wilt Chamberlain set the NBA single-season scoring record in 1961-62. What was his points-per-game average? (one decimal)",
+    "answer": "50.4",
+    "kind": "number",
+    "num": 50.4,
+    "accept": [],
+    "hints": [
+      "It was above 50.",
+      "Between 50.0 and 50.9. He also averaged about 48.5 minutes a night."
+    ],
+    "fact": "Wilt scored 4,029 points that season, including the 100-point game. Bill Russell still won MVP.",
+    "source": "https://en.wikipedia.org/wiki/1961%E2%80%9362_Philadelphia_Warriors_season",
+    "verified": true
+  },
+  {
+    "id": "nba-043",
+    "sport": "nba",
+    "type": "number",
+    "difficulty": 2,
+    "q": "On January 23, 2015, Klay Thompson set an NBA record for points in a quarter against the Kings. How many did he score in that third quarter?",
+    "answer": "37",
+    "kind": "number",
+    "num": 37,
+    "accept": [],
+    "hints": [
+      "He went 13-for-13 from the field in the quarter.",
+      "Between 35 and 40, with nine threes."
+    ],
+    "fact": "Klay Thompson went 13-for-13 with nine threes in the quarter and finished with 52. Golden State won 126-101.",
+    "source": "https://en.wikipedia.org/wiki/Klay_Thompson",
+    "verified": true
+  },
+  {
+    "id": "nba-044",
+    "sport": "nba",
+    "type": "number",
+    "difficulty": 2,
+    "q": "In March 2017, 20-year-old Devin Booker set the Phoenix Suns' single-game scoring record against Boston. How many points did he score?",
+    "answer": "70",
+    "kind": "number",
+    "num": 70,
+    "accept": [],
+    "hints": [
+      "It was the most by anyone since Kobe's 81 in 2006.",
+      "Between 65 and 75."
+    ],
+    "fact": "Devin Booker became the youngest player ever to score 60 or 70. The old Suns record was Tom Chambers' 60 in 1990.",
+    "source": "https://en.wikipedia.org/wiki/Devin_Booker",
+    "verified": true
+  },
+  {
+    "id": "nba-045",
+    "sport": "nba",
+    "type": "number",
+    "difficulty": 2,
+    "q": "Michael Jordan set the NBA playoff single-game scoring record in a double-overtime loss at Boston in April 1986. How many points did he score?",
+    "answer": "63",
+    "kind": "number",
+    "num": 63,
+    "accept": [],
+    "hints": [
+      "The Celtics won 135-131.",
+      "Between 60 and 65."
+    ],
+    "fact": "Jordan's 63 on April 20, 1986, still stands as the playoff record. Second place is Elgin Baylor's 61 in 1962, still the most in a regulation playoff game.",
+    "source": "https://en.wikipedia.org/wiki/List_of_NBA_single-game_playoff_scoring_leaders",
+    "verify_note": "Game was a double-overtime loss (135-131); wording fixed.",
+    "verified": true
+  },
+  {
+    "id": "nba-046",
+    "sport": "nba",
+    "type": "number",
+    "difficulty": 3,
+    "q": "In Game 7 of the 2018 West Finals against Golden State, Houston set a playoff record by missing how many three-pointers in a row?",
+    "answer": "27",
+    "kind": "number",
+    "num": 27,
+    "accept": [],
+    "hints": [
+      "James Harden, Trevor Ariza and Eric Gordon combined to shoot 4-for-34 from three.",
+      "Between 25 and 30."
+    ],
+    "fact": "Houston led by as many as 11 before the bricks piled up. The Warriors won 101-92 and went on to sweep the Finals.",
+    "source": "https://en.wikipedia.org/wiki/2017%E2%80%9318_Houston_Rockets_season",
+    "verified": true
+  },
+  {
+    "id": "nba-047",
+    "sport": "nba",
+    "type": "number",
+    "difficulty": 3,
+    "q": "On December 2, 2021, Memphis beat Oklahoma City by the largest margin in NBA history. What was the margin of victory?",
+    "answer": "73",
+    "kind": "number",
+    "num": 73,
+    "accept": [],
+    "hints": [
+      "It broke a 30-year-old record of 68, set by Cleveland over Miami.",
+      "Memphis scored 152, and the Thunder failed to reach 80."
+    ],
+    "fact": "The final was 152-79, and Jaren Jackson Jr. led Memphis with 27. The old record of 68 had stood since 1991.",
+    "source": "https://en.wikipedia.org/wiki/2021%E2%80%9322_Memphis_Grizzlies_season",
+    "verified": true
+  },
+  {
+    "id": "nba-048",
+    "sport": "nba",
+    "type": "number",
+    "difficulty": 4,
+    "q": "In November 1950 the Fort Wayne Pistons stalled their way past George Mikan's Lakers in the lowest-scoring game in NBA history. How many points did Fort Wayne score?",
+    "answer": "19",
+    "kind": "number",
+    "num": 19,
+    "accept": [],
+    "hints": [
+      "The Lakers scored exactly one fewer.",
+      "Under 20."
+    ],
+    "fact": "Fort Wayne won 19-18, and Mikan scored 15 of Minneapolis' 18. Games like this pushed the league toward the 24-second shot clock.",
+    "source": "https://en.wikipedia.org/wiki/George_Mikan",
+    "verified": true
+  },
+  {
+    "id": "nba-049",
+    "sport": "nba",
+    "type": "number",
+    "difficulty": 3,
+    "q": "On February 14, 1990, Michael Jordan's No. 23 jersey was stolen from the visitors' locker room in Orlando. What number did he wear that night?",
+    "answer": "12",
+    "kind": "number",
+    "num": 12,
+    "accept": [],
+    "hints": [
+      "It was not 45; that came during his 1995 comeback.",
+      "Between 10 and 20."
+    ],
+    "fact": "Jordan wore a plain No. 12 with no name on the back and still scored 49 points, though the Bulls lost 135-129 in overtime.",
+    "source": "https://en.wikipedia.org/wiki/1989%E2%80%9390_Chicago_Bulls_season",
+    "verify_note": "Verified on 1989-90 Bulls season page (No. 12, 49 pts, 135-129 OT loss). Fact expanded.",
+    "verified": true
+  },
+  {
+    "id": "nba-050",
+    "sport": "nba",
+    "type": "number",
+    "difficulty": 3,
+    "q": "Dennis Rodman couldn't wear his usual No. 10 in Chicago because the Bulls had retired it for Bob Love. What number did he wear instead?",
+    "answer": "91",
+    "kind": "number",
+    "num": 91,
+    "accept": [],
+    "hints": [
+      "The league would not let him wear 01.",
+      "Its digits add up to 10."
+    ],
+    "fact": "Rodman wore 91 for all three Bulls titles. In Dallas the league would not let him wear 69, so he went with 70.",
+    "source": "https://en.wikipedia.org/wiki/Dennis_Rodman",
+    "verified": true
+  },
+  {
+    "id": "nba-051",
+    "sport": "nba",
+    "type": "number",
+    "difficulty": 4,
+    "q": "A.C. Green holds the NBA record for consecutive regular-season games played. How many games long was the streak?",
+    "answer": "1192",
+    "kind": "number",
+    "num": 1192,
+    "accept": [],
+    "hints": [
+      "It ran from November 1986 to April 2001 across four teams.",
+      "Between 1,150 and 1,250."
+    ],
+    "fact": "A.C. Green, the Iron Man, played 1,192 straight games for the Lakers, Suns, Mavericks and Heat. The streak never snapped; it ended when he retired.",
+    "source": "https://en.wikipedia.org/wiki/A._C._Green",
+    "verify_note": "Removed unverified 'missed only eight games' detail.",
+    "verified": true
+  },
+  {
+    "id": "nba-052",
+    "sport": "nba",
+    "type": "number",
+    "difficulty": 2,
+    "q": "On December 9, 2004, Tracy McGrady stunned the Spurs with a late barrage. How many points did he score in the final 35 seconds?",
+    "answer": "13",
+    "kind": "number",
+    "num": 13,
+    "accept": [],
+    "hints": [
+      "Between 10 and 15.",
+      "He hit four threes, one of them a four-point play."
+    ],
+    "fact": "T-Mac's last three came with about two seconds left and won it for Houston. It is still the gold standard for late-game takeovers.",
+    "source": "https://en.wikipedia.org/wiki/Tracy_McGrady",
+    "verify_note": "Swapped hints: old hint 1 (four threes incl. a four-point play) computes the answer outright.",
+    "verified": true
+  },
+  {
+    "id": "nba-053",
+    "sport": "nba",
+    "type": "number",
+    "difficulty": 3,
+    "q": "Nikola Jokic's selection in the 2014 draft was famously shown during a Taco Bell ad. What overall pick was he?",
+    "answer": "41",
+    "kind": "number",
+    "num": 41,
+    "accept": [],
+    "hints": [
+      "It was in the second round.",
+      "Between 40 and 45."
+    ],
+    "fact": "Denver took Jokic 41st and he stayed in Serbia for another season. He has since won multiple MVPs and the 2023 title.",
+    "source": "https://en.wikipedia.org/wiki/Nikola_Joki%C4%87",
+    "verified": true
+  },
+  {
+    "id": "nba-054",
+    "sport": "nba",
+    "type": "year",
+    "difficulty": 3,
+    "q": "The NBA's 24-second shot clock debuted in the season that tipped off in what year?",
+    "answer": "1954",
+    "kind": "number",
+    "num": 1954,
+    "accept": [],
+    "hints": [
+      "It was the idea of Syracuse Nationals owner Danny Biasone.",
+      "The mid-1950s."
+    ],
+    "fact": "Biasone figured teams took about 120 shots in a good game, so he divided 2,880 seconds by 120 and got 24. The clock arrived for the 1954-55 season.",
+    "source": "https://en.wikipedia.org/wiki/Shot_clock",
+    "verified": true
+  },
+  {
+    "id": "nba-055",
+    "sport": "nba",
+    "type": "number",
+    "difficulty": 2,
+    "q": "Robert Horry won titles with the Rockets, Lakers and Spurs. How many NBA championships did he win in all?",
+    "answer": "7",
+    "kind": "number",
+    "num": 7,
+    "accept": [],
+    "hints": [
+      "More than Michael Jordan.",
+      "He is the only player outside the 1950s and 60s Celtics with more than six."
+    ],
+    "fact": "Big Shot Rob won two in Houston, three in LA and two in San Antonio. That is more rings than Jordan, Kobe or LeBron.",
+    "source": "https://en.wikipedia.org/wiki/Robert_Horry",
+    "verified": true
+  },
+  {
+    "id": "nba-056",
+    "sport": "nba",
+    "type": "team",
+    "difficulty": 3,
+    "q": "The Buffalo Braves, a 1970 expansion team, still exist today under what name?",
+    "answer": "Los Angeles Clippers",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "los angeles clippers",
+      "la clippers",
+      "clippers"
+    ],
+    "hints": [
+      "Bob McAdoo won an MVP for them in Buffalo.",
+      "They moved to San Diego in 1978, then up the coast in 1984."
+    ],
+    "fact": "In 1978 the Celtics' owner and the Braves' owner literally swapped franchises, which let the Braves' new owner move the team to San Diego. Donald Sterling took them to LA in 1984 without league approval.",
+    "source": "https://en.wikipedia.org/wiki/Los_Angeles_Clippers",
+    "verify_note": "Removed 'san diego clippers' from accept: the question asks for today's name.",
+    "verified": true
+  },
+  {
+    "id": "nba-057",
+    "sport": "nba",
+    "type": "team",
+    "difficulty": 3,
+    "q": "The Tri-Cities Blackhawks, who played out of Moline, Illinois, in the early days of the NBA, are the ancestors of which current franchise?",
+    "answer": "Atlanta Hawks",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "atlanta hawks",
+      "hawks",
+      "atlanta"
+    ],
+    "hints": [
+      "The franchise later passed through Milwaukee and St. Louis.",
+      "Bob Pettit starred for them in St. Louis."
+    ],
+    "fact": "The franchise started as the Buffalo Bisons, lasted 38 days there, and moved to the Tri-Cities of Moline, Rock Island and Davenport. It has been in Atlanta since 1968.",
+    "source": "https://en.wikipedia.org/wiki/Atlanta_Hawks",
+    "verified": true
+  },
+  {
+    "id": "nba-058",
+    "sport": "nba",
+    "type": "team",
+    "difficulty": 2,
+    "q": "Which team went 7-59 in the lockout-shortened 2011-12 season, the lowest winning percentage in NBA history?",
+    "answer": "Charlotte Bobcats",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "charlotte bobcats",
+      "bobcats",
+      "charlotte"
+    ],
+    "hints": [
+      "The team was owned by Michael Jordan.",
+      "The franchise later brought back its city's old NBA nickname."
+    ],
+    "fact": "The Bobcats' .106 mark broke the 1972-73 76ers' .110 for the worst ever. They did not win a single game in April.",
+    "source": "https://en.wikipedia.org/wiki/2011%E2%80%9312_Charlotte_Bobcats_season",
+    "verify_note": "Replaced unverified 23-game losing streak detail with verified 'no wins in April'. Hint 2 said 'Charlotte' (an accepted answer); reworded.",
+    "verified": true
+  },
+  {
+    "id": "nba-059",
+    "sport": "nba",
+    "type": "team",
+    "difficulty": 2,
+    "q": "In 1994, which team became the first No. 8 seed ever to beat a No. 1 seed, rallying from 0-2 to stun the Seattle SuperSonics?",
+    "answer": "Denver Nuggets",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "denver nuggets",
+      "nuggets",
+      "denver"
+    ],
+    "hints": [
+      "It was a best-of-five series decided in overtime of Game 5.",
+      "Dikembe Mutombo was their center."
+    ],
+    "fact": "Denver won Game 5 in Seattle 98-94 in overtime on May 7, 1994, with Robert Pack scoring 23. No 8 seed had ever done it before.",
+    "source": "https://en.wikipedia.org/wiki/1994_NBA_playoffs",
+    "verified": true
+  },
+  {
+    "id": "nba-060",
+    "sport": "nba",
+    "type": "team",
+    "difficulty": 3,
+    "q": "The 1971-72 Lakers won an NBA-record 33 straight games. Which team finally beat them in January 1972?",
+    "answer": "Milwaukee Bucks",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "milwaukee bucks",
+      "bucks",
+      "milwaukee"
+    ],
+    "hints": [
+      "They were the defending NBA champions.",
+      "Kareem Abdul-Jabbar was their center."
+    ],
+    "fact": "Milwaukee ended the streak on January 9, 1972. The Lakers still finished 69-13 and won the title over the Knicks.",
+    "source": "https://en.wikipedia.org/wiki/1971%E2%80%9372_Los_Angeles_Lakers_season",
+    "verify_note": "Removed unverified final score (120-104).",
+    "verified": true
+  },
+  {
+    "id": "nba-061",
+    "sport": "nba",
+    "type": "team",
+    "difficulty": 4,
+    "q": "Rick Barry jumped from the NBA's Warriors to which ABA team, which won the 1969 ABA championship?",
+    "answer": "Oakland Oaks",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "oakland oaks",
+      "oaks",
+      "oakland"
+    ],
+    "hints": [
+      "It played right across the bay from the Warriors and lasted only two seasons.",
+      "Its coach was Alex Hannum, and Warren Jabali was playoff MVP."
+    ],
+    "fact": "The Oaks went from 22-56 to 60 wins and a title in one year, then went broke and moved to Washington. The franchise later became the Virginia Squires.",
+    "source": "https://en.wikipedia.org/wiki/Oakland_Oaks_(ABA)",
+    "verified": true
+  },
+  {
+    "id": "nba-062",
+    "sport": "nba",
+    "type": "team",
+    "difficulty": 3,
+    "q": "Which defunct ABA team's owners were left out of the 1976 merger but got a cut of NBA TV money in perpetuity, a deal worth hundreds of millions?",
+    "answer": "Spirits of St. Louis",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "spirits of st louis",
+      "spirits of saint louis",
+      "spirits",
+      "st louis spirits",
+      "saint louis spirits"
+    ],
+    "hints": [
+      "The team was named after Charles Lindbergh's plane.",
+      "Moses Malone played for them in their final season."
+    ],
+    "fact": "Ozzie and Daniel Silna earned about $255 million by 2012 from a team that stopped playing in 1976. They finally took a $500 million settlement in 2014.",
+    "source": "https://en.wikipedia.org/wiki/Spirits_of_St._Louis",
+    "verified": true
+  },
+  {
+    "id": "nba-063",
+    "sport": "nba",
+    "type": "team",
+    "difficulty": 3,
+    "q": "Julius Erving began his pro career in 1971 with which ABA team?",
+    "answer": "Virginia Squires",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "virginia squires",
+      "squires",
+      "virginia"
+    ],
+    "hints": [
+      "The cash-strapped team sold his contract to the New York Nets in 1973.",
+      "The franchise started out as the Oakland Oaks."
+    ],
+    "fact": "Dr. J left UMass early to sign with the Squires. The Bucks drafted him in 1972, but he stayed in the ABA and won three MVPs.",
+    "source": "https://en.wikipedia.org/wiki/Julius_Erving",
+    "verified": true
+  },
+  {
+    "id": "nba-064",
+    "sport": "nba",
+    "type": "coach",
+    "difficulty": 4,
+    "q": "Who was the first head coach of the Vancouver Grizzlies?",
+    "answer": "Brian Winters",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "brian winters",
+      "winters"
+    ],
+    "hints": [
+      "He was a former Bucks guard whose No. 32 is retired in Milwaukee.",
+      "He was one of the players the Lakers sent to Milwaukee to get Kareem Abdul-Jabbar."
+    ],
+    "fact": "Brian Winters went 23-102 before being fired midway through Vancouver's second season. He played college ball at South Carolina.",
+    "source": "https://en.wikipedia.org/wiki/Brian_Winters",
+    "verified": true
+  },
+  {
+    "id": "nba-065",
+    "sport": "nba",
+    "type": "coach",
+    "difficulty": 4,
+    "q": "Who was the first head coach and general manager of the expansion Charlotte Bobcats?",
+    "answer": "Bernie Bickerstaff",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "bernie bickerstaff",
+      "bickerstaff"
+    ],
+    "hints": [
+      "He had previously been head coach of the Sonics, Nuggets and Bullets.",
+      "His son J.B. also became an NBA head coach."
+    ],
+    "fact": "Bernie Bickerstaff went 77-169 in three seasons building the Bobcats from scratch. He had taken over the Sonics bench in 1985 when Lenny Wilkens moved up to GM.",
+    "source": "https://en.wikipedia.org/wiki/Bernie_Bickerstaff",
+    "verify_note": "Fixed Bobcats record: 18-64, 26-56, 33-49 = 77-169, not 77-171.",
+    "verified": true
+  },
+  {
+    "id": "nba-066",
+    "sport": "nba",
+    "type": "coach",
+    "difficulty": 4,
+    "q": "Who was the first head coach of the Toronto Raptors in 1995-96?",
+    "answer": "Brendan Malone",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "brendan malone",
+      "malone"
+    ],
+    "hints": [
+      "He had been a Detroit Pistons assistant on the Bad Boys title teams.",
+      "His son Michael later coached Denver to the 2023 title."
+    ],
+    "fact": "Brendan Malone went 21-61 in his only season, but his Raptors handed the 72-10 Bulls one of their rare losses.",
+    "source": "https://en.wikipedia.org/wiki/Brendan_Malone",
+    "verified": true
+  },
+  {
+    "id": "nba-067",
+    "sport": "nba",
+    "type": "coach",
+    "difficulty": 3,
+    "q": "Who coached the New York Nets to ABA titles in 1974 and 1976, and later was Michael Jordan's first NBA head coach?",
+    "answer": "Kevin Loughery",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "kevin loughery",
+      "loughery"
+    ],
+    "hints": [
+      "He was a former guard for the Pistons, Bullets and 76ers.",
+      "He coached the Bulls from 1983 to 1985."
+    ],
+    "fact": "Kevin Loughery coached Dr. J to both Nets titles. Jordan later credited him with giving him the confidence to play his game as a rookie.",
+    "source": "https://en.wikipedia.org/wiki/Kevin_Loughery",
+    "verified": true
+  },
+  {
+    "id": "nba-068",
+    "sport": "nba",
+    "type": "coach",
+    "difficulty": 3,
+    "q": "Who took over when Jack McKinney was badly hurt in a bike accident early in 1979-80, then coached the Lakers to the title as a rookie head coach?",
+    "answer": "Paul Westhead",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "paul westhead",
+      "westhead"
+    ],
+    "hints": [
+      "He was fired early in 1981-82 after clashing with Magic Johnson.",
+      "He later ran the high-octane Loyola Marymount teams."
+    ],
+    "fact": "Paul Westhead is the only coach to win both an NBA title and a WNBA title, adding the 2007 crown with the Phoenix Mercury.",
+    "source": "https://en.wikipedia.org/wiki/Paul_Westhead",
+    "verified": true
+  },
+  {
+    "id": "nba-069",
+    "sport": "nba",
+    "type": "coach",
+    "difficulty": 3,
+    "q": "Who coached the 2011 Grizzlies, the No. 8 seed that upset the top-seeded Spurs for the franchise's first playoff series win?",
+    "answer": "Lionel Hollins",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "lionel hollins",
+      "hollins"
+    ],
+    "hints": [
+      "He was a guard on Portland's 1977 title team.",
+      "He later coached the Brooklyn Nets."
+    ],
+    "fact": "Lionel Hollins built the Grit and Grind Grizzlies and won a franchise-record 56 games in 2012-13. Portland retired his No. 14.",
+    "source": "https://en.wikipedia.org/wiki/Lionel_Hollins",
+    "verified": true
+  },
+  {
+    "id": "nba-070",
+    "sport": "nba",
+    "type": "coach",
+    "difficulty": 2,
+    "q": "Who coached the Seattle SuperSonics to their only NBA championship, in 1979?",
+    "answer": "Lenny Wilkens",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "lenny wilkens",
+      "wilkens",
+      "leonard wilkens"
+    ],
+    "hints": [
+      "He was a Hall of Fame point guard who had earlier been Seattle's player-coach.",
+      "He is in the Hall of Fame as both a player and a coach."
+    ],
+    "fact": "Lenny Wilkens' Sonics beat Washington 4-1 in a rematch of the 1978 Finals. Gus Williams led all scorers at 28.6 per game.",
+    "source": "https://en.wikipedia.org/wiki/1979_NBA_Finals",
+    "verified": true
+  },
+  {
+    "id": "nba-071",
+    "sport": "nba",
+    "type": "coach",
+    "difficulty": 2,
+    "q": "Who coached the 2007 We Believe Warriors, the first No. 8 seed to beat a No. 1 seed in a best-of-seven series?",
+    "answer": "Don Nelson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "don nelson",
+      "nelson",
+      "nellie"
+    ],
+    "hints": [
+      "It was his second stint coaching Golden State.",
+      "He had previously coached the Mavericks, the 67-win team his Warriors upset."
+    ],
+    "fact": "Don Nelson's 42-40 Warriors beat Dallas 4-2 after closing the season 16-5. They lost to Utah in the next round.",
+    "source": "https://en.wikipedia.org/wiki/2006%E2%80%9307_Golden_State_Warriors_season",
+    "verified": true
+  },
+  {
+    "id": "nba-072",
+    "sport": "nba",
+    "type": "venue",
+    "difficulty": 3,
+    "q": "In what Seattle arena did the SuperSonics play their final home games before moving to Oklahoma City in 2008?",
+    "answer": "KeyArena",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "keyarena",
+      "key arena",
+      "the key",
+      "seattle center coliseum",
+      "climate pledge arena"
+    ],
+    "hints": [
+      "The Sonics spent 1994-95 in the Tacoma Dome while it was being renovated.",
+      "It sits at Seattle Center, and a bank bought its naming rights in 1995."
+    ],
+    "fact": "The Sonics beat Dallas 99-95 there on April 13, 2008, in their last game in Seattle. Clay Bennett's group then paid the city $45 million to break the lease, and the team became the Thunder.",
+    "source": "https://en.wikipedia.org/wiki/Seattle_SuperSonics_relocation_to_Oklahoma_City",
+    "verify_note": "Replaced unverified 'smallest NBA venue, about 17,000' hint and 17,072 figure with verified Tacoma Dome / KeyBank / final-game facts.",
+    "verified": true
+  },
+  {
+    "id": "nba-073",
+    "sport": "nba",
+    "type": "venue",
+    "difficulty": 2,
+    "q": "Where did the NBA finish its 2019-20 season inside a bubble?",
+    "answer": "Walt Disney World",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "walt disney world",
+      "disney world",
+      "disney",
+      "espn wide world of sports",
+      "espn wide world of sports complex",
+      "wide world of sports",
+      "orlando",
+      "bay lake"
+    ],
+    "hints": [
+      "It was in Florida, and 22 teams were invited.",
+      "It was a theme-park resort, and teams stayed in its hotels."
+    ],
+    "fact": "Teams arrived in early July 2020 and the Finals ended October 11, with no recorded COVID cases inside. Games were played at the ESPN Wide World of Sports Complex.",
+    "source": "https://en.wikipedia.org/wiki/NBA_Bubble",
+    "verify_note": "Hint 2 named an accepted answer (ESPN Wide World of Sports); replaced. Fixed bubble dates in fact.",
+    "verified": true
+  },
+  {
+    "id": "nba-074",
+    "sport": "nba",
+    "type": "nickname",
+    "difficulty": 3,
+    "q": "Pistons sixth man Vinnie Johnson, who hit the shot that clinched the 1990 title, went by what nickname coined by Danny Ainge?",
+    "answer": "The Microwave",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "the microwave",
+      "microwave"
+    ],
+    "hints": [
+      "It described how fast he heated up off the bench.",
+      "It's a kitchen appliance."
+    ],
+    "fact": "Vinnie Johnson hit a 14-footer with 0.7 seconds left in Game 5 at Portland to clinch back-to-back titles. The Pistons retired his No. 15.",
+    "source": "https://en.wikipedia.org/wiki/Vinnie_Johnson",
+    "verified": true
+  },
+  {
+    "id": "nba-075",
+    "sport": "nba",
+    "type": "nickname",
+    "difficulty": 2,
+    "q": "What unflattering nickname did the early-2000s Portland Trail Blazers earn for their players' off-court trouble?",
+    "answer": "Jail Blazers",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jail blazers",
+      "jailblazers",
+      "the jail blazers"
+    ],
+    "hints": [
+      "It's a pun on the team name.",
+      "Rasheed Wallace, Bonzi Wells and Qyntel Woods were all part of that era."
+    ],
+    "fact": "The Jail Blazers era also produced Rasheed Wallace's NBA-record 41 technical fouls in a single season.",
+    "source": "https://en.wikipedia.org/wiki/Portland_Trail_Blazers",
+    "verified": true
+  }
+]

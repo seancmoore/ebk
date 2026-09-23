@@ -124,6 +124,10 @@
         rarity: typeof rec.rarity === "number" ? rec.rarity : null,
       };
     });
+    // the daily question rides along in the same card
+    var dc = parse(get("ebk_dcut_" + date));
+    out["deep-cut"] = !dc ? { state: "none" }
+      : { state: dc.done ? "done" : "partial", win: !!dc.win, n: (dc.g || []).length };
     return out;
   }
 
@@ -158,10 +162,11 @@
     opts = opts || {};
     var st = streak(), td = today();
     var sports = GRID_SPORTS.filter(function (s) { return s !== opts.exclude; });
-    var doneCount = GRID_SPORTS.filter(function (s) { return td[s].state === "done"; }).length;
+    var ALL = ["deep-cut"].concat(GRID_SPORTS);
+    var doneCount = ALL.filter(function (s) { return td[s].state === "done"; }).length;
 
     var root = el("section", "daily-card");
-    root.setAttribute("aria-label", "Your daily grids");
+    root.setAttribute("aria-label", "Your dailies");
 
     if (!opts.compact) {
       var head = el("div", "dc-head");
@@ -174,9 +179,9 @@
       lab.appendChild(el("span", "dc-lab-k", st.days > 0 ? "DAY STREAK" : "START A STREAK"));
       lab.appendChild(el("span", "dc-lab-v",
         st.days === 0
-          ? "Finish any grid today and it counts from here."
+          ? "Finish any daily today and it counts from here."
           : st.atRisk
-            ? "Play any grid today to make it " + (st.days + 1) + "."
+            ? "Play any daily today to make it " + (st.days + 1) + "."
             : "Come back tomorrow to make it " + (st.days + 1) + "."));
       head.appendChild(lab);
       if (st.atRisk && st.days > 0) head.appendChild(el("span", "dc-risk", "AT RISK"));
@@ -186,6 +191,19 @@
     var row = el("div", "dc-row");
     row.appendChild(el("span", "dc-row-k", opts.compact ? "STILL OPEN TODAY" : "TODAY"));
     var chips = el("div", "dc-chips");
+    if (opts.exclude !== "deep-cut") {
+      var q = td["deep-cut"];
+      var c = el("a", "dc-chip dc-chip-cut is-" + q.state);
+      c.href = "/deep-cut";
+      c.style.setProperty("--accent", "#c77dff");
+      c.appendChild(el("span", "dc-chip-s", "CUT"));
+      c.appendChild(el("span", "dc-chip-v",
+        q.state === "done" ? (q.win ? q.n + "/3" : "X") : q.state === "partial" ? "…" : "?"));
+      c.setAttribute("aria-label", "Deep Cut, the daily question: " +
+        (q.state === "done" ? (q.win ? "solved in " + q.n : "missed")
+          : q.state === "partial" ? "in progress" : "not played yet"));
+      chips.appendChild(c);
+    }
     sports.forEach(function (s) {
       var t = td[s];
       var a = el("a", "dc-chip is-" + t.state);
@@ -205,9 +223,9 @@
     root.appendChild(row);
 
     var foot = el("p", "dc-foot");
-    foot.appendChild(el("span", null, doneCount + " of " + GRID_SPORTS.length + " done today"));
+    foot.appendChild(el("span", null, doneCount + " of " + ALL.length + " dailies done today"));
     foot.appendChild(el("span", "dc-dot", "·"));
-    foot.appendChild(el("span", "dc-reset", "new grids in " + hoursToReset()));
+    foot.appendChild(el("span", "dc-reset", "new ones in " + hoursToReset()));
     root.appendChild(foot);
 
     return root;

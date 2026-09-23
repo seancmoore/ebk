@@ -148,6 +148,54 @@ service cloud.firestore {
       allow delete: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
     }
 
+    // Deep Cut (daily question): one play per account per day, immutable.
+    // The play doc and the day's tally are written in one batch; the tally
+    // rule below only accepts a bump when this doc is being created in that
+    // same batch, so each account moves the numbers exactly once per day.
+    match /deepCutPlays/{id} {
+      allow read: if signedIn() && (resource == null || resource.data.uid == request.auth.uid);
+      allow create: if signedIn()
+        && id == request.auth.uid + '_' + request.resource.data.date
+        && request.resource.data.keys().hasOnly(['uid', 'date', 'r', 'g'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.date is string
+        && request.resource.data.date.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+        && request.resource.data.g is list && request.resource.data.g.size() <= 3
+        && request.resource.data.r is int
+        && request.resource.data.r >= 0 && request.resource.data.r <= 3
+        && (request.resource.data.r == 0 || request.resource.data.r == request.resource.data.g.size())
+        && existsAfter(/databases/$(database)/documents/deepCutStats/$(request.resource.data.date));
+      allow update: if false;
+      allow delete: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
+    }
+
+    function dcOld(f) {
+      return resource == null ? 0 : resource.data.get(f, 0);
+    }
+    function dcSame(f) {
+      return request.resource.data.get(f, 0) == dcOld(f);
+    }
+    function dcBumpOk(date) {
+      let play = /databases/$(database)/documents/deepCutPlays/$(request.auth.uid + '_' + date);
+      let r = getAfter(play).data.r;
+      let f = r == 0 ? 'x' : 's' + string(r);
+      return !exists(play) && existsAfter(play)
+        && request.resource.data.keys().hasOnly(['p', 's1', 's2', 's3', 'x'])
+        && request.resource.data.p == dcOld('p') + 1
+        && request.resource.data.get(f, 0) == dcOld(f) + 1
+        && (f == 's1' || dcSame('s1'))
+        && (f == 's2' || dcSame('s2'))
+        && (f == 's3' || dcSame('s3'))
+        && (f == 'x' || dcSame('x'));
+    }
+    match /deepCutStats/{date} {
+      allow read: if true;
+      allow create, update: if signedIn()
+        && date.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+        && dcBumpOk(date);
+      allow delete: if isAdmin();
+    }
+
     // per-sport Elo ratings (head-to-head ranked). Owner-only writes.
     // Ratings are bounded and may only move by a small step per write
     // (client K-factor is 24), so a client can't just set itself to 9999.

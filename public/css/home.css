@@ -484,7 +484,7 @@ footer.site-footer a { color: var(--accent); }
 
 /* replay band */
 .replay-band {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(176px, 1fr));
   gap: var(--sp-md); margin: var(--sp-lg) 0 var(--sp-sm);
 }
 .replay-card {
@@ -507,8 +507,10 @@ footer.site-footer a { color: var(--accent); }
 .replay-card.h2h { --rc: var(--accent-2); }
 .replay-card.board { --rc: var(--gold); }
 .replay-card.deepbag { --rc: #c77dff; }
+.replay-card.cut { --rc: #e28bff; }
 .rc-ic { font-size: 1.9rem; line-height: 1; }
-.rc-title { font-size: var(--fs-lg); font-weight: 800; }
+.rc-body { display: grid; gap: 4px; }
+.rc-title { font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem); font-weight: 800; }
 .rc-desc { color: var(--muted); font-size: var(--fs-sm); line-height: 1.45; }
 .rc-foot { margin-top: auto; padding-top: 6px; color: var(--rc); font-weight: 800; font-size: var(--fs-xs); letter-spacing: 0.04em; }
 .replay-you {

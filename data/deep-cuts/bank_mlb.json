@@ -1,0 +1,1518 @@
+[
+  {
+    "id": "mlb-001",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In August 1990 the Red Sox traded a Double-A third baseman named Jeff Bagwell to Houston. Which 37-year-old reliever did Boston get back?",
+    "answer": "Larry Andersen",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "larry andersen",
+      "andersen",
+      "larry anderson",
+      "anderson"
+    ],
+    "hints": [
+      "He threw just 22 innings for Boston before leaving as a free agent.",
+      "He later spent decades as a Phillies radio broadcaster."
+    ],
+    "fact": "Larry Andersen gave Boston 22 good innings down the stretch. Bagwell won 1991 NL Rookie of the Year, the 1994 NL MVP and a plaque in Cooperstown, all in an Astros uniform.",
+    "source": "https://www.mlb.com/news/larry-andersen-forever-tied-to-jeff-bagwell-c213513620",
+    "verified": true
+  },
+  {
+    "id": "mlb-002",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In June 1964 the Cubs traded Lou Brock to St. Louis in a deal built around which Cardinals right-hander who had won 18 games the year before?",
+    "answer": "Ernie Broglio",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "ernie broglio",
+      "broglio"
+    ],
+    "hints": [
+      "He had tied Warren Spahn for the NL lead with 21 wins in 1960.",
+      "His elbow was already hurting. He won only 7 games total for the Cubs."
+    ],
+    "fact": "Ernie Broglio went 7-19 as a Cub. Brock hit .348 for St. Louis the rest of 1964, won the World Series that October and stole his way to 938 career bases and the Hall of Fame.",
+    "source": "https://baseballhall.org/discover-more/stories/inside-pitch/lou-brock-traded-to-cards",
+    "verified": true
+  },
+  {
+    "id": "mlb-003",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In August 1987 the Tigers sent 20-year-old prospect John Smoltz to Atlanta for which 36-year-old veteran starter?",
+    "answer": "Doyle Alexander",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "doyle alexander",
+      "alexander"
+    ],
+    "hints": [
+      "He went 9-0 with a 1.53 ERA in 11 starts for Detroit after the deal.",
+      "He had won 17 games for Toronto's 1985 AL East champions."
+    ],
+    "fact": "Doyle Alexander helped Detroit win the 1987 AL East. Smoltz, a Michigan native, won 213 games, saved 154 more, took the 1996 NL Cy Young and reached the Hall of Fame in 2015.",
+    "source": "https://www.baseball-reference.com/bullpen/Doyle_Alexander_for_John_Smoltz_Trade",
+    "verify_note": "Hint 2 was near-giveaway wordplay (Alexander the Great); replaced with verified 1985 Blue Jays detail (Lahman).",
+    "verified": true
+  },
+  {
+    "id": "mlb-004",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In December 1971 the Mets traded a wild young fireballer named Nolan Ryan and three others to the Angels. Who did New York get?",
+    "answer": "Jim Fregosi",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jim fregosi",
+      "fregosi"
+    ],
+    "hints": [
+      "He was a six-time All-Star shortstop for the Angels, moved to third base in New York.",
+      "He later managed the 1993 NL champion Phillies."
+    ],
+    "fact": "Jim Fregosi hurt his hand, hit poorly and was shipped to Texas in mid-1973. Ryan threw four of his seven no-hitters as an Angel on the way to 5,714 strikeouts.",
+    "source": "https://www.mlb.com/news/mets-nolan-ryan-trade-legacy",
+    "verified": true
+  },
+  {
+    "id": "mlb-005",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In November 1993 the Dodgers traded a skinny young Pedro Martinez to Montreal. Which second baseman did Los Angeles get in return?",
+    "answer": "Delino DeShields",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "delino deshields",
+      "deshields",
+      "delino deshields sr",
+      "delino"
+    ],
+    "hints": [
+      "He was a speedy leadoff man who had stolen 187 bases for the Expos over four seasons.",
+      "His son, with the same name, later played center field for the Rangers."
+    ],
+    "fact": "Delino DeShields hit .241 in three seasons as a Dodger. Pedro won the 1997 NL Cy Young in Montreal, then two more in Boston on his way to the Hall of Fame.",
+    "source": "https://en.wikipedia.org/wiki/Delino_DeShields",
+    "verified": true
+  },
+  {
+    "id": "mlb-006",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In May 1989 the Expos sent a raw 6-foot-10 lefty named Randy Johnson to Seattle in a deal headlined by which pitcher coming back to Montreal?",
+    "answer": "Mark Langston",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "mark langston",
+      "langston"
+    ],
+    "hints": [
+      "He was a left-hander who had led the AL in strikeouts three times as a Mariner.",
+      "He pitched four months in Montreal, then signed with the California Angels."
+    ],
+    "fact": "Mark Langston was a rental on an expiring deal and left after 1989. Johnson won five Cy Young Awards and finished with 4,875 strikeouts, second all-time.",
+    "source": "https://baseballhall.org/discover/inside-pitch/trade-to-mariners-launches-johnsons-career",
+    "verified": true
+  },
+  {
+    "id": "mlb-007",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 4,
+    "q": "In January 1982 the Phillies sent Larry Bowa and a throw-in prospect named Ryne Sandberg to the Cubs. Which shortstop came back to Philadelphia?",
+    "answer": "Ivan DeJesus",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "ivan dejesus",
+      "ivan de jesus",
+      "dejesus",
+      "de jesus"
+    ],
+    "hints": [
+      "He had been the Cubs' starting shortstop since 1977.",
+      "He started at short for the 1983 NL champion Phillies."
+    ],
+    "fact": "Ivan DeJesus was a solid starter, but Sandberg became a Hall of Famer with nine Gold Gloves and the 1984 NL MVP. Cubs GM Dallas Green, a former Phillies boss, asked for Sandberg by name.",
+    "source": "https://baseballhall.org/discover/inside-pitch/sandberg-trade-reshapes-cubs-future",
+    "verified": true
+  },
+  {
+    "id": "mlb-008",
+    "sport": "mlb",
+    "type": "other",
+    "difficulty": 2,
+    "q": "Which umpire's blown call at first base cost Detroit's Armando Galarraga a perfect game with two outs in the ninth in June 2010?",
+    "answer": "Jim Joyce",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jim joyce",
+      "joyce",
+      "james joyce"
+    ],
+    "hints": [
+      "He was a respected veteran who tearfully apologized after seeing the replay.",
+      "The next day Galarraga brought the lineup card out to him at home plate."
+    ],
+    "fact": "Jim Joyce called Cleveland's Jason Donald safe on what should have been out 27. Galarraga settled for a one-hitter, and the two became friends, later co-writing a book about the night.",
+    "source": "https://en.wikipedia.org/wiki/Armando_Galarraga's_near-perfect_game",
+    "verified": true
+  },
+  {
+    "id": "mlb-009",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 4,
+    "q": "On September 20, 1998, Cal Ripken sat out and ended his streak at 2,632 games. Which Orioles rookie started at third base in his place?",
+    "answer": "Ryan Minor",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "ryan minor",
+      "minor"
+    ],
+    "hints": [
+      "He had made his MLB debut only a week or so earlier.",
+      "He was a two-sport star at Oklahoma and was drafted by the Philadelphia 76ers."
+    ],
+    "fact": "Ryan Minor had debuted just seven days earlier. When the game began, the entire Yankees team stepped out of their dugout and tipped their caps to Ripken.",
+    "source": "https://sabr.org/gamesproj/game/september-20-1998-cal-ripken-decides-to-end-consecutive-game-streak-at-2632/",
+    "verify_note": "Fact: removed unverified 1-for-4 line; per SABR the Yankees stepped out and tipped caps (not applause from the top step). Debut Sept 13, 1998 confirmed.",
+    "verified": true
+  },
+  {
+    "id": "mlb-010",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Which Nationals lefty served up Barry Bonds' record-breaking 756th career home run in August 2007?",
+    "answer": "Mike Bacsik",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "mike bacsik",
+      "bacsik",
+      "michael bacsik"
+    ],
+    "hints": [
+      "He was a soft-tossing journeyman starter.",
+      "His father, with the same name, pitched in the majors from 1975 to 1980."
+    ],
+    "fact": "Mike Bacsik's dad faced Hank Aaron in 1976, after No. 755, and held him in the park. The son joked: \"If my dad had been gracious enough to let Hank Aaron hit a home run, we both would have given up 756.\"",
+    "source": "https://en.wikipedia.org/wiki/Mike_Bacsik_(2000s_pitcher)",
+    "verify_note": "Fact reworded to match the verified quote (father held Aaron to a single and flyout on Aug 23, 1976).",
+    "verified": true
+  },
+  {
+    "id": "mlb-011",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Which pitcher gave up both of Fernando Tatis' grand slams in the same inning in 1999, and later allowed Barry Bonds' 71st and 72nd homers in 2001?",
+    "answer": "Chan Ho Park",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "chan ho park",
+      "park",
+      "chanho park",
+      "park chan ho"
+    ],
+    "hints": [
+      "He was a Dodgers starter both times.",
+      "He was the first South Korean-born player in the majors."
+    ],
+    "fact": "Chan Ho Park was on the mound for both slams as Tatis set a record with 8 RBIs in one inning. Park finished with 124 wins, through 2025 the most by an Asian-born MLB pitcher.",
+    "source": "https://sabr.org/gamesproj/game/april-23-1999-fernando-tatis-hits-two-grand-slams-in-one-inning/",
+    "verify_note": "Asian-born wins claim pinned through 2025 (Park 124, Nomo 123, Darvish 115 and out for 2026).",
+    "verified": true
+  },
+  {
+    "id": "mlb-012",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 4,
+    "q": "Pete Rose passed Ty Cobb with hit No. 4,192 on September 11, 1985. Which Padres pitcher gave up the historic single?",
+    "answer": "Eric Show",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "eric show",
+      "show"
+    ],
+    "hints": [
+      "He was a right-hander who went 15-9 for the 1984 NL champion Padres.",
+      "Through 2025 he is still the Padres' all-time leader in pitching wins, with 100."
+    ],
+    "fact": "Rose lined a single to left-center at Riverfront Stadium. During the long ovation that followed, Eric Show famously sat down on the mound with his arms folded.",
+    "source": "https://en.wikipedia.org/wiki/Eric_Show",
+    "verify_note": "Show 100 Padres wins confirmed (Lahman, Wikipedia; Darvish nowhere near). Replaced unverified 7-minute ovation/batboy detail with Wikipedia's verified Show-sat-on-mound detail.",
+    "verified": true
+  },
+  {
+    "id": "mlb-013",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In September 1993, which Cardinals outfielder hit four home runs in one game and tied the single-game record with 12 RBIs?",
+    "answer": "Mark Whiten",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "mark whiten",
+      "whiten"
+    ],
+    "hints": [
+      "He was a switch hitter with a cannon arm, playing in the nightcap of a doubleheader in Cincinnati.",
+      "His nickname was \"Hard Hittin'.\""
+    ],
+    "fact": "Mark Whiten's 12 RBIs tied the single-game record set by another Cardinal, Jim Bottomley, in 1924. Nobody has topped 12 since.",
+    "source": "https://sabr.org/gamesproj/game/september-7-1993-hard-hittin-mark-whiten-hits-four-home-runs-for-cardinals/",
+    "verify_note": "Removed unverified Reds-fans ovation detail from fact.",
+    "verified": true
+  },
+  {
+    "id": "mlb-014",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Who threw the first no-hitter ever at Coors Field, blanking the Rockies in September 1996?",
+    "answer": "Hideo Nomo",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "hideo nomo",
+      "nomo"
+    ],
+    "hints": [
+      "He pitched for the Dodgers.",
+      "He was the 1995 NL Rookie of the Year, famous for a twisting tornado windup."
+    ],
+    "fact": "Hideo Nomo did it after a two-hour rain delay, on a slick mound in 46-degree drizzle. He threw another no-hitter for Boston in 2001, pitching one in each league.",
+    "source": "https://sabr.org/gamesproj/game/september-17-1996-hideo-nomo-no-hits-colorado-rockies-at-hitter-friendly-coors-field/",
+    "verify_note": "Kept 'first' (SABR: first and only as of 2016). Removed unverified 7.06 Coors ERA stat; fact now uses the verified rain delay.",
+    "verified": true
+  },
+  {
+    "id": "mlb-015",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "On April 6, 1973, who became the first designated hitter to bat in a major league game?",
+    "answer": "Ron Blomberg",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "ron blomberg",
+      "blomberg",
+      "ronnie blomberg"
+    ],
+    "hints": [
+      "He was a Yankee, and he drew a bases-loaded walk from Luis Tiant at Fenway.",
+      "He was the No. 1 overall pick in the 1967 draft."
+    ],
+    "fact": "Ron Blomberg's bat sits in Cooperstown, the rare Hall of Fame bat honored for a walk. Boston's Orlando Cepeda, signed to be a DH, went 0-for-6 that day.",
+    "source": "https://sabr.org/gamesproj/game/april-6-1973-yankees-ron-blomberg-makes-debut-as-baseballs-first-designated-hitter/",
+    "verified": true
+  },
+  {
+    "id": "mlb-016",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 4,
+    "q": "Jack Morris threw 10 shutout innings in Game 7 of the 1991 World Series. Which Twins pinch hitter won it with a single in the bottom of the 10th?",
+    "answer": "Gene Larkin",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "gene larkin",
+      "larkin"
+    ],
+    "hints": [
+      "He was a bench player and the first Columbia University alum to reach the majors since Lou Gehrig.",
+      "He hit the first pitch he saw from Atlanta's Alejandro Pena over a drawn-in outfield."
+    ],
+    "fact": "Gene Larkin's single scored Dan Gladden for a 1-0 win and Minnesota's second title in five years. The ball he hit is now in the Hall of Fame.",
+    "source": "https://baseballhall.org/discover/inside-pitch/jack-morris-wins-game-7",
+    "verify_note": "Removed unverified claim that Larkin broke Gehrig's Columbia records; 'first Columbia alum since Gehrig' confirmed on Wikipedia.",
+    "verified": true
+  },
+  {
+    "id": "mlb-017",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 4,
+    "q": "Luis Gonzalez's bloop single off Mariano Rivera won the 2001 World Series. Which Diamondback crossed the plate with the winning run?",
+    "answer": "Jay Bell",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jay bell",
+      "bell"
+    ],
+    "hints": [
+      "He was a veteran infielder who had been an All-Star shortstop in Pittsburgh.",
+      "His last name is shared with the man credited with inventing the telephone."
+    ],
+    "fact": "Jay Bell scored from third as the Diamondbacks beat Mariano Rivera. Arizona won the title in just its fourth season, the fastest any expansion team had reached the World Series.",
+    "source": "https://sabr.org/gamesproj/game/november-4-2001-luis-gonzalezs-walk-off-single-lifts-diamondbacks-to-game-7-win-over-yankees/",
+    "verify_note": "Removed unverified Matt Williams bear-hug detail.",
+    "verified": true
+  },
+  {
+    "id": "mlb-018",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Sid Bream's slide won the 1992 NLCS. Which little-used Braves pinch hitter lined the two-out, two-run single that scored him?",
+    "answer": "Francisco Cabrera",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "francisco cabrera",
+      "cabrera"
+    ],
+    "hints": [
+      "He had only 10 at-bats during the 1992 regular season.",
+      "He lined a 2-1 pitch from Pittsburgh's Stan Belinda into left field, and Barry Bonds' throw was a hair late."
+    ],
+    "fact": "Francisco Cabrera's hit capped a three-run ninth for a 3-2 win in Game 7, sending Atlanta to its second straight World Series. It was the last postseason game the Pirates played for 21 years.",
+    "source": "https://sabr.org/gamesproj/game/october-14-1992-francisco-cabreras-dramatic-walk-off-single-sends-atlanta-braves-back-to-world-series/",
+    "verify_note": "Hint 1 said 'backup catcher'; SABR calls him the last reserve available. Kept only the verified 10 at-bats (Lahman).",
+    "verified": true
+  },
+  {
+    "id": "mlb-019",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Aaron Boone's pennant-winning homer in Game 7 of the 2003 ALCS came on the first pitch of the 11th inning. Which Red Sox pitcher threw it?",
+    "answer": "Tim Wakefield",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "tim wakefield",
+      "wakefield"
+    ],
+    "hints": [
+      "He was a knuckleballer.",
+      "He was drafted by Pittsburgh as a first baseman before reinventing himself on the mound."
+    ],
+    "fact": "Tim Wakefield got his revenge a year later when Boston came back from 0-3 against the Yankees and won the 2004 World Series. He ranks third in Red Sox history with 186 wins.",
+    "source": "https://en.wikipedia.org/wiki/Tim_Wakefield",
+    "verified": true
+  },
+  {
+    "id": "mlb-020",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Before Bill Buckner's error in Game 6 of the 1986 World Series, which Red Sox reliever threw the wild pitch that let the tying run score?",
+    "answer": "Bob Stanley",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "bob stanley",
+      "stanley"
+    ],
+    "hints": [
+      "He retired as Boston's career saves leader, a mark that stood until 2009.",
+      "His nicknames were \"the Steamer\" and \"Bigfoot.\""
+    ],
+    "fact": "Bob Stanley's wild pitch to Mookie Wilson scored Kevin Mitchell and moved Ray Knight to second. Moments later Wilson's grounder went through Buckner's legs. Stanley held the Red Sox saves record until Jonathan Papelbon passed him in 2009.",
+    "source": "https://en.wikipedia.org/wiki/Bob_Stanley_(baseball)",
+    "verify_note": "Hint 1 was wrong: Stanley had 123 saves in Oct 1986, not 132 (132 is his final total, Lahman). Rewritten.",
+    "verified": true
+  },
+  {
+    "id": "mlb-021",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Who ended the longest game by time in MLB history, a 25-inning White Sox win over Milwaukee in May 1984, with a walk-off homer?",
+    "answer": "Harold Baines",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "harold baines",
+      "baines"
+    ],
+    "hints": [
+      "He was the No. 1 overall pick in the 1977 draft.",
+      "Bill Veeck first scouted him when he was a 12-year-old in Maryland."
+    ],
+    "fact": "Harold Baines' blast off Chuck Porter ended a game that lasted 8 hours, 6 minutes over two nights. The bat is in Cooperstown, and so is Baines, elected in 2019.",
+    "source": "https://en.wikipedia.org/wiki/Harold_Baines",
+    "verified": true
+  },
+  {
+    "id": "mlb-022",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 4,
+    "q": "Before Carlton Fisk's famous homer in Game 6 of the 1975 World Series, which Red Sox pinch hitter tied it with a three-run homer in the 8th?",
+    "answer": "Bernie Carbo",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "bernie carbo",
+      "carbo",
+      "bernardo carbo"
+    ],
+    "hints": [
+      "He had come up with the Reds, the team he was facing.",
+      "Cincinnati drafted him in the first round of the first-ever draft in 1965, ahead of Johnny Bench."
+    ],
+    "fact": "Bernie Carbo took Rawly Eastwick deep to center with two outs. He also hit a pinch-hit homer in Game 3 of that Series against his old club.",
+    "source": "https://en.wikipedia.org/wiki/Bernie_Carbo",
+    "verified": true
+  },
+  {
+    "id": "mlb-023",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 4,
+    "q": "In the Steve Bartman game, Game 6 of the 2003 NLCS, which Marlins hitter lifted the foul ball that Moises Alou could not catch?",
+    "answer": "Luis Castillo",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "luis castillo",
+      "castillo"
+    ],
+    "hints": [
+      "He was Florida's second baseman and a speedy table-setter.",
+      "In 2002 he put together a 35-game hitting streak."
+    ],
+    "fact": "Luis Castillo walked after the play and the Marlins stormed back to win the game and the pennant. Six years later, as a Met, he dropped Alex Rodriguez's game-ending pop-up at Yankee Stadium.",
+    "source": "https://en.wikipedia.org/wiki/Luis_Castillo_(second_baseman)",
+    "verify_note": "Castillo's 35-game streak was later matched by Chase Utley (2006), so not 'the longest' outright; hint reworded.",
+    "verified": true
+  },
+  {
+    "id": "mlb-024",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Which Pirates pitcher later said he threw his June 1970 no-hitter against the Padres while on LSD?",
+    "answer": "Dock Ellis",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "dock ellis",
+      "ellis"
+    ],
+    "hints": [
+      "He walked eight batters in the game.",
+      "He started the 1971 All-Star Game for the National League."
+    ],
+    "fact": "Dock Ellis said he took the LSD believing he had the day off. His catcher Jerry May wore reflective tape on his fingers so Ellis could see the signs.",
+    "source": "https://en.wikipedia.org/wiki/Dock_Ellis",
+    "verify_note": "Minor wording fix to match source (he thought it was the day before, an off day).",
+    "verified": true
+  },
+  {
+    "id": "mlb-025",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Which pitcher, born without a right hand, no-hit the Cleveland Indians at Yankee Stadium in September 1993?",
+    "answer": "Jim Abbott",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jim abbott",
+      "abbott",
+      "james abbott"
+    ],
+    "hints": [
+      "He pitched the final game as Team USA won baseball gold at the 1988 Seoul Olympics.",
+      "He went straight from the University of Michigan into the Angels' rotation, never playing in the minors."
+    ],
+    "fact": "Jim Abbott rested his glove on his right arm, then slipped it onto his left hand after each pitch. Cleveland's lineup that day included Kenny Lofton, Albert Belle, Manny Ramirez and Jim Thome.",
+    "source": "https://sabr.org/gamesproj/game/september-4-1993-jim-abbotts-no-hitter/",
+    "verified": true
+  },
+  {
+    "id": "mlb-026",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Which Cardinals reliever turned his back to the plate and psyched himself up before facing each hitter, earning the nickname \"The Mad Hungarian\"?",
+    "answer": "Al Hrabosky",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "al hrabosky",
+      "hrabosky",
+      "alan hrabosky"
+    ],
+    "hints": [
+      "He won The Sporting News NL Fireman of the Year award in 1975.",
+      "He has been a Cardinals broadcaster since 1985."
+    ],
+    "fact": "Al Hrabosky went 13-3 with an NL-leading 22 saves in 1975. He was a St. Louis first-round pick in 1969 and also pitched for the Royals and Braves.",
+    "source": "https://www.baseball-reference.com/bullpen/Al_Hrabosky",
+    "verify_note": "1975 ERA is 1.66 per Lahman (Wikipedia says 1.67), so ERA removed. Wikipedia describes a horseshoe mustache, so 'Fu Manchu' dropped from question.",
+    "verified": true
+  },
+  {
+    "id": "mlb-027",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Which slugger got the nickname \"Pronk,\" a mash-up of \"the Project\" and \"Donkey\" coined by a teammate in 2003?",
+    "answer": "Travis Hafner",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "travis hafner",
+      "hafner"
+    ],
+    "hints": [
+      "He was Cleveland's designated hitter, arriving just after Jim Thome left.",
+      "In 2006 he tied the single-season record with six grand slams."
+    ],
+    "fact": "Travis Hafner came to Cleveland from Texas in a trade for catcher Einar Diaz. His six slams in 2006 tied Don Mattingly's 1987 record.",
+    "source": "https://en.wikipedia.org/wiki/Travis_Hafner",
+    "verify_note": "Fact was wrong: Banks (1955) and Gentile (1961) hit 5 slams, not 6; only Mattingly (1987) had 6.",
+    "verified": true
+  },
+  {
+    "id": "mlb-028",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Which 5-foot-9 Houston slugger of the 1960s and 70s was known as \"The Toy Cannon\"?",
+    "answer": "Jimmy Wynn",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jimmy wynn",
+      "jim wynn",
+      "wynn",
+      "james wynn"
+    ],
+    "hints": [
+      "He began his career when the franchise was still called the Colt .45s.",
+      "In 1967 he hit a homer over Crosley Field's 58-foot scoreboard and onto Interstate 75."
+    ],
+    "fact": "Jimmy Wynn hit 37 homers in 1967, second in the NL only to Hank Aaron, despite playing half his games in the cavernous Astrodome.",
+    "source": "https://sabr.org/latest/jaffe-remembering-jimmy-wynn-the-toy-cannon/",
+    "verify_note": "Hint 2 (first upper-deck HR at Astrodome, 1970) unverified; replaced with Wikipedia-verified Crosley Field shot.",
+    "verified": true
+  },
+  {
+    "id": "mlb-029",
+    "sport": "mlb",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Whose seventh-inning homer off the right-field foul pole gave Washington the lead for good in Game 7 of the 2019 World Series?",
+    "answer": "Howie Kendrick",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "howie kendrick",
+      "kendrick",
+      "howard kendrick"
+    ],
+    "hints": [
+      "He was a 36-year-old veteran and the 2019 NLCS MVP.",
+      "Earlier that October he hit a 10th-inning grand slam to beat the Dodgers in NLDS Game 5."
+    ],
+    "fact": "Howie Kendrick's two-run shot off Will Harris flipped a 2-1 deficit, and the Nationals won 6-2 for the franchise's first title, 50 years after the Expos were born.",
+    "source": "https://en.wikipedia.org/wiki/Howie_Kendrick",
+    "verified": true
+  },
+  {
+    "id": "mlb-030",
+    "sport": "mlb",
+    "type": "player-season",
+    "difficulty": 2,
+    "q": "In 1987, after handing his new team a blank contract, who became the first player ever to win MVP while playing for a last-place club?",
+    "answer": "Andre Dawson, 1987 Cubs",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "andre dawson",
+      "dawson",
+      "the hawk",
+      "hawk"
+    ],
+    "hints": [
+      "He led the NL with 49 homers and 137 RBIs for the Cubs.",
+      "He had spent his first 11 seasons with the Montreal Expos."
+    ],
+    "fact": "Andre Dawson signed for a bargain $500,000 plus incentives during the owners' collusion era, then won the NL MVP. The Cubs finished 76-85, last in the NL East.",
+    "source": "https://www.mlb.com/news/remembering-when-andre-dawson-offered-the-cubs-a-blank-contract-c166744678",
+    "verified": true
+  },
+  {
+    "id": "mlb-031",
+    "sport": "mlb",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Through 2025, who is the last pitcher to win 25 or more games in a season, doing it with 27 wins in 1990?",
+    "answer": "Bob Welch, 1990 Athletics",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "bob welch",
+      "welch",
+      "robert welch"
+    ],
+    "hints": [
+      "He pitched for Oakland and won the AL Cy Young that year.",
+      "As a 21-year-old Dodgers rookie, he struck out Reggie Jackson to end Game 2 of the 1978 World Series."
+    ],
+    "fact": "Bob Welch went 27-6 in 1990, the most wins in a season since Steve Carlton's 27 in 1972. Nobody has won more than 24 since.",
+    "source": "https://en.wikipedia.org/wiki/Bob_Welch_(baseball)",
+    "verified": true
+  },
+  {
+    "id": "mlb-032",
+    "sport": "mlb",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Which Orioles leadoff man hit 50 home runs in 1996 after never hitting more than 21 in any previous season?",
+    "answer": "Brady Anderson, 1996 Orioles",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "brady anderson",
+      "anderson"
+    ],
+    "hints": [
+      "He was Baltimore's center fielder, better known for speed.",
+      "He had stolen 53 bases in 1992, and he never topped 24 homers again after 1996."
+    ],
+    "fact": "Brady Anderson broke Frank Robinson's Orioles record with 50. Having stolen 53 bases with 21 homers in 1992, he became the first player with both a 50-homer, 20-steal season and a 20-homer, 50-steal season.",
+    "source": "https://en.wikipedia.org/wiki/Brady_Anderson",
+    "verified": true
+  },
+  {
+    "id": "mlb-033",
+    "sport": "mlb",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Who was the first player to win Rookie of the Year and MVP in the same season?",
+    "answer": "Fred Lynn, 1975 Red Sox",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "fred lynn",
+      "lynn",
+      "freddie lynn"
+    ],
+    "hints": [
+      "He did it in 1975, hitting .331 and also winning a Gold Glove in center field.",
+      "He and fellow rookie Jim Rice were called the \"Gold Dust Twins.\""
+    ],
+    "fact": "Fred Lynn led the AL in doubles, runs and slugging in 1975. In 1983 he hit the first grand slam in All-Star Game history.",
+    "source": "https://en.wikipedia.org/wiki/Fred_Lynn",
+    "verified": true
+  },
+  {
+    "id": "mlb-034",
+    "sport": "mlb",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "In 1984, which reliever won the AL MVP, the AL Cy Young and a World Series ring, all in the same season?",
+    "answer": "Willie Hernandez, 1984 Tigers",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "willie hernandez",
+      "hernandez",
+      "guillermo hernandez",
+      "willie hernández"
+    ],
+    "hints": [
+      "He was Detroit's closer, acquired from the Phillies just before the season.",
+      "He saved 32 games with a 1.92 ERA in a league-high 80 appearances."
+    ],
+    "fact": "Willie Hernandez joined Sandy Koufax (1963) and Denny McLain (1968) as the only players to win MVP, Cy Young and the World Series in the same year.",
+    "source": "https://sabr.org/bioproj/person/willie-hernandez/",
+    "verify_note": "Hint 2 '32 of 33 save chances' not confirmed by SABR bio; reworded to verified totals.",
+    "verified": true
+  },
+  {
+    "id": "mlb-035",
+    "sport": "mlb",
+    "type": "player-season",
+    "difficulty": 4,
+    "q": "In 1974, which Dodgers reliever pitched in a record 106 games and became the first reliever to win a Cy Young Award?",
+    "answer": "Mike Marshall, 1974 Dodgers",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "mike marshall",
+      "marshall",
+      "michael marshall"
+    ],
+    "hints": [
+      "He threw 208 1/3 innings that year, every one of them in relief.",
+      "He earned a Ph.D. in exercise physiology from Michigan State."
+    ],
+    "fact": "Mike Marshall went 15-12 with 21 saves and set records for relief innings and consecutive games pitched (13). He also holds the AL record with 90 games for the 1979 Twins.",
+    "source": "https://en.wikipedia.org/wiki/Mike_Marshall_(pitcher)",
+    "verify_note": "'Iron Mike' nickname unverified and leaked an alias; removed from hint and accept list. Games, innings, consecutive-games and AL records confirmed (Lahman, Wikipedia).",
+    "verified": true
+  },
+  {
+    "id": "mlb-036",
+    "sport": "mlb",
+    "type": "player-season",
+    "difficulty": 2,
+    "q": "In 2025, which catcher hit 60 home runs, the most ever by a primary catcher and by a switch hitter?",
+    "answer": "Cal Raleigh, 2025 Mariners",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "cal raleigh",
+      "raleigh",
+      "big dumper",
+      "calvin raleigh"
+    ],
+    "hints": [
+      "He plays for Seattle and set the Mariners' single-season record.",
+      "He also became the first catcher to win the Home Run Derby that year."
+    ],
+    "fact": "Cal Raleigh led MLB with 60 homers and became the first switch hitter with 20 from each side of the plate in one season. Fans call him \"Big Dumper.\" He finished second to Aaron Judge in the AL MVP vote.",
+    "source": "https://en.wikipedia.org/wiki/Cal_Raleigh",
+    "verify_note": "Hint 2 leaked alias 'big dumper'; replaced with verified Derby first. Removed 'tight' vote descriptor. 20 HR from each side confirmed on Wikipedia.",
+    "verified": true
+  },
+  {
+    "id": "mlb-037",
+    "sport": "mlb",
+    "type": "player-season",
+    "difficulty": 2,
+    "q": "Who is the only player to win Rookie of the Year and the Cy Young Award in the same season, doing it in strike-shortened 1981?",
+    "answer": "Fernando Valenzuela, 1981 Dodgers",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "fernando valenzuela",
+      "valenzuela",
+      "fernando"
+    ],
+    "hints": [
+      "He was a Dodgers lefty who opened the year with eight straight wins.",
+      "He was a 20-year-old from Mexico who looked to the sky during his windup and threw a devastating screwball."
+    ],
+    "fact": "Fernando Valenzuela won his first eight starts, five of them shutouts, sparking \"Fernandomania,\" then won the World Series that October.",
+    "source": "https://en.wikipedia.org/wiki/Fernando_Valenzuela",
+    "verified": true
+  },
+  {
+    "id": "mlb-038",
+    "sport": "mlb",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Which Cardinals rookie stole 110 bases in 1985, obliterating the rookie record?",
+    "answer": "Vince Coleman, 1985 Cardinals",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "vince coleman",
+      "coleman",
+      "vincent coleman"
+    ],
+    "hints": [
+      "He won the 1985 NL Rookie of the Year.",
+      "He missed the World Series after Busch Stadium's automatic tarp rolled over his leg during the NLCS."
+    ],
+    "fact": "Vince Coleman's 110 is still the rookie record. Without him, the Cardinals lost the 1985 World Series to Kansas City in seven.",
+    "source": "https://en.wikipedia.org/wiki/Vince_Coleman_(baseball)",
+    "verify_note": "Removed Juan Samuel previous-record claim (not confirmed).",
+    "verified": true
+  },
+  {
+    "id": "mlb-039",
+    "sport": "mlb",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Who hit 51 home runs in 1990 in his first season back in the majors after a year in Japan?",
+    "answer": "Cecil Fielder, 1990 Tigers",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "cecil fielder",
+      "fielder",
+      "big daddy"
+    ],
+    "hints": [
+      "He played first base for Detroit after a season with the Hanshin Tigers.",
+      "His son later hit 50 homers for Milwaukee in 2007."
+    ],
+    "fact": "Cecil Fielder hit Nos. 50 and 51 on the final day at Yankee Stadium, becoming the first 50-homer man since George Foster in 1977.",
+    "source": "https://en.wikipedia.org/wiki/Cecil_Fielder",
+    "verified": true
+  },
+  {
+    "id": "mlb-040",
+    "sport": "mlb",
+    "type": "player-season",
+    "difficulty": 2,
+    "q": "Which Mets first baseman set the MLB rookie record with 53 home runs in 2019?",
+    "answer": "Pete Alonso, 2019 Mets",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "pete alonso",
+      "alonso",
+      "polar bear",
+      "peter alonso"
+    ],
+    "hints": [
+      "He also won the 2019 Home Run Derby.",
+      "In August 2025 he passed Darryl Strawberry as the Mets' career home run leader."
+    ],
+    "fact": "Pete Alonso broke Aaron Judge's rookie record of 52 with No. 53 on September 28, 2019. Todd Frazier gave him his nickname, \"Polar Bear.\"",
+    "source": "https://sabr.org/gamesproj/game/september-28-2019-mets-pete-alonso-sets-rookie-mark-with-53rd-home-run/",
+    "verify_note": "Hint 2 leaked alias 'polar bear'; replaced with verified franchise-record detail.",
+    "verified": true
+  },
+  {
+    "id": "mlb-041",
+    "sport": "mlb",
+    "type": "number",
+    "difficulty": 2,
+    "q": "Orel Hershiser's record scoreless-innings streak in 1988 reached how many consecutive innings?",
+    "answer": "59 innings",
+    "kind": "number",
+    "num": 59,
+    "accept": [],
+    "hints": [
+      "It broke Don Drysdale's 1968 Dodgers mark of 58 2/3.",
+      "It's between 55 and 60."
+    ],
+    "fact": "Hershiser only wanted to tie Drysdale, but Tommy Lasorda sent him out for the 10th inning of his final start to break it. He then won the Cy Young and World Series MVP.",
+    "source": "https://en.wikipedia.org/wiki/Orel_Hershiser's_scoreless_innings_streak",
+    "verified": true
+  },
+  {
+    "id": "mlb-042",
+    "sport": "mlb",
+    "type": "number",
+    "difficulty": 2,
+    "q": "How many bases did Rickey Henderson steal in 1982, still the modern single-season record?",
+    "answer": "130 steals",
+    "kind": "number",
+    "num": 130,
+    "accept": [],
+    "hints": [
+      "It broke Lou Brock's 1974 record of 118.",
+      "It's between 125 and 135."
+    ],
+    "fact": "Rickey Henderson stole 130 for Oakland in 1982 and retired with 1,406 career steals, also the record. Nobody has stolen more than 109 in a season since 1985.",
+    "source": "https://en.wikipedia.org/wiki/Rickey_Henderson",
+    "verified": true
+  },
+  {
+    "id": "mlb-043",
+    "sport": "mlb",
+    "type": "number",
+    "difficulty": 3,
+    "q": "What was Bob Gibson's ERA in the 1968 \"Year of the Pitcher,\" still the live-ball era record?",
+    "answer": "1.12",
+    "kind": "number",
+    "num": 1.12,
+    "accept": [],
+    "hints": [
+      "He also threw 13 shutouts that year.",
+      "It's between 1.00 and 1.25."
+    ],
+    "fact": "Gibson went 22-9 despite the microscopic ERA. After the 1968 season MLB lowered the mound from 15 inches to 10.",
+    "source": "https://en.wikipedia.org/wiki/Bob_Gibson",
+    "verify_note": "Removed Dutch Leonard 0.96 (figure varies by source) and the 'Gibson rules' label.",
+    "verified": true
+  },
+  {
+    "id": "mlb-044",
+    "sport": "mlb",
+    "type": "number",
+    "difficulty": 4,
+    "q": "In the offense-crazy 2000 season, what ERA did Pedro Martinez post for Boston?",
+    "answer": "1.74",
+    "kind": "number",
+    "num": 1.74,
+    "accept": [],
+    "hints": [
+      "The next-best qualified AL ERA was Roger Clemens at 3.70.",
+      "It's under 2.00."
+    ],
+    "fact": "Pedro's 1.74 came in a year when the AL scored over 5 runs per team per game. He went 18-6 and won the Cy Young unanimously.",
+    "source": "https://en.wikipedia.org/wiki/Pedro_Mart%C3%ADnez",
+    "verified": true
+  },
+  {
+    "id": "mlb-045",
+    "sport": "mlb",
+    "type": "number",
+    "difficulty": 3,
+    "q": "Pete Rose's 1978 hitting streak, the longest since Joe DiMaggio's 56 in 1941, lasted how many games?",
+    "answer": "44 games",
+    "kind": "number",
+    "num": 44,
+    "accept": [],
+    "hints": [
+      "It tied Wee Willie Keeler's 1897 National League record.",
+      "Atlanta reliever Gene Garber struck him out to end it."
+    ],
+    "fact": "Garber fanned Rose in the ninth on August 1, 1978. Rose grumbled that the Braves pitched to him like it was the seventh game of the World Series.",
+    "source": "https://www.mlb.com/news/pete-rose-44-game-hitting-streak-1978-c288355236",
+    "verify_note": "Removed unverified .385 streak average; fact now uses Wikipedia-verified Garber reaction.",
+    "verified": true
+  },
+  {
+    "id": "mlb-046",
+    "sport": "mlb",
+    "type": "number",
+    "difficulty": 4,
+    "q": "How many times was Expos second baseman Ron Hunt hit by a pitch in 1971, the post-1900 single-season record?",
+    "answer": "50 times",
+    "kind": "number",
+    "num": 50,
+    "accept": [],
+    "hints": [
+      "Teammate Rusty Staub was second in the NL that year with just nine.",
+      "It's a round number between 45 and 55."
+    ],
+    "fact": "Ron Hunt's 50 is the most since Hughie Jennings was hit 51 times in 1896. It is a modern record that may never fall.",
+    "source": "https://sabr.org/bioproj/person/ron-hunt/",
+    "verify_note": "Baylor 35 is 2nd since 1900 through 2021 (Lahman) but 2022-25 not checkable here; swapped hint 1 to Lahman-verified Staub nine. Removed unverified Milt Pappas detail.",
+    "verified": true
+  },
+  {
+    "id": "mlb-047",
+    "sport": "mlb",
+    "type": "number",
+    "difficulty": 4,
+    "q": "Mike Piazza was drafted in the 62nd round in 1988 as a favor to Tommy Lasorda. What overall pick was he?",
+    "answer": "1,390th pick",
+    "kind": "number",
+    "num": 1390,
+    "accept": [],
+    "hints": [
+      "His father grew up in the same Norristown, Pennsylvania neighborhood as Lasorda.",
+      "It's between 1,350 and 1,400."
+    ],
+    "fact": "Mike Piazza, pick No. 1,390, became the 1993 NL Rookie of the Year and the lowest-drafted player ever elected to the Hall of Fame.",
+    "source": "https://baseballhall.org/hall-of-famers/piazza-mike",
+    "verified": true
+  },
+  {
+    "id": "mlb-048",
+    "sport": "mlb",
+    "type": "number",
+    "difficulty": 3,
+    "q": "Carlton Fisk wore No. 27 in Boston. What number did he wear for 13 seasons with the White Sox?",
+    "answer": "No. 72",
+    "kind": "number",
+    "num": 72,
+    "accept": [],
+    "hints": [
+      "His old number was taken by pitcher Ken Kravec when he signed in 1981.",
+      "He simply flipped the digits."
+    ],
+    "fact": "Fisk said 72 fit because he broke in with Boston in 1972 and his son Casey was born that year. The White Sox retired No. 72 in 1997.",
+    "source": "https://en.wikipedia.org/wiki/Carlton_Fisk",
+    "verified": true
+  },
+  {
+    "id": "mlb-049",
+    "sport": "mlb",
+    "type": "number",
+    "difficulty": 2,
+    "q": "How many separate times did George Steinbrenner hire Billy Martin as Yankees manager?",
+    "answer": "5 times",
+    "kind": "number",
+    "num": 5,
+    "accept": [],
+    "hints": [
+      "His first stint began in 1975 and included the 1977 title.",
+      "His last stint came in 1988, and it lasted only until June."
+    ],
+    "fact": "Billy Martin managed the Yankees in 1975-78, 1979, 1983, 1985 and 1988, and was fired or pushed out every time.",
+    "source": "https://en.wikipedia.org/wiki/Billy_Martin",
+    "verify_note": "Hint 2 said he was 60 in his last stint; he was 59 when hired and turned 60 mid-stint. Reworded.",
+    "verified": true
+  },
+  {
+    "id": "mlb-050",
+    "sport": "mlb",
+    "type": "year",
+    "difficulty": 2,
+    "q": "In what year did the Cubs finally play a night game at Wrigley Field?",
+    "answer": "1988",
+    "kind": "number",
+    "num": 1988,
+    "accept": [],
+    "hints": [
+      "It happened during Ronald Reagan's final full year in office.",
+      "The first attempt, on a date of repeating digits, was rained out after 3 1/2 innings."
+    ],
+    "fact": "The 8/8/88 game against the Phillies was washed out, so the first official night game came on August 9, 1988, a 6-4 Cubs win over the Mets.",
+    "source": "https://sabr.org/gamesproj/game/august-9-1988-cubs-win-first-official-night-game-at-wrigley-field/",
+    "verify_note": "Hint 1 (repeating 8s) nearly gave away the answer; moved it to hint 2 and added a weaker hint 1.",
+    "verified": true
+  },
+  {
+    "id": "mlb-051",
+    "sport": "mlb",
+    "type": "number",
+    "difficulty": 3,
+    "q": "The 1972 Phillies won only 59 games. How many of them did Steve Carlton win?",
+    "answer": "27 wins",
+    "kind": "number",
+    "num": 27,
+    "accept": [],
+    "hints": [
+      "He also won the NL Cy Young that year.",
+      "It's between 25 and 30."
+    ],
+    "fact": "Steve Carlton won 46% of Philadelphia's games, a modern record share. He went 27-10 with a 1.97 ERA and 310 strikeouts, and was the first pitcher on a last-place team to win the Cy Young.",
+    "source": "https://en.wikipedia.org/wiki/Steve_Carlton",
+    "verified": true
+  },
+  {
+    "id": "mlb-052",
+    "sport": "mlb",
+    "type": "number",
+    "difficulty": 3,
+    "q": "How many home runs did Rays rookie Randy Arozarena hit in the 2020 postseason, the single-postseason record through 2025?",
+    "answer": "10 homers",
+    "kind": "number",
+    "num": 10,
+    "accept": [],
+    "hints": [
+      "He won ALCS MVP that October against Houston.",
+      "It's a double-digit number."
+    ],
+    "fact": "Randy Arozarena also set the single-postseason hits record, and four of his homers came against Houston in the ALCS.",
+    "source": "https://en.wikipedia.org/wiki/Randy_Arozarena",
+    "verify_note": "Pinned record through 2025 (2026 postseason pending); removed unverified 29 hits/.377 line.",
+    "verified": true
+  },
+  {
+    "id": "mlb-053",
+    "sport": "mlb",
+    "type": "number",
+    "difficulty": 4,
+    "q": "Orioles slugger Chris Davis set a record for position players with a hitless streak spanning 2018 and 2019. How many at-bats did it last?",
+    "answer": "54 at-bats",
+    "kind": "number",
+    "num": 54,
+    "accept": [],
+    "hints": [
+      "It was more than 45.",
+      "It's between 50 and 60."
+    ],
+    "fact": "Chris Davis finally broke the streak on April 13, 2019, with a bases-loaded single at Fenway Park. ESPN called it the longest hitless streak ever by a position player.",
+    "source": "https://www.espn.com/mlb/story/_/id/26488549/chris-davis-0-54-streak",
+    "verify_note": "Previous-record hint was contested (Velez 46 across seasons vs Counsell 45 per ESPN); replaced. Removed unverified 210-day claim.",
+    "verified": true
+  },
+  {
+    "id": "mlb-054",
+    "sport": "mlb",
+    "type": "number",
+    "difficulty": 2,
+    "q": "How many games did the 2024 Chicago White Sox lose, a modern MLB record?",
+    "answer": "121 losses",
+    "kind": "number",
+    "num": 121,
+    "accept": [],
+    "hints": [
+      "They broke the record of the 1962 expansion Mets.",
+      "It's between 115 and 125."
+    ],
+    "fact": "The White Sox went 41-121, one more loss than the 40-120 Mets. Along the way they lost 21 straight, tying the AL record.",
+    "source": "https://www.espn.com/mlb/story/_/id/41421364/2024-mlb-chicago-white-sox-121-losses-record-1962-new-york-mets-numbers",
+    "verified": true
+  },
+  {
+    "id": "mlb-055",
+    "sport": "mlb",
+    "type": "team",
+    "difficulty": 2,
+    "q": "On Disco Demolition Night in July 1979, fans tore up the field after a crate of records was blown up. Which home team had to forfeit the second game of the doubleheader?",
+    "answer": "Chicago White Sox",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "chicago white sox",
+      "white sox",
+      "chicago",
+      "chisox"
+    ],
+    "hints": [
+      "It was an AL team owned at the time by showman Bill Veeck.",
+      "The records were blown up in center field at Comiskey Park, between games against Detroit."
+    ],
+    "fact": "The promotion, run with Veeck's son Mike and DJ Steve Dahl, offered 98-cent admission with a disco record. AL president Lee MacPhail forfeited the nightcap to the Tigers, and 39 people were arrested.",
+    "source": "https://en.wikipedia.org/wiki/Disco_Demolition_Night",
+    "verify_note": "Removed alias 'sox' (would accept a player meaning the Red Sox).",
+    "verified": true
+  },
+  {
+    "id": "mlb-056",
+    "sport": "mlb",
+    "type": "team",
+    "difficulty": 2,
+    "q": "On Ten Cent Beer Night in June 1974, drunk fans rushed the field in the ninth inning. Which home team was forced to forfeit to the Texas Rangers?",
+    "answer": "Cleveland Indians",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "cleveland indians",
+      "indians",
+      "cleveland",
+      "cleveland guardians",
+      "guardians"
+    ],
+    "hints": [
+      "It was an AL team playing in a huge lakefront stadium.",
+      "Umpire Nestor Chylak called the forfeit with the game tied 5-5."
+    ],
+    "fact": "Beers were 10 cents with a six-cup limit per purchase but no limit on purchases. Six days earlier the two teams had brawled in Arlington.",
+    "source": "https://en.wikipedia.org/wiki/Ten-Cent_Beer_Night",
+    "verify_note": "Fact was wrong: the Arlington brawl was six days earlier and not at a beer promotion (Wikipedia).",
+    "verified": true
+  },
+  {
+    "id": "mlb-057",
+    "sport": "mlb",
+    "type": "team",
+    "difficulty": 3,
+    "q": "Tom Brady was drafted as a left-handed-hitting catcher in the 18th round of the 1995 MLB Draft. Which team picked him?",
+    "answer": "Montreal Expos",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "montreal expos",
+      "expos",
+      "montreal"
+    ],
+    "hints": [
+      "The franchise no longer plays in that city.",
+      "The franchise has been known as the Washington Nationals since 2005."
+    ],
+    "fact": "Brady went 507th overall out of Junipero Serra High but chose Michigan football instead. When he retired in 2023, he was the last active player the Expos ever drafted.",
+    "source": "https://www.cbssports.com/mlb/news/tom-brady-becomes-last-active-montreal-expos-draft-pick-to-retire-from-professional-playing-career",
+    "verified": true
+  },
+  {
+    "id": "mlb-058",
+    "sport": "mlb",
+    "type": "team",
+    "difficulty": 3,
+    "q": "Which team, managed by Harvey Kuenn, was nicknamed \"Harvey's Wallbangers\" in 1982?",
+    "answer": "Milwaukee Brewers",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "milwaukee brewers",
+      "brewers",
+      "milwaukee"
+    ],
+    "hints": [
+      "They led the majors in runs and home runs and reached the World Series.",
+      "Robin Yount, Paul Molitor and Gorman Thomas powered the lineup."
+    ],
+    "fact": "The Brewers came back from 0-2 to win the ALCS, then lost the World Series in seven games to the Cardinals. Kuenn had taken over from Buck Rodgers in June.",
+    "source": "https://en.wikipedia.org/wiki/1982_Milwaukee_Brewers_season",
+    "verified": true
+  },
+  {
+    "id": "mlb-059",
+    "sport": "mlb",
+    "type": "team",
+    "difficulty": 2,
+    "q": "Which team released David Ortiz in December 2002, a few weeks before he signed with the Red Sox?",
+    "answer": "Minnesota Twins",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "minnesota twins",
+      "twins",
+      "minnesota"
+    ],
+    "hints": [
+      "It was an AL Central team.",
+      "Their Rule 5 pick Jose Morban took his roster spot, then never played a game for them."
+    ],
+    "fact": "Boston signed Ortiz for one year and $1.25 million in January 2003. He hit 483 homers for the Red Sox and won three World Series titles there.",
+    "source": "https://en.wikipedia.org/wiki/David_Ortiz",
+    "verify_note": "Hint 2 reworded to match source (released as a cost-cutting move; Morban took his roster spot).",
+    "verified": true
+  },
+  {
+    "id": "mlb-060",
+    "sport": "mlb",
+    "type": "team",
+    "difficulty": 3,
+    "q": "In December 1956 the Dodgers traded Jackie Robinson. Which team, Brooklyn's bitter rival, did they send him to before he retired instead?",
+    "answer": "New York Giants",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "new york giants",
+      "giants",
+      "ny giants"
+    ],
+    "hints": [
+      "The deal would have kept him in New York City.",
+      "Brooklyn was getting journeyman lefty Dick Littlefield."
+    ],
+    "fact": "Robinson had already taken a job with Chock Full o'Nuts and retired rather than report, so he never played for the Giants.",
+    "source": "https://baseballhall.org/discover/inside-pitch/jackie-robinson-retires",
+    "verify_note": "Removed Look magazine / 'trade voided' details not confirmed by source.",
+    "verified": true
+  },
+  {
+    "id": "mlb-061",
+    "sport": "mlb",
+    "type": "team",
+    "difficulty": 3,
+    "q": "Pete Rose collected his 4,000th career hit in April 1984 while playing for which team?",
+    "answer": "Montreal Expos",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "montreal expos",
+      "expos",
+      "montreal"
+    ],
+    "hints": [
+      "He spent only part of one season with this club.",
+      "He played there between his Phillies years and his return to Cincinnati as player-manager."
+    ],
+    "fact": "Rose doubled off Jerry Koosman of the Phillies, 21 years to the day after his first big-league hit. Phillies shortstop Ivan DeJesus handed the ball over.",
+    "source": "https://sabr.org/gamesproj/game/april-13-1984-pete-rose-records-his-4000th-major-league-hit/",
+    "verified": true
+  },
+  {
+    "id": "mlb-062",
+    "sport": "mlb",
+    "type": "coach",
+    "difficulty": 4,
+    "q": "Who was the first and only manager of the 1969 Seattle Pilots, made famous by Jim Bouton's book \"Ball Four\"?",
+    "answer": "Joe Schultz",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "joe schultz",
+      "schultz",
+      "joe schultz jr"
+    ],
+    "hints": [
+      "He had been a longtime Cardinals coach before getting the job.",
+      "His signature pep talk urged players to \"pound that ol' Budweiser.\""
+    ],
+    "fact": "Joe Schultz was fired after the Pilots' lone season, and the franchise moved to Milwaukee to become the Brewers just before the 1970 season.",
+    "source": "https://sabr.org/bioproj/person/joe-schultz/",
+    "verify_note": "Quote corrected to SABR wording.",
+    "verified": true
+  },
+  {
+    "id": "mlb-063",
+    "sport": "mlb",
+    "type": "coach",
+    "difficulty": 3,
+    "q": "Who managed the Expos in their final season in Montreal in 2004 and then the first Washington Nationals team in 2005?",
+    "answer": "Frank Robinson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "frank robinson",
+      "robinson",
+      "f robinson"
+    ],
+    "hints": [
+      "He is a Hall of Fame outfielder who won MVP in both leagues.",
+      "In 1975 he became MLB's first Black manager, as player-manager in Cleveland."
+    ],
+    "fact": "Frank Robinson was hired by MLB itself to run the league-owned Expos in 2002 and stayed on through 2006 in Washington.",
+    "source": "https://en.wikipedia.org/wiki/Frank_Robinson",
+    "verified": true
+  },
+  {
+    "id": "mlb-064",
+    "sport": "mlb",
+    "type": "coach",
+    "difficulty": 3,
+    "q": "Which Hall of Fame hitter managed the Washington Senators to 86 wins in 1969, their first winning season, and was named AL Manager of the Year?",
+    "answer": "Ted Williams",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "ted williams",
+      "williams",
+      "teddy ballgame",
+      "the splendid splinter"
+    ],
+    "hints": [
+      "The same basic roster had lost 96 games the year before.",
+      "He was the last man to hit .400 in a season."
+    ],
+    "fact": "Ted Williams was named AL Manager of the Year by the AP. It was the expansion Senators' only winning season in Washington before the move to Texas.",
+    "source": "https://en.wikipedia.org/wiki/1969_Washington_Senators_season",
+    "verify_note": "Fact reworded; 1969 was the franchise's only winning season in Washington (Wikipedia). MOY was the AP award.",
+    "verified": true
+  },
+  {
+    "id": "mlb-065",
+    "sport": "mlb",
+    "type": "coach",
+    "difficulty": 3,
+    "q": "Who is the only manager to win Manager of the Year with four different franchises?",
+    "answer": "Buck Showalter",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "buck showalter",
+      "showalter",
+      "william showalter",
+      "nat showalter"
+    ],
+    "hints": [
+      "He won with the Yankees in 1994, the Rangers in 2004 and the Orioles in 2014.",
+      "He also won with the 2022 Mets and was the Diamondbacks' inaugural manager in 1998."
+    ],
+    "fact": "Buck Showalter's four awards came in four different decades. Bobby Cox and Tony La Russa also have four, but repeated with the same teams.",
+    "source": "https://www.bostonglobe.com/2022/11/15/sports/mets-buck-showalter-becomes-first-win-four-manager-year-awards-with-four-teams/",
+    "verified": true
+  },
+  {
+    "id": "mlb-066",
+    "sport": "mlb",
+    "type": "coach",
+    "difficulty": 2,
+    "q": "Who was the first manager to win a World Series in both the National and American Leagues?",
+    "answer": "Sparky Anderson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "sparky anderson",
+      "sparky",
+      "anderson",
+      "george anderson"
+    ],
+    "hints": [
+      "He won back-to-back titles in 1975 and 1976 with the Big Red Machine.",
+      "He added a third title with the 104-win 1984 Tigers."
+    ],
+    "fact": "Sparky Anderson swept Kansas City in the 1984 ALCS and beat San Diego in the World Series. Tony La Russa and Bruce Bochy later joined him.",
+    "source": "https://en.wikipedia.org/wiki/Sparky_Anderson",
+    "verified": true
+  },
+  {
+    "id": "mlb-067",
+    "sport": "mlb",
+    "type": "coach",
+    "difficulty": 2,
+    "q": "Which 72-year-old took over the Marlins in May 2003 and led them to a World Series title over the Yankees?",
+    "answer": "Jack McKeon",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jack mckeon",
+      "mckeon",
+      "trader jack",
+      "john mckeon"
+    ],
+    "hints": [
+      "He replaced Jeff Torborg with Florida sitting at 16-22.",
+      "He came back to manage the Marlins again at age 80 in 2011."
+    ],
+    "fact": "Jack McKeon went 75-49 after taking over and was named NL Manager of the Year. He was the oldest manager to win the World Series until Dusty Baker in 2022.",
+    "source": "https://en.wikipedia.org/wiki/Jack_McKeon",
+    "verify_note": "Hint 2 leaked alias 'trader jack'; removed. Fact was wrong: Dusty Baker (73) became the oldest WS-winning manager in 2022.",
+    "verified": true
+  },
+  {
+    "id": "mlb-068",
+    "sport": "mlb",
+    "type": "coach",
+    "difficulty": 4,
+    "q": "Who managed the Montreal Expos in the 1981 playoffs, the only postseason the franchise ever reached while in Montreal?",
+    "answer": "Jim Fanning",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jim fanning",
+      "fanning",
+      "william fanning"
+    ],
+    "hints": [
+      "He replaced the fired Dick Williams in September after years as the team's scouting and player development boss.",
+      "His club lost the NLCS on Rick Monday's ninth-inning homer in Game 5, forever known in Montreal as \"Blue Monday.\""
+    ],
+    "fact": "The Dodgers won Game 5 by a 2-1 score at Olympic Stadium. The Expos never reached the postseason again before moving to Washington after 2004.",
+    "source": "https://en.wikipedia.org/wiki/1981_National_League_Championship_Series",
+    "verified": true
+  },
+  {
+    "id": "mlb-069",
+    "sport": "mlb",
+    "type": "other",
+    "difficulty": 2,
+    "q": "Which team owner sent 3-foot-7 Eddie Gaedel up to pinch-hit for the St. Louis Browns in August 1951?",
+    "answer": "Bill Veeck",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "bill veeck",
+      "veeck",
+      "william veeck"
+    ],
+    "hints": [
+      "He also owned the Cleveland Indians and later the Chicago White Sox.",
+      "Gaedel wore uniform number 1/8 and walked on four pitches."
+    ],
+    "fact": "Bill Veeck was baseball's great showman. Decades later his White Sox hosted Disco Demolition Night, and as a young Cubs employee he came up with the idea of ivy on Wrigley Field's walls.",
+    "source": "https://en.wikipedia.org/wiki/Bill_Veeck",
+    "verified": true
+  },
+  {
+    "id": "mlb-070",
+    "sport": "mlb",
+    "type": "nickname",
+    "difficulty": 3,
+    "q": "What nickname was given to the 1990 Reds bullpen trio of Rob Dibble, Norm Charlton and Randy Myers?",
+    "answer": "The Nasty Boys",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "nasty boys",
+      "the nasty boys"
+    ],
+    "hints": [
+      "The name came from the lyrics of a Janet Jackson song.",
+      "It's two words: an adjective meaning mean or vicious, plus a word for young men."
+    ],
+    "fact": "The Nasty Boys allowed no earned runs in 8 2/3 World Series innings as Cincinnati swept the heavily favored A's in 1990.",
+    "source": "https://en.wikipedia.org/wiki/Nasty_Boys_(Cincinnati_Reds)",
+    "verified": true
+  }
+]

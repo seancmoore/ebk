@@ -1,0 +1,1295 @@
+[
+  {
+    "id": "cfb-001",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Boise State beat Oklahoma 43-42 in the 2007 Fiesta Bowl on a Statue of Liberty two-point conversion. Who took the handoff and scored?",
+    "answer": "Ian Johnson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "ian johnson",
+      "johnson"
+    ],
+    "hints": [
+      "He was Boise State's star running back.",
+      "Minutes after the game he proposed to his cheerleader girlfriend on national TV."
+    ],
+    "fact": "Ian Johnson walked into the end zone untouched, then proposed to cheerleader Chrissy Popadics on the field. She said yes.",
+    "source": "https://en.wikipedia.org/wiki/2007_Fiesta_Bowl",
+    "verified": true
+  },
+  {
+    "id": "cfb-002",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 4,
+    "q": "On 4th-and-18 late in the 2007 Fiesta Bowl, Boise State ran a hook-and-lateral to force overtime vs Oklahoma. Who took the lateral and scored?",
+    "answer": "Jerard Rabb",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jerard rabb",
+      "rabb"
+    ],
+    "hints": [
+      "He was a Boise State wide receiver.",
+      "Drisan James caught Jared Zabransky's pass and pitched it to him for a 35-yard run."
+    ],
+    "fact": "Jerard Rabb took Drisan James' pitch 35 yards to tie the game with seven seconds left. Boise called the play \"Circus.\"",
+    "source": "https://en.wikipedia.org/wiki/Hook_and_ladder_(football)",
+    "verified": true
+  },
+  {
+    "id": "cfb-003",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 4,
+    "q": "In \"The Play\" (Cal vs Stanford, 1982), the ball carrier flattened a band member in the end zone. Name the Stanford trombonist.",
+    "answer": "Gary Tyrrell",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "gary tyrrell",
+      "tyrrell",
+      "gary tyrell",
+      "tyrell"
+    ],
+    "hints": [
+      "He was in the Stanford Band, which had rushed onto the field early.",
+      "First name Gary. His smashed trombone ended up in the College Football Hall of Fame."
+    ],
+    "fact": "Gary Tyrrell never saw Kevin Moen coming. The two later became friends, and the flattened trombone went to the College Football Hall of Fame.",
+    "source": "https://en.wikipedia.org/wiki/The_Play_(American_football)",
+    "verified": true
+  },
+  {
+    "id": "cfb-004",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Which Cal player finished \"The Play\" in 1982, scoring through the Stanford band after five laterals on the final kickoff?",
+    "answer": "Kevin Moen",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "kevin moen",
+      "moen"
+    ],
+    "hints": [
+      "He was a Cal defensive back who fielded the squib kick and also took the final lateral.",
+      "First name Kevin."
+    ],
+    "fact": "Kevin Moen started and finished the return, beating Stanford 25-20 in the Big Game. Cal's coach that day was Joe Kapp.",
+    "source": "https://en.wikipedia.org/wiki/The_Play_(American_football)",
+    "verified": true,
+    "verify_note": "Removed unverified 57-yard return length (Wikipedia has Moen fielding it at the Cal 45)."
+  },
+  {
+    "id": "cfb-005",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 4,
+    "q": "Auburn's Chris Davis returned a missed field goal 109 yards in the 2013 \"Kick Six.\" Which Alabama kicker's 57-yard try did he catch?",
+    "answer": "Adam Griffith",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "adam griffith",
+      "griffith"
+    ],
+    "hints": [
+      "He was a young kicker, sent out with one second left and the score tied 28-28.",
+      "First name Adam. He later kicked the famous surprise onside kick vs Clemson in the 2016 title game."
+    ],
+    "fact": "Adam Griffith's kick fell short and Davis took it the distance for a 34-28 win. Griffith got redemption: his perfectly placed onside kick helped Alabama beat Clemson 45-40 for the 2015 national title.",
+    "source": "https://en.wikipedia.org/wiki/Adam_Griffith_(American_football)",
+    "verified": true
+  },
+  {
+    "id": "cfb-006",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "FCS Appalachian State stunned No. 5 Michigan 34-32 in 2007 when a safety blocked a last-second field goal. Who blocked it?",
+    "answer": "Corey Lynch",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "corey lynch",
+      "lynch"
+    ],
+    "hints": [
+      "He was App State's safety and later played in the NFL.",
+      "First name Corey."
+    ],
+    "fact": "Corey Lynch blocked Jason Gingell's 37-yard try and ran it back as time expired. App State became the first FCS team to beat an AP-ranked FBS team, and the AP soon let FCS teams into its poll.",
+    "source": "https://www.ncaa.com/news/football/article/2016-09-01/college-football-throwback-thursday-2007-appalachian-state-vs",
+    "verified": true,
+    "verify_note": "Tightened the 'first' claim to match source wording (AP-ranked FBS team)."
+  },
+  {
+    "id": "cfb-007",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "The closest Heisman vote ever came in 2009, when Mark Ingram won by 28 points. Who finished second?",
+    "answer": "Toby Gerhart",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "toby gerhart",
+      "gerhart"
+    ],
+    "hints": [
+      "He was a bruising Stanford running back.",
+      "He outgained Ingram 1,736 yards to 1,542 and scored 26 touchdowns."
+    ],
+    "fact": "Ingram beat Toby Gerhart 1,304 points to 1,276. Gerhart was also a Stanford baseball outfielder.",
+    "source": "https://www.heisman.com/articles/the-closest-heisman-votes/",
+    "verified": true
+  },
+  {
+    "id": "cfb-008",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 4,
+    "q": "In the 2003 Fiesta Bowl, a late pass interference flag in overtime kept Ohio State alive vs Miami. Which Miami defender was flagged?",
+    "answer": "Glenn Sharpe",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "glenn sharpe",
+      "sharpe",
+      "glen sharpe"
+    ],
+    "hints": [
+      "He was a Miami cornerback covering Chris Gamble on 4th-and-3.",
+      "First name Glenn. The official was Terry Porter."
+    ],
+    "fact": "Field judge Terry Porter's delayed flag on Glenn Sharpe came after Miami players had already rushed the field. Ohio State won in double overtime for the title.",
+    "source": "https://en.wikipedia.org/wiki/Glenn_Sharpe",
+    "verified": true
+  },
+  {
+    "id": "cfb-009",
+    "sport": "cfb",
+    "type": "number",
+    "difficulty": 3,
+    "q": "Oklahoma holds the major college football record for consecutive wins, set from 1953 to 1957. How many games in a row?",
+    "answer": "47",
+    "kind": "number",
+    "num": 47,
+    "accept": [],
+    "hints": [
+      "Bud Wilkinson was the coach. Unranked Notre Dame snapped it 7-0 in Norman.",
+      "It is between 40 and 50."
+    ],
+    "fact": "Oklahoma won 47 straight until Notre Dame's Dick Lynch scored the only touchdown, a 3-yard run on fourth down, on Nov. 16, 1957. The Sooners had been two-time defending national champs.",
+    "source": "https://soonersports.com/sports/2019/8/13/208798684",
+    "verified": true,
+    "verify_note": "Removed unverified 19-point spread from fact."
+  },
+  {
+    "id": "cfb-010",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Who is the only Heisman Trophy winner to go on and play in the NBA?",
+    "answer": "Charlie Ward",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "charlie ward",
+      "ward"
+    ],
+    "hints": [
+      "He won the Heisman as a quarterback in 1993 and led his school to the national title that season.",
+      "He played for Florida State and later spent years as a Knicks point guard."
+    ],
+    "fact": "Charlie Ward went undrafted in the NFL but was a 1994 first-round NBA pick by the Knicks, and played 11 NBA seasons, including the Knicks' 1999 Finals run.",
+    "source": "https://en.wikipedia.org/wiki/Charlie_Ward",
+    "verified": true
+  },
+  {
+    "id": "cfb-011",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 4,
+    "q": "The stiff-arm pose on the Heisman Trophy was modeled by a real 1930s college running back. Who was he?",
+    "answer": "Ed Smith",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "ed smith",
+      "edward smith",
+      "smith"
+    ],
+    "hints": [
+      "He played for NYU and knew the sculptor, Frank Eliscu, from high school.",
+      "He had one of the most common surnames in America, and didn't learn he was the trophy's model until 1982."
+    ],
+    "fact": "NYU's Ed Smith posed in full gear for sculptor Frank Eliscu. He had no idea his stiff-arm became the Heisman until documentarians tracked him down in 1982.",
+    "source": "https://en.wikipedia.org/wiki/Ed_Smith_(running_back)",
+    "verified": true,
+    "verify_note": "Sources disagree on 1934 vs 1935 for the posing; removed the year from the question."
+  },
+  {
+    "id": "cfb-012",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 4,
+    "q": "Who was the last Ivy League player to win the Heisman Trophy?",
+    "answer": "Dick Kazmaier",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "dick kazmaier",
+      "kazmaier",
+      "richard kazmaier"
+    ],
+    "hints": [
+      "He won it in 1951 as a single-wing tailback.",
+      "He played for Princeton, which went 18-0 over his final two seasons."
+    ],
+    "fact": "Princeton's Dick Kazmaier won the 1951 Heisman, and no Ivy Leaguer has won it since. Women's college hockey's top prize, the Patty Kazmaier Award, honors his late daughter.",
+    "source": "https://www.heisman.com/heisman-winners/dick-kazmaier/",
+    "verified": true,
+    "verify_note": "Removed unverified 'landslide' and 'last single-wing winner' claims."
+  },
+  {
+    "id": "cfb-013",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Who was the first Heisman Trophy winner of the scholarship era to have begun his college career as a walk-on?",
+    "answer": "Baker Mayfield",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "baker mayfield",
+      "mayfield",
+      "baker"
+    ],
+    "hints": [
+      "He won it in 2017, and he walked on at two different schools.",
+      "He started at Texas Tech before transferring to Oklahoma."
+    ],
+    "fact": "Baker Mayfield walked on at Texas Tech, where he became the first walk-on true freshman QB to start an FBS opener, then walked on again at Oklahoma and won the 2017 Heisman.",
+    "source": "https://www.espn.com/college-football/story/_/id/21720945/oklahoma-sooners-quarterback-baker-mayfield-unconventional-route-heisman-trophy",
+    "verified": true,
+    "verify_note": "Removed unverified 732 first-place-votes stat."
+  },
+  {
+    "id": "cfb-014",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Which former walk-on caught the 2-yard touchdown with one second left to beat Alabama in the January 2017 national title game?",
+    "answer": "Hunter Renfrow",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "hunter renfrow",
+      "renfrow"
+    ],
+    "hints": [
+      "He was a slot receiver for Clemson, catching passes from Deshaun Watson.",
+      "First name Hunter."
+    ],
+    "fact": "Hunter Renfrow had 10 catches and two touchdowns in Clemson's 35-31 win. He later won the Burlsworth Trophy for the best former walk-on.",
+    "source": "https://www.ncaa.com/news/football/article/2017-01-10/watch-clemson-wins-championship-last-second-hunter-renfrow-td",
+    "verified": true
+  },
+  {
+    "id": "cfb-015",
+    "sport": "cfb",
+    "type": "number",
+    "difficulty": 2,
+    "q": "In the most lopsided game in college football history, John Heisman's Georgia Tech shut out Cumberland in 1916. How many points did Tech score?",
+    "answer": "222",
+    "kind": "number",
+    "num": 222,
+    "accept": [],
+    "hints": [
+      "Tech led 126-0 at halftime.",
+      "Heisman may have been paying back a 22-0 baseball loss to Cumberland. The number is a pattern."
+    ],
+    "fact": "Georgia Tech won 222-0. Cumberland had dropped football, but Heisman threatened to bill it $3,000 if it didn't show, so a student manager rounded up a squad of fraternity brothers and law students.",
+    "source": "https://en.wikipedia.org/wiki/1916_Cumberland_vs._Georgia_Tech_football_game",
+    "verified": true,
+    "verify_note": "Fact wording fixed to match source (fraternity brothers and law students)."
+  },
+  {
+    "id": "cfb-016",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 4,
+    "q": "In the 2002 \"Bluegrass Miracle,\" LSU beat Kentucky 33-30 on a tipped Hail Mary as time expired. Who caught it?",
+    "answer": "Devery Henderson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "devery henderson",
+      "henderson"
+    ],
+    "hints": [
+      "He was an LSU receiver who later won a Super Bowl with the Saints.",
+      "Marcus Randall threw it. The receiver's first name is Devery."
+    ],
+    "fact": "Devery Henderson caught the deflection just short of the 15 and ran it in. Kentucky coach Guy Morriss had already been doused with a Gatorade bath.",
+    "source": "https://en.wikipedia.org/wiki/Bluegrass_Miracle",
+    "verified": true,
+    "verify_note": "Removed disputed '75-yard' distance from the question."
+  },
+  {
+    "id": "cfb-017",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Two weeks before the Kick Six, Auburn beat Georgia on a 4th-and-18 tipped Hail Mary, the \"Prayer at Jordan-Hare.\" Who caught it?",
+    "answer": "Ricardo Louis",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "ricardo louis",
+      "louis"
+    ],
+    "hints": [
+      "He was a sophomore Auburn receiver. Nick Marshall threw it 73 yards.",
+      "First name Ricardo."
+    ],
+    "fact": "Two Georgia defenders collided going for the ball and tipped it straight to Ricardo Louis, who ran in for a 43-38 Auburn win.",
+    "source": "https://en.wikipedia.org/wiki/Prayer_at_Jordan%E2%80%93Hare",
+    "verified": true
+  },
+  {
+    "id": "cfb-018",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Kordell Stewart's final-play Hail Mary stunned Michigan in 1994, the \"Miracle at Michigan.\" Who caught it for Colorado?",
+    "answer": "Michael Westbrook",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "michael westbrook",
+      "westbrook"
+    ],
+    "hints": [
+      "He was Colorado's star receiver and a top-5 NFL draft pick the next spring.",
+      "First name Michael. Blake Anderson tipped it to him as planned."
+    ],
+    "fact": "Michael Westbrook caught the tip from teammate Blake Anderson in the end zone for a 27-26 win. The play was called \"Rocket Left.\"",
+    "source": "https://en.wikipedia.org/wiki/Miracle_at_Michigan",
+    "verified": true,
+    "verify_note": "Removed '64-yard' (ball traveled 70+ yards in the air; distance ambiguous)."
+  },
+  {
+    "id": "cfb-019",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 4,
+    "q": "\"Wide Right I\" in 1991: No. 1 Florida State lost 17-16 to No. 2 Miami on a missed 34-yard field goal. Who was FSU's kicker?",
+    "answer": "Gerry Thomas",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "gerry thomas",
+      "thomas",
+      "gerald thomas"
+    ],
+    "hints": [
+      "It was the first of several FSU late missed kicks vs Miami over the next dozen years.",
+      "First name Gerry."
+    ],
+    "fact": "Gerry Thomas missed with 29 seconds left. The NCAA had narrowed the uprights by 4 feet 10 inches before that season.",
+    "source": "https://en.wikipedia.org/wiki/Wide_Right_I",
+    "verified": true
+  },
+  {
+    "id": "cfb-020",
+    "sport": "cfb",
+    "type": "team",
+    "difficulty": 3,
+    "q": "In 1990, officials accidentally gave Colorado a fifth down on the final drive, and Colorado scored the winning TD on the last play. Who did Colorado beat?",
+    "answer": "Missouri",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "missouri",
+      "mizzou",
+      "missouri tigers",
+      "tigers"
+    ],
+    "hints": [
+      "It was a Big Eight game on the road at Faurot Field.",
+      "The home team is in Columbia."
+    ],
+    "fact": "Colorado beat Missouri 33-31 when backup QB Charles Johnson scored on the fifth down. Colorado went on to share the 1990 national title with Georgia Tech.",
+    "source": "https://en.wikipedia.org/wiki/Fifth_Down_Game_(1990)",
+    "verified": true
+  },
+  {
+    "id": "cfb-021",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Michigan's punter fumbled the snap with 10 seconds left in the 2015 rivalry game. Which Michigan State player scooped it up for the winning TD?",
+    "answer": "Jalen Watts-Jackson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jalen watts-jackson",
+      "jalen watts jackson",
+      "watts-jackson",
+      "watts jackson"
+    ],
+    "hints": [
+      "He was a sophomore safety.",
+      "First name Jalen. He ran 38 yards and got hurt in the celebration pile."
+    ],
+    "fact": "Jalen Watts-Jackson returned Blake O'Neill's fumble 38 yards for a 27-23 win, then broke his hip under the celebration dogpile and needed surgery.",
+    "source": "https://en.wikipedia.org/wiki/2015_Michigan_State_vs._Michigan_football_game",
+    "verified": true
+  },
+  {
+    "id": "cfb-022",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "The first winner of the trophy that became the Heisman (1935) was also the first pick in the first NFL draft, but never played a pro down. Who was he?",
+    "answer": "Jay Berwanger",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jay berwanger",
+      "berwanger",
+      "john jacob berwanger"
+    ],
+    "hints": [
+      "He was a do-everything halfback for a Big Ten school that no longer plays big-time football.",
+      "He played for the University of Chicago Maroons."
+    ],
+    "fact": "The Eagles drafted Jay Berwanger, then traded his rights to the Bears. He and George Halas couldn't agree on money, so he went to work for a Chicago rubber company instead.",
+    "source": "https://en.wikipedia.org/wiki/Jay_Berwanger",
+    "verified": true,
+    "verify_note": "Fact had wrong contract figure; sources say he asked for $15,000 vs Halas' $13,500. Rewrote without the disputed number."
+  },
+  {
+    "id": "cfb-023",
+    "sport": "cfb",
+    "type": "team",
+    "difficulty": 3,
+    "q": "Which founding Big Ten school abolished its football program after the 1939 season and then withdrew from the conference in 1946?",
+    "answer": "University of Chicago",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "university of chicago",
+      "chicago",
+      "uchicago",
+      "chicago maroons",
+      "maroons"
+    ],
+    "hints": [
+      "Its president, Robert Maynard Hutchins, thought big-time football clashed with academics.",
+      "It produced the very first Heisman winner, Jay Berwanger."
+    ],
+    "fact": "The Chicago Maroons were once a power under Amos Alonzo Stagg. President Robert Maynard Hutchins killed the program in 1939, and Michigan State eventually took the open Big Ten spot.",
+    "source": "https://en.wikipedia.org/wiki/Chicago_Maroons_football",
+    "verified": true
+  },
+  {
+    "id": "cfb-024",
+    "sport": "cfb",
+    "type": "team",
+    "difficulty": 4,
+    "q": "Which founding SEC member left the conference after the 1940 season without ever winning a single SEC football game?",
+    "answer": "Sewanee",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "sewanee",
+      "university of the south",
+      "sewanee tigers"
+    ],
+    "hints": [
+      "It's a small Episcopal school on a Tennessee mountain.",
+      "Its 1899 team famously went 12-0 and won five road games in six days."
+    ],
+    "fact": "Sewanee went 0-37 in SEC games from 1933 to 1940, getting shut out 26 times, before dropping athletic scholarships and leaving the league.",
+    "source": "https://en.wikipedia.org/wiki/Sewanee_Tigers_football",
+    "verified": true,
+    "verify_note": "Removed 'the south' from accept (too loose)."
+  },
+  {
+    "id": "cfb-025",
+    "sport": "cfb",
+    "type": "year",
+    "difficulty": 3,
+    "q": "The Southwest Conference, home of Texas, Texas A&M, Arkansas and more, fell apart in realignment. In what year was its final football season played?",
+    "answer": "1995",
+    "kind": "number",
+    "num": 1995,
+    "accept": [],
+    "hints": [
+      "Four of its Texas schools left to help form the Big 12.",
+      "It was in the mid-1990s; the conference officially dissolved the next year."
+    ],
+    "fact": "The SWC played its last football season in 1995 and dissolved in 1996. Texas, Texas A&M, Texas Tech and Baylor joined the Big Eight to form the Big 12.",
+    "source": "https://en.wikipedia.org/wiki/Southwest_Conference",
+    "verified": true,
+    "verify_note": "Hint 2 said 'following spring'; the SWC dissolved in mid-1996. Reworded."
+  },
+  {
+    "id": "cfb-026",
+    "sport": "cfb",
+    "type": "year",
+    "difficulty": 3,
+    "q": "Penn State was voted into the Big Ten in June 1990. In what year did it play its first Big Ten football season?",
+    "answer": "1993",
+    "kind": "number",
+    "num": 1993,
+    "accept": [],
+    "hints": [
+      "It took a few years for football schedules to catch up.",
+      "It was 1991, 1992, 1993 or 1994."
+    ],
+    "fact": "Penn State started Big Ten football play in 1993, making it an 11-team \"Big Ten.\" It was the league's first addition since Michigan State in 1949.",
+    "source": "https://en.wikipedia.org/wiki/1993_Big_Ten_Conference_football_season",
+    "verified": true
+  },
+  {
+    "id": "cfb-027",
+    "sport": "cfb",
+    "type": "venue",
+    "difficulty": 3,
+    "q": "In 1954, Bear Bryant took his first Texas A&M team to a brutal 10-day camp in the Hill Country during a drought. Over 100 players went; only a few dozen lasted. In what town?",
+    "answer": "Junction, Texas",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "junction",
+      "junction texas",
+      "junction tx"
+    ],
+    "hints": [
+      "A&M had an adjunct campus there, now run by Texas Tech.",
+      "The survivors are named after the town, and ESPN made a movie about them."
+    ],
+    "fact": "The \"Junction Boys\" survived 100-degree heat with no water breaks. The core of that group went 9-0-1 in 1956 and won the Southwest Conference.",
+    "source": "https://en.wikipedia.org/wiki/Junction_Boys",
+    "verified": true,
+    "verify_note": "Headcounts vary by source (100+ went, 27 to 39 stayed); softened the numbers."
+  },
+  {
+    "id": "cfb-028",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Who was the first sophomore ever to win the Heisman Trophy?",
+    "answer": "Tim Tebow",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "tim tebow",
+      "tebow"
+    ],
+    "hints": [
+      "He won it in 2007, beating out Darren McFadden.",
+      "He was a Florida Gators quarterback who ran for 23 TDs and threw for 32 that year."
+    ],
+    "fact": "Tim Tebow became the first FBS player to throw for 20 TDs and run for 20 in the same season, and joined Steve Spurrier and Danny Wuerffel as Florida Heisman winners.",
+    "source": "https://www.ncaa.com/news/football/article/2015-12-08/tim-tebow-heisman-trophy-win-2007-was-first-sophomore",
+    "verified": true
+  },
+  {
+    "id": "cfb-029",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Who is the most recent player from a service academy (Army, Navy or Air Force) to win the Heisman Trophy?",
+    "answer": "Roger Staubach",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "roger staubach",
+      "staubach",
+      "roger the dodger"
+    ],
+    "hints": [
+      "He won it in 1963, leading his team to a No. 2 ranking and the Cotton Bowl.",
+      "He was Navy's scrambling quarterback and later a Dallas Cowboys legend."
+    ],
+    "fact": "Roger Staubach won as a Navy junior in 1963, the last of five service-academy Heisman winners. He served in the Navy, including in Vietnam, before joining the Cowboys.",
+    "source": "https://www.heisman.com/heisman-winners/roger-staubach/",
+    "verified": true
+  },
+  {
+    "id": "cfb-030",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Who was the first primarily defensive player ever to win the Heisman Trophy?",
+    "answer": "Charles Woodson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "charles woodson",
+      "woodson"
+    ],
+    "hints": [
+      "He won it in 1997, beating Peyton Manning.",
+      "He was Michigan's cornerback and punt returner."
+    ],
+    "fact": "Charles Woodson won the 1997 Heisman as a cornerback who also returned punts and caught passes, including a punt return TD vs Ohio State. Michigan went unbeaten and won a share of the national title.",
+    "source": "https://www.heisman.com/heisman-winners/charles-woodson/",
+    "verified": true,
+    "verify_note": "Travis Hunter (2024) is also counted as a primarily defensive winner; reworded to 'first', which is permanent and unique."
+  },
+  {
+    "id": "cfb-031",
+    "sport": "cfb",
+    "type": "team",
+    "difficulty": 3,
+    "q": "The first college bowl game, the Rose Bowl on Jan. 1, 1902, ended 49-0 for Michigan. Who did Michigan beat?",
+    "answer": "Stanford",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "stanford",
+      "stanford cardinal",
+      "leland stanford junior university"
+    ],
+    "hints": [
+      "Michigan coach Fielding Yost had coached this team the season before.",
+      "It's a West Coast school; its captain conceded with about eight minutes left."
+    ],
+    "fact": "Stanford's captain gave up with eight minutes to go down 49-0. Michigan's 1901 team outscored opponents 550-0, and the Rose Bowl didn't return as a football game until 1916.",
+    "source": "https://en.wikipedia.org/wiki/1901_Michigan_Wolverines_football_team",
+    "verified": true
+  },
+  {
+    "id": "cfb-032",
+    "sport": "cfb",
+    "type": "venue",
+    "difficulty": 3,
+    "q": "Weeks after Pearl Harbor, fear of an attack on the West Coast moved the January 1942 Rose Bowl out of Pasadena. In which city was it played?",
+    "answer": "Durham, North Carolina",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "durham",
+      "durham north carolina",
+      "durham nc"
+    ],
+    "hints": [
+      "The host school borrowed bleachers from UNC and NC State.",
+      "The host was Duke, which lost 20-16 to Oregon State."
+    ],
+    "fact": "Duke hosted Oregon State in Durham and lost 20-16. The only other time the game left Pasadena was the pandemic edition in Arlington, Texas, in January 2021.",
+    "source": "https://en.wikipedia.org/wiki/1942_Rose_Bowl",
+    "verified": true
+  },
+  {
+    "id": "cfb-033",
+    "sport": "cfb",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Joe Burrow's FBS record of 60 TD passes in a season lasted only two years. Who broke it in 2021 with 62?",
+    "answer": "Bailey Zappe (2021)",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "bailey zappe",
+      "zappe"
+    ],
+    "hints": [
+      "He was a transfer quarterback who followed his coordinator from Houston Baptist.",
+      "He played for Western Kentucky and was later a Patriots backup."
+    ],
+    "fact": "Bailey Zappe threw six TDs in the Boca Raton Bowl to finish with 62, and also broke the FBS single-season passing yards record that year.",
+    "source": "https://www.ncaa.com/news/football/article/2021-12-18/college-football-bowl-results-western-kentucky-quarterback-bailey-zappe-breaks-fbs",
+    "verified": true
+  },
+  {
+    "id": "cfb-034",
+    "sport": "cfb",
+    "type": "number",
+    "difficulty": 3,
+    "q": "In November 2014, Oklahoma freshman Samaje Perine broke Melvin Gordon's week-old FBS single-game rushing record vs Kansas. How many yards did he run for?",
+    "answer": "427",
+    "kind": "number",
+    "num": 427,
+    "accept": [],
+    "hints": [
+      "Gordon's record, set against Nebraska, was 408.",
+      "It is between 420 and 430, on 34 carries."
+    ],
+    "fact": "Samaje Perine ran for 427 yards and five TDs on 34 carries. Buffalo's Jaret Patterson made a run at it with 409 in 2020, but Perine's record still stands.",
+    "source": "https://www.ncaa.com/news/football/article/2020-12-03/top-10-single-game-rushing-yard-leaders-college-football-history",
+    "verified": true,
+    "verify_note": "Replaced 'came closest' (not pinned in time) with a verified statement."
+  },
+  {
+    "id": "cfb-035",
+    "sport": "cfb",
+    "type": "team",
+    "difficulty": 2,
+    "q": "Floyd of Rosedale, a bronze pig trophy born from a 1935 bet between governors, goes to the winner of Iowa vs which Big Ten rival?",
+    "answer": "Minnesota",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "minnesota",
+      "minnesota golden gophers",
+      "golden gophers",
+      "gophers"
+    ],
+    "hints": [
+      "The pig was named Floyd after that state's governor, Floyd B. Olson.",
+      "The team plays in Minneapolis."
+    ],
+    "fact": "Iowa's governor delivered a live prize hog to Minnesota's governor after the 1935 game. The real Floyd died in 1936, so a 98-pound bronze pig replaced him.",
+    "source": "https://iowahistoryjournal.com/origin-floyd-rosedale/",
+    "verified": true
+  },
+  {
+    "id": "cfb-036",
+    "sport": "cfb",
+    "type": "nickname",
+    "difficulty": 2,
+    "q": "What is the name of Texas A&M's live collie mascot, officially the highest-ranking member of the Corps of Cadets?",
+    "answer": "Reveille",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "reveille",
+      "reveille x",
+      "rev",
+      "miss rev"
+    ],
+    "hints": [
+      "The name is also a military bugle call that wakes soldiers up.",
+      "She is a Rough Collie, and the name has been passed down through ten dogs since 1931."
+    ],
+    "fact": "Reveille wears five silver diamonds as the Corps' top-ranking member. A sophomore cadet in Company E-2 serves as her caretaker each year.",
+    "source": "https://www.tamu.edu/campus-community/traditions/aggie-culture/reveille.html",
+    "verified": true,
+    "verify_note": "Hint 2 said 'ten-plus dogs'; current is Reveille X, so exactly ten."
+  },
+  {
+    "id": "cfb-037",
+    "sport": "cfb",
+    "type": "number",
+    "difficulty": 2,
+    "q": "After the NCAA restored 111 of his vacated wins in 2015, Joe Paterno was back atop the FBS career wins list. What is his win total?",
+    "answer": "409",
+    "kind": "number",
+    "num": 409,
+    "accept": [],
+    "hints": [
+      "He coached Penn State from 1966 to 2011.",
+      "It is just over 400."
+    ],
+    "fact": "Paterno finished 409-136-3. His 409th and final win came on Oct. 29, 2011, days before Penn State fired him.",
+    "source": "https://www.espn.com/college-football/story/_/id/12179571/joe-paterno-111-wins-were-vacated-restored",
+    "verified": true,
+    "verify_note": "Removed unverified hockey-sticker detail."
+  },
+  {
+    "id": "cfb-038",
+    "sport": "cfb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Doug Flutie's Hail Mary beat defending champ Miami 47-45 in 1984. Who caught it in the end zone for Boston College?",
+    "answer": "Gerard Phelan",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "gerard phelan",
+      "phelan",
+      "gerry phelan"
+    ],
+    "hints": [
+      "He was a Boston College wide receiver.",
+      "First name Gerard."
+    ],
+    "fact": "Gerard Phelan got behind the Miami secondary as Flutie's heave from his own 37 carried more than 60 yards in the air. It went down as a 48-yard touchdown pass.",
+    "source": "https://en.wikipedia.org/wiki/Hail_Flutie",
+    "verified": true,
+    "verify_note": "Removed unverified 'roommate' claim from hint 1."
+  },
+  {
+    "id": "cbb-001",
+    "sport": "cbb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Lorenzo Charles won the 1983 title for NC State by dunking a desperation 30-footer that fell short. Who threw up that airball?",
+    "answer": "Dereck Whittenburg",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "dereck whittenburg",
+      "whittenburg",
+      "derek whittenburg",
+      "whitt"
+    ],
+    "hints": [
+      "He was one of NC State's senior guards, alongside Sidney Lowe.",
+      "First name Dereck."
+    ],
+    "fact": "Dereck Whittenburg's heave came up short, Hakeem Olajuwon hesitated, and Charles dunked it for a 54-52 win over Houston in Albuquerque.",
+    "source": "https://en.wikipedia.org/wiki/1983_NCAA_Division_I_men%27s_basketball_championship_game",
+    "verified": true
+  },
+  {
+    "id": "cbb-002",
+    "sport": "cbb",
+    "type": "player",
+    "difficulty": 2,
+    "q": "With 2.1 seconds left in overtime of the 1992 East Regional final vs Kentucky, who threw the full-court pass to Christian Laettner?",
+    "answer": "Grant Hill",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "grant hill",
+      "hill"
+    ],
+    "hints": [
+      "He was a Duke sophomore forward, later a seven-time NBA All-Star.",
+      "First name Grant."
+    ],
+    "fact": "Nobody guarded Grant Hill on the inbound. Laettner caught it, dribbled, spun and hit it at the horn for a 104-103 win, finishing a perfect 10-for-10 from the field.",
+    "source": "https://en.wikipedia.org/wiki/The_Shot_(Duke%E2%80%93Kentucky)",
+    "verified": true
+  },
+  {
+    "id": "cbb-003",
+    "sport": "cbb",
+    "type": "number",
+    "difficulty": 4,
+    "q": "8-seed Villanova beat Georgetown 66-64 in the 1985 title game with a near-perfect shooting night. How many field goal attempts did Villanova miss all game?",
+    "answer": "6",
+    "kind": "number",
+    "num": 6,
+    "accept": [],
+    "hints": [
+      "They shot 78.6 percent, still the best in a Final Four game.",
+      "They made 22 shots and went 9-for-10 in the second half."
+    ],
+    "fact": "Villanova went 22-for-28, missing only six shots, and just one in the second half. It remains the lowest seed ever to win the title.",
+    "source": "https://en.wikipedia.org/wiki/1985_NCAA_Division_I_men%27s_basketball_championship_game",
+    "verified": true
+  },
+  {
+    "id": "cbb-004",
+    "sport": "cbb",
+    "type": "coach",
+    "difficulty": 3,
+    "q": "Who coached UMBC in 2018 when it became the first men's 16 seed to beat a 1 seed, routing Virginia 74-54?",
+    "answer": "Ryan Odom",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "ryan odom",
+      "odom"
+    ],
+    "hints": [
+      "He was in his second season at UMBC, and his father Dave coached Wake Forest.",
+      "First name Ryan. He later coached VCU."
+    ],
+    "fact": "Ryan Odom's Retrievers outscored Virginia by 20 after halftime. Plot twist: Virginia hired him as its head coach in 2025.",
+    "source": "https://en.wikipedia.org/wiki/2018_UMBC_vs._Virginia_men%27s_basketball_game",
+    "verified": true
+  },
+  {
+    "id": "cbb-005",
+    "sport": "cbb",
+    "type": "coach",
+    "difficulty": 4,
+    "q": "Fairleigh Dickinson became the second men's 16 seed to beat a 1 seed, knocking off Purdue in 2023. Who was FDU's first-year head coach?",
+    "answer": "Tobin Anderson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "tobin anderson",
+      "anderson"
+    ],
+    "hints": [
+      "He had come from Division II power St. Thomas Aquinas the year before.",
+      "First name Tobin."
+    ],
+    "fact": "Tobin Anderson had FDU beat a 23.5-point favorite, the biggest upset by spread in tournament history. Days later he left for Iona.",
+    "source": "https://en.wikipedia.org/wiki/2023_Fairleigh_Dickinson_vs._Purdue_men%27s_basketball_game",
+    "verified": true,
+    "verify_note": "Removed unverified 'brought three players' from hint 1."
+  },
+  {
+    "id": "cbb-006",
+    "sport": "cbb",
+    "type": "venue",
+    "difficulty": 3,
+    "q": "Butler played Duke for the 2010 national title in its own hometown and lost 61-59 when a half-court heave rimmed out. In what stadium?",
+    "answer": "Lucas Oil Stadium",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "lucas oil stadium",
+      "lucas oil"
+    ],
+    "hints": [
+      "It's an NFL stadium in Indianapolis.",
+      "It is home to the Colts."
+    ],
+    "fact": "Gordon Hayward's heave at Lucas Oil Stadium was inches from making 5-seed Butler the ultimate hometown Cinderella. Duke's win gave Coach K his fourth title.",
+    "source": "https://en.wikipedia.org/wiki/2010_NCAA_Division_I_men%27s_basketball_championship_game",
+    "verified": true
+  },
+  {
+    "id": "cbb-007",
+    "sport": "cbb",
+    "type": "coach",
+    "difficulty": 3,
+    "q": "Who coached Saint Peter's in 2022 when it became the first 15 seed to reach the Elite Eight?",
+    "answer": "Shaheen Holloway",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "shaheen holloway",
+      "holloway"
+    ],
+    "hints": [
+      "As a player he starred at Seton Hall and led a 10 seed to the 2000 Sweet 16.",
+      "First name Shaheen."
+    ],
+    "fact": "Shaheen Holloway's Peacocks beat Kentucky, Murray State and Purdue. Right after the run he left to coach his alma mater, Seton Hall.",
+    "source": "https://www.ncaa.com/news/basketball-men/article/2022-03-25/saint-peters-upsets-no-3-purdue-become-first-no-15-seed-advance-elite-8",
+    "verified": true
+  },
+  {
+    "id": "cbb-008",
+    "sport": "cbb",
+    "type": "team",
+    "difficulty": 2,
+    "q": "In 2011, which 11 seed became the first team ever to go from the First Four all the way to the Final Four?",
+    "answer": "VCU",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "vcu",
+      "virginia commonwealth",
+      "virginia commonwealth rams",
+      "vcu rams"
+    ],
+    "hints": [
+      "They were coached by 33-year-old Shaka Smart.",
+      "They are the Rams, from Richmond."
+    ],
+    "fact": "VCU beat USC, Georgetown, Purdue, Florida State and No. 1 Kansas. UCLA matched the First Four to Final Four trip in 2021.",
+    "source": "https://en.wikipedia.org/wiki/2010%E2%80%9311_VCU_Rams_men%27s_basketball_team",
+    "verified": true
+  },
+  {
+    "id": "cbb-009",
+    "sport": "cbb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Who is the only NCAA Division I men's player to score 100 points in a game, doing it vs Newberry in 1954?",
+    "answer": "Frank Selvy",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "frank selvy",
+      "selvy"
+    ],
+    "hints": [
+      "He played for Furman in South Carolina.",
+      "First name Frank. He later played for the Minneapolis/Los Angeles Lakers."
+    ],
+    "fact": "Frank Selvy made 41 of 66 shots and 18 of 22 free throws. He averaged 41.7 points per game that season and led the nation in scoring for the second straight year.",
+    "source": "https://www.ncaa.com/news/basketball-men/article/2019-02-13/frank-selvy-furman-ncaa-record-100-points-game",
+    "verified": true,
+    "verify_note": "Removed unverified 149-95 score and record-until-Maravich claim."
+  },
+  {
+    "id": "cbb-010",
+    "sport": "cbb",
+    "type": "number",
+    "difficulty": 3,
+    "q": "Pete Maravich holds the NCAA record for career scoring average from his three varsity seasons at LSU. What was it, to one decimal?",
+    "answer": "44.2",
+    "kind": "number",
+    "num": 44.2,
+    "accept": [],
+    "hints": [
+      "He led the nation in scoring all three years, without a three-point line.",
+      "He scored 3,667 points in 83 games."
+    ],
+    "fact": "Pistol Pete averaged 44.2 points a game, and his 3,667 points are still the men's Division I career record, all without a shot clock or three-point line.",
+    "source": "https://www.ncaa.com/news/basketball-men/article/2022-03-07/pistol-pete-maravich-college-basketball-stats-best-moments-quotes",
+    "verified": true
+  },
+  {
+    "id": "cbb-011",
+    "sport": "cbb",
+    "type": "number",
+    "difficulty": 2,
+    "q": "John Wooden's UCLA had the longest winning streak in men's Division I history, snapped by Notre Dame in January 1974. How many games?",
+    "answer": "88",
+    "kind": "number",
+    "num": 88,
+    "accept": [],
+    "hints": [
+      "Bill Walton was UCLA's star center when it ended.",
+      "It is between 80 and 90."
+    ],
+    "fact": "Notre Dame scored the last 12 points, capped by Dwight Clay's corner jumper, for a 71-70 win. The streak had begun right after UCLA's last loss, also to Notre Dame, in January 1971.",
+    "source": "https://www.heraldstandard.com/sports/2024/jan/21/50-years-ago-clay-ended-uclas-88-game-winning-streak/",
+    "verified": true,
+    "verify_note": "Removed unverified '21 seconds left' detail."
+  },
+  {
+    "id": "cbb-012",
+    "sport": "cbb",
+    "type": "nickname",
+    "difficulty": 2,
+    "q": "What fraternity-style nickname did Houston's high-flying early-80s teams with Hakeem Olajuwon and Clyde Drexler go by?",
+    "answer": "Phi Slama Jama",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "phi slama jama",
+      "phi slamma jamma",
+      "phi slama jamma",
+      "phi slamma jama"
+    ],
+    "hints": [
+      "It was coined by Houston Post writer Thomas Bonk.",
+      "It's a made-up Greek-letter name built around dunking."
+    ],
+    "fact": "Phi Slama Jama reached three straight Final Fours (1982-84) under Guy Lewis but never won it all, famously losing the 1983 final to NC State.",
+    "source": "https://en.wikipedia.org/wiki/Phi_Slama_Jama",
+    "verified": true,
+    "verify_note": "Removed disputed coinage year from hint 1."
+  },
+  {
+    "id": "cbb-013",
+    "sport": "cbb",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Memphis led Kansas by three in the final seconds of the 2008 title game. Who hit the tying three with 2.1 seconds left to force overtime?",
+    "answer": "Mario Chalmers",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "mario chalmers",
+      "chalmers"
+    ],
+    "hints": [
+      "He was a Kansas guard from Alaska, later a two-time NBA champion with Miami.",
+      "First name Mario."
+    ],
+    "fact": "Memphis missed key free throws down the stretch, and Mario Chalmers made them pay. Kansas won 75-68 in overtime at the Alamodome.",
+    "source": "https://en.wikipedia.org/wiki/2008_NCAA_Division_I_men%27s_basketball_championship_game",
+    "verified": true
+  },
+  {
+    "id": "cbb-014",
+    "sport": "cbb",
+    "type": "team",
+    "difficulty": 2,
+    "q": "Through the 2025-26 season, which team was the last to go undefeated and win the men's national championship?",
+    "answer": "Indiana (1975-76)",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "indiana",
+      "indiana hoosiers",
+      "hoosiers",
+      "iu"
+    ],
+    "hints": [
+      "They finished 32-0 and beat Michigan in the final.",
+      "Bob Knight coached them, with Scott May, Kent Benson and Quinn Buckner."
+    ],
+    "fact": "Indiana went 32-0 in 1975-76 and beat Big Ten rival Michigan 86-68 in the title game. Kentucky got to 38-0 in 2015 before losing in the Final Four.",
+    "source": "https://en.wikipedia.org/wiki/1975%E2%80%9376_Indiana_Hoosiers_men%27s_basketball_team",
+    "verified": true
+  },
+  {
+    "id": "cbb-015",
+    "sport": "cbb",
+    "type": "other",
+    "difficulty": 2,
+    "q": "Which 98-year-old nun, the team chaplain, became the breakout star of 11-seed Loyola Chicago's 2018 Final Four run?",
+    "answer": "Sister Jean",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "sister jean",
+      "jean dolores schmidt",
+      "sister jean dolores schmidt",
+      "jean schmidt",
+      "sister jean schmidt"
+    ],
+    "hints": [
+      "She prayed with the Ramblers before games and sent them scouting notes.",
+      "She was born Dolores Schmidt in 1919 and fans simply called her by her title plus her religious first name."
+    ],
+    "fact": "Sister Jean Dolores Schmidt became a national celebrity in 2018. She died in October 2025 at age 106.",
+    "source": "https://en.wikipedia.org/wiki/Sister_Jean",
+    "verified": true
+  },
+  {
+    "id": "cbb-016",
+    "sport": "cbb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "UCLA trailed Missouri by one in the 1995 second round when a guard went coast to coast in under five seconds for the winning layup. Who?",
+    "answer": "Tyus Edney",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "tyus edney",
+      "edney"
+    ],
+    "hints": [
+      "He was UCLA's 5-foot-10 senior point guard.",
+      "First name Tyus."
+    ],
+    "fact": "Tyus Edney's layup beat Missouri 75-74. UCLA rode it all the way to the 1995 title, beating Arkansas 89-78.",
+    "source": "https://en.wikipedia.org/wiki/1995_NCAA_Division_I_men%27s_basketball_tournament",
+    "verified": true
+  },
+  {
+    "id": "cbb-017",
+    "sport": "cbb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Before Kris Jenkins' buzzer-beater won the 2016 title for Villanova, which North Carolina player hit a double-clutch three to tie it 74-74 with 4.7 seconds left?",
+    "answer": "Marcus Paige",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "marcus paige",
+      "paige"
+    ],
+    "hints": [
+      "He was UNC's senior guard.",
+      "First name Marcus."
+    ],
+    "fact": "Marcus Paige's off-balance three looked like an all-time moment for 4.7 seconds. Then Ryan Arcidiacono dribbled up and flipped it to Jenkins for a 77-74 Villanova win.",
+    "source": "https://en.wikipedia.org/wiki/2016_NCAA_Division_I_men%27s_basketball_championship_game",
+    "verified": true
+  },
+  {
+    "id": "cbb-018",
+    "sport": "cbb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "13-seed Valparaiso beat 4-seed Ole Miss 70-69 in 1998 on a play called \"Pacer\" that ended with a buzzer-beating three. Who hit it?",
+    "answer": "Bryce Drew",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "bryce drew",
+      "drew"
+    ],
+    "hints": [
+      "His father was Valparaiso's head coach.",
+      "He later coached Valpo, Vanderbilt and Grand Canyon. First name Bryce."
+    ],
+    "fact": "Jamie Sykes threw it long, Bill Jenkins caught it and dished to Bryce Drew, who drilled the three for his dad Homer's team. Valpo reached the Sweet 16.",
+    "source": "https://en.wikipedia.org/wiki/Bryce_Drew",
+    "verified": true
+  },
+  {
+    "id": "cbb-019",
+    "sport": "cbb",
+    "type": "number",
+    "difficulty": 3,
+    "q": "UNLV beat Duke in the 1990 title game by the largest margin in championship game history. By how many points?",
+    "answer": "30",
+    "kind": "number",
+    "num": 30,
+    "accept": [],
+    "hints": [
+      "UNLV topped 100 points, and Anderson Hunt was Most Outstanding Player.",
+      "It is between 25 and 35."
+    ],
+    "fact": "UNLV beat Duke by 30 in Denver, and Anderson Hunt was Most Outstanding Player with 29 points. Duke got revenge in the 1991 semifinal.",
+    "source": "https://en.wikipedia.org/wiki/1990_NCAA_Division_I_men%27s_basketball_championship_game",
+    "verified": true,
+    "verify_note": "Hint 2 gave the final score, which is the answer. Replaced with a range."
+  },
+  {
+    "id": "cbb-020",
+    "sport": "cbb",
+    "type": "player",
+    "difficulty": 3,
+    "q": "After Michael Jordan's jumper put UNC up 63-62 in the 1982 title game, which Georgetown guard threw the ball straight to James Worthy?",
+    "answer": "Fred Brown",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "fred brown",
+      "brown",
+      "freddie brown"
+    ],
+    "hints": [
+      "He was a Georgetown sophomore guard.",
+      "First name Fred. John Thompson famously consoled him right after."
+    ],
+    "fact": "Fred Brown's errant pass sealed UNC's 63-62 win in New Orleans, Dean Smith's first title. John Thompson hugging Brown moments later became an iconic image, and Brown was a senior on Georgetown's 1984 title team.",
+    "source": "https://en.wikipedia.org/wiki/1982_NCAA_Division_I_men%27s_basketball_championship_game",
+    "verified": true,
+    "verify_note": "Fact misplaced the famous Thompson hug in 1984; it was right after the 1982 turnover."
+  },
+  {
+    "id": "cbb-021",
+    "sport": "cbb",
+    "type": "nickname",
+    "difficulty": 3,
+    "q": "Wichita State's scowling mascot is a bundle of harvested wheat, a nod to students who once worked the fields. What is its name?",
+    "answer": "WuShock",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "wushock",
+      "wu shock",
+      "the wushock"
+    ],
+    "hints": [
+      "A student drew it in 1948 and the name came from a student newspaper contest.",
+      "Harvested wheat bundles are called \"shocks.\""
+    ],
+    "fact": "Former Marine Wilbur Elsea designed WuShock in 1948 and freshman Jack Kersting named it. It's been redesigned to look meaner over the years.",
+    "source": "https://en.wikipedia.org/wiki/WuShock",
+    "verified": true,
+    "verify_note": "Hint 1 reworded: the mascot was drawn by a student and named via a student-paper contest."
+  },
+  {
+    "id": "cbb-022",
+    "sport": "cbb",
+    "type": "nickname",
+    "difficulty": 4,
+    "q": "Oregon won the first NCAA tournament in 1939, beating Ohio State 46-33. What nickname did that team earn for its size?",
+    "answer": "The Tall Firs",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "tall firs",
+      "the tall firs"
+    ],
+    "hints": [
+      "A newspaper editor, L. H. Gregory, named them for their height.",
+      "It's a tree reference, fitting for the Pacific Northwest."
+    ],
+    "fact": "The Tall Firs were coached by Howard Hobson and won the final at Patten Gym in Evanston, Illinois. The school's teams were then called the Webfoots.",
+    "source": "https://en.wikipedia.org/wiki/1938%E2%80%9339_Oregon_Webfoots_men%27s_basketball_team",
+    "verified": true
+  }
+]

@@ -1,0 +1,1385 @@
+[
+ {
+  "id": "soc-001",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "On 15 August 1992, who scored the very first goal in Premier League history, heading past Peter Schmeichel at Bramall Lane?",
+  "answer": "Brian Deane",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "brian deane",
+   "deane"
+  ],
+  "hints": [
+   "He played for Sheffield United, who beat Manchester United 2-1 that day.",
+   "He later scored the second goal of that game too, from the penalty spot."
+  ],
+  "fact": "Brian Deane nodded in after five minutes of Sheffield United 2-1 Manchester United, then added a penalty. He said he only found out at half-time he had made history.",
+  "source": "https://en.wikipedia.org/wiki/Brian_Deane",
+  "verified": true
+ },
+ {
+  "id": "soc-002",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "Who scored the fastest goal in Premier League history, after 7.69 seconds at Vicarage Road in April 2019?",
+  "answer": "Shane Long",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "shane long",
+   "long"
+  ],
+  "hints": [
+   "He was playing for Southampton against Watford.",
+   "He is a Republic of Ireland striker who also had spells at Reading, West Brom and Hull."
+  ],
+  "fact": "Shane Long charged down a Craig Cathcart clearance and beat Ben Foster in 7.69 seconds, breaking Ledley King's 9.82-second record from 2000. The game still finished 1-1.",
+  "source": "https://www.premierleague.com/en/news/1195500",
+  "verified": true
+ },
+ {
+  "id": "soc-003",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 2,
+  "q": "In May 2015, which Southampton forward scored the fastest hat-trick in Premier League history, three goals in 2 minutes 56 seconds against Aston Villa?",
+  "answer": "Sadio Mane",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "sadio mane",
+   "mane"
+  ],
+  "hints": [
+   "He is Senegalese and moved to Liverpool the following year.",
+   "He later formed a famous front three with Salah and Firmino."
+  ],
+  "fact": "Sadio Mane beat Robbie Fowler's 4 minutes 33 seconds record from 1994 in a 6-1 win at St Mary's. Through 2025-26 it is still the fastest hat-trick in Premier League history.",
+  "source": "https://www.skysports.com/football/news/11700/9852411/southampton-6-1-aston-villa-sadio-mane-scores-fastest-premier-league-hat-trick",
+  "verify_note": "Removed unverified Ron Vlaar backpass detail; record confirmed still standing through 2025-26.",
+  "verified": true
+ },
+ {
+  "id": "soc-004",
+  "sport": "soccer",
+  "type": "number",
+  "difficulty": 2,
+  "q": "Derby County's 2007-08 season is the worst in Premier League history. How many points did they finish with?",
+  "answer": "11",
+  "kind": "number",
+  "num": 11,
+  "accept": [],
+  "hints": [
+   "They won just one game all season.",
+   "It is between 10 and 15."
+  ],
+  "fact": "Derby finished with 11 points from 1 win and 8 draws. Their only win was 1-0 at home to Newcastle in September, and they were relegated by 29 March.",
+  "source": "https://en.wikipedia.org/wiki/2007%E2%80%9308_Derby_County_F.C._season",
+  "verified": true
+ },
+ {
+  "id": "soc-005",
+  "sport": "soccer",
+  "type": "number",
+  "difficulty": 3,
+  "q": "Jose Mourinho's first Chelsea side in 2004-05 set the Premier League record for fewest goals conceded in a season. How many did they concede?",
+  "answer": "15",
+  "kind": "number",
+  "num": 15,
+  "accept": [],
+  "hints": [
+   "Only six of them came at home.",
+   "It is between 12 and 18."
+  ],
+  "fact": "Chelsea conceded just 15 in 38 games, and Petr Cech kept a record 24 clean sheets. It was the club's first league title in 50 years.",
+  "source": "https://en.wikipedia.org/wiki/2004%E2%80%9305_Chelsea_F.C._season",
+  "verified": true
+ },
+ {
+  "id": "soc-006",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "Who became the first player to score five goals in a single Premier League match, doing it in a 9-0 rout of Ipswich in March 1995?",
+  "answer": "Andy Cole",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "andy cole",
+   "andrew cole",
+   "cole"
+  ],
+  "hints": [
+   "He had joined Manchester United from Newcastle two months earlier for a British record fee.",
+   "He later formed a famous partnership with Dwight Yorke."
+  ],
+  "fact": "Andy Cole hit five as Manchester United beat Ipswich 9-0 at Old Trafford on 4 March 1995, still the joint-biggest home win in Premier League history.",
+  "source": "https://www.manutd.com/en/videos/detail/andy-cole-scores-five-goals-in-man-united-9-ipswich-town-0-in-1995",
+  "verify_note": "Removed unverified 'biggest crowd of the season' claim.",
+  "verified": true
+ },
+ {
+  "id": "soc-007",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "Tottenham beat Wigan 9-1 in November 2009. Which Spurs striker scored five of those goals, all in the second half?",
+  "answer": "Jermain Defoe",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "jermain defoe",
+   "defoe"
+  ],
+  "hints": [
+   "Peter Crouch scored Spurs' only first-half goal that day.",
+   "He is a small English striker who later had spells at Toronto FC and Sunderland."
+  ],
+  "fact": "Jermain Defoe scored in the 51st, 54th, 58th, 69th and 87th minutes, a hat-trick in seven minutes to start it. Spurs scored eight times after the break.",
+  "source": "https://en.wikipedia.org/wiki/2009%E2%80%9310_Tottenham_Hotspur_F.C._season",
+  "verify_note": "FALSE fact removed: there was no Kirkland own goal (Spurs goals: Crouch, Defoe x5, Lennon, Bentley, Kranjcar).",
+  "verified": true
+ },
+ {
+  "id": "soc-008",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 4,
+  "q": "Who was the first player to score 10 own goals in the Premier League, completing the unwanted set against Liverpool in October 2014?",
+  "answer": "Richard Dunne",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "richard dunne",
+   "dunne"
+  ],
+  "hints": [
+   "He was a Republic of Ireland centre-back, playing for QPR by then.",
+   "He spent most of his prime at Manchester City and also played for Aston Villa and Everton."
+  ],
+  "fact": "Richard Dunne's 10th own goal came in QPR's 3-2 home loss to Liverpool on 19 October 2014, a game in which QPR scored two own goals. Through 2025-26 nobody has matched his 10.",
+  "source": "https://en.wikipedia.org/wiki/Richard_Dunne",
+  "verify_note": "Removed unverified 'three clear' and '13 goals' side details.",
+  "verified": true
+ },
+ {
+  "id": "soc-009",
+  "sport": "soccer",
+  "type": "team",
+  "difficulty": 3,
+  "q": "Which club became the first to lose two Premier League games 9-0, first at home to Leicester in 2019 and then to Manchester United in 2021?",
+  "answer": "Southampton",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "southampton",
+   "saints",
+   "southampton fc"
+  ],
+  "hints": [
+   "They play on England's south coast.",
+   "Their stadium is St Mary's."
+  ],
+  "fact": "Southampton lost 0-9 at home to Leicester in October 2019, then 9-0 at Old Trafford in February 2021 after an early red card, finishing with nine men. Vardy and Ayoze Perez both scored hat-tricks in the first one.",
+  "source": "https://en.wikipedia.org/wiki/Southampton_F.C._0%E2%80%939_Leicester_City_F.C.",
+  "verify_note": "Reworded the nine-men detail for accuracy.",
+  "verified": true
+ },
+ {
+  "id": "soc-010",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 4,
+  "q": "Through the 2025-26 season, who was the oldest goalscorer in Premier League history, scoring aged 40 years and 268 days on Boxing Day 2006?",
+  "answer": "Teddy Sheringham",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "teddy sheringham",
+   "edward sheringham",
+   "sheringham"
+  ],
+  "hints": [
+   "He was playing for West Ham against Portsmouth.",
+   "He scored in the 1999 Champions League final."
+  ],
+  "fact": "Teddy Sheringham scored for West Ham against Portsmouth at 40 years and 268 days. James Milner got closest with a penalty at 39 in 2025. Years earlier Sheringham equalised in Manchester United's 1999 Champions League final comeback.",
+  "source": "https://en.wikipedia.org/wiki/Teddy_Sheringham",
+  "verify_note": "Pinned time frame: James Milner (2nd oldest scorer, 39y 239d) is still playing and could break it in 2026-27.",
+  "verified": true
+ },
+ {
+  "id": "soc-011",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "In October 2001, who became the first goalkeeper to score a Premier League goal, volleying in a late corner at Goodison Park?",
+  "answer": "Peter Schmeichel",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "peter schmeichel",
+   "schmeichel"
+  ],
+  "hints": [
+   "He was playing for Aston Villa at the time.",
+   "He is a Danish legend who captained Manchester United in the 1999 Champions League final."
+  ],
+  "fact": "Peter Schmeichel scored for Aston Villa in a 3-2 loss at Everton on 20 October 2001, after returning to England from Sporting CP. Only a handful of keepers have done it since.",
+  "source": "https://en.wikipedia.org/wiki/List_of_goalkeepers_who_have_scored_in_the_Premier_League",
+  "verify_note": "Wikipedia says 90th-minute corner, not stoppage time; Schmeichel captained only the 1999 CL final (Keane suspended), not the whole treble; removed unverified 'eight games' detail.",
+  "verified": true
+ },
+ {
+  "id": "soc-012",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "Sergio Aguero's 93:20 winner against QPR won Man City the 2011-12 title. Who played him the final pass?",
+  "answer": "Mario Balotelli",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "mario balotelli",
+   "balotelli"
+  ],
+  "hints": [
+   "He had come off the bench that day.",
+   "He is an Italian striker famous for his 'Why always me?' T-shirt."
+  ],
+  "fact": "Mario Balotelli, on as a late sub, went down while laying the ball into Aguero's path. The goal won City their first league title since 1968, on goal difference over Manchester United.",
+  "source": "https://www.planetfootball.com/quick-reads/man-city-qpr-2012-premier-league-title-unbelievable-stats-records-balotelli-aguero",
+  "verify_note": "Removed unverified 'only assist of the season' claim.",
+  "verified": true
+ },
+ {
+  "id": "soc-013",
+  "sport": "soccer",
+  "type": "coach",
+  "difficulty": 4,
+  "q": "In February 1993, who became the first manager ever sacked in the Premier League?",
+  "answer": "Ian Porterfield",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "ian porterfield",
+   "porterfield"
+  ],
+  "hints": [
+   "He was managing Chelsea, who were 2nd after 19 games before a 12-match winless run.",
+   "As a Sunderland player he scored the winner in the 1973 FA Cup final."
+  ],
+  "fact": "Ian Porterfield was sacked by Chelsea on 15 February 1993 and replaced by David Webb. As a player he scored Sunderland's shock 1973 FA Cup final winner against Leeds.",
+  "source": "https://en.wikipedia.org/wiki/Ian_Porterfield",
+  "verified": true
+ },
+ {
+  "id": "soc-014",
+  "sport": "soccer",
+  "type": "number",
+  "difficulty": 3,
+  "q": "Swindon Town's only top-flight season, 1993-94, was a disaster. How many league goals did they concede in their 42 games?",
+  "answer": "100",
+  "kind": "number",
+  "num": 100,
+  "accept": [],
+  "hints": [
+   "It was the Premier League record for three decades until Sheffield United in 2023-24.",
+   "It is a nice round number."
+  ],
+  "fact": "Swindon conceded exactly 100, finished last and kept just four clean sheets. Sheffield United finally beat the record in 2023-24.",
+  "source": "https://en.wikipedia.org/wiki/1993%E2%80%9394_Swindon_Town_F.C._season",
+  "verified": true
+ },
+ {
+  "id": "soc-015",
+  "sport": "soccer",
+  "type": "number",
+  "difficulty": 2,
+  "q": "In 2015-16 Jamie Vardy broke Ruud van Nistelrooy's record for scoring in consecutive Premier League games. How many games in a row did Vardy score in?",
+  "answer": "11",
+  "kind": "number",
+  "num": 11,
+  "accept": [],
+  "hints": [
+   "Van Nistelrooy's old record was 10.",
+   "The record-breaker came against Manchester United in November 2015."
+  ],
+  "fact": "Vardy scored in 11 straight Premier League games from 29 August to 28 November 2015, breaking the record against Manchester United. Leicester went on to win the title.",
+  "source": "https://www.skysports.com/football/video/13017540/on-this-day-record-breaking-jamie-vardy-scores-in-11th-straight-premier-league-game",
+  "verify_note": "Removed unverified '13 goals during the run' detail.",
+  "verified": true
+ },
+ {
+  "id": "soc-016",
+  "sport": "soccer",
+  "type": "number",
+  "difficulty": 2,
+  "q": "Before the 2015-16 season, bookmakers had Leicester City as massive outsiders for the title. What were their famous pre-season odds, X to 1?",
+  "answer": "5000",
+  "kind": "number",
+  "num": 5000,
+  "accept": [],
+  "hints": [
+   "They had only escaped relegation with a late run the season before.",
+   "It is a four-digit number."
+  ],
+  "fact": "Leicester were 5000-1 to win the league and won it by 10 points under Claudio Ranieri. They lost only three league games all season.",
+  "source": "https://www.skysports.com/football/news/10261535/premier-league-2015-16-how-the-odds-changed-as-leicester-claimed-the-title",
+  "verified": true
+ },
+ {
+  "id": "soc-017",
+  "sport": "soccer",
+  "type": "player-season",
+  "difficulty": 3,
+  "q": "Before Harry Kane, who was the only Englishman to win the European Golden Shoe, scoring 30 Premier League goals in 1999-2000?",
+  "answer": "Kevin Phillips",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "kevin phillips",
+   "phillips",
+   "super kev"
+  ],
+  "hints": [
+   "He played for newly promoted Sunderland, partnering Niall Quinn.",
+   "He later played for Southampton, Aston Villa and Birmingham."
+  ],
+  "fact": "Kevin Phillips hit 30 league goals for newly promoted Sunderland, who finished seventh. The season before, he had scored 23 in 26 league games as they won the First Division.",
+  "source": "https://en.wikipedia.org/wiki/European_Golden_Shoe",
+  "verify_note": "WRONG as written: Harry Kane won the European Golden Shoe in 2023-24 and 2025-26. Rewritten to 'Before Harry Kane'.",
+  "verified": true
+ },
+ {
+  "id": "soc-018",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 4,
+  "q": "Wigan won the 2013 FA Cup final 1-0 against Manchester City, then were relegated three days later. Who headed their stoppage-time winner?",
+  "answer": "Ben Watson",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "ben watson",
+   "watson"
+  ],
+  "hints": [
+   "He was a substitute, and met a Shaun Maloney corner.",
+   "He is an English midfielder who had earlier played for Crystal Palace."
+  ],
+  "fact": "Ben Watson headed in Shaun Maloney's corner in the first minute of stoppage time. Wigan then became the first club to win the FA Cup and be relegated from the top flight in the same season.",
+  "source": "https://en.wikipedia.org/wiki/2013_FA_Cup_final",
+  "verify_note": "'Near post' not verifiable; hint simplified.",
+  "verified": true
+ },
+ {
+  "id": "soc-019",
+  "sport": "soccer",
+  "type": "player-season",
+  "difficulty": 3,
+  "q": "Which Spanish attacker, signed from Rayo Vallecano for about 2 million pounds, scored 18 Premier League goals in his debut season of 2012-13?",
+  "answer": "Michu",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "michu",
+   "miguel perez cuesta",
+   "miguel perez"
+  ],
+  "hints": [
+   "He played for Swansea City.",
+   "He won the League Cup that season and later earned one Spain cap."
+  ],
+  "fact": "Michu scored 22 goals in all competitions in his first Swansea season and helped them win the 2013 League Cup. Injuries meant he was never close to that level again.",
+  "source": "https://en.wikipedia.org/wiki/Michu",
+  "verify_note": "Michu's only Spain cap came in October 2013, after the 2012-13 season.",
+  "verified": true
+ },
+ {
+  "id": "soc-020",
+  "sport": "soccer",
+  "type": "coach",
+  "difficulty": 4,
+  "q": "Who was the last permanent Arsenal manager before Arsene Wenger, lasting only the 1995-96 season?",
+  "answer": "Bruce Rioch",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "bruce rioch",
+   "rioch"
+  ],
+  "hints": [
+   "He had just won promotion with Bolton.",
+   "He signed Dennis Bergkamp, then was dismissed just before the 1996-97 season."
+  ],
+  "fact": "Bruce Rioch took Arsenal from 12th to fifth and a UEFA Cup place in his only season. He was dismissed days before the 1996-97 season, and Arsene Wenger arrived that autumn.",
+  "source": "https://en.wikipedia.org/wiki/1995%E2%80%9396_Arsenal_F.C._season",
+  "verify_note": "Transfer-funds dispute is uncited on Wikipedia; hint and fact reworded to verified facts.",
+  "verified": true
+ },
+ {
+  "id": "soc-021",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 4,
+  "q": "Matt Le Tissier scored 47 of 48 career penalties. Which goalkeeper made the only save, in March 1993?",
+  "answer": "Mark Crossley",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "mark crossley",
+   "crossley"
+  ],
+  "hints": [
+   "He was playing for Nottingham Forest.",
+   "He is a Welsh international keeper who later played for Middlesbrough and Fulham."
+  ],
+  "fact": "Mark Crossley saved from Le Tissier on 24 March 1993, Nottingham Forest v Southampton. He is still the only keeper who can say he stopped one.",
+  "source": "https://en.wikipedia.org/wiki/Mark_Crossley",
+  "verified": true
+ },
+ {
+  "id": "soc-022",
+  "sport": "soccer",
+  "type": "team",
+  "difficulty": 3,
+  "q": "Which club finished third in the first ever Premier League season, 1992-93, then famously won in Munich against Bayern the following season?",
+  "answer": "Norwich City",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "norwich city",
+   "norwich",
+   "the canaries",
+   "canaries"
+  ],
+  "hints": [
+   "They play at Carrow Road.",
+   "They wear yellow and green."
+  ],
+  "fact": "Norwich beat Bayern 2-1 at the Olympiastadion in October 1993, and Jeremy Goss's volley is widely considered the greatest goal in club history. They went out to eventual winners Inter in the next round.",
+  "source": "https://en.wikipedia.org/wiki/FC_Bayern_Munich_1%E2%80%932_Norwich_City_F.C._(1993)",
+  "verify_note": "Softened 'still called' to match source wording.",
+  "verified": true
+ },
+ {
+  "id": "soc-023",
+  "sport": "soccer",
+  "type": "venue",
+  "difficulty": 2,
+  "q": "Leicester were confirmed as 2015-16 champions when Tottenham blew a 2-0 lead in a bad-tempered 2-2 draw. At which stadium?",
+  "answer": "Stamford Bridge",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "stamford bridge",
+   "the bridge",
+   "chelsea",
+   "stamford"
+  ],
+  "hints": [
+   "Eden Hazard scored the late equaliser for the home side.",
+   "It is in west London."
+  ],
+  "fact": "Chelsea came back from 2-0 down at Stamford Bridge on 2 May 2016 in what became the 'Battle of the Bridge'. Spurs picked up nine yellow cards, a Premier League record for one team.",
+  "source": "https://en.wikipedia.org/wiki/2015%E2%80%9316_Premier_League",
+  "verify_note": "Removed unverified 'watched at Vardy's house' detail; nine Spurs bookings confirmed.",
+  "verified": true
+ },
+ {
+  "id": "soc-024",
+  "sport": "soccer",
+  "type": "nickname",
+  "difficulty": 2,
+  "q": "Manchester United ended Arsenal's 49-game unbeaten run in October 2004. What nickname was given to the tunnel fight afterwards, when food hit Alex Ferguson?",
+  "answer": "Battle of the Buffet",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "battle of the buffet",
+   "the battle of the buffet",
+   "pizzagate",
+   "pizza gate"
+  ],
+  "hints": [
+   "Wayne Rooney and Ruud van Nistelrooy scored in the 2-0 win.",
+   "A slice of pizza was the projectile."
+  ],
+  "fact": "The 'Battle of the Buffet', also called Pizzagate, saw a slice of pizza thrown at Ferguson in the Old Trafford tunnel. Arsenal fans still dispute the Rooney penalty that started it all.",
+  "source": "https://en.wikipedia.org/wiki/Battle_of_the_Buffet",
+  "verified": true
+ },
+ {
+  "id": "soc-025",
+  "sport": "soccer",
+  "type": "player-season",
+  "difficulty": 3,
+  "q": "Which striker, signed from Juventus, scored a hat-trick on his Middlesbrough debut in a 3-3 draw with Liverpool on the opening day of 1996-97?",
+  "answer": "Fabrizio Ravanelli",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "fabrizio ravanelli",
+   "ravanelli"
+  ],
+  "hints": [
+   "He is Italian and had won the Champions League a few months earlier.",
+   "He was nicknamed 'The White Feather' for his prematurely white hair."
+  ],
+  "fact": "Fabrizio Ravanelli scored a hat-trick on his Premier League debut against Liverpool on 17 August 1996. Boro still got relegated that season after a three-point deduction.",
+  "source": "https://en.wikipedia.org/wiki/1996%E2%80%9397_Middlesbrough_F.C._season",
+  "verify_note": "Hair was white (not grey); removed unverified goal-by-goal description.",
+  "verified": true
+ },
+ {
+  "id": "soc-026",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 2,
+  "q": "Which goalkeeper played every one of Arsenal's 38 league games in the unbeaten 2003-04 Invincibles season?",
+  "answer": "Jens Lehmann",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "jens lehmann",
+   "lehmann"
+  ],
+  "hints": [
+   "He had just joined from Borussia Dortmund.",
+   "He is German, and was sent off in the 2006 Champions League final."
+  ],
+  "fact": "Jens Lehmann was ever-present as Arsenal went 26 wins and 12 draws. Two years later he became the first player sent off in a Champions League final.",
+  "source": "https://en.wikipedia.org/wiki/Jens_Lehmann",
+  "verified": true
+ },
+ {
+  "id": "soc-027",
+  "sport": "soccer",
+  "type": "number",
+  "difficulty": 3,
+  "q": "Man City's 2017-18 'Centurions' reached 100 points. How many league goals did they score, still a Premier League record?",
+  "answer": "106",
+  "kind": "number",
+  "num": 106,
+  "accept": [],
+  "hints": [
+   "It is more than 100.",
+   "Their goal difference was +79."
+  ],
+  "fact": "City scored 106 for a +79 goal difference, both Premier League records. They also won 18 league games in a row that season.",
+  "source": "https://en.wikipedia.org/wiki/2017%E2%80%9318_Manchester_City_F.C._season",
+  "verified": true
+ },
+ {
+  "id": "soc-028",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 4,
+  "q": "In April 2005, which Everton forward became the Premier League's youngest ever scorer at just 16, a record that stood until 2026?",
+  "answer": "James Vaughan",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "james vaughan",
+   "vaughan"
+  ],
+  "hints": [
+   "He scored on his debut, against Crystal Palace.",
+   "He took the record from James Milner."
+  ],
+  "fact": "James Vaughan scored on his Everton debut against Crystal Palace to beat James Milner's record. Arsenal's Max Dowman finally broke it in March 2026.",
+  "source": "https://en.wikipedia.org/wiki/James_Vaughan_(footballer,_born_1988)",
+  "verify_note": "Age sources conflict (PL 270 days vs Wikipedia 271), so exact age removed from question; 4-0 scoreline not verified, removed from hint. Dowman record (16y 73d, 14 Mar 2026) confirmed.",
+  "verified": true
+ },
+ {
+  "id": "soc-029",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "Liverpool came from 3-0 down to win the 2005 Champions League final in Istanbul. Which Milan legend had opened the scoring inside the first minute?",
+  "answer": "Paolo Maldini",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "paolo maldini",
+   "maldini"
+  ],
+  "hints": [
+   "He was Milan's captain and a defender.",
+   "He spent his entire career at Milan and wore number 3."
+  ],
+  "fact": "Paolo Maldini volleyed in after 53 seconds, still the fastest goal in a Champions League final. Hernan Crespo added two more before half-time, and Liverpool still won on penalties.",
+  "source": "https://en.wikipedia.org/wiki/2005_UEFA_Champions_League_final",
+  "verify_note": "Maldini's career was about 24 years, not 25; fact reworded to verified details (53 seconds, fastest CL final goal).",
+  "verified": true
+ },
+ {
+  "id": "soc-030",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "Manchester United trailed Bayern for most of the 1999 Champions League final. Who scored Bayern's 6th-minute opener with a low free kick?",
+  "answer": "Mario Basler",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "mario basler",
+   "basler"
+  ],
+  "hints": [
+   "He was a German right-sided attacker, substituted in the 87th minute before both United goals.",
+   "He had joined Bayern from Werder Bremen in 1996, and moved to Kaiserslautern in 1999."
+  ],
+  "fact": "Mario Basler curled a low free kick around the United wall after six minutes at the Camp Nou. Solskjaer's knee-slide celebration for the winner mimicked Basler's earlier one.",
+  "source": "https://en.wikipedia.org/wiki/1999_UEFA_Champions_League_final",
+  "verify_note": "Rewritten to a new answer (Mario Basler) because soc-063 also answers David Beckham.",
+  "verified": true
+ },
+ {
+  "id": "soc-031",
+  "sport": "soccer",
+  "type": "number",
+  "difficulty": 3,
+  "q": "Cristiano Ronaldo holds the record for most goals in a single Champions League season, set with Real Madrid in 2013-14. How many did he score?",
+  "answer": "17",
+  "kind": "number",
+  "num": 17,
+  "accept": [],
+  "hints": [
+   "The previous record, shared by Messi and Jose Altafini, was 14.",
+   "He opened his account with a hat-trick against Galatasaray and scored in the final against Atletico."
+  ],
+  "fact": "Ronaldo scored 17 as Real Madrid won La Decima, including a penalty in the 4-1 final win over Atletico. He beat the 14 shared by Messi and Altafini.",
+  "source": "https://en.wikipedia.org/wiki/2013%E2%80%9314_UEFA_Champions_League",
+  "verified": true
+ },
+ {
+  "id": "soc-032",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "Who holds the record for most goals in a single UEFA Cup or Europa League campaign, scoring 17 for Porto in 2010-11 under Andre Villas-Boas?",
+  "answer": "Radamel Falcao",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "radamel falcao",
+   "falcao",
+   "el tigre"
+  ],
+  "hints": [
+   "He is a Colombian striker.",
+   "He later joined Atletico Madrid and had a tough loan spell at Manchester United."
+  ],
+  "fact": "Radamel Falcao scored 17 in 14 games, including the only goal of the final against Braga in Dublin. He broke Jurgen Klinsmann's record of 15 from 1995-96.",
+  "source": "https://www.uefa.com/uefaeuropaleague/news/0250-0c50f81b7942-fac67f6ec49d-1000--seventeen-goal-falcao-signs-off-with-record/",
+  "verified": true
+ },
+ {
+  "id": "soc-033",
+  "sport": "soccer",
+  "type": "number",
+  "difficulty": 2,
+  "q": "Sevilla are the kings of the UEFA Cup and Europa League and have never lost a final. Through 2025, how many times have they won it?",
+  "answer": "7",
+  "kind": "number",
+  "num": 7,
+  "accept": [],
+  "hints": [
+   "Their most recent win came against Jose Mourinho's Roma in Budapest in 2023.",
+   "They won it three years in a row from 2014 to 2016."
+  ],
+  "fact": "Sevilla won in 2006, 2007, 2014, 2015, 2016, 2020 and 2023, seven finals from seven. No other club has more than three.",
+  "source": "https://en.wikipedia.org/wiki/2023_UEFA_Europa_League_final",
+  "verified": true
+ },
+ {
+  "id": "soc-034",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "After John Terry slipped and hit the post, whose sudden-death penalty did Edwin van der Sar save to win the 2008 Champions League final in Moscow?",
+  "answer": "Nicolas Anelka",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "nicolas anelka",
+   "anelka"
+  ],
+  "hints": [
+   "He was Chelsea's seventh taker.",
+   "He is a French striker who played for Arsenal, Real Madrid, Man City, Bolton and Chelsea."
+  ],
+  "fact": "Nicolas Anelka later said he had not wanted to take a penalty, citing a lack of warm-up time. The save gave Manchester United their third European Cup.",
+  "source": "https://en.wikipedia.org/wiki/2008_UEFA_Champions_League_final",
+  "verify_note": "Removed unverified 'Van der Sar studied Anelka' claim; replaced with sourced detail.",
+  "verified": true
+ },
+ {
+  "id": "soc-035",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 4,
+  "q": "In the 1997 Champions League final, which Dortmund substitute lobbed Juventus's keeper from long range just 16 seconds after coming on?",
+  "answer": "Lars Ricken",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "lars ricken",
+   "ricken"
+  ],
+  "hints": [
+   "He was a 20-year-old Dortmund academy product.",
+   "Karl-Heinz Riedle scored Dortmund's other two goals in the 3-1 win."
+  ],
+  "fact": "Lars Ricken chipped Angelo Peruzzi with his first touch to make it 3-1 in Munich. It remains one of the great super-sub moments in European final history.",
+  "source": "https://en.wikipedia.org/wiki/1997_UEFA_Champions_League_final",
+  "verified": true
+ },
+ {
+  "id": "soc-036",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 4,
+  "q": "Who headed the only goal of the first Champions League-era final in 1993, giving Marseille a 1-0 win over AC Milan?",
+  "answer": "Basile Boli",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "basile boli",
+   "boli"
+  ],
+  "hints": [
+   "He was a central defender, scoring just before half-time.",
+   "He was born in Ivory Coast and played for France."
+  ],
+  "fact": "Basile Boli headed in a corner in the 43rd minute in Munich. Marseille were soon engulfed by a match-fixing scandal and stripped of their 1993 French title, but kept the European Cup.",
+  "source": "https://en.wikipedia.org/wiki/1993_UEFA_Champions_League_final",
+  "verified": true
+ },
+ {
+  "id": "soc-037",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "Which 18-year-old substitute scored the 85th-minute winner as Ajax beat AC Milan in the 1995 Champions League final?",
+  "answer": "Patrick Kluivert",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "patrick kluivert",
+   "kluivert"
+  ],
+  "hints": [
+   "He is Dutch and later starred for Barcelona.",
+   "He became the Netherlands' record scorer for a time."
+  ],
+  "fact": "Patrick Kluivert was 18 years and 327 days old, the youngest player to score in a Champions League final. It gave Ajax their first European Cup in 22 years.",
+  "source": "https://en.wikipedia.org/wiki/1995_UEFA_Champions_League_final",
+  "verified": true
+ },
+ {
+  "id": "soc-038",
+  "sport": "soccer",
+  "type": "team",
+  "difficulty": 2,
+  "q": "Which club beat Arsenal on penalties in the 2000 UEFA Cup final in Copenhagen, despite having their Romanian star sent off in extra time?",
+  "answer": "Galatasaray",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "galatasaray",
+   "gala",
+   "galatasaray sk"
+  ],
+  "hints": [
+   "They became the first Turkish club to win a European trophy.",
+   "Gheorghe Hagi was the player sent off."
+  ],
+  "fact": "Galatasaray won 4-1 on penalties after a 0-0 draw, with Davor Suker and Patrick Vieira both hitting the woodwork. Gheorghe Popescu scored the winning kick.",
+  "source": "https://en.wikipedia.org/wiki/2000_UEFA_Cup_final",
+  "verified": true
+ },
+ {
+  "id": "soc-039",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "Chelsea won the 2012 Champions League final in Munich on penalties. Who had given Bayern an 83rd-minute lead before Drogba equalised?",
+  "answer": "Thomas Muller",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "thomas muller",
+   "muller",
+   "thomas mueller",
+   "mueller"
+  ],
+  "hints": [
+   "He headed in a Toni Kroos cross off the ground and the bar.",
+   "He is a German forward who spent his whole career at Bayern before joining Vancouver."
+  ],
+  "fact": "Thomas Muller's header bounced in off the underside of the bar, but Drogba equalised five minutes later. Petr Cech then saved Arjen Robben's extra-time penalty.",
+  "source": "https://en.wikipedia.org/wiki/2012_UEFA_Champions_League_final",
+  "verified": true
+ },
+ {
+  "id": "soc-040",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 2,
+  "q": "'Corner taken quickly...' Who scored from Trent Alexander-Arnold's quick corner to complete Liverpool's 4-0 comeback against Barcelona in May 2019?",
+  "answer": "Divock Origi",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "divock origi",
+   "origi"
+  ],
+  "hints": [
+   "He had also scored Liverpool's first goal that night.",
+   "He is Belgian and scored in the final against Tottenham too."
+  ],
+  "fact": "Divock Origi's goal was voted the greatest in Liverpool's history by fans. He also scored the second in the 2-0 final win over Spurs in Madrid.",
+  "source": "https://www.liverpoolfc.com/news/first-team/454462-corner-taken-quickly-origi-voted-liverpool-s-greatest-ever-goal",
+  "verified": true
+ },
+ {
+  "id": "soc-041",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "Jose Mourinho's Inter completed the treble by beating Bayern 2-0 in the 2010 Champions League final at the Bernabeu. Who scored both goals?",
+  "answer": "Diego Milito",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "diego milito",
+   "milito",
+   "el principe"
+  ],
+  "hints": [
+   "He is an Argentine striker who had joined from Genoa.",
+   "His younger brother Gabriel played for Barcelona."
+  ],
+  "fact": "Diego Milito scored in the 35th and 70th minutes, the first set up by Wesley Sneijder. He had also scored the winners in the Coppa Italia final and the title-clinching Serie A game that month.",
+  "source": "https://www.cnn.com/2010/SPORT/football/05/22/champions.league.final.inter.bayern/index.html",
+  "verified": true
+ },
+ {
+  "id": "soc-042",
+  "sport": "soccer",
+  "type": "coach",
+  "difficulty": 3,
+  "q": "Jose Mourinho's Porto beat Monaco 3-0 in the 2004 Champions League final. Who was Monaco's young coach, later a World Cup winner as a manager?",
+  "answer": "Didier Deschamps",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "didier deschamps",
+   "deschamps"
+  ],
+  "hints": [
+   "He had captained France to the 1998 World Cup as a player.",
+   "He later coached France to the 2018 World Cup title."
+  ],
+  "fact": "Didier Deschamps took Monaco to their first Champions League final, where Carlos Alberto, Deco and Alenichev scored for Porto. He won the World Cup as captain in 1998 and as coach in 2018.",
+  "source": "https://en.wikipedia.org/wiki/2004_UEFA_Champions_League_final",
+  "verified": true
+ },
+ {
+  "id": "soc-043",
+  "sport": "soccer",
+  "type": "number",
+  "difficulty": 2,
+  "q": "Miroslav Klose broke the men's World Cup scoring record during Germany's 7-1 win over Brazil in 2014. What was his final World Cup goal total?",
+  "answer": "16",
+  "kind": "number",
+  "num": 16,
+  "accept": [],
+  "hints": [
+   "He played in four World Cups, 2002 to 2014.",
+   "He finished one ahead of Brazil's Ronaldo."
+  ],
+  "fact": "Klose's 16th and final World Cup goal came in the 7-1 in Belo Horizonte, taking him one past Brazil's Ronaldo. Kylian Mbappe finally overtook him at the 2026 World Cup.",
+  "source": "https://en.wikipedia.org/wiki/Brazil_v_Germany_(2014_FIFA_World_Cup)",
+  "verify_note": "Fact updated: Mbappe passed Klose at the 2026 World Cup (22 goals).",
+  "verified": true
+ },
+ {
+  "id": "soc-044",
+  "sport": "soccer",
+  "type": "number",
+  "difficulty": 3,
+  "q": "France's Just Fontaine set the record for most goals at a single World Cup in 1958. How many did he score?",
+  "answer": "13",
+  "kind": "number",
+  "num": 13,
+  "accept": [],
+  "hints": [
+   "He did it in just six matches.",
+   "It is between 10 and 15."
+  ],
+  "fact": "Just Fontaine scored 13 in six games in Sweden, more than double Pele's six. He reportedly did it in borrowed boots.",
+  "source": "https://en.wikipedia.org/wiki/Just_Fontaine",
+  "verified": true
+ },
+ {
+  "id": "soc-045",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 4,
+  "q": "At USA 94, which Russian striker scored a World Cup record five goals in a single match, a 6-1 rout of Cameroon?",
+  "answer": "Oleg Salenko",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "oleg salenko",
+   "salenko"
+  ],
+  "hints": [
+   "Russia still went out in the group stage.",
+   "He shared the Golden Boot with Bulgaria's Hristo Stoichkov."
+  ],
+  "fact": "Oleg Salenko scored five against Cameroon on 28 June 1994 and shared the Golden Boot on six goals. Remarkably, it was his last ever international appearance.",
+  "source": "https://en.wikipedia.org/wiki/Oleg_Salenko",
+  "verified": true
+ },
+ {
+  "id": "soc-046",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 2,
+  "q": "In June 1994, which Cameroon striker became the oldest scorer in World Cup history at 42 years and 39 days, breaking his own record?",
+  "answer": "Roger Milla",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "roger milla",
+   "milla"
+  ],
+  "hints": [
+   "He had already set the record at Italia 90.",
+   "He is famous for dancing at the corner flag after his goals."
+  ],
+  "fact": "Roger Milla scored a consolation against Russia in a 6-1 defeat, the same game in which Oleg Salenko scored five. He had first set the record at Italia 90, aged 38.",
+  "source": "https://www.fifa.com/en/tournaments/mens/worldcup/articles/roger-milla-oldest-goalscorer-cameroon",
+  "verified": true
+ },
+ {
+  "id": "soc-047",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "In the 2002 World Cup third-place match, which Turkish striker scored against co-hosts South Korea after just 11 seconds?",
+  "answer": "Hakan Sukur",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "hakan sukur",
+   "sukur",
+   "hakan"
+  ],
+  "hints": [
+   "He was nicknamed the 'Bull of the Bosphorus'.",
+   "He played most of his career for Galatasaray and had brief spells at Inter, Parma and Blackburn."
+  ],
+  "fact": "Hakan Sukur scored after 10.8 seconds, still the fastest goal in World Cup history. Turkey won 3-2 to finish third.",
+  "source": "https://en.wikipedia.org/wiki/Hakan_%C5%9E%C3%BCk%C3%BCr",
+  "verified": true
+ },
+ {
+  "id": "soc-048",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "Greece shocked hosts Portugal 1-0 in the Euro 2004 final in Lisbon. Who headed the winning goal?",
+  "answer": "Angelos Charisteas",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "angelos charisteas",
+   "charisteas"
+  ],
+  "hints": [
+   "He met a corner from Angelos Basinas in the 57th minute.",
+   "He played his club football at Werder Bremen at the time."
+  ],
+  "fact": "Angelos Charisteas headed past Ricardo at the Estadio da Luz for Greece's first major trophy. Their coach became the first to win the Euros with a nation other than his own.",
+  "source": "https://en.wikipedia.org/wiki/UEFA_Euro_2004_final",
+  "verified": true
+ },
+ {
+  "id": "soc-049",
+  "sport": "soccer",
+  "type": "team",
+  "difficulty": 3,
+  "q": "Denmark won Euro 1992 after a late call-up. Which banned nation did they replace at the tournament?",
+  "answer": "Yugoslavia",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "yugoslavia",
+   "fr yugoslavia",
+   "federal republic of yugoslavia"
+  ],
+  "hints": [
+   "The ban came from UN sanctions during a war.",
+   "The country no longer exists; its successor states include Serbia and Croatia."
+  ],
+  "fact": "Yugoslavia were banned under UN Security Council Resolution 757, and Denmark stepped in. They beat the Netherlands on penalties and Germany 2-0 in the final.",
+  "source": "https://en.wikipedia.org/wiki/UEFA_Euro_1992",
+  "verified": true
+ },
+ {
+  "id": "soc-050",
+  "sport": "soccer",
+  "type": "venue",
+  "difficulty": 3,
+  "q": "Germany beat hosts Brazil 7-1 in the 2014 World Cup semi-final. In which stadium did it happen?",
+  "answer": "Mineirao",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "mineirao",
+   "estadio mineirao",
+   "o mineirao",
+   "estadio governador magalhaes pinto"
+  ],
+  "hints": [
+   "It is in the state of Minas Gerais, not Rio or Sao Paulo.",
+   "Its name comes from the word for people from that state."
+  ],
+  "fact": "The Mineirao in Belo Horizonte saw Germany score four goals in six minutes and lead 5-0 after 29. Toni Kroos scored two of them barely a minute apart.",
+  "source": "https://en.wikipedia.org/wiki/Brazil_v_Germany_(2014_FIFA_World_Cup)",
+  "verify_note": "'69 seconds' not verified; reworded.",
+  "verified": true
+ },
+ {
+  "id": "soc-051",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 2,
+  "q": "Zidane opened the 2006 World Cup final with a chipped penalty. Who headed Italy's equaliser from an Andrea Pirlo corner?",
+  "answer": "Marco Materazzi",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "marco materazzi",
+   "materazzi"
+  ],
+  "hints": [
+   "He was an Inter Milan centre-back at the time.",
+   "He was later on the receiving end of Zidane's headbutt."
+  ],
+  "fact": "Marco Materazzi equalised in the 19th minute, then was headbutted by Zidane in extra time. Italy won the shootout 5-3, Fabio Grosso scoring the winner.",
+  "source": "https://en.wikipedia.org/wiki/2006_FIFA_World_Cup_final",
+  "verify_note": "Tense fix.",
+  "verified": true
+ },
+ {
+  "id": "soc-052",
+  "sport": "soccer",
+  "type": "coach",
+  "difficulty": 4,
+  "q": "Iceland knocked England out of Euro 2016 under joint managers. Which one of the pair was also a part-time dentist?",
+  "answer": "Heimir Hallgrimsson",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "heimir hallgrimsson",
+   "hallgrimsson",
+   "heimir"
+  ],
+  "hints": [
+   "He was the Icelander of the duo. The other was Swede Lars Lagerback.",
+   "He later managed Jamaica and the Republic of Ireland."
+  ],
+  "fact": "Heimir Hallgrimsson kept working as a dentist on the island of Heimaey through his coaching career. Iceland's 2-1 win in Nice made Roy Hodgson resign on the spot.",
+  "source": "https://en.wikipedia.org/wiki/Heimir_Hallgr%C3%ADmsson",
+  "verified": true
+ },
+ {
+  "id": "soc-053",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 2,
+  "q": "Who won the 2014 World Cup Golden Boot with six goals, including a chest-and-volley stunner against Uruguay?",
+  "answer": "James Rodriguez",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "james rodriguez",
+   "james",
+   "rodriguez"
+  ],
+  "hints": [
+   "He is Colombian.",
+   "Real Madrid signed him right after the tournament."
+  ],
+  "fact": "James Rodriguez scored six as Colombia reached the quarter-finals, and his volley against Uruguay won the Puskas Award. Real Madrid bought him from Monaco that summer.",
+  "source": "https://en.wikipedia.org/wiki/2014_FIFA_World_Cup_awards",
+  "verified": true
+ },
+ {
+  "id": "soc-054",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 4,
+  "q": "Which Haitian-born forward, who washed dishes in New York, scored the only goal when the USA stunned England at the 1950 World Cup?",
+  "answer": "Joe Gaetjens",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "joe gaetjens",
+   "gaetjens",
+   "joseph gaetjens"
+  ],
+  "hints": [
+   "The game was played in Belo Horizonte, Brazil.",
+   "He played for Brookhattan in the American Soccer League."
+  ],
+  "fact": "Joe Gaetjens scored the winner in the 1-0 upset, one of the biggest in World Cup history, and never actually became a US citizen. He disappeared under the Duvalier regime in Haiti in 1964.",
+  "source": "https://en.wikipedia.org/wiki/Joe_Gaetjens",
+  "verified": true
+ },
+ {
+  "id": "soc-055",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 2,
+  "q": "Who scored the first own goal in World Cup final history, glancing an Antoine Griezmann free kick into his own net in 2018?",
+  "answer": "Mario Mandzukic",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "mario mandzukic",
+   "mandzukic"
+  ],
+  "hints": [
+   "He is a Croatian striker.",
+   "He also scored at the right end in the second half, and played for Bayern and Juventus."
+  ],
+  "fact": "Mario Mandzukic's own goal was the first ever in a World Cup final, and he later scored at the right end too in France's 4-2 win in Moscow.",
+  "source": "https://en.wikipedia.org/wiki/2018_FIFA_World_Cup_final",
+  "verify_note": "Removed unverified 'only Ernie Brandts before' claim.",
+  "verified": true
+ },
+ {
+  "id": "soc-056",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 2,
+  "q": "Robert Lewandowski scored 41 Bundesliga goals in 2020-21, breaking a single-season record that had stood since 1971-72. Whose record was it?",
+  "answer": "Gerd Muller",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "gerd muller",
+   "gerd mueller",
+   "muller",
+   "mueller"
+  ],
+  "hints": [
+   "He scored 40 that season for Bayern.",
+   "He was nicknamed 'Der Bomber'."
+  ],
+  "fact": "Lewandowski's 41st goal came in the 90th minute of the final day against Augsburg. Gerd Muller had scored 40 in 1971-72.",
+  "source": "https://en.wikipedia.org/wiki/Robert_Lewandowski",
+  "verified": true
+ },
+ {
+  "id": "soc-057",
+  "sport": "soccer",
+  "type": "team",
+  "difficulty": 3,
+  "q": "In September 2015, Lewandowski came off the bench with Bayern losing 1-0 and scored five goals in under nine minutes. Who were the opponents?",
+  "answer": "Wolfsburg",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "wolfsburg",
+   "vfl wolfsburg"
+  ],
+  "hints": [
+   "They had won the Bundesliga in 2008-09.",
+   "They are the Volkswagen club from Lower Saxony."
+  ],
+  "fact": "Lewandowski scored five in 8 minutes 59 seconds as Bayern turned 0-1 into 5-1, the fastest five goals in Bundesliga history.",
+  "source": "https://en.wikipedia.org/wiki/Robert_Lewandowski",
+  "verified": true
+ },
+ {
+  "id": "soc-058",
+  "sport": "soccer",
+  "type": "number",
+  "difficulty": 2,
+  "q": "In calendar year 2012, Lionel Messi scored a world record number of goals for Barcelona and Argentina. How many?",
+  "answer": "91",
+  "kind": "number",
+  "num": 91,
+  "accept": [],
+  "hints": [
+   "He broke Gerd Muller's 85 from 1972.",
+   "It is between 86 and 95."
+  ],
+  "fact": "Messi scored 91 in 2012. In the 2011-12 season he also scored a La Liga record 50 league goals and 73 in all competitions.",
+  "source": "https://en.wikipedia.org/wiki/Lionel_Messi",
+  "verified": true
+ },
+ {
+  "id": "soc-059",
+  "sport": "soccer",
+  "type": "number",
+  "difficulty": 2,
+  "q": "Starting in 2011-12, Juventus won how many consecutive Serie A titles?",
+  "answer": "9",
+  "kind": "number",
+  "num": 9,
+  "accept": [],
+  "hints": [
+   "Inter ended the run in 2020-21.",
+   "Antonio Conte won the first three, Massimiliano Allegri the next five."
+  ],
+  "fact": "Juventus won nine straight scudetti from 2011-12 to 2019-20, with Maurizio Sarri winning the last. Conte's first title in 2011-12 came without a single league defeat.",
+  "source": "https://en.wikipedia.org/wiki/Juventus_FC",
+  "verified": true
+ },
+ {
+  "id": "soc-060",
+  "sport": "soccer",
+  "type": "team",
+  "difficulty": 3,
+  "q": "After the 2006 Calciopoli scandal, Juventus were stripped of the 2005-06 Serie A title. Which club was awarded it?",
+  "answer": "Inter Milan",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "inter milan",
+   "inter",
+   "internazionale",
+   "fc internazionale"
+  ],
+  "hints": [
+   "They had finished third on the pitch.",
+   "They play at San Siro, sharing it with a rival."
+  ],
+  "fact": "Inter were handed the 2005-06 scudetto while Juventus were relegated to Serie B. The 2004-05 title was stripped and never reassigned.",
+  "source": "https://en.wikipedia.org/wiki/2006_Italian_football_scandal",
+  "verified": true
+ },
+ {
+  "id": "soc-061",
+  "sport": "soccer",
+  "type": "team",
+  "difficulty": 4,
+  "q": "Which club won its only Serie A title in 1984-85, with Danish striker Preben Elkjaer and German Hans-Peter Briegel?",
+  "answer": "Hellas Verona",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "hellas verona",
+   "verona"
+  ],
+  "hints": [
+   "They were coached by Osvaldo Bagnoli and finished four points clear of Torino.",
+   "Their city is the setting of Romeo and Juliet."
+  ],
+  "fact": "Hellas Verona remain the only club from a city that is not a regional capital to win Serie A since 1929. It is still their only title.",
+  "source": "https://en.wikipedia.org/wiki/Hellas_Verona_FC",
+  "verified": true
+ },
+ {
+  "id": "soc-062",
+  "sport": "soccer",
+  "type": "number",
+  "difficulty": 3,
+  "q": "Carlos Vela set the MLS single-season scoring record for LAFC in 2019, a mark still standing through 2025. How many regular-season goals did he score?",
+  "answer": "34",
+  "kind": "number",
+  "num": 34,
+  "accept": [],
+  "hints": [
+   "He beat Josef Martinez's 31 from 2018.",
+   "It is between 32 and 36."
+  ],
+  "fact": "Carlos Vela scored 34 and won MVP by a distance over Zlatan Ibrahimovic. Through 2025, the closest anyone has come since is Messi's 29 in 2025.",
+  "source": "https://en.wikipedia.org/wiki/MLS_Golden_Boot",
+  "verify_note": "Pinned 'closest since' to through 2025 (2026 season in progress).",
+  "verified": true
+ },
+ {
+  "id": "soc-063",
+  "sport": "soccer",
+  "type": "nickname",
+  "difficulty": 2,
+  "q": "MLS's Designated Player Rule, which lets clubs pay stars outside the salary cap, is popularly nicknamed after which player?",
+  "answer": "David Beckham",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "david beckham",
+   "beckham",
+   "the beckham rule",
+   "beckham rule"
+  ],
+  "hints": [
+   "He was its first signing, joining LA Galaxy in 2007.",
+   "He is an England legend who played for Man Utd and Real Madrid."
+  ],
+  "fact": "The 'Beckham Rule' was adopted before the 2007 season, and Beckham signed a five-year Galaxy deal worth 6.5 million dollars a year guaranteed. He later co-founded Inter Miami.",
+  "source": "https://en.wikipedia.org/wiki/Designated_Player_Rule",
+  "verified": true
+ },
+ {
+  "id": "soc-064",
+  "sport": "soccer",
+  "type": "coach",
+  "difficulty": 3,
+  "q": "Which German coach won the Bundesliga with newly promoted Kaiserslautern in 1997-98, then won Euro 2004 with Greece?",
+  "answer": "Otto Rehhagel",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "otto rehhagel",
+   "rehhagel",
+   "king otto",
+   "rehakles"
+  ],
+  "hints": [
+   "He had been sacked by Bayern Munich in 1996.",
+   "He also won two Bundesliga titles with Werder Bremen."
+  ],
+  "fact": "Otto Rehhagel's Kaiserslautern are still the only newly promoted team to win the Bundesliga, pipping his old club Bayern by two points. Six years later he became the first coach to win the Euros with a country other than his own.",
+  "source": "https://en.wikipedia.org/wiki/1997%E2%80%9398_Bundesliga",
+  "verify_note": "Added 'rehakles' nickname to accept list.",
+  "verified": true
+ },
+ {
+  "id": "soc-065",
+  "sport": "soccer",
+  "type": "player",
+  "difficulty": 3,
+  "q": "Atletico Madrid clinched the 2013-14 La Liga title with a 1-1 at Camp Nou on the final day. Who headed their equaliser?",
+  "answer": "Diego Godin",
+  "kind": "text",
+  "num": null,
+  "accept": [
+   "diego godin",
+   "godin"
+  ],
+  "hints": [
+   "He is a Uruguayan centre-back.",
+   "A week later he headed Atletico in front in the Champions League final too."
+  ],
+  "fact": "Diego Godin's header won Atletico their first league title in 18 years under Diego Simeone. It was the first title for a club other than Barca or Real since Valencia in 2003-04.",
+  "source": "https://en.wikipedia.org/wiki/Diego_God%C3%ADn",
+  "verified": true
+ }
+]

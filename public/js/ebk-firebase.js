@@ -339,6 +339,7 @@
     }
     await wipe("scores");
     await wipe("gridPlays").catch(function () {});
+    await wipe("deepCutPlays").catch(function () {});
     try { await EBKF.db.collection("totals").doc(uid).delete(); } catch (e) {}
     try { if (name) await EBKF.db.collection("usernames").doc(nameKeyOf(name)).delete(); } catch (e) {}
     try { await EBKF.db.collection("users").doc(uid).delete(); } catch (e) {}
@@ -382,6 +383,40 @@
     if (!EBKF.user) return null;
     var d = await EBKF.db.collection("gridPlays")
       .doc(EBKF.user.uid + "_" + sport + "_" + date).get();
+    return d.exists ? d.data() : null;
+  };
+
+  // ---- Deep Cut: one play per account per day + community tallies ----
+  // deepCutPlays/{uid}_{date} = { uid, date, r, g }   r: 0 missed, 1-3 solved on guess r
+  // deepCutStats/{date}       = { p, s1, s2, s3, x }  written in the SAME batch,
+  // which is what lets the rules allow exactly one bump per account per day.
+  EBKF.recordDeepCut = async function (date, r, guesses) {
+    await EBKF.ready;
+    if (!EBKF.user) return;
+    var uid = EBKF.user.uid;
+    var playRef = EBKF.db.collection("deepCutPlays").doc(uid + "_" + date);
+    var existing = await playRef.get().catch(function () { return null; });
+    if (existing && existing.exists) return;
+    var inc = firebase.firestore.FieldValue.increment(1);
+    var bump = { p: inc };
+    bump[r > 0 ? "s" + r : "x"] = inc;
+    var batch = EBKF.db.batch();
+    batch.set(playRef, {
+      uid: uid, date: date, r: r,
+      g: (guesses || []).slice(0, 3).map(function (x) { return String(x).slice(0, 60); }),
+    });
+    batch.set(EBKF.db.collection("deepCutStats").doc(date), bump, { merge: true });
+    return batch.commit();
+  };
+  EBKF.deepCutStats = async function (date) {
+    await EBKF.ready;
+    var d = await EBKF.db.collection("deepCutStats").doc(date).get();
+    return d.exists ? d.data() : null;
+  };
+  EBKF.getDeepCutPlay = async function (date) {
+    await EBKF.ready;
+    if (!EBKF.user) return null;
+    var d = await EBKF.db.collection("deepCutPlays").doc(EBKF.user.uid + "_" + date).get();
     return d.exists ? d.data() : null;
   };
 

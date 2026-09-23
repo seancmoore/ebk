@@ -1,0 +1,1295 @@
+[
+  {
+    "id": "nhl-001",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Before Connor McDavid in 2024, who was the only skater ever to win the Conn Smythe Trophy while his team lost the Stanley Cup Final?",
+    "answer": "Reggie Leach",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "reggie leach",
+      "leach"
+    ],
+    "hints": [
+      "He did it in 1976 for a Philadelphia Flyers team that got swept by Montreal.",
+      "Right wing on the LCB Line with Bobby Clarke and Bill Barber, nicknamed 'The Riverton Rifle'."
+    ],
+    "fact": "Reggie Leach scored 19 goals in 16 games in the 1976 playoffs, a record later matched by Jari Kurri but never beaten. He also had a five-goal game against Boston that spring.",
+    "source": "https://en.wikipedia.org/wiki/Reggie_Leach",
+    "verified": true
+  },
+  {
+    "id": "nhl-002",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "The 'Easter Epic': Game 7, 1987, Islanders vs. Capitals, ended at 1:58 a.m. in the fourth overtime. Who scored the winner?",
+    "answer": "Pat LaFontaine",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "pat lafontaine",
+      "lafontaine",
+      "patrick lafontaine"
+    ],
+    "hints": [
+      "An American-born Islanders center who later captained the Buffalo Sabres.",
+      "Hall of Famer, born in St. Louis, wore No. 16 on Long Island. Initials P.L."
+    ],
+    "fact": "Pat LaFontaine's goal came at 8:47 of the fourth OT, more than six hours after puck drop, finishing an Islanders comeback from a 3-1 series deficit.",
+    "source": "https://en.wikipedia.org/wiki/Easter_Epic",
+    "verified": true
+  },
+  {
+    "id": "nhl-003",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In the 1988 trade that sent Wayne Gretzky to Los Angeles, which 20-year-old center, fresh off a 55-goal season, was the main player Edmonton got back?",
+    "answer": "Jimmy Carson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jimmy carson",
+      "carson",
+      "james carson"
+    ],
+    "hints": [
+      "He was a Michigan native taken 2nd overall by the Kings in 1986.",
+      "He was the first teenager since Wayne Gretzky to score 50 in a season. Martin Gelinas also came to Edmonton in the deal."
+    ],
+    "fact": "Jimmy Carson, Martin Gelinas, three first-round picks and $15 million went to Edmonton. Carson scored 49 goals in his first Oilers season but was traded to Detroit early in 1989-90.",
+    "source": "https://en.wikipedia.org/wiki/Jimmy_Carson",
+    "verified": true,
+    "verify_note": "Hint 2: 'record for goals by a teenager' unverified (Wikipedia only supports first teen 50-goal scorer since Gretzky); replaced."
+  },
+  {
+    "id": "nhl-004",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "The Flyers' 1992 package for Eric Lindros included Peter Forsberg, Mike Ricci, Steve Duchesne and one goalie. Which goalie went to Quebec?",
+    "answer": "Ron Hextall",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "ron hextall",
+      "hextall",
+      "ronald hextall"
+    ],
+    "hints": [
+      "He had won the Conn Smythe in 1987 despite the Flyers losing the Final.",
+      "In 1987 he became the first NHL goalie to shoot the puck into the opposing net for a goal."
+    ],
+    "fact": "Ron Hextall played one season in Quebec before moving to the Islanders and later back to Philadelphia. The Lindros deal was decided by an arbitrator after both the Flyers and Rangers claimed they had traded for him.",
+    "source": "https://en.wikipedia.org/wiki/Eric_Lindros",
+    "verified": true
+  },
+  {
+    "id": "nhl-005",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 4,
+    "q": "In December 1995 Montreal traded Patrick Roy and Mike Keane to Colorado for Martin Rucinsky, Andrei Kovalenko and a young goalie. Who was the goalie?",
+    "answer": "Jocelyn Thibault",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jocelyn thibault",
+      "thibault"
+    ],
+    "hints": [
+      "He was just 20 and had been a 1993 first-round pick of the Quebec Nordiques.",
+      "He later spent five seasons as Chicago's starter. Initials J.T."
+    ],
+    "fact": "Jocelyn Thibault was taken 10th overall by Quebec in 1993. The Roy deal, made four days after Roy's infamous 11-1 loss to Detroit, is considered one of the most lopsided trades ever.",
+    "source": "https://en.wikipedia.org/wiki/Patrick_Roy",
+    "verified": true
+  },
+  {
+    "id": "nhl-006",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Who holds the NHL record for career regular-season penalty minutes, with nearly 4,000?",
+    "answer": "Tiger Williams",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "tiger williams",
+      "dave williams",
+      "dave tiger williams",
+      "williams",
+      "tiger"
+    ],
+    "hints": [
+      "He played mostly for Toronto and Vancouver from 1974 to 1988.",
+      "His nickname came from his minor hockey coach when he was 5 years old."
+    ],
+    "fact": "Dave 'Tiger' Williams finished with 3,966 PIM in the NHL's official records (some sources list 3,971), spread over five teams. He could also score: 241 career goals.",
+    "source": "https://en.wikipedia.org/wiki/List_of_NHL_records_(individual)",
+    "verified": true,
+    "verify_note": "Fact: Wikipedia bio lists 3,971 PIM while NHL record list uses 3,966; noted both."
+  },
+  {
+    "id": "nhl-007",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In November 1979, which goalie became the first ever credited with an NHL goal, after a Colorado Rockies player's blind pass slid into their own empty net?",
+    "answer": "Billy Smith",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "billy smith",
+      "bill smith",
+      "william smith",
+      "battlin billy",
+      "battlin billy smith",
+      "smith"
+    ],
+    "hints": [
+      "He was the last player on his team to touch the puck before it went in.",
+      "New York Islanders goalie who won four straight Cups and the 1983 Conn Smythe."
+    ],
+    "fact": "Rockies rookie Rob Ramage made the errant pass during a delayed penalty. Billy Smith was credited because he was the last Islander to touch the puck.",
+    "source": "https://en.wikipedia.org/wiki/Billy_Smith_(ice_hockey)",
+    "verified": true,
+    "verify_note": "Added 'smith' to accept (unambiguous in context)."
+  },
+  {
+    "id": "nhl-008",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "On Feb. 7, 1976, which player set the NHL single-game points record with 6 goals and 4 assists in an 11-4 win over Boston?",
+    "answer": "Darryl Sittler",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "darryl sittler",
+      "sittler"
+    ],
+    "hints": [
+      "He was captain of the Toronto Maple Leafs.",
+      "Later that same year he scored five goals in a single playoff game against the Flyers."
+    ],
+    "fact": "Darryl Sittler's 10 points broke the old single-game record of 8, and it still stands. He is also the most recent player to score six goals in one NHL game.",
+    "source": "https://en.wikipedia.org/wiki/Darryl_Sittler",
+    "verified": true,
+    "verify_note": "Fact: 8-point record was also shared by Bert Olmstead; reworded to 'the old record of 8'."
+  },
+  {
+    "id": "nhl-009",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Game 7, 1986 Smythe Division final: which Oilers defenseman banked a pass off goalie Grant Fuhr into his own net, on his birthday, to eliminate Edmonton?",
+    "answer": "Steve Smith",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "steve smith",
+      "smith",
+      "steven smith"
+    ],
+    "hints": [
+      "Calgary's Perry Berezan was credited with the goal as the last Flame to touch the puck.",
+      "A young defenseman who later won three Cups with the Oilers."
+    ],
+    "fact": "Steve Smith's own goal came about five minutes into the third period on April 30, 1986. It was Calgary's first playoff series win over Edmonton.",
+    "source": "https://en.wikipedia.org/wiki/Steve_Smith_(ice_hockey,_born_April_30,_1963)",
+    "verified": true,
+    "verify_note": "Source swapped to Steve Smith Wikipedia bio (confirms Fuhr-skate bank, 23rd birthday, Cups 1987/88/90)."
+  },
+  {
+    "id": "nhl-010",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Which Swede became the first European-born player ever drafted first overall, by the Quebec Nordiques in 1989?",
+    "answer": "Mats Sundin",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "mats sundin",
+      "sundin"
+    ],
+    "hints": [
+      "In 1994 he was traded to Toronto in a deal centered on Wendel Clark.",
+      "He finished as the Maple Leafs' all-time leader in points with 987."
+    ],
+    "fact": "Mats Sundin was dealt to Toronto on draft day 1994 and captained the Leafs for over a decade. He is in the Hockey Hall of Fame.",
+    "source": "https://en.wikipedia.org/wiki/Mats_Sundin",
+    "verified": true
+  },
+  {
+    "id": "nhl-011",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Which No. 1 overall pick of 1993 famously said, 'I'm glad I got drafted first, because no one remembers number two'?",
+    "answer": "Alexandre Daigle",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "alexandre daigle",
+      "daigle",
+      "alex daigle"
+    ],
+    "hints": [
+      "He was picked by the Ottawa Senators, who were accused of tanking for him.",
+      "The No. 2 pick that year was future Hall of Famer Chris Pronger."
+    ],
+    "fact": "Alexandre Daigle signed a five-year, $12.25 million deal, the richest rookie contract ever at the time, which helped push the NHL toward a rookie salary cap. He never became a star.",
+    "source": "https://en.wikipedia.org/wiki/Alexandre_Daigle",
+    "verified": true
+  },
+  {
+    "id": "nhl-012",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "On Feb. 22, 2020, a 42-year-old emergency backup goalie who worked at the Toronto Marlies' arena came in for Carolina and beat the Maple Leafs. Who was he?",
+    "answer": "David Ayres",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "david ayres",
+      "ayres",
+      "dave ayres"
+    ],
+    "hints": [
+      "Media called him 'the Zamboni driver', though his title was building operator.",
+      "He'd had a kidney transplant in 2004, with his mother as the donor."
+    ],
+    "fact": "David Ayres became the first emergency backup goalie credited with an NHL win and the oldest goalie to win his regular-season debut. His stick went to the Hockey Hall of Fame.",
+    "source": "https://en.wikipedia.org/wiki/David_Ayres",
+    "verified": true
+  },
+  {
+    "id": "nhl-013",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Who is the only player in NHL history to die as a direct result of an injury suffered in a game, a Minnesota North Star in January 1968?",
+    "answer": "Bill Masterton",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "bill masterton",
+      "masterton",
+      "william masterton"
+    ],
+    "hints": [
+      "He had starred at the University of Denver, winning two NCAA titles.",
+      "An annual NHL award for perseverance, sportsmanship and dedication carries his name."
+    ],
+    "fact": "Bill Masterton fell and struck his head without a helmet against the Oakland Seals and died two days later at age 29. The North Stars retired his No. 19.",
+    "source": "https://en.wikipedia.org/wiki/Bill_Masterton",
+    "verified": true
+  },
+  {
+    "id": "nhl-014",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 4,
+    "q": "The 1982 'Miracle on Manchester': the Kings trailed Edmonton 5-0 entering the third period and won 6-5 in OT. Who scored the overtime winner?",
+    "answer": "Daryl Evans",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "daryl evans",
+      "evans"
+    ],
+    "hints": [
+      "A rookie winger. Steve Bozek had tied it with 5 seconds left in regulation.",
+      "He has been the Kings' radio color commentator since 1998. Initials D.E."
+    ],
+    "fact": "Daryl Evans scored at 2:35 of overtime at the Forum. It is still the largest comeback in NHL playoff history, and the Kings went on to upset the Oilers in the series.",
+    "source": "https://en.wikipedia.org/wiki/Miracle_on_Manchester",
+    "verified": true,
+    "verify_note": "Hint 1: sources conflict on left vs right wing; changed to 'rookie winger'."
+  },
+  {
+    "id": "nhl-015",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 4,
+    "q": "Bobby Orr's famous flying Cup-winner in 1970 came on a give-and-go. Which Bruins center fed him the return pass?",
+    "answer": "Derek Sanderson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "derek sanderson",
+      "sanderson",
+      "turk sanderson"
+    ],
+    "hints": [
+      "He won the 1968 Calder Trophy, the year after Orr won it.",
+      "Nicknamed 'Turk', he jumped to the WHA's Philadelphia Blazers in 1972 as the world's highest-paid athlete."
+    ],
+    "fact": "Derek Sanderson set up Orr 40 seconds into overtime of Game 4 against St. Louis goalie Glenn Hall. Sanderson's $2.65 million WHA deal in 1972 was a record at the time.",
+    "source": "https://www.nhl.com/news/derek-sanderson-on-54th-anniversary-of-bobby-orr-s-memorable-goal",
+    "verified": true
+  },
+  {
+    "id": "nhl-016",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In July 1995 the Blues traded a star power forward to Hartford for young defenseman Chris Pronger. Who went to the Whalers?",
+    "answer": "Brendan Shanahan",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "brendan shanahan",
+      "shanahan",
+      "shanny"
+    ],
+    "hints": [
+      "He had back-to-back 50-goal seasons for St. Louis in 1992-93 and 1993-94.",
+      "He later won three Cups in Detroit and ran the Maple Leafs as team president."
+    ],
+    "fact": "Brendan Shanahan had joined St. Louis in 1991 when an arbitrator sent Scott Stevens to New Jersey as compensation. Hartford flipped him to Detroit in 1996.",
+    "source": "https://en.wikipedia.org/wiki/Chris_Pronger",
+    "verified": true,
+    "verify_note": "Hint 1: his most recent season (1994-95 lockout) was 20 goals, so 'just posted' was wrong; named the seasons."
+  },
+  {
+    "id": "nhl-017",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Game 2, 1993 Final: with LA up 2-1 late, Montreal asked for a stick measurement. Which Kings defenseman's illegal curve flipped the series?",
+    "answer": "Marty McSorley",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "marty mcsorley",
+      "mcsorley"
+    ],
+    "hints": [
+      "He came to LA from Edmonton in the 1988 Wayne Gretzky trade.",
+      "Gretzky's longtime enforcer and bodyguard. Initials M.M."
+    ],
+    "fact": "Montreal tied it on the ensuing power play and won in overtime, then took the series in five. Marty McSorley's penalty is one of the most famous in Final history.",
+    "source": "https://en.wikipedia.org/wiki/Marty_McSorley",
+    "verified": true
+  },
+  {
+    "id": "nhl-018",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 4,
+    "q": "In 1985-86, which Minnesota North Stars center became the first American-born player to reach 100 points in an NHL season?",
+    "answer": "Neal Broten",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "neal broten",
+      "broten"
+    ],
+    "hints": [
+      "He was on the 1980 'Miracle on Ice' Olympic team.",
+      "He won the first-ever Hobey Baker Award at Minnesota and scored the 1995 Cup-winner for New Jersey."
+    ],
+    "fact": "Neal Broten had 29 goals and 76 assists for 105 points. Fifteen years after the Miracle on Ice, he scored the Cup-clinching goal for New Jersey in 1995.",
+    "source": "https://en.wikipedia.org/wiki/Neal_Broten",
+    "verified": true,
+    "verify_note": "Fact: removed 'first American to score a Cup-clinching goal' (unreliable claim); replaced with verified detail."
+  },
+  {
+    "id": "nhl-019",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Which Flyers goalie, the reigning Vezina winner and first European goalie to win it, died after crashing his Porsche in November 1985?",
+    "answer": "Pelle Lindbergh",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "pelle lindbergh",
+      "lindbergh"
+    ],
+    "hints": [
+      "He was from Sweden.",
+      "Fans voted him to the 1986 All-Star Game after his death, a first for a major North American sport."
+    ],
+    "fact": "Pelle Lindbergh won the 1985 Vezina and helped Philadelphia reach that year's Final. He was only 26.",
+    "source": "https://en.wikipedia.org/wiki/Pelle_Lindbergh",
+    "verified": true
+  },
+  {
+    "id": "nhl-020",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Who scored at 4:31 of triple overtime in Game 4 of the 1996 Final to give Colorado a 1-0 win and a sweep of Florida?",
+    "answer": "Uwe Krupp",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "uwe krupp",
+      "krupp"
+    ],
+    "hints": [
+      "A German defenseman who had torn up his knee in the first game in franchise history.",
+      "He missed almost the whole regular season, returning for its last five games. Initials U.K."
+    ],
+    "fact": "Uwe Krupp's goal was unassisted and ended the longest scoreless tie in Final history. It clinched the Avalanche's first Cup in their first season after leaving Quebec.",
+    "source": "https://en.wikipedia.org/wiki/1996_Stanley_Cup_Final",
+    "verified": true,
+    "verify_note": "Hint 2 was wrong: Krupp returned for the last five REGULAR-season games, then played all 22 playoff games."
+  },
+  {
+    "id": "nhl-021",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Who scored in overtime of Game 6 in 1980 to beat the Flyers and win the Islanders their first Stanley Cup?",
+    "answer": "Bob Nystrom",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "bob nystrom",
+      "nystrom",
+      "bobby nystrom",
+      "robert nystrom"
+    ],
+    "hints": [
+      "John Tonelli and Lorne Henning assisted on the goal at 7:11 of OT.",
+      "A Swedish-born right winger who spent his entire NHL career with the Islanders."
+    ],
+    "fact": "Bob Nystrom's goal started a run of four straight Islanders Cups. The game also featured linesman Leon Stickle's missed offside call, which he admitted after the game that he blew.",
+    "source": "https://en.wikipedia.org/wiki/1980_Stanley_Cup_Final",
+    "verified": true,
+    "verify_note": "Fact: Stickle admitted it after the game (not 'later'); tightened."
+  },
+  {
+    "id": "nhl-022",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Who was the Atlanta Thrashers' first-ever draft pick, taken first overall in 1999?",
+    "answer": "Patrik Stefan",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "patrik stefan",
+      "stefan",
+      "patrick stefan"
+    ],
+    "hints": [
+      "A Czech center. The Sedin twins went 2nd and 3rd right behind him.",
+      "He's best remembered for missing an empty net for Dallas in 2007, leading to a tying goal."
+    ],
+    "fact": "Patrik Stefan scored 64 goals in 455 NHL games. The Sedin twins, picked right after him, both made the Hall of Fame.",
+    "source": "https://en.wikipedia.org/wiki/1999_NHL_entry_draft",
+    "verified": true,
+    "verify_note": "Fact: 'only Hall of Famers' from 1999 draft could change (Zetterberg, Miller eligible); reworded."
+  },
+  {
+    "id": "nhl-023",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In May 1967, Chicago sent a young center, Ken Hodge and Fred Stanfield to Boston for Pit Martin, Gilles Marotte and Jack Norris. Who was the center?",
+    "answer": "Phil Esposito",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "phil esposito",
+      "esposito",
+      "espo",
+      "phil espo"
+    ],
+    "hints": [
+      "He became the first NHL player to record 100 points in a season.",
+      "In 1970-71 he scored 76 goals, a record until Wayne Gretzky broke it."
+    ],
+    "fact": "Phil Esposito led Boston to Cups in 1970 and 1972. The deal is still considered one of the most lopsided trades in hockey history.",
+    "source": "https://en.wikipedia.org/wiki/Pit_Martin",
+    "verified": true,
+    "verify_note": "Source swapped to Pit Martin Wikipedia (confirms all six players in the trade)."
+  },
+  {
+    "id": "nhl-024",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Who is the only player to play in the NHL in five different decades, finishing in 1980 at age 52?",
+    "answer": "Gordie Howe",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "gordie howe",
+      "howe",
+      "mr hockey",
+      "gordon howe"
+    ],
+    "hints": [
+      "His final NHL season was with the Hartford Whalers.",
+      "A 'goal, an assist and a fight' hat trick is named after him."
+    ],
+    "fact": "Gordie Howe played from the 1940s to 1980, mostly with Detroit, and scored 801 NHL goals. In between, he played in the WHA alongside his sons Mark and Marty.",
+    "source": "https://en.wikipedia.org/wiki/Gordie_Howe",
+    "verified": true
+  },
+  {
+    "id": "nhl-025",
+    "sport": "nhl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "On April 6, 2025, Alex Ovechkin scored goal No. 895 to pass Wayne Gretzky. Which goalie gave it up?",
+    "answer": "Ilya Sorokin",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "ilya sorokin",
+      "sorokin"
+    ],
+    "hints": [
+      "The game was at UBS Arena, and he plays for the New York Islanders.",
+      "A fellow Russian who was a Vezina finalist in 2022-23. Initials I.S."
+    ],
+    "fact": "Ovechkin beat Ilya Sorokin on a power play at 7:26 of the second period. The Islanders still won the game 4-1.",
+    "source": "https://en.wikipedia.org/wiki/UBS_Arena",
+    "verified": true,
+    "verify_note": "Fact: removed unverified 'wrist shot off Tom Wilson feed' and '183rd different goalie'; added verified 7:26 time and 4-1 result."
+  },
+  {
+    "id": "nhl-026",
+    "sport": "nhl",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Which Montreal goalie won the 2001-02 Hart Trophy after tying Jarome Iginla in voting points and winning on the tiebreaker?",
+    "answer": "Jose Theodore",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jose theodore",
+      "theodore"
+    ],
+    "hints": [
+      "He also won the Vezina that season.",
+      "He later played for Colorado and Washington. Initials J.T."
+    ],
+    "fact": "Jose Theodore won the Hart because he had more first-place votes than Iginla. He was the first goalie since Dominik Hasek to win it, and Iginla had to settle for the Art Ross and Rocket Richard.",
+    "source": "https://en.wikipedia.org/wiki/Jarome_Iginla",
+    "verified": true,
+    "verify_note": "Hint 2's '86 to 82' first-place votes is impossible (only ~60 voters) and unverified; question now states the tie, hint 2 replaced."
+  },
+  {
+    "id": "nhl-027",
+    "sport": "nhl",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "In 1999-2000, which defenseman won the Hart and the Norris, the first blueliner to win MVP since Bobby Orr in 1972?",
+    "answer": "Chris Pronger",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "chris pronger",
+      "pronger"
+    ],
+    "hints": [
+      "He played for the St. Louis Blues.",
+      "He was the No. 2 overall pick in 1993, taken by Hartford."
+    ],
+    "fact": "Chris Pronger was the first defenseman Hart winner in 28 years. Hartford had traded him to St. Louis for Brendan Shanahan in 1995.",
+    "source": "https://en.wikipedia.org/wiki/Chris_Pronger",
+    "verified": true
+  },
+  {
+    "id": "nhl-028",
+    "sport": "nhl",
+    "type": "player-season",
+    "difficulty": 4,
+    "q": "Who won the first-ever Maurice 'Rocket' Richard Trophy as the NHL's top goal scorer in 1998-99, with 47 goals?",
+    "answer": "Teemu Selanne",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "teemu selanne",
+      "selanne"
+    ],
+    "hints": [
+      "He played for the Mighty Ducks of Anaheim.",
+      "Nicknamed 'The Finnish Flash', he holds the rookie record with 76 goals."
+    ],
+    "fact": "Teemu Selanne scored his 47 goals in 75 games. Pavel Bure won the next two Rocket Richard Trophies with Florida.",
+    "source": "https://en.wikipedia.org/wiki/Maurice_%22Rocket%22_Richard_Trophy",
+    "verified": true
+  },
+  {
+    "id": "nhl-029",
+    "sport": "nhl",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Acquired from San Jose for a second-round pick in November 2003, which goalie posted a then-modern-record 1.69 GAA that season?",
+    "answer": "Miikka Kiprusoff",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "miikka kiprusoff",
+      "kiprusoff",
+      "kipper"
+    ],
+    "hints": [
+      "He joined Calgary after Roman Turek got hurt.",
+      "A Finn who led the Flames within one win of the 2004 Cup."
+    ],
+    "fact": "Miikka Kiprusoff won 15 playoff games in 2004, five by shutout. He later won the 2006 Vezina.",
+    "source": "https://en.wikipedia.org/wiki/Miikka_Kiprusoff",
+    "verified": true
+  },
+  {
+    "id": "nhl-030",
+    "sport": "nhl",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Who led the NHL in goals in 1993-94 with 60, ahead of Sergei Fedorov's 56?",
+    "answer": "Pavel Bure",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "pavel bure",
+      "bure"
+    ],
+    "hints": [
+      "He played for Vancouver and scored 60 the year before too.",
+      "Nicknamed 'The Russian Rocket'."
+    ],
+    "fact": "Pavel Bure then led Vancouver to Game 7 of the 1994 Final. Vancouver had drafted him in the sixth round in 1989 with a pick rival teams claimed was illegal.",
+    "source": "https://en.wikipedia.org/wiki/Pavel_Bure",
+    "verified": true,
+    "verify_note": "Fact: softened 'league first ruled illegal' to what the source supports."
+  },
+  {
+    "id": "nhl-031",
+    "sport": "nhl",
+    "type": "player-season",
+    "difficulty": 2,
+    "q": "Who won the 2003 Conn Smythe Trophy even though his Mighty Ducks lost Game 7 of the Final to New Jersey?",
+    "answer": "Jean-Sebastien Giguere",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jean sebastien giguere",
+      "jean-sebastien giguere",
+      "giguere",
+      "j s giguere",
+      "js giguere"
+    ],
+    "hints": [
+      "A goalie. Anaheim entered the playoffs as the West's 7th seed and swept defending champ Detroit in Round 1.",
+      "He went 7-0 in overtime games that spring. Nicknamed 'Jiggy'."
+    ],
+    "fact": "Jean-Sebastien Giguere made 63 saves in his playoff debut, a triple-OT win in Detroit, and set a record with a 168:27 overtime shutout streak. He was the fifth Conn Smythe winner from a losing team.",
+    "source": "https://en.wikipedia.org/wiki/Jean-S%C3%A9bastien_Gigu%C3%A8re",
+    "verified": true,
+    "verify_note": "Fact: 'one of six' can go stale after 2026 playoffs; now 'the fifth Conn Smythe winner from a losing team' per source."
+  },
+  {
+    "id": "nhl-032",
+    "sport": "nhl",
+    "type": "player-season",
+    "difficulty": 2,
+    "q": "In 2014-15, which goalie became the first ever to win the Hart, Vezina, Ted Lindsay Award and Jennings Trophy in the same season?",
+    "answer": "Carey Price",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "carey price",
+      "price"
+    ],
+    "hints": [
+      "He played for the Montreal Canadiens.",
+      "Montreal took him 5th overall in 2005, a surprise pick at the time."
+    ],
+    "fact": "Carey Price swept all four awards in one season, something no goalie had ever done. He was the first goalie to win the Hart since Jose Theodore, also a Canadien, in 2002.",
+    "source": "https://en.wikipedia.org/wiki/Carey_Price",
+    "verified": true
+  },
+  {
+    "id": "nhl-033",
+    "sport": "nhl",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Which defenseman scored 48 goals in 1985-86, breaking Bobby Orr's record for blueliners, a mark that still stood through 2025?",
+    "answer": "Paul Coffey",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "paul coffey",
+      "coffey"
+    ],
+    "hints": [
+      "He played for the Edmonton Oilers.",
+      "His 138 points that season were one short of Orr's defenseman record of 139."
+    ],
+    "fact": "Paul Coffey broke Orr's 46-goal mark from 1974-75. The year before, he set defenseman playoff records with 12 goals and 37 points.",
+    "source": "https://en.wikipedia.org/wiki/Paul_Coffey",
+    "verified": true
+  },
+  {
+    "id": "nhl-034",
+    "sport": "nhl",
+    "type": "player-season",
+    "difficulty": 2,
+    "q": "On Dec. 31, 1988, who became the only player to score goals five different ways in one game: even strength, power play, shorthanded, penalty shot and empty net?",
+    "answer": "Mario Lemieux",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "mario lemieux",
+      "lemieux",
+      "super mario",
+      "le magnifique"
+    ],
+    "hints": [
+      "He did it against the New Jersey Devils.",
+      "Pittsburgh Penguins center, the 1984 No. 1 overall pick."
+    ],
+    "fact": "Mario Lemieux finished that night with 8 points. Four years later he beat Hodgkin lymphoma mid-season and still won the scoring title with 160 points in 60 games.",
+    "source": "https://en.wikipedia.org/wiki/Mario_Lemieux",
+    "verified": true
+  },
+  {
+    "id": "nhl-035",
+    "sport": "nhl",
+    "type": "number",
+    "difficulty": 3,
+    "q": "Brett Hull's 1990-91 season is the record for goals by a right winger. How many goals did he score?",
+    "answer": "86",
+    "kind": "number",
+    "num": 86,
+    "accept": [],
+    "hints": [
+      "It's the third-highest single-season total in NHL history, behind only two Wayne Gretzky seasons.",
+      "Between 80 and 90."
+    ],
+    "fact": "Brett Hull scored 86 for St. Louis in 1990-91 and won the Hart. Only Gretzky's 92 and 87 are higher.",
+    "source": "https://en.wikipedia.org/wiki/List_of_NHL_records_(individual)",
+    "verified": true
+  },
+  {
+    "id": "nhl-036",
+    "sport": "nhl",
+    "type": "number",
+    "difficulty": 4,
+    "q": "Bobby Orr's 1970-71 season set the record for points by a defenseman. Exactly how many points did he have?",
+    "answer": "139",
+    "kind": "number",
+    "num": 139,
+    "accept": [],
+    "hints": [
+      "Paul Coffey came within one point of it in 1985-86.",
+      "Between 130 and 145."
+    ],
+    "fact": "Bobby Orr had 139 points in 1970-71. Paul Coffey's 138 in 1985-86 is the closest any defenseman has come.",
+    "source": "https://en.wikipedia.org/wiki/Paul_Coffey",
+    "verified": true
+  },
+  {
+    "id": "nhl-037",
+    "sport": "nhl",
+    "type": "number",
+    "difficulty": 3,
+    "q": "Martin Brodeur holds the NHL record for regular-season wins by a goalie. How many did he finish with?",
+    "answer": "691",
+    "kind": "number",
+    "num": 691,
+    "accept": [],
+    "hints": [
+      "He passed Patrick Roy's old mark of 551 in 2009.",
+      "Between 650 and 700."
+    ],
+    "fact": "Martin Brodeur won 691 games, almost all with New Jersey. He also holds the career shutout record with 125.",
+    "source": "https://en.wikipedia.org/wiki/List_of_NHL_records_(individual)",
+    "verified": true
+  },
+  {
+    "id": "nhl-038",
+    "sport": "nhl",
+    "type": "number",
+    "difficulty": 4,
+    "q": "From 1955 to 1962, Glenn Hall started and finished every game in a record streak for goalies. How many consecutive complete games did he play?",
+    "answer": "502",
+    "kind": "number",
+    "num": 502,
+    "accept": [],
+    "hints": [
+      "He played without a mask for the whole run, with Detroit and Chicago.",
+      "Between 450 and 550."
+    ],
+    "fact": "Glenn Hall's streak of 502 straight complete games ended in 1962 with a back injury. Given modern goalie rotations, it is almost certainly unbreakable.",
+    "source": "https://en.wikipedia.org/wiki/List_of_NHL_records_(individual)",
+    "verified": true
+  },
+  {
+    "id": "nhl-039",
+    "sport": "nhl",
+    "type": "number",
+    "difficulty": 4,
+    "q": "Wayne Gretzky holds the record for points in a single playoff year, set in 1985. How many points did he have?",
+    "answer": "47",
+    "kind": "number",
+    "num": 47,
+    "accept": [],
+    "hints": [
+      "Edmonton beat Philadelphia in the Final that year.",
+      "Between 40 and 50."
+    ],
+    "fact": "Gretzky had 47 points in the 1985 playoffs and won the Conn Smythe. Teammate Paul Coffey set defenseman playoff records that same spring.",
+    "source": "https://en.wikipedia.org/wiki/List_of_NHL_records_(individual)",
+    "verified": true
+  },
+  {
+    "id": "nhl-040",
+    "sport": "nhl",
+    "type": "number",
+    "difficulty": 3,
+    "q": "The 1992-93 Pittsburgh Penguins set the NHL record for consecutive wins. How long was the streak?",
+    "answer": "17",
+    "kind": "number",
+    "num": 17,
+    "accept": [],
+    "hints": [
+      "Mario Lemieux had come back from cancer treatment to help drive it.",
+      "Between 15 and 20."
+    ],
+    "fact": "Pittsburgh won 17 straight late in 1992-93 and took the Presidents' Trophy. The record still stood through 2025.",
+    "source": "https://en.wikipedia.org/wiki/List_of_NHL_records_(team)",
+    "verified": true,
+    "verify_note": "Hint 1: exact streak start date not verified; reworded to the sourced claim."
+  },
+  {
+    "id": "nhl-041",
+    "sport": "nhl",
+    "type": "number",
+    "difficulty": 4,
+    "q": "The 1976-77 Montreal Canadiens hold the record for fewest losses in a 70-plus game season. How many games did they lose?",
+    "answer": "8",
+    "kind": "number",
+    "num": 8,
+    "accept": [],
+    "hints": [
+      "They went on to win the second of four straight Cups.",
+      "Single digits."
+    ],
+    "fact": "Montreal went 60-8-12 in 1976-77. Their 8 losses remain the record for any season of 70 or more games.",
+    "source": "https://en.wikipedia.org/wiki/List_of_NHL_records_(team)",
+    "verified": true
+  },
+  {
+    "id": "nhl-042",
+    "sport": "nhl",
+    "type": "number",
+    "difficulty": 2,
+    "q": "The 2022-23 Boston Bruins set the NHL record for wins in a season. How many did they win?",
+    "answer": "65",
+    "kind": "number",
+    "num": 65,
+    "accept": [],
+    "hints": [
+      "They broke the 62-win mark shared by the 1995-96 Red Wings and 2018-19 Lightning.",
+      "Between 60 and 70."
+    ],
+    "fact": "Boston won 65 games and piled up a record 135 points, then lost in the first round to Florida.",
+    "source": "https://en.wikipedia.org/wiki/List_of_NHL_records_(team)",
+    "verified": true
+  },
+  {
+    "id": "nhl-043",
+    "sport": "nhl",
+    "type": "number",
+    "difficulty": 2,
+    "q": "When the Rangers won the Cup in 1994, how many years had passed since their previous championship?",
+    "answer": "54",
+    "kind": "number",
+    "num": 54,
+    "accept": [],
+    "hints": [
+      "Their prior title came in 1940.",
+      "Between 50 and 60."
+    ],
+    "fact": "The 54-year 'Curse of 1940' ended with a Game 7 win over Vancouver. Brian Leetch won the Conn Smythe.",
+    "source": "https://en.wikipedia.org/wiki/1994_Stanley_Cup_Final",
+    "verified": true
+  },
+  {
+    "id": "nhl-044",
+    "sport": "nhl",
+    "type": "year",
+    "difficulty": 4,
+    "q": "The franchise born as the Kansas City Scouts moved to Denver as the Colorado Rockies. In what year did it move again to become the New Jersey Devils?",
+    "answer": "1982",
+    "kind": "number",
+    "num": 1982,
+    "accept": [],
+    "hints": [
+      "It lasted six seasons in Denver after arriving in 1976.",
+      "Early 1980s."
+    ],
+    "fact": "The Devils debuted in 1982-83 at the Meadowlands. The Scouts' name came from 'The Scout' statue overlooking downtown Kansas City.",
+    "source": "https://en.wikipedia.org/wiki/Kansas_City_Scouts",
+    "verified": true
+  },
+  {
+    "id": "nhl-045",
+    "sport": "nhl",
+    "type": "number",
+    "difficulty": 2,
+    "q": "Jaromir Jagr wore the same jersey number his entire career to honor the Prague Spring and his grandfather, who died in prison that year. What number?",
+    "answer": "68",
+    "kind": "number",
+    "num": 68,
+    "accept": [],
+    "hints": [
+      "Between 60 and 70.",
+      "Think about the year the Prague Spring happened."
+    ],
+    "fact": "Jagr wore 68 for 1968. He finished with 1,921 NHL points, second only to Wayne Gretzky.",
+    "source": "https://en.wikipedia.org/wiki/Jarom%C3%ADr_J%C3%A1gr",
+    "verified": true
+  },
+  {
+    "id": "nhl-046",
+    "sport": "nhl",
+    "type": "team",
+    "difficulty": 3,
+    "q": "Before Edmonton, a 17-year-old Wayne Gretzky played eight WHA games in 1978 for which team, which folded weeks later?",
+    "answer": "Indianapolis Racers",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "indianapolis racers",
+      "racers",
+      "indianapolis",
+      "indy racers",
+      "indy"
+    ],
+    "hints": [
+      "Owner Nelson Skalbania sold his contract to Edmonton's Peter Pocklington.",
+      "The team played in Indiana's capital."
+    ],
+    "fact": "Skalbania sold Gretzky, goalie Eddie Mio and Peter Driscoll to the Oilers. The Indianapolis Racers ceased operations on December 15, 1978.",
+    "source": "https://en.wikipedia.org/wiki/Indianapolis_Racers",
+    "verified": true
+  },
+  {
+    "id": "nhl-047",
+    "sport": "nhl",
+    "type": "team",
+    "difficulty": 3,
+    "q": "In 1973 Gordie Howe came out of retirement to play with his sons Mark and Marty. Which WHA team did they join?",
+    "answer": "Houston Aeros",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "houston aeros",
+      "aeros",
+      "houston"
+    ],
+    "hints": [
+      "The team won back-to-back Avco Cups in 1974 and 1975.",
+      "A Texas team."
+    ],
+    "fact": "The Howes became the first father-son combination to play together in pro hockey. The Houston Aeros folded in 1978 and were the only WHA champion not to join the NHL.",
+    "source": "https://en.wikipedia.org/wiki/Houston_Aeros_(WHA)",
+    "verified": true
+  },
+  {
+    "id": "nhl-048",
+    "sport": "nhl",
+    "type": "team",
+    "difficulty": 4,
+    "q": "In 1978 the struggling Minnesota North Stars merged with another NHL franchise that was about to fold. Which team?",
+    "answer": "Cleveland Barons",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "cleveland barons",
+      "barons",
+      "cleveland"
+    ],
+    "hints": [
+      "The franchise had entered the NHL in the 1967 expansion, in the Bay Area.",
+      "It moved to Ohio in 1976 from Oakland, where it had been the California Golden Seals."
+    ],
+    "fact": "The merged club kept the North Stars' name and history. The Cleveland Barons lasted just two seasons.",
+    "source": "https://en.wikipedia.org/wiki/Cleveland_Barons_(NHL)",
+    "verified": true,
+    "verify_note": "Hints were in the wrong order (hint 1 named Ohio and the Golden Seals); now progressive."
+  },
+  {
+    "id": "nhl-049",
+    "sport": "nhl",
+    "type": "team",
+    "difficulty": 3,
+    "q": "Which 1974-75 expansion team went 8-67-5, allowed a record 446 goals, and won just one road game all season?",
+    "answer": "Washington Capitals",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "washington capitals",
+      "capitals",
+      "caps",
+      "washington"
+    ],
+    "hints": [
+      "They entered the league alongside the Kansas City Scouts.",
+      "Their lone road win came against the California Golden Seals."
+    ],
+    "fact": "The Washington Capitals' .131 points percentage is the worst ever for a 70-plus game season. They also lost 37 straight road games.",
+    "source": "https://en.wikipedia.org/wiki/1974%E2%80%9375_Washington_Capitals_season",
+    "verified": true
+  },
+  {
+    "id": "nhl-050",
+    "sport": "nhl",
+    "type": "team",
+    "difficulty": 2,
+    "q": "Which team is the only one ever to win a Stanley Cup Final after trailing the series 3-0, doing it against Detroit in 1942?",
+    "answer": "Toronto Maple Leafs",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "toronto maple leafs",
+      "maple leafs",
+      "leafs",
+      "toronto"
+    ],
+    "hints": [
+      "An Original Six team from Canada.",
+      "Pete Langelle scored the Game 7 winner on home ice."
+    ],
+    "fact": "Toronto won four straight and took Game 7 3-1 before 16,218 fans, the first crowd over 16,000 at a hockey game in Canada.",
+    "source": "https://en.wikipedia.org/wiki/1942_Stanley_Cup_Final",
+    "verified": true,
+    "verify_note": "Hint 2 said 'Maple Leaf Gardens', nearly the answer string; replaced. Fact: 'largest crowd' reworded to sourced 'first 16,000+ crowd in Canada'."
+  },
+  {
+    "id": "nhl-051",
+    "sport": "nhl",
+    "type": "team",
+    "difficulty": 2,
+    "q": "In 2012, which team became the first No. 8 seed ever to win the Stanley Cup?",
+    "answer": "Los Angeles Kings",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "los angeles kings",
+      "la kings",
+      "kings",
+      "los angeles",
+      "la"
+    ],
+    "hints": [
+      "They went 8-0 on the road on the way to the Final.",
+      "Jonathan Quick won the Conn Smythe, and they beat New Jersey."
+    ],
+    "fact": "The Los Angeles Kings fired Terry Murray in December and hired Darryl Sutter, then became the first 8th seed in North American pro sports to win a title.",
+    "source": "https://en.wikipedia.org/wiki/2012_Stanley_Cup_Final",
+    "verified": true
+  },
+  {
+    "id": "nhl-052",
+    "sport": "nhl",
+    "type": "coach",
+    "difficulty": 3,
+    "q": "Which coach, famous for saying 'It's a great day for hockey,' led Pittsburgh to the 1991 Cup in his only season there?",
+    "answer": "Bob Johnson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "bob johnson",
+      "badger bob",
+      "badger bob johnson",
+      "johnson",
+      "robert johnson"
+    ],
+    "hints": [
+      "He had coached Calgary to the 1986 Final.",
+      "He won three NCAA titles at Wisconsin, which inspired his nickname."
+    ],
+    "fact": "'Badger Bob' Johnson died of brain cancer in November 1991, months after the Cup win. He was the first American-born coach to win the Cup in 53 years.",
+    "source": "https://en.wikipedia.org/wiki/Bob_Johnson_(ice_hockey,_born_1931)",
+    "verified": true
+  },
+  {
+    "id": "nhl-053",
+    "sport": "nhl",
+    "type": "coach",
+    "difficulty": 3,
+    "q": "Who coached the 'Broad Street Bullies' Flyers to Cups in 1974 and 1975 and wrote 'Win today and we walk together forever' on the chalkboard?",
+    "answer": "Fred Shero",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "fred shero",
+      "shero",
+      "freddie shero"
+    ],
+    "hints": [
+      "He won the first-ever Jack Adams Award in 1974.",
+      "Nicknamed 'The Fog', he later took the Rangers to the 1979 Final."
+    ],
+    "fact": "Fred Shero made Philadelphia the first expansion team to win the Cup and pioneered the full-time assistant coach and systematic film study.",
+    "source": "https://en.wikipedia.org/wiki/Fred_Shero",
+    "verified": true
+  },
+  {
+    "id": "nhl-054",
+    "sport": "nhl",
+    "type": "coach",
+    "difficulty": 3,
+    "q": "After a 'too many men' penalty doomed Boston in 1979, which future broadcasting icon spent his last NHL coaching season with the 1979-80 Colorado Rockies?",
+    "answer": "Don Cherry",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "don cherry",
+      "cherry",
+      "grapes"
+    ],
+    "hints": [
+      "He went 19-48-13 in Denver and was fired after the season.",
+      "He modeled his Bruins on his bull terrier, Blue, then became a TV icon on Coach's Corner."
+    ],
+    "fact": "Don Cherry's Rockies slogan was 'Come to the fights and watch a Rockies game break out!' He went on to fame on Coach's Corner.",
+    "source": "https://en.wikipedia.org/wiki/Don_Cherry",
+    "verified": true
+  },
+  {
+    "id": "nhl-055",
+    "sport": "nhl",
+    "type": "coach",
+    "difficulty": 4,
+    "q": "Who was the first head coach of the Atlanta Flames when they entered the NHL in 1972?",
+    "answer": "Bernie Geoffrion",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "bernie geoffrion",
+      "geoffrion",
+      "boom boom geoffrion",
+      "boom boom",
+      "bernard geoffrion"
+    ],
+    "hints": [
+      "A Hall of Fame winger who won six Cups as a player with Montreal.",
+      "His nickname came from his thunderous slapshot, which he claimed to have invented."
+    ],
+    "fact": "'Boom Boom' Geoffrion led the Flames to their first playoff berth in 1974. He was the second player ever to score 50 goals in a season, after Maurice Richard.",
+    "source": "https://en.wikipedia.org/wiki/Bernie_Geoffrion",
+    "verified": true
+  },
+  {
+    "id": "nhl-056",
+    "sport": "nhl",
+    "type": "coach",
+    "difficulty": 2,
+    "q": "Which interim coach took over the St. Louis Blues in November 2018 and led them from last place on Jan. 3 to the franchise's first Stanley Cup?",
+    "answer": "Craig Berube",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "craig berube",
+      "berube"
+    ],
+    "hints": [
+      "He replaced Mike Yeo after a 7-9-3 start.",
+      "A former enforcer nicknamed 'Chief' who had been a Blues assistant."
+    ],
+    "fact": "Craig Berube's Blues were 15-18-4 on Jan. 3, 2019, dead last in the NHL, then beat Boston in seven games in the Final.",
+    "source": "https://en.wikipedia.org/wiki/2018%E2%80%9319_St._Louis_Blues_season",
+    "verified": true
+  },
+  {
+    "id": "nhl-057",
+    "sport": "nhl",
+    "type": "coach",
+    "difficulty": 2,
+    "q": "Which coach won the 2018 Cup with Washington, resigned 11 days later in a contract dispute, and was hired by the Islanders three days after that?",
+    "answer": "Barry Trotz",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "barry trotz",
+      "trotz"
+    ],
+    "hints": [
+      "He had been the Nashville Predators' first-ever coach.",
+      "He later returned to Nashville as general manager in 2023."
+    ],
+    "fact": "Barry Trotz coached Nashville from its start until 2014, then delivered the Capitals' first Cup before his surprise exit.",
+    "source": "https://en.wikipedia.org/wiki/Barry_Trotz",
+    "verified": true
+  },
+  {
+    "id": "nhl-058",
+    "sport": "nhl",
+    "type": "other",
+    "difficulty": 3,
+    "q": "What was the name of the Hartford Whalers' famous goal song, still played on Whalers throwback nights?",
+    "answer": "Brass Bonanza",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "brass bonanza"
+    ],
+    "hints": [
+      "It was originally titled 'Evening Beat', by Jacques Ysaye under a pen name.",
+      "GM Brian Burke dropped it in 1992, but it came back after he left."
+    ],
+    "fact": "'Brass Bonanza' dates to the team's WHA days as the New England Whalers. Today it also plays when a Hartford Yard Goats player homers.",
+    "source": "https://en.wikipedia.org/wiki/Brass_Bonanza",
+    "verified": true
+  },
+  {
+    "id": "nhl-059",
+    "sport": "nhl",
+    "type": "other",
+    "difficulty": 2,
+    "q": "What 1982 pop song, discovered by players at a Philadelphia bar in January 2019, became the St. Louis Blues' victory anthem on their Cup run?",
+    "answer": "Gloria",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "gloria"
+    ],
+    "hints": [
+      "It was a hit for Laura Branigan.",
+      "The title is a woman's name, and fans chanted it after every win."
+    ],
+    "fact": "Blues players heard 'Gloria' while watching an NFL playoff game on Jan. 6, 2019. The next night Jordan Binnington won his first NHL start with a shutout.",
+    "source": "https://en.wikipedia.org/wiki/2018%E2%80%9319_St._Louis_Blues_season",
+    "verified": true
+  },
+  {
+    "id": "nhl-060",
+    "sport": "nhl",
+    "type": "nickname",
+    "difficulty": 3,
+    "q": "Flyers enforcer Dave Schultz set the single-season penalty minutes record with 472 in 1974-75. What was his nickname?",
+    "answer": "The Hammer",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "the hammer",
+      "hammer"
+    ],
+    "hints": [
+      "It's a tool.",
+      "You'd use it to drive a nail."
+    ],
+    "fact": "Dave 'The Hammer' Schultz wrapped his hands in tape to fight, which led to the so-called Schultz Rule banning it. He won two Cups with the Broad Street Bullies.",
+    "source": "https://en.wikipedia.org/wiki/Dave_Schultz_(ice_hockey)",
+    "verified": true
+  }
+]

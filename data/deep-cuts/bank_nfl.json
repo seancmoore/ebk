@@ -1,0 +1,1902 @@
+[
+  {
+    "id": "nfl-001",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Roger Staubach coined the term 'Hail Mary' after a 1975 playoff heave that beat the Vikings. Which Cowboys receiver caught it?",
+    "answer": "Drew Pearson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "drew pearson",
+      "pearson"
+    ],
+    "hints": [
+      "He was Dallas's top wideout of the 1970s and wore No. 88.",
+      "He went undrafted out of Tulsa and later made the Hall of Fame in 2021."
+    ],
+    "fact": "Drew Pearson hauled in the pass on December 28, 1975, to beat Minnesota 17-14. Staubach said afterward, 'I closed my eyes and said a Hail Mary,' and the name stuck forever.",
+    "source": "https://en.wikipedia.org/wiki/Hail_Mary_pass",
+    "verified": true
+  },
+  {
+    "id": "nfl-002",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Terry Bradshaw's 'Immaculate Reception' pass in 1972 was not thrown to Franco Harris. Which Steelers running back was the intended target?",
+    "answer": "John 'Frenchy' Fuqua",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "frenchy fuqua",
+      "john fuqua",
+      "fuqua",
+      "frenchy"
+    ],
+    "hints": [
+      "The ball deflected off him and/or Raiders safety Jack Tatum before Franco scooped it.",
+      "He was known for flamboyant outfits and went by a French nickname."
+    ],
+    "fact": "Bradshaw was throwing to John 'Frenchy' Fuqua on 4th down with 22 seconds left. The ball caromed off Fuqua or Jack Tatum, Franco Harris caught it at his shoetops, and Pittsburgh won 13-7 for its first ever playoff win.",
+    "source": "https://en.wikipedia.org/wiki/Immaculate_Reception",
+    "verified": true
+  },
+  {
+    "id": "nfl-003",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "On the last play of Super Bowl XXXIV, Kevin Dyson was stopped one yard short of tying the game. Which Rams linebacker made 'The Tackle'?",
+    "answer": "Mike Jones",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "mike jones",
+      "michael jones"
+    ],
+    "hints": [
+      "He wrapped up Dyson's legs at the 1 with no time left.",
+      "He shares a name with a Houston rapper famous for repeating his own name."
+    ],
+    "fact": "Mike Jones' tackle on January 30, 2000 sealed a 23-16 Rams win. Kurt Warner won MVP after throwing for a then-Super Bowl record 414 yards.",
+    "source": "https://en.wikipedia.org/wiki/Super_Bowl_XXXIV",
+    "verified": true
+  },
+  {
+    "id": "nfl-004",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In the January 2000 'Music City Miracle,' who threw the cross-field lateral that Kevin Dyson took 75 yards to beat the Bills?",
+    "answer": "Frank Wycheck",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "frank wycheck",
+      "wycheck"
+    ],
+    "hints": [
+      "He was the Titans' starting tight end.",
+      "Fullback Lorenzo Neal fielded the kickoff and handed it to him."
+    ],
+    "fact": "Frank Wycheck's throw was ruled a lateral after replay review, and Tennessee won 22-16 with three seconds left. The Titans rode it all the way to Super Bowl XXXIV.",
+    "source": "https://en.wikipedia.org/wiki/Music_City_Miracle",
+    "verified": true
+  },
+  {
+    "id": "nfl-005",
+    "sport": "nfl",
+    "type": "player-season",
+    "difficulty": 2,
+    "q": "In Week 2 of the 2003 season, which running back set a then-NFL record by rushing for 295 yards against the Browns?",
+    "answer": "Jamal Lewis (2003)",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jamal lewis",
+      "lewis"
+    ],
+    "hints": [
+      "He played for the Baltimore Ravens.",
+      "He finished that season with 2,066 rushing yards and won Offensive Player of the Year."
+    ],
+    "fact": "Jamal Lewis broke Corey Dillon's single-game record of 278. His 295 stood for four years until Adrian Peterson ran for 296 in 2007.",
+    "source": "https://en.wikipedia.org/wiki/Jamal_Lewis_(American_football)",
+    "verified": true
+  },
+  {
+    "id": "nfl-006",
+    "sport": "nfl",
+    "type": "number",
+    "difficulty": 3,
+    "q": "As a rookie in November 2007, Adrian Peterson set the NFL single-game rushing record against the Chargers. How many yards did he run for?",
+    "answer": "296",
+    "kind": "number",
+    "num": 296,
+    "accept": [],
+    "hints": [
+      "It beat the previous record by exactly one yard.",
+      "It is between 290 and 300."
+    ],
+    "fact": "Peterson ran for 296 yards on November 4, 2007, one more than Jamal Lewis's 295 from 2003. Through the 2025 season nobody has topped it.",
+    "source": "https://en.wikipedia.org/wiki/Adrian_Peterson",
+    "verify_note": "Source switched to Adrian Peterson page; 296 confirmed and still the record through 2025 (local nflverse data).",
+    "verified": true
+  },
+  {
+    "id": "nfl-007",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "In 1970, which Saints kicker, born without toes on his kicking foot, booted a 63-yard field goal that stood as the NFL record for 43 years?",
+    "answer": "Tom Dempsey",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "tom dempsey",
+      "dempsey"
+    ],
+    "hints": [
+      "He kicked with a custom flat-front shoe.",
+      "The walk-off kick beat the Detroit Lions 19-17 at Tulane Stadium."
+    ],
+    "fact": "Tom Dempsey's 63-yarder on November 8, 1970 was tied three times before Matt Prater hit a 64-yarder in 2013. He was also born with no fingers on his right hand.",
+    "source": "https://en.wikipedia.org/wiki/Tom_Dempsey",
+    "verified": true
+  },
+  {
+    "id": "nfl-008",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "The Jacksonville Jaguars' first-ever NFL Draft pick, taken 2nd overall in 1995, became the franchise's first Hall of Famer. Who was he?",
+    "answer": "Tony Boselli",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "tony boselli",
+      "boselli"
+    ],
+    "hints": [
+      "He was an offensive tackle.",
+      "He played college ball at USC."
+    ],
+    "fact": "Tony Boselli went one pick after Ki-Jana Carter and one before Steve McNair. Shoulder injuries cut his career short, but he was enshrined in Canton in 2022.",
+    "source": "https://en.wikipedia.org/wiki/1995_NFL_draft",
+    "verified": true
+  },
+  {
+    "id": "nfl-009",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In October 2000, which Bengals running back broke Walter Payton's 23-year-old single-game rushing record with 278 yards against Denver?",
+    "answer": "Corey Dillon",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "corey dillon",
+      "dillon"
+    ],
+    "hints": [
+      "He later won a Super Bowl ring with the Patriots.",
+      "He was a 1997 second-round pick out of Washington."
+    ],
+    "fact": "Corey Dillon averaged 12.6 yards per carry that day, topping Payton's 275 from 1977. He finally won a title after a 2004 trade to New England, rushing for a TD in Super Bowl XXXIX.",
+    "source": "https://en.wikipedia.org/wiki/Corey_Dillon",
+    "verify_note": "Softened \"forcing his way\" to the verifiable 2004 trade.",
+    "verified": true
+  },
+  {
+    "id": "nfl-010",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "In the 1987 AFC Championship, which Browns running back was stripped near the goal line in the final minutes, a play forever known as 'The Fumble'?",
+    "answer": "Earnest Byner",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "earnest byner",
+      "ernest byner",
+      "byner"
+    ],
+    "hints": [
+      "Broncos DB Jeremiah Castille punched the ball out.",
+      "He later won a Super Bowl ring with Washington."
+    ],
+    "fact": "Earnest Byner had 187 yards from scrimmage and two touchdowns that day before the fumble. Denver won 38-33, one year after 'The Drive' beat the Browns too.",
+    "source": "https://en.wikipedia.org/wiki/The_Fumble",
+    "verify_note": "Sources disagree on the exact yard line (drive at the 8, fumble near the 3); question now says near the goal line. Fact uses verified game stats.",
+    "verified": true
+  },
+  {
+    "id": "nfl-011",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 4,
+    "q": "In the 1978 'Holy Roller' play, Ken Stabler fumbled forward, a teammate batted it, and which Raiders tight end fell on it in the end zone to beat San Diego?",
+    "answer": "Dave Casper",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "dave casper",
+      "casper"
+    ],
+    "hints": [
+      "Running back Pete Banaszak was the one who batted it along.",
+      "He played his college ball at Notre Dame and is in the Hall of Fame."
+    ],
+    "fact": "Dave Casper kicked the ball ahead and then recovered it for a 21-20 win. The NFL changed the rules the next year so only the fumbler can advance a fumble on 4th down or after the two-minute warning.",
+    "source": "https://en.wikipedia.org/wiki/Holy_Roller_(American_football)",
+    "verified": true
+  },
+  {
+    "id": "nfl-012",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "On the 'Philly Special' in Super Bowl LII, Nick Foles caught a touchdown pass. Who threw it?",
+    "answer": "Trey Burton",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "trey burton",
+      "burton"
+    ],
+    "hints": [
+      "He was a tight end, and running back Corey Clement pitched him the ball.",
+      "He played at Florida and was an all-state quarterback in high school."
+    ],
+    "fact": "Trey Burton's toss made Nick Foles the first player to both throw and catch a touchdown in a Super Bowl. Burton cashed in with a big free-agent deal from the Bears weeks later.",
+    "source": "https://en.wikipedia.org/wiki/Philly_Special",
+    "verified": true
+  },
+  {
+    "id": "nfl-013",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 4,
+    "q": "The 'Double Doink' field goal that ended the Bears' 2018 season was later ruled tipped at the line. Which Eagles defensive lineman got a finger on it?",
+    "answer": "Treyvon Hester",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "treyvon hester",
+      "hester"
+    ],
+    "hints": [
+      "He was a backup defensive tackle.",
+      "He played college ball at Toledo."
+    ],
+    "fact": "Treyvon Hester's tip sent Cody Parkey's 43-yarder off the upright and the crossbar. Philadelphia won 16-15 in the Wild Card round in January 2019.",
+    "source": "https://en.wikipedia.org/wiki/Double_Doink",
+    "verified": true
+  },
+  {
+    "id": "nfl-014",
+    "sport": "nfl",
+    "type": "number",
+    "difficulty": 4,
+    "q": "The highest-scoring game in NFL history was Washington's 1966 win over the Giants. How many total points were scored?",
+    "answer": "113",
+    "kind": "number",
+    "num": 113,
+    "accept": [],
+    "hints": [
+      "Washington scored 72 of them.",
+      "It is between 110 and 120."
+    ],
+    "fact": "Washington beat the Giants 72-41 on November 27, 1966. The teams combined for 16 touchdowns, and 14 footballs were lost into the stands that day, mostly on extra points.",
+    "source": "https://en.wikipedia.org/wiki/List_of_highest-scoring_NFL_games",
+    "verify_note": "Removed unverified claim that Jurgensen threw for 508 yards; replaced with verified lost-footballs detail.",
+    "verified": true
+  },
+  {
+    "id": "nfl-015",
+    "sport": "nfl",
+    "type": "team",
+    "difficulty": 4,
+    "q": "In 1944 the Pittsburgh Steelers merged with another franchise for one wartime season and went 0-10. Which franchise was it?",
+    "answer": "Chicago Cardinals",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "chicago cardinals",
+      "cardinals",
+      "arizona cardinals",
+      "st louis cardinals"
+    ],
+    "hints": [
+      "A year earlier, Pittsburgh had merged with the Eagles.",
+      "That franchise lives on today in Arizona."
+    ],
+    "fact": "The merged team was officially 'Card-Pitt,' but one angry fan suggested calling them the 'Car-Pits' because every team in the league walked all over them.",
+    "source": "https://en.wikipedia.org/wiki/Card-Pitt",
+    "verify_note": "Nickname origin corrected to the documented fan letter (\"Car-Pits\").",
+    "verified": true
+  },
+  {
+    "id": "nfl-016",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Which undrafted rookie, who walked into the Rams' offices with a scrapbook asking for a tryout, set the NFL single-season interception record with 14 in 1952?",
+    "answer": "Dick 'Night Train' Lane",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "night train lane",
+      "dick lane",
+      "night train",
+      "richard lane",
+      "dick night train lane"
+    ],
+    "hints": [
+      "He was working at an aircraft plant in Los Angeles at the time.",
+      "His nickname came from a Jimmy Forrest song a teammate kept playing."
+    ],
+    "fact": "Dick 'Night Train' Lane picked off 14 passes in a 12-game season, and more than 70 years later nobody has matched it. He originally tried out as a receiver before the Rams moved him to defense.",
+    "source": "https://en.wikipedia.org/wiki/Night_Train_Lane",
+    "verified": true
+  },
+  {
+    "id": "nfl-017",
+    "sport": "nfl",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Which Jets defensive end set the official NFL single-season sack record with 22 in 1984, a mark that stood for 17 years?",
+    "answer": "Mark Gastineau (1984)",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "mark gastineau",
+      "gastineau"
+    ],
+    "hints": [
+      "He was part of the 'New York Sack Exchange.'",
+      "The league banned his signature sack dance in 1984."
+    ],
+    "fact": "Mark Gastineau's 22 sacks stood until Michael Strahan got 22.5 in 2001. His sack celebrations were so over the top that the NFL outlawed them as taunting.",
+    "source": "https://en.wikipedia.org/wiki/Mark_Gastineau",
+    "verified": true
+  },
+  {
+    "id": "nfl-018",
+    "sport": "nfl",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Who is the only placekicker ever named AP NFL MVP, winning it in the strike-shortened 1982 season?",
+    "answer": "Mark Moseley (1982)",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "mark moseley",
+      "moseley"
+    ],
+    "hints": [
+      "He kicked for Washington.",
+      "He was the league's last full-time straight-on (toe) kicker."
+    ],
+    "fact": "Mark Moseley made 20 of 21 field goals in 1982 and Washington went on to win Super Bowl XVII. Once Rick Danmeier retired after that season, Moseley was the NFL's only full-time straight-on kicker.",
+    "source": "https://en.wikipedia.org/wiki/Mark_Moseley",
+    "verify_note": "Removed false claim that every other kicker was soccer-style in 1982 (Rick Danmeier was still active that year).",
+    "verified": true
+  },
+  {
+    "id": "nfl-019",
+    "sport": "nfl",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "In 1971 this Vikings defensive tackle became the first defensive player ever named AP NFL MVP. Who was he?",
+    "answer": "Alan Page (1971)",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "alan page",
+      "page"
+    ],
+    "hints": [
+      "He was a member of the 'Purple People Eaters.'",
+      "He later became a justice on the Minnesota Supreme Court."
+    ],
+    "fact": "Alan Page was the first defensive MVP, and only Lawrence Taylor (1986) has done it since. Page earned a law degree while still playing and served on Minnesota's Supreme Court from 1993 to 2015.",
+    "source": "https://en.wikipedia.org/wiki/Alan_Page",
+    "verified": true
+  },
+  {
+    "id": "nfl-020",
+    "sport": "nfl",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Peyton Manning won the 2003 NFL MVP, but he had to share it. Who was the co-MVP?",
+    "answer": "Steve McNair (2003)",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "steve mcnair",
+      "mcnair",
+      "air mcnair"
+    ],
+    "hints": [
+      "He played quarterback for the Tennessee Titans.",
+      "He went 3rd overall in 1995 out of Alcorn State."
+    ],
+    "fact": "Steve McNair and Peyton Manning split the 2003 AP MVP vote. McNair, known as 'Air McNair,' led Tennessee to a 12-4 record that year.",
+    "source": "https://en.wikipedia.org/wiki/Steve_McNair",
+    "verify_note": "\"Air McNair\" nickname origin (high school, per Wikipedia) removed from fact.",
+    "verified": true
+  },
+  {
+    "id": "nfl-021",
+    "sport": "nfl",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Which 5-foot-8 Colts safety was named AP Defensive Player of the Year for 2007, the first Colt ever to win it?",
+    "answer": "Bob Sanders (2007)",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "bob sanders",
+      "sanders"
+    ],
+    "hints": [
+      "Tony Dungy nicknamed him 'The Eraser.'",
+      "He played college ball at Iowa."
+    ],
+    "fact": "Bob Sanders, also known as 'The Sandman,' was the first Colt ever to win DPOY. One season earlier, in the Colts' Super Bowl XLI win, he forced a fumble and intercepted Rex Grossman.",
+    "source": "https://en.wikipedia.org/wiki/Bob_Sanders",
+    "verify_note": "Clarified timing: Super Bowl XLI was the season before his DPOY year.",
+    "verified": true
+  },
+  {
+    "id": "nfl-022",
+    "sport": "nfl",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "Which second-round rookie ran for 1,508 yards and won 2002 Offensive Rookie of the Year for the Broncos?",
+    "answer": "Clinton Portis (2002)",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "clinton portis",
+      "portis"
+    ],
+    "hints": [
+      "He played college ball at Miami and won a national title there.",
+      "Denver later traded him to Washington for Champ Bailey."
+    ],
+    "fact": "Clinton Portis followed his 1,508-yard rookie year with 1,591 yards in 2003. Denver then flipped him to Washington for Champ Bailey in one of the biggest player-for-player swaps ever.",
+    "source": "https://en.wikipedia.org/wiki/Clinton_Portis",
+    "verified": true
+  },
+  {
+    "id": "nfl-023",
+    "sport": "nfl",
+    "type": "player-season",
+    "difficulty": 3,
+    "q": "In 2011 three quarterbacks topped 5,000 passing yards in the same season for the first time. Drew Brees and Tom Brady were two. Who was the third?",
+    "answer": "Matthew Stafford (2011)",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "matthew stafford",
+      "matt stafford",
+      "stafford"
+    ],
+    "hints": [
+      "He played for the Detroit Lions.",
+      "He was the 2009 No. 1 overall pick out of Georgia."
+    ],
+    "fact": "Matthew Stafford crossed 5,000 passing yards in the 2011 finale at Green Bay, throwing for 520 yards in a 45-41 loss. He finished with 5,038.",
+    "source": "https://en.wikipedia.org/wiki/Matthew_Stafford",
+    "verify_note": "Removed \"fourth QB ever\" claim: Brady also crossed 5,000 in the same Week 17 time slot of 2011, so the order is ambiguous.",
+    "verified": true
+  },
+  {
+    "id": "nfl-024",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Who is the only Super Bowl MVP ever to come from the losing team?",
+    "answer": "Chuck Howley",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "chuck howley",
+      "howley"
+    ],
+    "hints": [
+      "He was a Dallas Cowboys linebacker.",
+      "It happened in Super Bowl V against the Baltimore Colts."
+    ],
+    "fact": "Chuck Howley intercepted two passes in Super Bowl V, but Baltimore won 16-13 on a late Jim O'Brien field goal. He was also the first defensive player to win Super Bowl MVP.",
+    "source": "https://en.wikipedia.org/wiki/Super_Bowl_Most_Valuable_Player",
+    "verified": true
+  },
+  {
+    "id": "nfl-025",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 4,
+    "q": "Only two safeties have ever been named Super Bowl MVP. One was Miami's Jake Scott. Who was the Buccaneer who did it in Super Bowl XXXVII?",
+    "answer": "Dexter Jackson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "dexter jackson"
+    ],
+    "hints": [
+      "He picked off Rich Gannon twice in the first half.",
+      "He played college ball at Florida State."
+    ],
+    "fact": "Dexter Jackson's two first-half picks set the tone as Tampa Bay crushed Oakland 48-21. Weeks later he left for Arizona in free agency.",
+    "source": "https://en.wikipedia.org/wiki/Super_Bowl_Most_Valuable_Player",
+    "verified": true
+  },
+  {
+    "id": "nfl-026",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Joe Namath's Jets upset Baltimore in Super Bowl III. Who was the Colts' starting quarterback that day, the reigning 1968 NFL MVP?",
+    "answer": "Earl Morrall",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "earl morrall",
+      "morrall"
+    ],
+    "hints": [
+      "He was filling in for an injured Johnny Unitas all season.",
+      "Four years later he started nine games, winning all nine, for the undefeated 1972 Dolphins."
+    ],
+    "fact": "Earl Morrall threw three interceptions before Don Shula pulled him for Unitas late in the third quarter. He still collected three Super Bowl rings later: V with the Colts, then VII and VIII with Miami.",
+    "source": "https://en.wikipedia.org/wiki/Super_Bowl_III",
+    "verified": true
+  },
+  {
+    "id": "nfl-027",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 4,
+    "q": "In Super Bowl XXXV, three touchdowns were scored in 36 seconds. After Ron Dixon's 97-yard kickoff return for the Giants, which Raven took the very next kickoff 84 yards to the house?",
+    "answer": "Jermaine Lewis",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jermaine lewis"
+    ],
+    "hints": [
+      "The sequence started with a Duane Starks pick-six.",
+      "He was a 5-foot-7 return specialist from Maryland."
+    ],
+    "fact": "Jermaine Lewis's 84-yard return marked the first time two kickoffs were returned for TDs in one Super Bowl, and on back-to-back kicks at that. Baltimore won 34-7.",
+    "source": "https://en.wikipedia.org/wiki/Super_Bowl_XXXV",
+    "verified": true
+  },
+  {
+    "id": "nfl-028",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Who returned the opening kickoff of the second half 87 yards for a touchdown in Seattle's 43-8 rout of Denver in Super Bowl XLVIII?",
+    "answer": "Percy Harvin",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "percy harvin",
+      "harvin"
+    ],
+    "hints": [
+      "Seattle traded a first-round pick to Minnesota to get him.",
+      "He barely played in the regular season due to a hip injury."
+    ],
+    "fact": "Percy Harvin's return on the first play of the second half made it 29-0, his only touchdown of that season. Seattle traded him to the Jets just eight months later.",
+    "source": "https://en.wikipedia.org/wiki/Percy_Harvin",
+    "verify_note": "Removed unverified \"short kick at his 13\" detail; source switched to Percy Harvin page.",
+    "verified": true
+  },
+  {
+    "id": "nfl-029",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In Super Bowl VII, which Dolphins kicker had a field goal blocked, picked it up, and tried to throw a pass that Washington returned for a touchdown?",
+    "answer": "Garo Yepremian",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "garo yepremian",
+      "yepremian"
+    ],
+    "hints": [
+      "He was born in Cyprus and did not grow up playing American football.",
+      "Washington's Mike Bass took the ball 49 yards the other way."
+    ],
+    "fact": "Garo Yepremian's fumbled pass was the only blemish in a 14-7 win that completed Miami's 17-0 perfect season. He joked, 'This is the first time the goat of the game is in the winner's locker room.'",
+    "source": "https://en.wikipedia.org/wiki/Super_Bowl_VII",
+    "verified": true
+  },
+  {
+    "id": "nfl-030",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "In Super Bowl XLVI, the Patriots let the Giants score on purpose. Which Giants running back tried to stop at the 1-yard line but tumbled into the end zone?",
+    "answer": "Ahmad Bradshaw",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "ahmad bradshaw",
+      "bradshaw"
+    ],
+    "hints": [
+      "The 6-yard TD came with 57 seconds left.",
+      "He was a seventh-round pick out of Marshall."
+    ],
+    "fact": "Ahmad Bradshaw's reluctant touchdown put New York up 21-17, and the Giants held on for their second Super Bowl win over New England in four years.",
+    "source": "https://en.wikipedia.org/wiki/Super_Bowl_XLVI",
+    "verified": true
+  },
+  {
+    "id": "nfl-031",
+    "sport": "nfl",
+    "type": "number",
+    "difficulty": 3,
+    "q": "In the 1940 NFL Championship Game, the Chicago Bears destroyed Washington in the most lopsided result in league history. How many points did the Bears score?",
+    "answer": "73",
+    "kind": "number",
+    "num": 73,
+    "accept": [],
+    "hints": [
+      "Washington scored zero.",
+      "It is between 70 and 80."
+    ],
+    "fact": "The Bears won 73-0 at Griffith Stadium on December 8, 1940, showcasing the modern T formation. It is still the most points by one team in any NFL game.",
+    "source": "https://en.wikipedia.org/wiki/1940_NFL_Championship_Game",
+    "verified": true
+  },
+  {
+    "id": "nfl-032",
+    "sport": "nfl",
+    "type": "number",
+    "difficulty": 3,
+    "q": "In a January 1993 playoff game, backup QB Frank Reich rallied Buffalo past Houston in overtime. How many points had the Bills trailed by at their low point?",
+    "answer": "32",
+    "kind": "number",
+    "num": 32,
+    "accept": [],
+    "hints": [
+      "The Oilers led 35-3 early in the third quarter.",
+      "It is between 30 and 35."
+    ],
+    "fact": "Buffalo came back from 35-3 down to win 41-38 in overtime. It was the NFL's biggest comeback until the 2022 Vikings erased a 33-point deficit against the Colts, and it is still the largest in playoff history.",
+    "source": "https://en.wikipedia.org/wiki/The_Comeback_(American_football)",
+    "verified": true
+  },
+  {
+    "id": "nfl-033",
+    "sport": "nfl",
+    "type": "number",
+    "difficulty": 3,
+    "q": "Jerry Rice holds the NFL record for career receiving touchdowns. How many did he catch?",
+    "answer": "197",
+    "kind": "number",
+    "num": 197,
+    "accept": [],
+    "hints": [
+      "Randy Moss is second with 156.",
+      "It is between 190 and 200."
+    ],
+    "fact": "Jerry Rice caught 197 touchdown passes across 20 seasons, 41 more than anyone else. Add his rushing and return scores and he had 208 total touchdowns.",
+    "source": "https://en.wikipedia.org/wiki/List_of_NFL_career_receiving_touchdowns_leaders",
+    "verified": true
+  },
+  {
+    "id": "nfl-034",
+    "sport": "nfl",
+    "type": "number",
+    "difficulty": 4,
+    "q": "Brett Favre's iron-man streak of consecutive regular-season starts at quarterback ended in December 2010. How many straight games had he started?",
+    "answer": "297",
+    "kind": "number",
+    "num": 297,
+    "accept": [],
+    "hints": [
+      "Counting playoffs, the number was 321.",
+      "It is between 290 and 300."
+    ],
+    "fact": "Favre's streak ran from September 20, 1992 to December 2010, when a sprained shoulder kept him out against the Giants. Counting playoffs he started 321 straight games.",
+    "source": "https://en.wikipedia.org/wiki/Brett_Favre",
+    "verified": true
+  },
+  {
+    "id": "nfl-035",
+    "sport": "nfl",
+    "type": "number",
+    "difficulty": 4,
+    "q": "Paul Krause, who played for Washington and Minnesota, holds the NFL record for career interceptions. How many?",
+    "answer": "81",
+    "kind": "number",
+    "num": 81,
+    "accept": [],
+    "hints": [
+      "He broke Emlen Tunnell's record of 79 in 1979.",
+      "It is between 80 and 85."
+    ],
+    "fact": "Paul Krause intercepted 12 passes as a rookie in 1964 and finished with 81, a record that has stood since 1979.",
+    "source": "https://en.wikipedia.org/wiki/Paul_Krause",
+    "verified": true
+  },
+  {
+    "id": "nfl-036",
+    "sport": "nfl",
+    "type": "number",
+    "difficulty": 2,
+    "q": "Eric Dickerson's 1984 single-season rushing record has survived every 2,000-yard challenger through 2025. How many yards did he run for?",
+    "answer": "2105",
+    "kind": "number",
+    "num": 2105,
+    "accept": [],
+    "hints": [
+      "He broke O.J. Simpson's mark of 2,003.",
+      "It is between 2,100 and 2,110."
+    ],
+    "fact": "Eric Dickerson ran for 2,105 yards for the Los Angeles Rams in 1984, just his second season. The year before, he set the rookie record with 1,808.",
+    "source": "https://en.wikipedia.org/wiki/Eric_Dickerson",
+    "verified": true
+  },
+  {
+    "id": "nfl-037",
+    "sport": "nfl",
+    "type": "number",
+    "difficulty": 3,
+    "q": "LaDainian Tomlinson set the NFL single-season record for rushing touchdowns in his 2006 MVP season. How many did he score on the ground?",
+    "answer": "28",
+    "kind": "number",
+    "num": 28,
+    "accept": [],
+    "hints": [
+      "Shaun Alexander and Priest Holmes had each scored 27.",
+      "It is between 25 and 30."
+    ],
+    "fact": "LT ran for 28 touchdowns and scored 31 total in 2006, and his 186 points broke Paul Hornung's 46-year-old scoring record.",
+    "source": "https://en.wikipedia.org/wiki/LaDainian_Tomlinson",
+    "verified": true
+  },
+  {
+    "id": "nfl-038",
+    "sport": "nfl",
+    "type": "number",
+    "difficulty": 2,
+    "q": "Barry Sanders ran for at least 1,000 yards in every season of his NFL career before retiring abruptly in 1999. How many seasons was that?",
+    "answer": "10",
+    "kind": "number",
+    "num": 10,
+    "accept": [],
+    "hints": [
+      "He was drafted in 1989.",
+      "It is between 8 and 12."
+    ],
+    "fact": "Barry Sanders went 10 for 10 on 1,000-yard seasons, capped by 2,053 yards in 1997. He retired just 1,457 yards short of Walter Payton's career record.",
+    "source": "https://en.wikipedia.org/wiki/Barry_Sanders",
+    "verified": true
+  },
+  {
+    "id": "nfl-039",
+    "sport": "nfl",
+    "type": "number",
+    "difficulty": 2,
+    "q": "In 1984, second-year Dolphin Dan Marino shattered the single-season record for touchdown passes. How many did he throw?",
+    "answer": "48",
+    "kind": "number",
+    "num": 48,
+    "accept": [],
+    "hints": [
+      "The mark stood until Peyton Manning threw 49 in 2004.",
+      "It is between 45 and 50."
+    ],
+    "fact": "Marino threw 48 TDs and became the first QB ever to pass for 5,000 yards (5,084). He had been the 27th pick, the sixth QB taken in the 1983 draft.",
+    "source": "https://en.wikipedia.org/wiki/Dan_Marino",
+    "verified": true
+  },
+  {
+    "id": "nfl-040",
+    "sport": "nfl",
+    "type": "year",
+    "difficulty": 3,
+    "q": "The AFL used the two-point conversion from its first season, but the NFL held out for decades. In what year did the NFL finally adopt it?",
+    "answer": "1994",
+    "kind": "number",
+    "num": 1994,
+    "accept": [],
+    "hints": [
+      "It was the NFL's 75th anniversary season.",
+      "It was the 1990s."
+    ],
+    "fact": "The NFL added the two-point try in 1994. Browns punter Tom Tupa scored the first one on a fake kick in Week 1, earning the nickname 'Two-Point Tupa.'",
+    "source": "https://en.wikipedia.org/wiki/Two-point_conversion",
+    "verified": true
+  },
+  {
+    "id": "nfl-041",
+    "sport": "nfl",
+    "type": "year",
+    "difficulty": 3,
+    "q": "In the infamous 'Heidi Game,' NBC cut away from Jets vs. Raiders to air a children's movie and East Coast viewers missed Oakland's two late TDs. What year was it?",
+    "answer": "1968",
+    "kind": "number",
+    "num": 1968,
+    "accept": [],
+    "hints": [
+      "The Jets won the Super Bowl at the end of that same season.",
+      "It was the late 1960s."
+    ],
+    "fact": "On November 17, 1968, Oakland scored twice in the final minute to win 43-32 while viewers watched Heidi. The fiasco is why NFL TV deals now require games to be shown to completion in the visiting team's market.",
+    "source": "https://en.wikipedia.org/wiki/Heidi_Game",
+    "verify_note": "Consequence reworded to match source (games shown to completion in the visiting market).",
+    "verified": true
+  },
+  {
+    "id": "nfl-042",
+    "sport": "nfl",
+    "type": "year",
+    "difficulty": 4,
+    "q": "The Detroit Lions' Thanksgiving tradition began as a gimmick by their first owner to sell tickets. In what year did the Lions host their first Thanksgiving game?",
+    "answer": "1934",
+    "kind": "number",
+    "num": 1934,
+    "accept": [],
+    "hints": [
+      "It was the franchise's first season in Detroit, against the Chicago Bears.",
+      "It was the 1930s."
+    ],
+    "fact": "Detroit lost 19-16 to the Bears on November 29, 1934. Owner George A. Richards also owned radio station WJR and used it to broadcast the game nationally.",
+    "source": "https://en.wikipedia.org/wiki/NFL_on_Thanksgiving_Day",
+    "verify_note": "Question said \"Detroit\"; the Detroit Panthers hosted a Thanksgiving game in 1925. Now asks about the Lions specifically.",
+    "verified": true
+  },
+  {
+    "id": "nfl-043",
+    "sport": "nfl",
+    "type": "year",
+    "difficulty": 3,
+    "q": "The Rooney Rule, requiring teams to interview minority candidates for head coaching jobs, is named for a Steelers owner. In what year was it adopted?",
+    "answer": "2003",
+    "kind": "number",
+    "num": 2003,
+    "accept": [],
+    "hints": [
+      "It followed the firings of Tony Dungy and Dennis Green after the 2001 season.",
+      "It was the early 2000s."
+    ],
+    "fact": "The rule, named for Dan Rooney, took effect in 2003. It has since been expanded to general manager and coordinator searches.",
+    "source": "https://en.wikipedia.org/wiki/Rooney_Rule",
+    "verified": true
+  },
+  {
+    "id": "nfl-044",
+    "sport": "nfl",
+    "type": "number",
+    "difficulty": 3,
+    "q": "The expansion Tampa Bay Buccaneers went 0-14 in 1976 and kept losing into 1977. How many straight games did they lose before their first win?",
+    "answer": "26",
+    "kind": "number",
+    "num": 26,
+    "accept": [],
+    "hints": [
+      "They finally won late in the 1977 season.",
+      "It is between 20 and 30."
+    ],
+    "fact": "Tampa Bay lost 26 straight under John McKay, still the longest skid of the modern era. McKay's verdict on one loss: 'We didn't block, but we made up for it by not tackling.'",
+    "source": "https://en.wikipedia.org/wiki/1976_Tampa_Bay_Buccaneers_season",
+    "verified": true
+  },
+  {
+    "id": "nfl-045",
+    "sport": "nfl",
+    "type": "number",
+    "difficulty": 4,
+    "q": "In 2006, Chiefs running back Larry Johnson set the NFL record for rushing attempts in a single season. How many carries did he have?",
+    "answer": "416",
+    "kind": "number",
+    "num": 416,
+    "accept": [],
+    "hints": [
+      "Jamal Anderson's 410 in 1998 was the old record.",
+      "It is between 410 and 420."
+    ],
+    "fact": "Larry Johnson carried 416 times for 1,789 yards in 2006. Through 2025, no back has topped it.",
+    "source": "https://en.wikipedia.org/wiki/Larry_Johnson_(running_back)",
+    "verified": true
+  },
+  {
+    "id": "nfl-046",
+    "sport": "nfl",
+    "type": "year",
+    "difficulty": 2,
+    "q": "Bart Starr's QB sneak won the 'Ice Bowl' NFL Championship Game over Dallas at a kickoff temperature of minus 13 degrees. What year was it played?",
+    "answer": "1967",
+    "kind": "number",
+    "num": 1967,
+    "accept": [],
+    "hints": [
+      "It was played on New Year's Eve.",
+      "Green Bay went on to win Super Bowl II."
+    ],
+    "fact": "The Ice Bowl was played December 31, 1967 at Lambeau Field. Jerry Kramer and Ken Bowman double-teamed Jethro Pugh to clear the way for Starr's winning sneak with seconds left.",
+    "source": "https://en.wikipedia.org/wiki/1967_NFL_Championship_Game",
+    "verify_note": "Kickoff temperature per Wikipedia is -13 F, fixed from -15.",
+    "verified": true
+  },
+  {
+    "id": "nfl-047",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Who holds the NFL record for sacks in a single game with 7, set against Seattle in 1990?",
+    "answer": "Derrick Thomas",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "derrick thomas",
+      "thomas"
+    ],
+    "hints": [
+      "He was a Kansas City Chiefs linebacker.",
+      "He went 4th overall in 1989 out of Alabama."
+    ],
+    "fact": "Derrick Thomas sacked Dave Krieg seven times, but missed an eighth on the final play and Krieg threw the game-winning TD. Thomas called it the one play he wished he could have back.",
+    "source": "https://en.wikipedia.org/wiki/Derrick_Thomas",
+    "verified": true
+  },
+  {
+    "id": "nfl-048",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Who set the NFL single-game receiving yards record with 336 yards in a 1989 overtime win over the Saints, a mark still standing through 2025?",
+    "answer": "Willie 'Flipper' Anderson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "flipper anderson",
+      "willie anderson",
+      "flipper",
+      "willie flipper anderson"
+    ],
+    "hints": [
+      "He played for the Los Angeles Rams.",
+      "He is known by a nickname shared with a famous TV dolphin."
+    ],
+    "fact": "Flipper Anderson caught 15 passes for 336 yards on November 26, 1989, breaking Stephone Paige's 309. Calvin Johnson came closest with 329 in 2013.",
+    "source": "https://en.wikipedia.org/wiki/Flipper_Anderson",
+    "verified": true
+  },
+  {
+    "id": "nfl-049",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 4,
+    "q": "Only two players have ever rushed for more yards in a game than this Browns back's 286 against Kansas City in December 2009. Who was he?",
+    "answer": "Jerome Harrison",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jerome harrison",
+      "harrison"
+    ],
+    "hints": [
+      "He broke Jim Brown's Browns franchise single-game record.",
+      "He was a consensus All-American at Washington State."
+    ],
+    "fact": "Jerome Harrison ran for 286 yards and three TDs on December 20, 2009, trailing only Adrian Peterson's 296 and Jamal Lewis's 295 in NFL history.",
+    "source": "https://en.wikipedia.org/wiki/Jerome_Harrison",
+    "verified": true
+  },
+  {
+    "id": "nfl-050",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Which tight end caught Green Bay's 'Miracle in Motown' Hail Mary to beat Detroit in December 2015?",
+    "answer": "Richard Rodgers",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "richard rodgers"
+    ],
+    "hints": [
+      "He shares a last name with the quarterback who threw it.",
+      "He played college ball at Cal."
+    ],
+    "fact": "The 61-yard heave traveled about 69 yards in the air, and Richard Rodgers caught it in the end zone for a 27-23 win. A facemask penalty as time expired had given Green Bay one untimed down.",
+    "source": "https://en.wikipedia.org/wiki/Hail_Mary_pass",
+    "verify_note": "Pass was 61 yards but traveled about 69 in the air (thrown from GB 35, caught 4 yards deep); fact fixed.",
+    "verified": true
+  },
+  {
+    "id": "nfl-051",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 4,
+    "q": "The NFL adopted the two-point conversion in 1994. Which Browns player scored the first one in league history on a fake kick in Week 1?",
+    "answer": "Tom Tupa",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "tom tupa",
+      "tupa"
+    ],
+    "hints": [
+      "He was the team's punter and holder.",
+      "He had been Ohio State's starting quarterback in 1987."
+    ],
+    "fact": "Tom Tupa ran in the first NFL two-point try against Cincinnati and converted three that season, earning the nickname 'Two-Point Tupa.' He later won Super Bowl XXXVII as Tampa Bay's punter.",
+    "source": "https://en.wikipedia.org/wiki/Tom_Tupa",
+    "verified": true
+  },
+  {
+    "id": "nfl-052",
+    "sport": "nfl",
+    "type": "player-season",
+    "difficulty": 2,
+    "q": "In the final week of the 2025 season, who broke the NFL single-season sack record with his 23rd sack of the year?",
+    "answer": "Myles Garrett (2025)",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "myles garrett",
+      "garrett"
+    ],
+    "hints": [
+      "He plays for the Cleveland Browns.",
+      "He was the No. 1 overall pick in 2017 out of Texas A&M."
+    ],
+    "fact": "Myles Garrett sacked Joe Burrow in the season finale to reach 23, passing the 22.5 shared by Michael Strahan and T.J. Watt.",
+    "source": "https://en.wikipedia.org/wiki/Myles_Garrett",
+    "verified": true
+  },
+  {
+    "id": "nfl-053",
+    "sport": "nfl",
+    "type": "player-season",
+    "difficulty": 2,
+    "q": "In 2019, which receiver broke Marvin Harrison's single-season receptions record with 149 catches?",
+    "answer": "Michael Thomas (2019)",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "michael thomas",
+      "thomas",
+      "can't guard mike",
+      "cant guard mike"
+    ],
+    "hints": [
+      "He played for the New Orleans Saints.",
+      "He was a 2016 second-round pick out of Ohio State."
+    ],
+    "fact": "Michael Thomas caught 149 passes and became the first receiver since Jerry Rice in 1993 to win Offensive Player of the Year.",
+    "source": "https://en.wikipedia.org/wiki/Michael_Thomas_(wide_receiver,_born_1993)",
+    "verified": true
+  },
+  {
+    "id": "nfl-054",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "On Thanksgiving 2012, Mark Sanchez ran face-first into a teammate's backside and fumbled in the 'Butt Fumble.' Which Jets offensive lineman did he run into?",
+    "answer": "Brandon Moore",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "brandon moore",
+      "moore"
+    ],
+    "hints": [
+      "He was the Jets' starting right guard.",
+      "Patriots safety Steve Gregory scooped the ball and scored."
+    ],
+    "fact": "Brandon Moore spent 10 seasons with the Jets and said the play shouldn't have any link to his career. New England won 49-19, scoring 35 points in the second quarter alone.",
+    "source": "https://en.wikipedia.org/wiki/Butt_fumble",
+    "verify_note": "Fact aligned to Moore's actual quote and tenure (10 seasons with the Jets).",
+    "verified": true
+  },
+  {
+    "id": "nfl-055",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "In September 2001, a hit by which Jets linebacker sheared a blood vessel in Drew Bledsoe's chest and opened the door for Tom Brady?",
+    "answer": "Mo Lewis",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "mo lewis",
+      "maurice lewis"
+    ],
+    "hints": [
+      "He spent his entire career with the Jets.",
+      "He played college ball at Georgia."
+    ],
+    "fact": "Mo Lewis's sideline hit caused internal bleeding that sidelined Bledsoe, and Brady never gave the job back. Lewis later said it was 'just another play' to him.",
+    "source": "https://en.wikipedia.org/wiki/Mo_Lewis",
+    "verified": true
+  },
+  {
+    "id": "nfl-056",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Which Falcons running back set a then-NFL record with 410 carries in 1998 and celebrated touchdowns with a flapping-arms dance?",
+    "answer": "Jamal Anderson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jamal anderson",
+      "anderson"
+    ],
+    "hints": [
+      "The dance was called the 'Dirty Bird.'",
+      "He was a seventh-round pick out of Utah."
+    ],
+    "fact": "Jamal Anderson ran for 1,846 yards in 1998 and led Atlanta to its first Super Bowl. Larry Johnson broke his carries record with 416 in 2006.",
+    "source": "https://en.wikipedia.org/wiki/Jamal_Anderson",
+    "verified": true
+  },
+  {
+    "id": "nfl-057",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Who scored the first touchdown in Super Bowl history, a backup receiver who had caught only four passes all season?",
+    "answer": "Max McGee",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "max mcgee",
+      "mcgee"
+    ],
+    "hints": [
+      "He played for the Green Bay Packers.",
+      "Legend says he broke curfew with Paul Hornung the night before."
+    ],
+    "fact": "Max McGee caught 7 passes for 138 yards and two TDs in Super Bowl I, a 35-10 win over Kansas City. His first TD was a 37-yard catch from Bart Starr.",
+    "source": "https://en.wikipedia.org/wiki/Max_McGee",
+    "verified": true
+  },
+  {
+    "id": "nfl-058",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 4,
+    "q": "In 1978's 'Miracle at the Meadowlands,' the Giants only needed to kneel. Which Giants quarterback botched a handoff that Herm Edwards returned for the winning TD?",
+    "answer": "Joe Pisarcik",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "joe pisarcik",
+      "pisarcik"
+    ],
+    "hints": [
+      "He was trying to hand off to Larry Csonka.",
+      "He later played for the Eagles."
+    ],
+    "fact": "Joe Pisarcik's fumble gave Philadelphia a 19-17 win. Giants offensive coordinator Bob Gibson, who called the play, was fired the next morning and never worked in football again. The fiasco is why the kneel-down became standard.",
+    "source": "https://en.wikipedia.org/wiki/Miracle_at_the_Meadowlands",
+    "verified": true
+  },
+  {
+    "id": "nfl-059",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "In 2004, Jerry Rice briefly wore a Seahawks jersey number that had been retired for which Seattle receiving legend?",
+    "answer": "Steve Largent",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "steve largent",
+      "largent"
+    ],
+    "hints": [
+      "The number was 80.",
+      "He played at Tulsa and later served in the U.S. Congress."
+    ],
+    "fact": "Steve Largent's No. 80 was temporarily unretired for Rice. Houston had drafted Largent in the fourth round in 1976, then shipped him to Seattle for an eighth-round pick.",
+    "source": "https://en.wikipedia.org/wiki/Steve_Largent",
+    "verify_note": "Fact was self-contradictory (traded \"after the Oilers cut him\"); reworded.",
+    "verified": true
+  },
+  {
+    "id": "nfl-060",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "Pittsburgh's 1974 draft produced four Hall of Famers. Which one was a fourth-round wide receiver?",
+    "answer": "John Stallworth",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "john stallworth",
+      "stallworth"
+    ],
+    "hints": [
+      "He was taken two rounds after Jack Lambert.",
+      "He played college ball at Alabama A&M."
+    ],
+    "fact": "The class went Lynn Swann (1st round), Jack Lambert (2nd), John Stallworth (4th) and Mike Webster (5th), and undrafted Donnie Shell also made Canton. It is widely called the greatest draft haul ever.",
+    "source": "https://en.wikipedia.org/wiki/1974_NFL_draft",
+    "verified": true
+  },
+  {
+    "id": "nfl-061",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "In 1989 Green Bay drafted this offensive tackle 2nd overall, between Troy Aikman and Barry Sanders. Sports Illustrated called him 'The Incredible Bulk.' Who was he?",
+    "answer": "Tony Mandarich",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "tony mandarich",
+      "mandarich"
+    ],
+    "hints": [
+      "He played college ball at Michigan State.",
+      "Derrick Thomas and Deion Sanders went 4th and 5th."
+    ],
+    "fact": "Tony Mandarich became one of the biggest busts ever and later admitted to steroid use from high school through the 1989 combine. The four players picked around him all made the Hall of Fame.",
+    "source": "https://en.wikipedia.org/wiki/Tony_Mandarich",
+    "verified": true
+  },
+  {
+    "id": "nfl-062",
+    "sport": "nfl",
+    "type": "team",
+    "difficulty": 2,
+    "q": "Brett Favre was a second-round pick in 1991, but not by Green Bay. Which team drafted him and then traded him to the Packers for a first-round pick a year later?",
+    "answer": "Atlanta Falcons",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "atlanta falcons",
+      "falcons",
+      "atlanta"
+    ],
+    "hints": [
+      "He threw only four passes for them as a rookie, and two were intercepted.",
+      "Their head coach, Jerry Glanville, said it would take a plane crash for him to play Favre."
+    ],
+    "fact": "Atlanta took Favre 33rd overall in 1991 and shipped him to Green Bay in February 1992 for the 17th pick. He went on to start 297 straight regular-season games.",
+    "source": "https://en.wikipedia.org/wiki/Brett_Favre",
+    "verified": true
+  },
+  {
+    "id": "nfl-063",
+    "sport": "nfl",
+    "type": "team",
+    "difficulty": 2,
+    "q": "Dan Marino's final NFL game was a 62-7 playoff blowout loss in January 2000, the most lopsided in AFC playoff history. Which team crushed Miami?",
+    "answer": "Jacksonville Jaguars",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "jacksonville jaguars",
+      "jaguars",
+      "jacksonville",
+      "jags"
+    ],
+    "hints": [
+      "It was a Divisional Round game in the 1999 playoffs.",
+      "That team was only in its fifth season of existence."
+    ],
+    "fact": "The 55-point margin is still the worst in AFC playoff history. Marino retired that spring holding most of the NFL's major passing records.",
+    "source": "https://en.wikipedia.org/wiki/Dan_Marino",
+    "verified": true
+  },
+  {
+    "id": "nfl-064",
+    "sport": "nfl",
+    "type": "team",
+    "difficulty": 4,
+    "q": "The Portsmouth Spartans of Ohio played in the NFL's first ever playoff game in 1932. Two years later they moved and changed their name. Which franchise did they become?",
+    "answer": "Detroit Lions",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "detroit lions",
+      "lions",
+      "detroit"
+    ],
+    "hints": [
+      "The 1932 playoff game was moved indoors to Chicago Stadium because of a blizzard.",
+      "The new team started a Thanksgiving tradition in its first season."
+    ],
+    "fact": "Portsmouth moved to Detroit in 1934 and became the Lions. That 1932 indoor playoff was played on an 80-yard field, and the Bears won 9-0 on a Bronko Nagurski pass to Red Grange.",
+    "source": "https://en.wikipedia.org/wiki/Portsmouth_Spartans",
+    "verified": true
+  },
+  {
+    "id": "nfl-065",
+    "sport": "nfl",
+    "type": "team",
+    "difficulty": 4,
+    "q": "Which franchise won the very first AFL Championship Game, beating the Los Angeles Chargers 24-16 on New Year's Day 1961?",
+    "answer": "Houston Oilers",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "houston oilers",
+      "oilers",
+      "tennessee titans",
+      "titans"
+    ],
+    "hints": [
+      "Their quarterback, George Blanda, also kicked.",
+      "The franchise now plays in Tennessee."
+    ],
+    "fact": "The Houston Oilers won the first AFL title at Jeppesen Stadium behind 301 passing yards from George Blanda. Heisman winner Billy Cannon sealed it with an 88-yard TD catch.",
+    "source": "https://en.wikipedia.org/wiki/1960_AFL_Championship_Game",
+    "verified": true
+  },
+  {
+    "id": "nfl-066",
+    "sport": "nfl",
+    "type": "team",
+    "difficulty": 2,
+    "q": "In the January 2002 'Tuck Rule' playoff game, a Tom Brady fumble was overturned in the snow at Foxboro. Which team lost that game?",
+    "answer": "Oakland Raiders",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "oakland raiders",
+      "raiders",
+      "oakland",
+      "las vegas raiders"
+    ],
+    "hints": [
+      "Charles Woodson was the defender who forced the apparent fumble.",
+      "A year later, this team reached the Super Bowl under Bill Callahan."
+    ],
+    "fact": "Adam Vinatieri then hit a 45-yarder in heavy snow to force overtime, and New England won 16-13. The tuck rule was abolished by a 29-1 owners vote in 2013.",
+    "source": "https://en.wikipedia.org/wiki/Tuck_Rule_Game",
+    "verified": true
+  },
+  {
+    "id": "nfl-067",
+    "sport": "nfl",
+    "type": "team",
+    "difficulty": 2,
+    "q": "The expansion Houston Texans won their very first regular-season game in September 2002, 19-10 on Sunday Night Football. Who did they beat?",
+    "answer": "Dallas Cowboys",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "dallas cowboys",
+      "cowboys",
+      "dallas"
+    ],
+    "hints": [
+      "It was an in-state rival.",
+      "David Carr threw a TD to Billy Miller in the first quarter."
+    ],
+    "fact": "Houston beat Dallas 19-10 at Reliant Stadium on September 8, 2002.",
+    "source": "https://en.wikipedia.org/wiki/2002_Houston_Texans_season",
+    "verified": true
+  },
+  {
+    "id": "nfl-068",
+    "sport": "nfl",
+    "type": "team",
+    "difficulty": 2,
+    "q": "Which current NFL franchise began play in 1960 as the AFL's Dallas Texans before moving in 1963?",
+    "answer": "Kansas City Chiefs",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "kansas city chiefs",
+      "chiefs",
+      "kansas city"
+    ],
+    "hints": [
+      "Lamar Hunt founded the team.",
+      "As the Texans they won the 1962 AFL title in double overtime over Houston."
+    ],
+    "fact": "Lamar Hunt moved the Texans to Kansas City in 1963. The new name honored Mayor H. Roe Bartle, whose nickname was 'The Chief.'",
+    "source": "https://en.wikipedia.org/wiki/Dallas_Texans_(AFL)",
+    "verified": true
+  },
+  {
+    "id": "nfl-069",
+    "sport": "nfl",
+    "type": "venue",
+    "difficulty": 3,
+    "q": "Super Bowl I in January 1967 was not even a sellout, with about 33,000 empty seats. In which stadium was it played?",
+    "answer": "Los Angeles Memorial Coliseum",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "los angeles memorial coliseum",
+      "la memorial coliseum",
+      "memorial coliseum",
+      "la coliseum",
+      "los angeles coliseum",
+      "the coliseum",
+      "coliseum"
+    ],
+    "hints": [
+      "It was in Southern California.",
+      "The venue has hosted two Summer Olympics."
+    ],
+    "fact": "Green Bay beat Kansas City 35-10 at the LA Memorial Coliseum in what was officially called the AFL-NFL World Championship Game. Tickets cost $12, and local papers called that too expensive.",
+    "source": "https://en.wikipedia.org/wiki/Super_Bowl_I",
+    "verified": true
+  },
+  {
+    "id": "nfl-070",
+    "sport": "nfl",
+    "type": "venue",
+    "difficulty": 3,
+    "q": "After leaving San Diego in 2017, the Chargers spent three seasons in a 27,000-seat soccer stadium, the NFL's smallest. What was it called then?",
+    "answer": "StubHub Center",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "stubhub center",
+      "stubhub",
+      "dignity health sports park",
+      "rokit field",
+      "home depot center"
+    ],
+    "hints": [
+      "It is in Carson, California, and the LA Galaxy play there.",
+      "It is named for a ticket resale company at the time."
+    ],
+    "fact": "The Chargers played at StubHub Center from 2017 to 2019 while SoFi Stadium was built, often in front of crowds full of visiting fans. It is now called Dignity Health Sports Park.",
+    "source": "https://en.wikipedia.org/wiki/Dignity_Health_Sports_Park",
+    "verify_note": "Removed \"12-12 at StubHub Center\" claim: only 23 home games were played there (2019 had a Mexico City home game).",
+    "verified": true
+  },
+  {
+    "id": "nfl-071",
+    "sport": "nfl",
+    "type": "venue",
+    "difficulty": 3,
+    "q": "From 1964 through 1983, the New York Jets played home games in a stadium they shared with a baseball team. Which stadium?",
+    "answer": "Shea Stadium",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "shea stadium",
+      "shea"
+    ],
+    "hints": [
+      "The baseball team was the primary tenant, which made scheduling a headache.",
+      "It was in Queens, home of the Mets."
+    ],
+    "fact": "The Jets won Super Bowl III as Shea Stadium tenants and left for Giants Stadium in 1984. The Giants themselves also played the 1975 season at Shea.",
+    "source": "https://en.wikipedia.org/wiki/Shea_Stadium",
+    "verified": true
+  },
+  {
+    "id": "nfl-072",
+    "sport": "nfl",
+    "type": "venue",
+    "difficulty": 2,
+    "q": "From 2008 to 2013, the Buffalo Bills played a series of regular-season 'home' games in another country. In which city?",
+    "answer": "Toronto",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "toronto",
+      "toronto ontario",
+      "rogers centre"
+    ],
+    "hints": [
+      "The games were played in a domed baseball stadium.",
+      "The city is in Ontario, Canada."
+    ],
+    "fact": "The Bills Toronto Series was held at Rogers Centre. It was postponed in March 2014 and cancelled that December after the Pegulas bought the team.",
+    "source": "https://en.wikipedia.org/wiki/Bills_Toronto_Series",
+    "verify_note": "Replaced subjective claim with verified end dates.",
+    "verified": true
+  },
+  {
+    "id": "nfl-073",
+    "sport": "nfl",
+    "type": "nickname",
+    "difficulty": 3,
+    "q": "Denver's 3-4 defense that carried the Broncos to Super Bowl XII after the 1977 season was named after a soft drink. What was its nickname?",
+    "answer": "Orange Crush",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "orange crush",
+      "the orange crush",
+      "orange crush defense"
+    ],
+    "hints": [
+      "It combined the team's jersey color with the beverage brand.",
+      "Randy Gradishar and Tom Jackson were its linebackers."
+    ],
+    "fact": "The Orange Crush allowed just 10.6 points per game in 1977 under coordinator Joe Collier. Sportswriter Woody Paige helped popularize the name.",
+    "source": "https://en.wikipedia.org/wiki/Orange_Crush_Defense",
+    "verified": true
+  },
+  {
+    "id": "nfl-074",
+    "sport": "nfl",
+    "type": "nickname",
+    "difficulty": 3,
+    "q": "Before Super Bowl VI, Tom Landry said he couldn't recall the names of Miami's defenders. What nickname did that Dolphins unit become famous under?",
+    "answer": "No-Name Defense",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "no name defense",
+      "the no name defense",
+      "no names",
+      "no name"
+    ],
+    "hints": [
+      "It poked fun at the lack of star players.",
+      "Nick Buoniconti was its only eventual Hall of Famer."
+    ],
+    "fact": "Dallas won Super Bowl VI 24-3, but the 'No-Name Defense' got the last laugh a year later in Miami's 17-0 season. Coordinator Bill Arnsparger had actually used the name first, after the AFC title game.",
+    "source": "https://en.wikipedia.org/wiki/Super_Bowl_VI",
+    "verify_note": "WRONG as written: Landry's remark came before Super Bowl VI (Dallas beat Miami 24-3), not VII. Question and fact rewritten.",
+    "verified": true
+  },
+  {
+    "id": "nfl-075",
+    "sport": "nfl",
+    "type": "coach",
+    "difficulty": 3,
+    "q": "Who is the only head coach to lead two different NFL expansion teams in their inaugural seasons, the 1995 Carolina Panthers and the 2002 Houston Texans?",
+    "answer": "Dom Capers",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "dom capers",
+      "capers",
+      "dominic capers"
+    ],
+    "hints": [
+      "His Panthers went 12-4 in just their second season.",
+      "That 1996 Carolina team reached the NFC Championship Game."
+    ],
+    "fact": "Dom Capers coached Carolina from 1995 to 1998 and Houston from 2002 to 2005. His 1996 Panthers were the youngest expansion team ever to win a division and reach a conference title game.",
+    "source": "https://en.wikipedia.org/wiki/Dom_Capers",
+    "verified": true
+  },
+  {
+    "id": "nfl-076",
+    "sport": "nfl",
+    "type": "coach",
+    "difficulty": 2,
+    "q": "Which head coach is the only one to win three Super Bowls with three different starting quarterbacks?",
+    "answer": "Joe Gibbs",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "joe gibbs",
+      "gibbs"
+    ],
+    "hints": [
+      "All three titles came with Washington.",
+      "He also founded a NASCAR team that has won multiple Cup Series championships."
+    ],
+    "fact": "Joe Gibbs won Super Bowl XVII with Joe Theismann, XXII with Doug Williams and XXVI with Mark Rypien. He later returned to Washington from 2004 to 2007.",
+    "source": "https://en.wikipedia.org/wiki/Joe_Gibbs",
+    "verified": true
+  },
+  {
+    "id": "nfl-077",
+    "sport": "nfl",
+    "type": "coach",
+    "difficulty": 3,
+    "q": "Which head coach lost four Super Bowls, three with Denver in the late 1980s and one with Atlanta after the 1998 season?",
+    "answer": "Dan Reeves",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "dan reeves",
+      "reeves"
+    ],
+    "hints": [
+      "His Falcons lost Super Bowl XXXIII to his old team, the Broncos.",
+      "He had been a running back for the Cowboys in the 1960s and 70s."
+    ],
+    "fact": "Dan Reeves took part in nine Super Bowls as a player, assistant and head coach. He also coached the Giants in between Denver and Atlanta.",
+    "source": "https://en.wikipedia.org/wiki/Dan_Reeves",
+    "verify_note": "Removed \"third most\" ranking (unstable); nine Super Bowls verified.",
+    "verified": true
+  },
+  {
+    "id": "nfl-078",
+    "sport": "nfl",
+    "type": "coach",
+    "difficulty": 4,
+    "q": "Who is the only head coach to win a championship in both the NFL and the AFL?",
+    "answer": "Weeb Ewbank",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "weeb ewbank",
+      "ewbank",
+      "wilbur ewbank"
+    ],
+    "hints": [
+      "His NFL titles came with the Baltimore Colts in 1958 and 1959.",
+      "His AFL title came with the 1968 Jets, who then beat the Colts in Super Bowl III."
+    ],
+    "fact": "Weeb Ewbank won the 1958 'Greatest Game Ever Played' and the 1959 title with Baltimore, then beat his old franchise in Super Bowl III with the Jets.",
+    "source": "https://en.wikipedia.org/wiki/Weeb_Ewbank",
+    "verify_note": "Hint 2 wrongly called Super Bowl III an AFL title; fixed.",
+    "verified": true
+  },
+  {
+    "id": "nfl-079",
+    "sport": "nfl",
+    "type": "coach",
+    "difficulty": 2,
+    "q": "Which coach lost Super Bowl XV with the Eagles, quit citing burnout, then came back 14 years later and won Super Bowl XXXIV with the Rams?",
+    "answer": "Dick Vermeil",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "dick vermeil",
+      "vermeil"
+    ],
+    "hints": [
+      "He spent his time away working as a TV broadcaster.",
+      "He later coached the Chiefs from 2001 to 2005."
+    ],
+    "fact": "Dick Vermeil retired from Philadelphia in January 1983, then came back with the Rams in 1997. After going 5-11 and 4-12, his 1999 team rode Kurt Warner to a title. He entered the Hall of Fame in 2022.",
+    "source": "https://en.wikipedia.org/wiki/Dick_Vermeil",
+    "verify_note": "\"15 years later\" was off: he left in Jan 1983 and returned in 1997 (14 years).",
+    "verified": true
+  },
+  {
+    "id": "nfl-080",
+    "sport": "nfl",
+    "type": "coach",
+    "difficulty": 3,
+    "q": "Who was the Arizona Cardinals' head coach in Super Bowl XLIII, facing the Steelers team he had served as offensive coordinator?",
+    "answer": "Ken Whisenhunt",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "ken whisenhunt",
+      "whisenhunt"
+    ],
+    "hints": [
+      "He was Pittsburgh's OC when they won Super Bowl XL.",
+      "His quarterback in the game was Kurt Warner."
+    ],
+    "fact": "Ken Whisenhunt's Cardinals led 23-20 late before Santonio Holmes's toe-tap TD won it for Pittsburgh 27-23. It remains Arizona's only Super Bowl appearance.",
+    "source": "https://en.wikipedia.org/wiki/Super_Bowl_XLIII",
+    "verified": true
+  },
+  {
+    "id": "nfl-081",
+    "sport": "nfl",
+    "type": "coach",
+    "difficulty": 4,
+    "q": "Who is the only man to serve as head coach of both the Baltimore Colts and the Baltimore Ravens?",
+    "answer": "Ted Marchibroda",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "ted marchibroda",
+      "marchibroda"
+    ],
+    "hints": [
+      "He coached the Baltimore Colts from 1975 to 1979.",
+      "He was the Ravens' first head coach in 1996, right after taking the Indianapolis Colts to the AFC title game."
+    ],
+    "fact": "Ted Marchibroda's 1995 Indianapolis Colts fell one play short of Super Bowl XXX. Indy declined his extension request, and Baltimore hired him six days later.",
+    "source": "https://en.wikipedia.org/wiki/Ted_Marchibroda",
+    "verified": true
+  },
+  {
+    "id": "nfl-082",
+    "sport": "nfl",
+    "type": "coach",
+    "difficulty": 4,
+    "q": "Super Bowl XXIII pitted Bill Walsh against one of his former 49ers assistants. Who was the Cincinnati Bengals' head coach?",
+    "answer": "Sam Wyche",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "sam wyche",
+      "wyche"
+    ],
+    "hints": [
+      "Walsh brought him out of retirement to join the 49ers staff in 1979.",
+      "He won a ring as a 49ers assistant in Super Bowl XVI, also against Cincinnati."
+    ],
+    "fact": "Sam Wyche's Bengals led 16-13 until Joe Montana hit John Taylor for the winning TD with 34 seconds left. The night before, fullback Stanley Wilson was banned for life after a drug relapse.",
+    "source": "https://en.wikipedia.org/wiki/Super_Bowl_XXIII",
+    "verified": true
+  },
+  {
+    "id": "nfl-083",
+    "sport": "nfl",
+    "type": "coach",
+    "difficulty": 3,
+    "q": "Which coach, miked up by NFL Films during a Super Bowl, famously urged his team to keep 'matriculating the ball down the field'?",
+    "answer": "Hank Stram",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "hank stram",
+      "stram"
+    ],
+    "hints": [
+      "It was Super Bowl IV, a win over Minnesota.",
+      "He coached the franchise from 1960 to 1974, starting when it was the Dallas Texans."
+    ],
+    "fact": "Hank Stram's Chiefs beat the Vikings 23-7 in Super Bowl IV. He won three AFL titles and his 129 wins were a Chiefs record until 2023.",
+    "source": "https://en.wikipedia.org/wiki/Hank_Stram",
+    "verify_note": "Dropped the hard-to-pin \"first ever\" claim from the question.",
+    "verified": true
+  },
+  {
+    "id": "nfl-084",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Which Arizona Cardinals safety turned down a $3.6 million contract in 2002 to enlist in the U.S. Army after 9/11?",
+    "answer": "Pat Tillman",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "pat tillman",
+      "tillman",
+      "patrick tillman"
+    ],
+    "hints": [
+      "He was a seventh-round pick in 1998 out of Arizona State.",
+      "He served in the 75th Ranger Regiment."
+    ],
+    "fact": "Pat Tillman was killed in Afghanistan on April 22, 2004. The Cardinals retired his No. 40.",
+    "source": "https://en.wikipedia.org/wiki/Pat_Tillman",
+    "verified": true
+  },
+  {
+    "id": "nfl-085",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "The Carolina Panthers' motto 'Keep Pounding' comes from a speech during the 2003 playoffs by which former linebacker, then an assistant coach battling cancer?",
+    "answer": "Sam Mills",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "sam mills",
+      "mills"
+    ],
+    "hints": [
+      "He was just 5-foot-9 and went undrafted out of Montclair State.",
+      "Before reaching the NFL he won two titles in the USFL."
+    ],
+    "fact": "Sam Mills gave the speech before a playoff win over Dallas and died in 2005. His No. 51 was the first number the Panthers retired, and he was elected to the Hall of Fame in 2022.",
+    "source": "https://en.wikipedia.org/wiki/Sam_Mills",
+    "verify_note": "Speech was before the January 2004 playoff game; wording now says 2003 playoffs.",
+    "verified": true
+  },
+  {
+    "id": "nfl-086",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "In December 2010's 'Miracle at the New Meadowlands,' who returned a punt 65 yards as time expired to complete the Eagles' comeback from 31-10 down?",
+    "answer": "DeSean Jackson",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "desean jackson",
+      "jackson",
+      "d jax",
+      "djax"
+    ],
+    "hints": [
+      "Giants punter Matt Dodge kicked it to him against orders.",
+      "He was a speedy receiver out of Cal."
+    ],
+    "fact": "DeSean Jackson became the first player in NFL history to win a game by scoring on a punt return as time expired. Philadelphia scored 28 points in the final 7:28.",
+    "source": "https://en.wikipedia.org/wiki/Miracle_at_the_New_Meadowlands",
+    "verify_note": "Scoring window corrected to the final 7:28; added \"djax\" alias.",
+    "verified": true
+  },
+  {
+    "id": "nfl-087",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 2,
+    "q": "Who intercepted Peyton Manning and returned it 74 yards for the touchdown that sealed the Saints' win in Super Bowl XLIV?",
+    "answer": "Tracy Porter",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "tracy porter",
+      "porter"
+    ],
+    "hints": [
+      "He was a second-year cornerback out of Indiana.",
+      "Two weeks earlier he picked off Brett Favre late in regulation of the NFC title game."
+    ],
+    "fact": "Tracy Porter's pick-six made it 31-17. He later became the first player to return interceptions for TDs against both Peyton and Eli Manning.",
+    "source": "https://en.wikipedia.org/wiki/Tracy_Porter",
+    "verified": true
+  },
+  {
+    "id": "nfl-088",
+    "sport": "nfl",
+    "type": "player",
+    "difficulty": 3,
+    "q": "On November 4, 2007, the same day Adrian Peterson ran for 296 yards, which Chargers cornerback returned a missed field goal 109 yards for a TD?",
+    "answer": "Antonio Cromartie",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "antonio cromartie",
+      "cromartie"
+    ],
+    "hints": [
+      "He played college ball at Florida State.",
+      "He later played for the Jets and is famous off the field for having a very large family."
+    ],
+    "fact": "Antonio Cromartie's 109-yard return is the longest play possible in the NFL, so it can be tied but never broken. Minnesota still won the game 35-17.",
+    "source": "https://en.wikipedia.org/wiki/Antonio_Cromartie",
+    "verify_note": "\"Later matched by Cordarrelle Patterson\" implied a single tie; reworded to the verifiable max-length point.",
+    "verified": true
+  },
+  {
+    "id": "nfl-089",
+    "sport": "nfl",
+    "type": "player-season",
+    "difficulty": 2,
+    "q": "Which Seattle running back won the 2005 NFL MVP after scoring a then-record 28 touchdowns?",
+    "answer": "Shaun Alexander (2005)",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "shaun alexander",
+      "alexander"
+    ],
+    "hints": [
+      "He led the league with 1,880 rushing yards.",
+      "He played college ball at Alabama."
+    ],
+    "fact": "Shaun Alexander was the first Seahawk to win MVP, and Seattle reached Super Bowl XL. LaDainian Tomlinson broke his TD record with 31 the very next year.",
+    "source": "https://en.wikipedia.org/wiki/Shaun_Alexander",
+    "verified": true
+  },
+  {
+    "id": "nfl-090",
+    "sport": "nfl",
+    "type": "player-season",
+    "difficulty": 2,
+    "q": "In 2008, who became the first undrafted player to win AP Defensive Player of the Year, then returned a pick 100 yards in that season's Super Bowl?",
+    "answer": "James Harrison (2008)",
+    "kind": "text",
+    "num": null,
+    "accept": [
+      "james harrison",
+      "harrison"
+    ],
+    "hints": [
+      "He was a Pittsburgh Steelers outside linebacker.",
+      "He played college ball at Kent State and was cut multiple times early in his career."
+    ],
+    "fact": "James Harrison's 100-yard interception return against Arizona came on the final play of the first half of Super Bowl XLIII, still the longest pick-six in Super Bowl history.",
+    "source": "https://en.wikipedia.org/wiki/James_Harrison_(American_football)",
+    "verified": true
+  }
+]

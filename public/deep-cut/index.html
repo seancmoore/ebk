@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script src="/js/ebk-loader.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0e1c" />
+  <meta name="description" content="Deep Cut: one deep ball-knowledge question a day, across every sport. Three guesses. An EBK daily." />
+  <title>Deep Cut · EBK</title>
+  <link rel="canonical" href="https://eliteballknowledge.web.app/deep-cut" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="EBK — Elite Ball Knowledge" />
+  <meta property="og:title" content="Deep Cut · EBK" />
+  <meta property="og:description" content="One deep ball-knowledge question a day, across every sport. Three guesses. Prove it." />
+  <meta property="og:url" content="https://eliteballknowledge.web.app/deep-cut" />
+  <meta property="og:image" content="https://eliteballknowledge.web.app/img/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="EBK — Elite Ball Knowledge. Prove it." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Deep Cut · EBK" />
+  <meta name="twitter:description" content="One deep ball-knowledge question a day, across every sport. Three guesses. Prove it." />
+  <meta name="twitter:image" content="https://eliteballknowledge.web.app/img/og.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="icon" type="image/svg+xml" href="/img/icon.svg" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/game-common.css" />
+  <link rel="stylesheet" href="/css/deep-cut.css" />
+  <script src="/js/ebk-analytics.js" defer></script>
+</head>
+<body class="dcut">
+  <div class="gpage">
+    <header class="gtop">
+      <a class="ghome" href="/">&larr; <b>EBK</b></a>
+      <p class="gtitle">Deep Cut <small id="dc-no"></small></p>
+      <div class="gscore">
+        <div class="chip"><span class="k">Streak</span><span class="v" id="dc-streak">0</span></div>
+        <div class="chip"><span class="k">Solved</span><span class="v" id="dc-solved">0</span></div>
+      </div>
+    </header>
+
+    <main class="gwrap dc-wrap">
+      <p id="loading" class="muted center" role="status" aria-live="polite">Loading today's cut…</p>
+      <p id="load-err" class="muted center" hidden>Couldn't load today's question. Refresh to try again.</p>
+
+      <article id="game" class="dc-card" hidden aria-live="polite">
+        <div class="dc-meta">
+          <span class="dc-sport" id="dc-sport"></span>
+          <span class="dc-level" id="dc-level" title="Difficulty"></span>
+        </div>
+        <p class="dc-type" id="dc-type"></p>
+        <h1 class="dc-q" id="dc-q"></h1>
+
+        <ol class="dc-guesses" id="dc-guesses" aria-label="Your guesses"></ol>
+        <div class="dc-hints" id="dc-hints"></div>
+
+        <form class="dc-form" id="dc-form" autocomplete="off">
+          <label class="sr-only" for="dc-input">Your answer</label>
+          <input class="ac-input dc-input" id="dc-input" autocomplete="off" autocapitalize="off"
+                 autocorrect="off" spellcheck="false" enterkeyhint="go" />
+          <button class="gbtn primary dc-go" id="dc-go" type="submit">Guess</button>
+        </form>
+        <div class="dc-under">
+          <span class="dc-left" id="dc-left"></span>
+          <button type="button" class="dc-giveup" id="dc-giveup">Give up</button>
+        </div>
+        <p class="dc-msg" id="dc-msg" role="status"></p>
+
+        <section class="dc-result" id="dc-result" hidden>
+          <p class="banner" id="dc-banner"></p>
+          <div class="dc-answer">
+            <span class="dc-answer-k">The answer</span>
+            <span class="dc-answer-v" id="dc-answer"></span>
+          </div>
+          <p class="dc-fact" id="dc-fact"></p>
+          <p class="dc-src"><a id="dc-src" href="#" target="_blank" rel="noopener noreferrer">Source</a></p>
+
+          <div class="dc-stats" id="dc-stats" hidden>
+            <p class="dc-stats-k" id="dc-stats-k">How everyone did today</p>
+            <div class="dc-dist" id="dc-dist"></div>
+          </div>
+          <p class="dc-signin muted" id="dc-signin" hidden>Sign in and your answer counts toward today's numbers.</p>
+
+          <div class="row-btns" id="dc-btns"></div>
+          <p class="dc-next muted" id="dc-next"></p>
+        </section>
+      </article>
+
+      <div id="dc-daily"></div>
+
+      <section class="dc-yday" id="dc-yday" hidden>
+        <p class="dc-yday-k">Yesterday's Deep Cut</p>
+        <p class="dc-yday-q" id="dc-yday-q"></p>
+        <p class="dc-yday-a"><span>Answer:</span> <b id="dc-yday-a"></b></p>
+      </section>
+
+      <p class="center muted dc-how">
+        One question a day, every sport, resets at midnight ET. Three guesses: a hint after each miss,
+        and number answers tell you higher or lower. Research behind the questions lives in the
+        <a href="/deep-bag">Deep Bag</a>.
+      </p>
+    </main>
+  </div>
+
+  <script src="/js/catalog.js"></script>
+  <script src="/js/ebk-daily.js"></script>
+  <script src="/js/deep-cut.js"></script>
+  <script src="/js/ebk-sound.js"></script>
+</body>
+</html>
