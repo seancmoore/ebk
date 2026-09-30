@@ -16,6 +16,7 @@ window.NHL = (function () {
     ["PIT", "Penguins", "pit", ["PIT"]], ["SJS", "Sharks", "sj", ["SJS"]],
     ["SEA", "Kraken", "sea", ["SEA"]], ["STL", "Blues", "stl", ["STL"]],
     ["TBL", "Lightning", "tb", ["TBL"]], ["TOR", "Maple Leafs", "tor", ["TOR"]],
+    ["UTA", "Mammoth", "utah", ["UTA"]],
     ["VAN", "Canucks", "van", ["VAN"]], ["VGK", "Golden Knights", "vgk", ["VGK"]],
     ["WSH", "Capitals", "wsh", ["WSH"]], ["WPG", "Jets", "wpg", ["WPG", "ATL"]],
   ];

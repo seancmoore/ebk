@@ -7,7 +7,7 @@
  * browser and without the live site.
  *
  * It does NOT reimplement the game. CFG, seededRng, buildRoster, satisfies,
- * intersects and generate are sliced out of public/js/player-grid.js at run
+ * fits, enough and generate are sliced out of public/js/player-grid.js at run
  * time and eval'd, and the franchise helpers are eval'd out of
  * public/js/<sport>-teams.js, so this tool cannot drift from what ships.
  *
@@ -41,11 +41,12 @@ function slice(startRe, endRe, label) {
 }
 
 const CFG_SRC = slice(/^  const CFG = \{$/m, /^  \}\[SPORT\];$/m, "CFG");
-const FN_SRC = ["seededRng", "buildRoster", "satisfies", "intersects", "generate"]
+const FN_SRC = ["seededRng", "buildRoster", "satisfies", "fits", "enough", "generate"]
   .map((n) => slice(new RegExp("^  function " + n + "\\(", "m"), /^  \}$/m, n))
   .join("\n");
-const SHUFFLE_SRC = slice(/^  const shuffle = /m, /;$/m, "shuffle");
-const NORMPOS_SRC = slice(/^  const normPos = /m, /;$/m, "normPos");
+const CONST_SRC = ["shuffle", "normPos", "posOf", "fold", "teamPosPair"]
+  .map((n) => slice(new RegExp("^  const " + n + " = ", "m"), /;$/m, n))
+  .join("\n");
 // GEN_ATTEMPTS is defined next to generate() when the attempt cap has been
 // lifted out of the loop; fall back to the inline literal if it has not.
 const GEN_ATTEMPTS = (() => {
@@ -82,8 +83,7 @@ function boardFor(sport, date) {
     const CAREER_COLS = [...new Set(CAREER.map((x) => x[2]))];
     const S = { R: [], crit: [], teams: [], specials: [] };
     const GEN_ATTEMPTS = ${GEN_ATTEMPTS};
-    ${NORMPOS_SRC}
-    ${SHUFFLE_SRC}
+    ${CONST_SRC}
     ${FN_SRC}
     buildRoster(DATA);
     // buildCriteria, inlined so the tool keeps the criteria order the page uses
@@ -105,15 +105,15 @@ function boardFor(sport, date) {
       g = generate(f, seededRng(seed));
       if (g) { floor = f; break; }
     }
-    return { rows: g.rows, cols: g.cols, R: S.R, floor };
+    return { rows: g.rows, cols: g.cols, R: S.R, floor, fits };
   `;
   const run = new Function("DATA", "DATE", "LEAGUE", body);
-  const { rows, cols, R, floor } = run(data, date, LEAGUE);
+  const { rows, cols, R, floor, fits } = run(data, date, LEAGUE);
 
   const cells = [];
   for (let r = 0; r < 3; r++) {
     for (let c = 0; c < 3; c++) {
-      const ids = [...rows[r].set].filter((i) => cols[c].set.has(i));
+      const ids = [...rows[r].set].filter((i) => cols[c].set.has(i) && fits(R[i], rows[r], cols[c]));
       cells.push({
         row: rows[r].label, col: cols[c].label,
         n: ids.length,

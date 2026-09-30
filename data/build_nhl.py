@@ -1,12 +1,12 @@
 """
 build_nhl.py — NHL player-season dataset for EBK (stdlib only).
 Source: official NHL stats REST API (season-aggregated skater + goalie summary).
-Usage: python build_nhl.py [startEndYear endEndYear]   e.g. 2001 2024
+Usage: python build_nhl.py [startEndYear endEndYear]   e.g. 2001 2026
 """
 import os, sys, json, urllib.request
 from datetime import date
 
-FIRST, LAST = 2001, 2024        # end-years (2000-01 .. 2023-24)
+FIRST, LAST = 2001, 2026        # end-years (2000-01 .. 2025-26)
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAW = os.path.join(HERE, "raw", "nhl")
 OUT = os.path.normpath(os.path.join(HERE, "..", "public", "data", "nhl", "players.json"))

@@ -9,7 +9,7 @@ import os, sys, csv, io, json, urllib.request
 from datetime import date
 
 SEASONS = ["2016-17", "2017-18", "2018-19", "2019-20", "2020-21",
-           "2021-22", "2022-23", "2023-24", "2024-25"]
+           "2021-22", "2022-23", "2023-24", "2024-25", "2025-26"]
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAW = os.path.join(HERE, "raw", "soccer")
 OUT = os.path.normpath(os.path.join(HERE, "..", "public", "data", "soccer", "players.json"))

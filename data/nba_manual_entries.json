@@ -1,0 +1,4 @@
+{
+  "_note": "Player-seasons missing from the ESPN box scores. Only add a record here with a real, citable source in its _source field; build_nba.py appends entries verbatim.",
+  "entries": []
+}

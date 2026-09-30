@@ -6,7 +6,7 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=3";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=4";
   const BEST_KEY = SPORT === "nfl" ? "ebk_grid_best" : "ebk_grid_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "player-grid", score); } catch (e) {} };
@@ -205,6 +205,12 @@
   }
 
   const normPos = (p) => (p === "FB" || p === "HB" ? "RB" : p);
+  // Every position a season lists: "grps" marks an NBA season split across
+  // groups, "poss" an MLB two-way season (hitter who also pitched).
+  const posOf = (p) => (p.poss || p.grps || [p[CFG.posKey] || p.grp || normPos(p.pos)]).filter(Boolean);
+  // "joao" should find "João", "lukasz" should find "Łukasz"
+  const fold = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .replace(/[łŁ]/g, "l").replace(/[øØ]/g, "o").replace(/[đĐ]/g, "d").toLowerCase();
   const getBest = () => { try { return +localStorage.getItem(BEST_KEY) || 0; } catch { return 0; } };
   const setBest = (v) => { try { localStorage.setItem(BEST_KEY, v); } catch {} };
   const shuffle = (a, rnd = Math.random) => { for (let i = a.length - 1; i > 0; i--) { const j = (rnd() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -246,7 +252,15 @@
   // save an in-progress snapshot so a refresh resumes (can't restart the day)
   function saveProgress() {
     if (S.over) return;
-    saveLocalPlay({ cells: serializeCells(), score: S.score, entries: S.entries, done: false, ts: Date.now() });
+    saveLocalPlay({ cells: serializeCells(), board: boardKeys(), score: S.score, entries: S.entries, done: false, ts: Date.now() });
+  }
+  // The board is regenerated from the dataset, so a data refresh during the
+  // day would drop a resumed game onto a different board. Replay the saved one.
+  const boardKeys = () => S.rows.concat(S.cols).map((c) => c.type + ":" + c.key);
+  function restoreBoard(keys) {
+    const picks = (keys || []).map((k) => S.crit.find((c) => c.type + ":" + c.key === k));
+    if (picks.length !== 6 || picks.some((c) => !c)) return;
+    S.rows = picks.slice(0, 3); S.cols = picks.slice(3, 6);
   }
   function hoursToReset() {
     const p = new Intl.DateTimeFormat("en-US", {
@@ -289,7 +303,7 @@
     const saved = loadLocalPlay();
     if (saved && saved.done) { showCompleted(saved); return; }   // already played today
     buildBoard();
-    if (saved && saved.cells) resumeProgress(saved);             // mid-game refresh
+    if (saved && saved.cells) { restoreBoard(saved.board); resumeProgress(saved); }   // mid-game refresh
     else {
       setEntries(ENTRIES);
       $("#status-line").textContent =
@@ -331,7 +345,7 @@
       if (!a) {
         const bio = people[p.id] || {};
         a = { id: p.id, name: p.name, pos: p[CFG.posKey] || p.grp || normPos(p.pos), headshot: p.headshot,
-              teams: new Set(), ach: new Set(), career: {},
+              teams: new Set(), positions: new Set(), teamPos: new Map(), ach: new Set(), career: {},
               r1: bio.draftRound === 1, undrafted: bio.draftYear == null,
               min: p.season, max: p.season };
         byId.set(p.id, a);
@@ -340,8 +354,17 @@
       // multiple clubs (e.g. a mid-season trade) — the season-aggregate
       // stat row alone can't tell us that, so build_players.py fills it in
       // from per-week rosters. Fall back to the single "team" otherwise.
-      for (const t of p.teams && p.teams.length ? p.teams : [p.team])
-        if (t) a.teams.add(LEAGUE.keyOf(t));
+      const teamList = p.teams && p.teams.length ? p.teams : [p.team];
+      const seasonPos = posOf(p);
+      for (const t of teamList) {
+        if (!t) continue;
+        const tkey = LEAGUE.keyOf(t);
+        a.teams.add(tkey);
+        let tp = a.teamPos.get(tkey);
+        if (!tp) a.teamPos.set(tkey, (tp = new Set()));
+        seasonPos.forEach((x) => tp.add(x));
+      }
+      seasonPos.forEach((x) => a.positions.add(x));
       a.min = Math.min(a.min, p.season); a.max = Math.max(a.max, p.season);
       if (p.headshot && !a.headshot) a.headshot = p.headshot;
       for (const [key, , col, thr] of ACH) if ((p.stats[col] || 0) >= thr) a.ach.add(key);
@@ -350,7 +373,7 @@
     for (const a of byId.values())
       for (const [key, , col, thr] of CAREER) if ((a.career[col] || 0) >= thr) a.ach.add(key);
     S.R = [...byId.values()];
-    S.R.forEach((a) => (a.nameLC = a.name.toLowerCase()));
+    S.R.forEach((a) => (a.nameLC = fold(a.name)));
     S.R.sort((x, y) => x.name.localeCompare(y.name));
   }
 
@@ -371,14 +394,27 @@
   function satisfies(p, c) {
     if (c.type === "team") return p.teams.has(c.key);
     if (c.type === "ach") return p.ach.has(c.key);
-    if (c.type === "pos") return p.pos === c.key;
+    if (c.type === "pos") return p.positions.has(c.key);
     return c.key === "r1" ? p.r1 : p.undrafted;
   }
 
-  function intersects(a, b, min) {
-    const [small, big] = a.size < b.size ? [a, b] : [b, a];
+  // A team × position square needs that position AT that team: LeBron is a
+  // Laker and has been listed at guard somewhere, but only counts as a Lakers
+  // guard if a Lakers season lists him there.
+  const teamPosPair = (r, c) =>
+    r.type === "team" && c.type === "pos" ? [r, c] : r.type === "pos" && c.type === "team" ? [c, r] : null;
+  function fits(p, r, c) {
+    if (!satisfies(p, r) || !satisfies(p, c)) return false;
+    const tp = teamPosPair(r, c);
+    return !tp || p.teamPos.get(tp[0].key).has(tp[1].key);
+  }
+
+  function enough(r, c, min) {
+    const [small, big] = r.set.size < c.set.size ? [r.set, c.set] : [c.set, r.set];
+    const strict = teamPosPair(r, c);
     let n = 0;
-    for (const v of small) if (big.has(v)) { if (++n >= min) return true; }
+    for (const i of small)
+      if (big.has(i) && (!strict || fits(S.R[i], r, c)) && ++n >= min) return true;
     return false;
   }
 
@@ -410,7 +446,7 @@
       let ok = true;
       for (let r = 0; r < 3 && ok; r++)
         for (let c = 0; c < 3 && ok; c++)
-          if (!intersects(rows[r].set, cols[c].set, min)) ok = false;
+          if (!enough(rows[r], cols[c], min)) ok = false;
       if (ok) return { rows, cols };
     }
     return null;
@@ -471,6 +507,7 @@
   // restore a finished daily (this device or another, via Firestore)
   function showCompleted(saved) {
     buildBoard();
+    restoreBoard(saved.board);
     S.over = true;
     S.pts = saved.pts || null;
     const cells = saved.cells || [];
@@ -563,7 +600,7 @@
 
   function renderAC(q) {
     const list = $("#ac-list");
-    q = q.trim().toLowerCase();
+    q = fold(q.trim());
     if (q.length < 2) { list.hidden = true; return; }
     const starts = [], has = [];
     for (const p of S.R) {
@@ -590,7 +627,7 @@
     if (S.used.has(p.id)) { $("#m-msg").textContent = `${p.name} is already on the grid — pick another.`; return; }
     const idx = S.active;
     const r = S.rows[(idx / 3) | 0], c = S.cols[idx % 3];
-    const ok = satisfies(p, r) && satisfies(p, c);
+    const ok = fits(p, r, c);
     if (ok) {
       S.cells[idx] = { pid: p.id, name: p.name, pos: p.pos, headshot: p.headshot || "" };
       S.used.add(p.id);
@@ -666,7 +703,7 @@
     try { window.EBKDaily && EBKDaily.markPlayed(S.date); } catch (e) {}
     showDailyCard();
     const cells = serializeCells();
-    saveLocalPlay({ cells, score: S.score, rarity: total, pts, done: true, ts: Date.now() });
+    saveLocalPlay({ cells, board: boardKeys(), score: S.score, rarity: total, pts, done: true, ts: Date.now() });
     try {
       if (window.EBKF)
         EBKF.saveGridPlay(SPORT, S.date, { cells, score: S.score, rarity: total, pts }).catch(() => {

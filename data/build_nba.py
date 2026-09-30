@@ -1,23 +1,25 @@
 """
 build_nba.py — NBA player-season dataset for EBK.
 
-Source: sportsdataverse hoopR-data, nba/player_box parquet (per-game box scores,
-2002-present). Aggregated to player-season totals + per-game rates.
+Source: sportsdataverse ESPN NBA player box scores (parquet, one file per
+season, 2002-present). Aggregated to player-season totals + per-game rates.
 Requires pandas + pyarrow (local build tool only; the shipped site stays static).
 
 Usage:  python build_nba.py            # full range
-        python build_nba.py 2020 2025  # custom
+        python build_nba.py 2020 2026  # custom
 """
 import os, sys, json, urllib.request
 from datetime import date
 import pandas as pd
 
-FIRST, LAST = 2002, 2025
+
+FIRST, LAST = 2002, 2026
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAW = os.path.join(HERE, "raw", "nba")
 OUT = os.path.normpath(os.path.join(HERE, "..", "public", "data", "nba", "players.json"))
-URL = ("https://github.com/sportsdataverse/hoopR-data/raw/main/nba/player_box/"
-       "parquet/player_box_{y}.parquet")
+# hoopR-data/raw/main stopped at 2023; the same files now publish as releases.
+URL = ("https://github.com/sportsdataverse/sportsdataverse-data/releases/download/"
+       "espn_nba_player_boxscores/player_box_{y}.parquet")
 
 CATEGORIES = [
     ("pts", "Points",            0, "\U0001F3C0"),
@@ -56,6 +58,22 @@ def grp_of(pos):
     return "G"
 
 
+def drop_cup_final(df):
+    """The NBA Cup final (since 2023-24) is typed as a regular-season game but
+    doesn't count in the standings or player stats. It is the only game that
+    gives two teams an 83rd game, and nothing else is played that day."""
+    per_team = df.groupby("team_abbreviation")["game_id"].nunique()
+    over = frozenset(per_team[per_team > 82].index)
+    if not over:
+        return df
+    games = df.groupby("game_id").agg(
+        teams=("team_abbreviation", frozenset), day=("game_date", "first"))
+    solo_days = games["day"].value_counts()
+    solo_days = set(solo_days[solo_days == 1].index)
+    final = games[(games["teams"] == over) & games["day"].isin(solo_days)].index
+    return df[~df["game_id"].isin(final)]
+
+
 def fetch(y):
     os.makedirs(RAW, exist_ok=True)
     cache = os.path.join(RAW, f"player_box_{y}.parquet")
@@ -87,6 +105,7 @@ def build():
         # would otherwise fabricate extra "teams played for" for every
         # All-Star. Filter by real franchise code instead of a name guess.
         df = df[df["team_abbreviation"].isin(VALID_TEAMS)]
+        df = drop_cup_final(df)
         frames.append(df)
         print(f"  {y}: {len(df):,} player-games")
     allg = pd.concat(frames, ignore_index=True)
@@ -112,12 +131,16 @@ def build():
         team = g["team_abbreviation"].mode()
         team = team.iloc[0] if len(team) else (g["team_abbreviation"].iloc[-1] or "")
         pos = g["athlete_position_abbreviation"].mode()
-        pos = pos.iloc[0] if len(pos) else ""
+        pos = pos.iloc[0] if len(pos) else "G"
+        # Capture ALL unique positions played, not just the mode, so mid-season
+        # position changes (e.g., DJJ as G and F) are both available for grid criteria
+        all_pos = list(dict.fromkeys(g["athlete_position_abbreviation"].dropna().unique()))
+        all_grps = sorted(set(grp_of(p) for p in all_pos)) if all_pos else [grp_of(pos)]
         head = g["athlete_headshot_href"].dropna()
         rec = {
             "id": str(aid),
             "name": g["athlete_display_name"].iloc[-1],
-            "pos": pos or "G",
+            "pos": pos,
             "grp": grp_of(pos),
             "season": int(season),
             "seasonLabel": f"{int(season)-1}-{str(int(season))[2:]}",
@@ -133,12 +156,26 @@ def build():
             rec["headshot"] = head.iloc[-1]
         if len(teams) > 1:
             rec["teams"] = teams
+        if len(all_grps) > 1:
+            rec["grps"] = all_grps
         players.append(rec)
+
+    # Load and append manually-added entries for data gaps
+    MANUAL_FILE = os.path.join(HERE, "nba_manual_entries.json")
+    if os.path.exists(MANUAL_FILE):
+        try:
+            with open(MANUAL_FILE, "r", encoding="utf-8") as f:
+                manual_data = json.load(f)
+                if "entries" in manual_data and isinstance(manual_data["entries"], list):
+                    players.extend(manual_data["entries"])
+                    print(f"  + Added {len(manual_data['entries'])} manual entries for data gaps")
+        except Exception as e:
+            print(f"  ! Failed to load manual entries: {e}")
 
     players.sort(key=lambda r: (r["season"], r["name"]))
     out = {
         "generated": date.today().isoformat(),
-        "source": "sportsdataverse hoopR-data / nba player_box",
+        "source": "sportsdataverse ESPN NBA player box scores",
         "sport": "nba",
         "seasons": [start, end],
         "categories": [{"key": k, "label": l, "decimals": d, "icon": i} for k, l, d, i in CATEGORIES],

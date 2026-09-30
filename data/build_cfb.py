@@ -9,7 +9,7 @@ import os, sys, json, time, urllib.request
 from collections import defaultdict
 from datetime import date
 
-FIRST, LAST = 2014, 2024
+FIRST, LAST = 2014, 2025
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAW = os.path.join(HERE, "raw", "cfb")
 OUT = os.path.normpath(os.path.join(HERE, "..", "public", "data", "cfb", "players.json"))
@@ -73,8 +73,9 @@ def build():
     schools = {}
     for y in range(start, end + 1):
         for t in cached(f"teams_{y}.json", lambda y=y: api_get(f"/teams/fbs?year={y}", key)):
-            logos = t.get("logos") or []
-            logo = (logos[0] if logos else "").replace("http://", "https://")
+            # CFBD's own logo URLs moved to its CDN in 2026; its team ids are ESPN's,
+            # so keep serving the ESPN logos the rest of the site uses.
+            logo = f"https://a.espncdn.com/i/teamlogos/ncaa/500/{t['id']}.png"
             schools[t["school"]] = {"name": t["school"], "logo": logo, "conf": t.get("conference")}
 
     # pivot stats

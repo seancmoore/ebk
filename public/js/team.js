@@ -7,7 +7,7 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=3";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=4";
 
   const CFG = {
     nfl: {
@@ -34,7 +34,7 @@
       },
     },
     nba: {
-      seasons: "2002–2023",
+      seasons: "2002–2026",
       groups: ["all", "G", "F", "C"],
       labels: {
         games: "G", pts: "PTS", ppg: "PPG", reb: "REB", rpg: "RPG",
@@ -49,7 +49,7 @@
       },
     },
     mlb: {
-      seasons: "2000–2021",
+      seasons: "2000–2026",
       groups: ["all", "H", "P"],
       labels: { games: "G", hr: "HR", rbi: "RBI", hits: "H", runs: "R", sb: "SB", avg: "AVG",
                 w: "W", k: "K", sv: "SV", era: "ERA" },
@@ -61,7 +61,7 @@
       },
     },
     nhl: {
-      seasons: "2000–2024",
+      seasons: "2000–2026",
       groups: ["all", "F", "D", "G"],
       labels: { games: "GP", g: "G", a: "A", pts: "P", plus: "+/-", shots: "S",
                 ppg_g: "PPG", ppg: "P/G", w: "W", sv: "SV", svpct: "SV%", gaa: "GAA", so: "SO" },
@@ -74,7 +74,7 @@
       },
     },
     cfb: {
-      seasons: "2014–2024",
+      seasons: "2014–2025",
       groups: ["all", "QB", "RB", "WR", "TE", "DL", "LB", "DB"],
       labels: { pyd: "PsYd", ptd: "PsTD", pint: "INT", ryd: "RuYd", rtd: "RuTD", car: "Car",
                 recyd: "RcYd", rec: "Rec", rectd: "RcTD", tkl: "Tkl", sk: "Sk", tfl: "TFL" },
@@ -91,7 +91,7 @@
       },
     },
     soccer: {
-      seasons: "2016–2025",
+      seasons: "2016–2026",
       groups: ["all", "GK", "DEF", "MID", "FWD"],
       labels: { goals: "G", assists: "A", minutes: "Min", cs: "CS", saves: "Sv",
                 gc: "GC", bonus: "Bns", pts: "Pts" },

@@ -6,7 +6,7 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=3";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=4";
   const BEST_KEY = SPORT === "nfl" ? "ebk_statline_best_v2" : "ebk_statline_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "stat-line", score); } catch (e) {} };
@@ -38,7 +38,7 @@
                 ["def_interceptions", 3], ["def_fumbles_forced", 3], ["def_pass_defended", 12]],
     },
     nba: {
-      yMin: 2002, yMax: 2023,
+      yMin: 2002, yMax: 2026,
       seasonFmt: (y) => (y - 1) + "-" + String(y).slice(2),
       display: [
         ["pts", "Points"], ["ppg", "PPG"], ["reb", "Rebounds"], ["rpg", "RPG"],
@@ -51,7 +51,7 @@
       notable: [["ppg", 10], ["pts", 500], ["rpg", 6], ["apg", 4]],
     },
     mlb: {
-      yMin: 2000, yMax: 2021, seasonFmt: (y) => String(y),
+      yMin: 2000, yMax: 2026, seasonFmt: (y) => String(y),
       display: [
         ["hr", "Home Runs"], ["rbi", "RBI"], ["hits", "Hits"], ["runs", "Runs"],
         ["sb", "Stolen Bases"], ["avg", "Batting Avg"],
@@ -65,7 +65,7 @@
                 ["w", 8], ["k", 100], ["sv", 10]],
     },
     nhl: {
-      yMin: 2001, yMax: 2024, seasonFmt: (y) => (y - 1) + "-" + String(y).slice(2),
+      yMin: 2001, yMax: 2026, seasonFmt: (y) => (y - 1) + "-" + String(y).slice(2),
       display: [
         ["g", "Goals"], ["a", "Assists"], ["pts", "Points"], ["plus", "Plus/Minus"],
         ["shots", "Shots"], ["ppg_g", "PP Goals"], ["ppg", "Points/Game"],
@@ -77,7 +77,7 @@
       notable: [["pts", 30], ["g", 15], ["a", 20], ["w", 15], ["sv", 600], ["so", 3]],
     },
     cfb: {
-      yMin: 2014, yMax: 2024, seasonFmt: (y) => String(y),
+      yMin: 2014, yMax: 2025, seasonFmt: (y) => String(y),
       display: [
         ["pyd", "Pass Yds"], ["ptd", "Pass TD"], ["pint", "Interceptions"],
         ["ryd", "Rush Yds"], ["rtd", "Rush TD"], ["car", "Carries"],
@@ -95,7 +95,7 @@
                 ["rec", 40], ["rectd", 6], ["tkl", 60], ["sk", 6]],
     },
     soccer: {
-      yMin: 2017, yMax: 2025, seasonFmt: (y) => (y - 1) + "-" + String(y).slice(2),
+      yMin: 2017, yMax: 2026, seasonFmt: (y) => (y - 1) + "-" + String(y).slice(2),
       display: [
         ["goals", "Goals"], ["assists", "Assists"], ["minutes", "Minutes"], ["cs", "Clean Sheets"],
         ["saves", "Saves"], ["gc", "Goals Conceded"], ["bonus", "Bonus Pts"], ["pts", "FPL Points"],

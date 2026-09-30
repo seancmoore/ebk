@@ -26,14 +26,14 @@ There's also a first-party analytics setup that just writes anonymous `{path, so
 
 ## Data
 
-The datasets come from public sources: nflverse, ESPN, Lahman, NHL, CFBD, FPL. The build scripts live in `data/` and are stdlib-only Python:
+The datasets come from public sources: nflverse, ESPN, Lahman, the MLB Stats API, NHL, CFBD, FPL. Every sport runs through its latest complete season. The build scripts live in `data/` and are plain Python (the NBA one also needs pandas + pyarrow):
 
 ```
 cd data
 python build_players.py
 ```
 
-After rebuilding, run `python tools/slim_players.py` to prune the dead weight before it ships.
+When a season ends, raise `LAST` in that sport's builder (`SEASONS` for soccer), rebuild, and bump the `?v=N` on `DATA_URL` in the game scripts so browsers pick up the new data. Ship the output as-is - `tools/slim_players.py` prunes the low-stat and traded stints the Player Grid needs.
 
 ## Running it locally
 

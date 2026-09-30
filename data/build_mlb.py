@@ -1,32 +1,36 @@
 """
 build_mlb.py — MLB player-season dataset for EBK (stdlib only).
 
-Source: Lahman / Chadwick baseball databank (xorq-labs fork, through 2021).
-Hitters and pitchers; team canonicalized to franchise key.
+Sources: Lahman / Chadwick baseball databank (xorq-labs fork) through 2021, then
+the official MLB Stats API (statsapi.mlb.com) from 2022. Hitters and pitchers;
+team canonicalized to franchise key. A player keeps his Lahman (bbref) id across
+both sources via the Chadwick register (key_bbref <-> key_mlbam).
 
 Usage: python build_mlb.py [start end]
 """
-import csv, io, os, sys, json, urllib.request
+import csv, hashlib, os, sys, json, urllib.request
 from collections import defaultdict
 from datetime import date
 
-FIRST, LAST = 2000, 2021
+FIRST, LAST = 2000, 2026
+LAHMAN_LAST = 2021      # the databank fork stops here; the Stats API covers the rest
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAW = os.path.join(HERE, "raw", "mlb")
 OUT = os.path.normpath(os.path.join(HERE, "..", "public", "data", "mlb", "players.json"))
 BASE = "https://raw.githubusercontent.com/xorq-labs/baseballdatabank/master/core"
+STATSAPI = "https://statsapi.mlb.com/api/v1"
 
 ESPN = {"ANA": "laa", "ARI": "ari", "ATL": "atl", "BAL": "bal", "BOS": "bos", "CHC": "chc",
         "CHW": "chw", "CIN": "cin", "CLE": "cle", "COL": "col", "DET": "det", "FLA": "mia",
         "HOU": "hou", "KCR": "kc", "LAD": "lad", "MIL": "mil", "MIN": "min", "NYM": "nym",
         "NYY": "nyy", "OAK": "oak", "PHI": "phi", "PIT": "pit", "SDP": "sd", "SEA": "sea",
         "SFG": "sf", "STL": "stl", "TBD": "tb", "TEX": "tex", "TOR": "tor", "WSN": "wsh"}
-NICK = {"ANA": "Angels", "ARI": "Diamondbacks", "ATL": "Braves", "BAL": "Orioles", "BOS": "Red Sox",
-        "CHC": "Cubs", "CHW": "White Sox", "CIN": "Reds", "CLE": "Guardians", "COL": "Rockies",
-        "DET": "Tigers", "FLA": "Marlins", "HOU": "Astros", "KCR": "Royals", "LAD": "Dodgers",
-        "MIL": "Brewers", "MIN": "Twins", "NYM": "Mets", "NYY": "Yankees", "OAK": "Athletics",
-        "PHI": "Phillies", "PIT": "Pirates", "SDP": "Padres", "SEA": "Mariners", "SFG": "Giants",
-        "STL": "Cardinals", "TBD": "Rays", "TEX": "Rangers", "TOR": "Blue Jays", "WSN": "Nationals"}
+# Stats API team id -> the Lahman franchise key used for every season
+API_TEAM = {108: "ANA", 109: "ARI", 144: "ATL", 110: "BAL", 111: "BOS", 112: "CHC", 145: "CHW",
+            113: "CIN", 114: "CLE", 115: "COL", 116: "DET", 146: "FLA", 117: "HOU", 118: "KCR",
+            119: "LAD", 158: "MIL", 142: "MIN", 121: "NYM", 147: "NYY", 133: "OAK", 143: "PHI",
+            134: "PIT", 135: "SDP", 136: "SEA", 137: "SFG", 138: "STL", 139: "TBD", 140: "TEX",
+            141: "TOR", 120: "WSN"}
 
 CATEGORIES = [
     ("hr", "Home Runs", 0, "\U0001F4A3"), ("rbi", "RBI", 0, "\U0001F3CF"),
@@ -35,6 +39,8 @@ CATEGORIES = [
     ("w", "Wins", 0, "\U0001F947"), ("k", "Strikeouts", 0, "\U0001F525"),
     ("sv", "Saves", 0, "\U0001F512"), ("era", "ERA", 2, "\U0001F6E1️"),
 ]
+BAT = ("G", "AB", "R", "H", "HR", "RBI", "SB")
+PIT = ("W", "SV", "SO", "IPouts", "ER", "G")
 
 
 def fetch(name, base=None):
@@ -48,18 +54,30 @@ def fetch(name, base=None):
         return list(csv.DictReader(f))
 
 
-# Chadwick register: maps bbref/Lahman playerIDs -> MLBAM ids (for headshots).
+def fetch_json(url, name):
+    d = os.path.join(RAW, "statsapi")
+    os.makedirs(d, exist_ok=True)
+    cache = os.path.join(d, name)
+    if not (os.path.exists(cache) and os.path.getsize(cache) > 0):
+        req = urllib.request.Request(url, headers={"User-Agent": "ebk/1.0"})
+        with urllib.request.urlopen(req, timeout=180) as r, open(cache, "wb") as f:
+            f.write(r.read())
+    with open(cache, encoding="utf-8") as f:
+        return json.load(f)
+
+
+# Chadwick register: bbref/Lahman playerIDs <-> MLBAM ids.
 REGISTER = "https://raw.githubusercontent.com/chadwickbureau/register/master/data"
 
-def mlbam_map(first_year):
-    out = {}
+def register_maps():
+    to_mlbam, to_bbref = {}, {}
     for h in "0123456789abcdef":
         for r in fetch_register(h):
             bbref, mlbam = r.get("key_bbref"), r.get("key_mlbam")
-            last = r.get("mlb_played_last")
-            if bbref and mlbam and last and int(last) >= first_year:
-                out[bbref] = mlbam
-    return out
+            if bbref and mlbam:
+                to_mlbam[bbref] = mlbam
+                to_bbref[mlbam] = bbref
+    return to_mlbam, to_bbref
 
 def fetch_register(h):
     os.makedirs(RAW, exist_ok=True)
@@ -82,67 +100,125 @@ def num(x):
     except (TypeError, ValueError): return 0.0
 
 
-def build():
-    start, end = (int(sys.argv[1]), int(sys.argv[2])) if len(sys.argv) == 3 else (FIRST, LAST)
-    mlbam = mlbam_map(start)
-    print(f"Chadwick register: {len(mlbam):,} bbref->MLBAM ids (mlb_played_last >= {start})")
+def fielding_pos(p):
+    """Lahman already rolls LF/CF/RF into OF; the Stats API doesn't."""
+    return "OF" if p in ("LF", "CF", "RF", "OF") else p
+
+
+class Seasons:
+    """Per (playerId, year) sums shared by both sources."""
+    def __init__(self):
+        self.bat = defaultdict(lambda: defaultdict(float))
+        self.pit = defaultdict(lambda: defaultdict(float))
+        self.teamG = defaultdict(lambda: defaultdict(float))   # -> franchise -> games
+        self.posG = defaultdict(lambda: defaultdict(float))    # -> fielding pos -> games
+        self.names = {}
+        self.mlbam = {}
+
+
+def add_lahman(start, end, acc):
     teamFranch = {r["teamID"]: r["franchID"] for r in fetch("Teams.csv")}
-    people = {}
     for r in fetch("People.csv"):
         nm = ((r.get("nameFirst") or "") + " " + (r.get("nameLast") or "")).strip()
-        people[r["playerID"]] = nm or r["playerID"]
-
-    bat = defaultdict(lambda: defaultdict(float))      # (pid,yr) -> sums
-    teamG = defaultdict(lambda: defaultdict(float))    # (pid,yr) -> teamID -> G
-    for r in fetch("Batting.csv"):
-        y = int(r["yearID"])
-        if y < start or y > end: continue
-        k = (r["playerID"], y)
-        for c in ("G", "AB", "R", "H", "HR", "RBI", "SB"):
-            bat[k][c] += num(r[c])
-        teamG[k][r["teamID"]] += num(r["G"])
-
-    pit = defaultdict(lambda: defaultdict(float))
-    for r in fetch("Pitching.csv"):
-        y = int(r["yearID"])
-        if y < start or y > end: continue
-        k = (r["playerID"], y)
-        for c in ("W", "SV", "SO", "IPouts", "ER", "G"):
-            pit[k][c] += num(r[c])
-        teamG[k][r["teamID"]] += num(r["G"])
-
-    # primary fielding position per (pid,yr)
-    posG = defaultdict(lambda: defaultdict(float))
+        acc.names[r["playerID"]] = nm or r["playerID"]
+    for fname, cols, into in (("Batting.csv", BAT, acc.bat), ("Pitching.csv", PIT, acc.pit)):
+        for r in fetch(fname):
+            y = int(r["yearID"])
+            if y < start or y > end: continue
+            k = (r["playerID"], y)
+            for c in cols:
+                into[k][c] += num(r[c])
+            acc.teamG[k][teamFranch.get(r["teamID"], r["teamID"])] += num(r["G"])
     for r in fetch("Fielding.csv"):
         y = int(r["yearID"])
-        if y < start or y > end: continue
-        posG[(r["playerID"], y)][r["POS"]] += num(r["G"])
+        if y < start or y > end or r["POS"] == "DH": continue
+        acc.posG[(r["playerID"], y)][fielding_pos(r["POS"])] += num(r["G"])
 
-    def primary_pos(k):
-        d = posG.get(k)
-        if not d: return ""
-        pos = max(d, key=d.get)
-        return "OF" if pos in ("LF", "CF", "RF", "OF") else pos
 
-    keys = set(bat) | set(pit)
+def add_statsapi(start, end, acc, to_bbref):
+    ids = set()
+    for y in range(start, end + 1):
+        for group in ("hitting", "pitching"):
+            url = (f"{STATSAPI}/stats?stats=season&group={group}&season={y}"
+                   "&sportId=1&playerPool=ALL&limit=10000")
+            ids.update(s["player"]["id"] for s in fetch_json(url, f"{group}_{y}.json")["stats"][0]["splits"])
+    ids = sorted(ids)
+    # The season endpoints give one combined line per player (team missing for
+    # anyone traded), and their teamId filter only returns who finished the
+    # year there. Year-by-year person stats carry one row per team played for.
+    for i in range(0, len(ids), 150):
+        chunk = ",".join(map(str, ids[i:i + 150]))
+        url = (f"{STATSAPI}/people?personIds={chunk}"
+               "&hydrate=stats(group=[hitting,pitching,fielding],type=[yearByYear])")
+        name = "people_" + hashlib.sha1(f"{start}-{end}:{chunk}".encode()).hexdigest()[:16] + ".json"
+        for person in fetch_json(url, name)["people"]:
+            mid = str(person["id"])
+            pid = to_bbref.get(mid) or "m" + mid
+            acc.names[pid] = person.get("fullName") or pid
+            acc.mlbam[pid] = mid
+            for st in person.get("stats", []):
+                group = st["group"]["displayName"]
+                for s in st["splits"]:
+                    y = int(s["season"])
+                    if y < start or y > end or s.get("gameType") != "R" or s.get("sport", {}).get("id") != 1:
+                        continue
+                    fr = API_TEAM.get((s.get("team") or {}).get("id"))
+                    if not fr:          # the team-less row is the multi-team total
+                        continue
+                    k, x = (pid, y), s["stat"]
+                    if group == "hitting":
+                        for c, src in (("G", "gamesPlayed"), ("AB", "atBats"), ("R", "runs"), ("H", "hits"),
+                                       ("HR", "homeRuns"), ("RBI", "rbi"), ("SB", "stolenBases")):
+                            acc.bat[k][c] += num(x.get(src))
+                        acc.teamG[k][fr] += num(x.get("gamesPlayed"))
+                    elif group == "pitching":
+                        g = num(x.get("gamesPitched", x.get("gamesPlayed")))
+                        for c, src in (("W", "wins"), ("SV", "saves"), ("SO", "strikeOuts"),
+                                       ("IPouts", "outs"), ("ER", "earnedRuns")):
+                            acc.pit[k][c] += num(x.get(src))
+                        acc.pit[k]["G"] += g
+                        acc.teamG[k][fr] += g
+                    elif group == "fielding":
+                        pos = (s.get("position") or {}).get("abbreviation")
+                        if pos and pos != "DH":
+                            acc.posG[k][fielding_pos(pos)] += num(x.get("gamesPlayed"))
+
+
+def primary_pos(field, skip=()):
+    d = {p: g for p, g in field.items() if p not in skip}
+    return max(d, key=d.get) if d else ""
+
+
+def build():
+    start, end = (int(sys.argv[1]), int(sys.argv[2])) if len(sys.argv) == 3 else (FIRST, LAST)
+    to_mlbam, to_bbref = register_maps()
+    print(f"Chadwick register: {len(to_mlbam):,} bbref<->MLBAM ids")
+
+    acc = Seasons()
+    if start <= LAHMAN_LAST:
+        add_lahman(start, min(end, LAHMAN_LAST), acc)
+    if end > LAHMAN_LAST:
+        add_statsapi(max(start, LAHMAN_LAST + 1), end, acc, to_bbref)
+
     players = []
     cat_counts = defaultdict(int)
-    for k in keys:
+    for k in set(acc.bat) | set(acc.pit):
         pid, yr = k
-        tg = teamG[k]
-        teamID = max(tg, key=tg.get) if tg else ""
-        franch = teamFranch.get(teamID, teamID)
-        if franch not in ESPN:           # skip defunct/unmapped (keeps logos valid)
+        # Every franchise the player appeared for that season, most games
+        # first — not just the top one, so a mid-season trade still registers
+        # on both teams' grids.
+        tg = acc.teamG[k]
+        franchises = [f for f, _ in sorted(tg.items(), key=lambda kv: -kv[1]) if f in ESPN]
+        if not franchises:
             continue
-        # Every franchise the player appeared for that season (by games
-        # played, most-played first) — not just the one with the most
-        # games, so a mid-season trade still registers on both teams' grids.
-        franchises = list(dict.fromkeys(
-            teamFranch.get(t, t) for t, _gp in sorted(tg.items(), key=lambda kv: -kv[1])
-            if teamFranch.get(t, t) in ESPN))
-        b, p = bat.get(k), pit.get(k)
+        b, p = acc.bat.get(k), acc.pit.get(k)
+        field = acc.posG.get(k, {})
         ipouts = p["IPouts"] if p else 0
-        isPitcher = bool(p) and ipouts >= 30 and (not b or b["AB"] < 50)
+        # A pitcher is anyone with 10+ innings who fields mostly as a pitcher or
+        # barely batted. Judging by at-bats alone turned every pre-2022 NL
+        # starter into a "hitter" and dropped his pitching line.
+        isPitcher = ipouts >= 30 and (primary_pos(field) == "P" or not b or b["AB"] < 50)
+        twoWay = isPitcher and b is not None and b["AB"] >= 200      # Ohtani
         stats = {}
         if b and b["AB"] > 0:
             stats["hr"] = int(b["HR"]); stats["rbi"] = int(b["RBI"]); stats["hits"] = int(b["H"])
@@ -152,27 +228,33 @@ def build():
             stats["w"] = int(p["W"]); stats["k"] = int(p["SO"]); stats["sv"] = int(p["SV"])
             if ipouts > 0:
                 stats["era"] = round(p["ER"] * 27.0 / ipouts, 2)
-        if not franchises:
-            continue
         for c in stats:
             cat_counts[c] += 1
-        games = int((b["G"] if b else 0) if not isPitcher else (p["G"] if p else 0))
-        pos = "P" if isPitcher else (primary_pos(k) or "DH")
+        if twoWay:
+            pos, grp = primary_pos(field, skip=("P",)) or "DH", "H"
+        elif isPitcher:
+            pos, grp = "P", "P"
+        else:
+            pos, grp = primary_pos(field) or "DH", "H"
+        games = int(p["G"] if isPitcher and not twoWay else (b["G"] if b else p["G"]))
         rec = {
-            "id": pid, "name": people.get(pid, pid),
-            "pos": pos, "grp": "P" if isPitcher else "H",
-            "season": yr, "team": franch, "games": games, "stats": stats,
+            "id": pid, "name": acc.names.get(pid, pid),
+            "pos": pos, "grp": grp,
+            "season": yr, "team": franchises[0], "games": games, "stats": stats,
         }
+        if twoWay:
+            rec["poss"] = [pos, "P"]
         if len(franchises) > 1:
             rec["teams"] = franchises
-        if pid in mlbam:
-            rec["headshot"] = HEADSHOT.format(mlbam[pid])
+        mid = acc.mlbam.get(pid) or to_mlbam.get(pid)
+        if mid:
+            rec["headshot"] = HEADSHOT.format(mid)
         players.append(rec)
 
     players.sort(key=lambda r: (r["season"], r["name"]))
     out = {
         "generated": date.today().isoformat(),
-        "source": "Lahman / Chadwick baseball databank",
+        "source": "Lahman / Chadwick baseball databank (through 2021) + MLB Stats API",
         "sport": "mlb", "seasons": [start, end],
         "categories": [{"key": k, "label": l, "decimals": d, "icon": i} for k, l, d, i in CATEGORIES],
         "players": players, "people": {},
