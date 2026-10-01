@@ -22,6 +22,6 @@ window.MLB = (function () {
     franchises,
     keyOf: (a) => a,
     name: (a) => nameByKey[a] || a,
-    logo: (a) => "https://a.espncdn.com/i/teamlogos/mlb/500/" + (espnByKey[a] || String(a).toLowerCase()) + ".png",
+    logo: (a) => "https://a.espncdn.com/combiner/i?img=/i/teamlogos/mlb/500/" + (espnByKey[a] || String(a).toLowerCase()) + ".png&w=128",
   };
 })();

@@ -51,7 +51,7 @@
   const dataCache = {};
   async function loadData(sport) {
     if (dataCache[sport]) return dataCache[sport];
-    const url = (sport === "nfl" ? "/data/players.json" : "/data/" + sport + "/players.json") + "?v=4";
+    const url = (sport === "nfl" ? "/data/players.json" : "/data/" + sport + "/players.json") + "?v=5";
     const res = await fetch(url, { cache: "force-cache" });
     if (!res.ok) throw new Error("data " + res.status);
     dataCache[sport] = EBKD.inflate(await res.json());
@@ -364,12 +364,14 @@
     }
     return chain;
   }
-  const fmtN = (v, d) => Number(v).toLocaleString("en-US", { maximumFractionDigits: d || 0 });
+  const NF = {};      // cached Intl formatter per decimal count
+  const fmtN = (v, d) => (NF[d || 0] || (NF[d || 0] = new Intl.NumberFormat("en-US", { maximumFractionDigits: d || 0 }))).format(Number(v));
+  const photo = (url) => (EBKD.img ? EBKD.img(url, 256) : url);
   function hlCard(p, revealedVal) {
     const L = M.league, cat = M._cat;
     const team = L ? `<img class="tlogo" src="${L.logo(p.team)}" alt="" onerror="this.remove()"> ${esc(L.name(p.team))}` : esc(p.team || "");
     const val = revealedVal != null ? `<div class="hl2-stat">${fmtN(revealedVal, cat.decimals)} <span>${esc(cat.label)}</span></div>` : "";
-    return `<img class="hl2-ph" src="${p.headshot || "/img/avatar.svg"}" alt="" onerror="this.src='/img/avatar.svg'">` +
+    return `<img class="hl2-ph" src="${photo(p.headshot) || "/img/avatar.svg"}" alt="" onerror="this.src='/img/avatar.svg'">` +
       `<div class="hl2-name">${esc(p.name)}</div><div class="hl2-meta">${team}</div>${val}`;
   }
   function renderHL() {

@@ -69,7 +69,7 @@ def build():
             nm = teams.get(p["team"], "")
             if not nm:
                 continue
-            clubs[code] = {"name": nm, "logo": f"https://resources.premierleague.com/premierleague/badges/t{code}.png"}
+            clubs[code] = {"name": nm, "logo": f"https://resources.premierleague.com/premierleague/badges/100/t{code}.png"}
             pos = POS.get(p["element_type"], "MID")
             stats = {
                 "goals": num(p["goals_scored"]), "assists": num(p["assists"]),

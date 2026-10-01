@@ -3,12 +3,12 @@ build_mlb.py — MLB player-season dataset for EBK (stdlib only).
 
 Sources: Lahman / Chadwick baseball databank (xorq-labs fork) through 2021, then
 the official MLB Stats API (statsapi.mlb.com) from 2022. Hitters and pitchers;
-team canonicalized to franchise key. A player keeps his Lahman (bbref) id across
+team canonicalized to franchise key. A player keeps his bbref id across
 both sources via the Chadwick register (key_bbref <-> key_mlbam).
 
 Usage: python build_mlb.py [start end]
 """
-import csv, hashlib, os, sys, json, urllib.request
+import csv, hashlib, os, re, sys, json, unicodedata, urllib.request
 from collections import defaultdict
 from datetime import date
 
@@ -113,26 +113,35 @@ class Seasons:
         self.teamG = defaultdict(lambda: defaultdict(float))   # -> franchise -> games
         self.posG = defaultdict(lambda: defaultdict(float))    # -> fielding pos -> games
         self.names = {}
+        self.lahman_names = {}
         self.mlbam = {}
 
 
 def add_lahman(start, end, acc):
     teamFranch = {r["teamID"]: r["franchID"] for r in fetch("Teams.csv")}
+    # Lahman playerIDs are NOT always bbref ids (jimenda01 is D'Angelo Jimenez
+    # in Lahman but Dany Jimenez on bbref), and the register lookup and the
+    # Stats API side are keyed by bbref. Re-key every Lahman row by People.csv's
+    # own bbrefID so both sources share one id space.
+    canon = {}
     for r in fetch("People.csv"):
-        nm = ((r.get("nameFirst") or "") + " " + (r.get("nameLast") or "")).strip()
-        acc.names[r["playerID"]] = nm or r["playerID"]
+        pid = canon[r["playerID"]] = r.get("bbrefID") or r["playerID"]
+        # "A. J." -> "A.J." (bbref / Stats API spelling)
+        first = re.sub(r"\b([A-Z])\. (?=[A-Z]\.)", r"\1.", r.get("nameFirst") or "")
+        nm = (first + " " + (r.get("nameLast") or "")).strip()
+        acc.names[pid] = acc.lahman_names[pid] = nm or pid
     for fname, cols, into in (("Batting.csv", BAT, acc.bat), ("Pitching.csv", PIT, acc.pit)):
         for r in fetch(fname):
             y = int(r["yearID"])
             if y < start or y > end: continue
-            k = (r["playerID"], y)
+            k = (canon.get(r["playerID"], r["playerID"]), y)
             for c in cols:
                 into[k][c] += num(r[c])
             acc.teamG[k][teamFranch.get(r["teamID"], r["teamID"])] += num(r["G"])
     for r in fetch("Fielding.csv"):
         y = int(r["yearID"])
         if y < start or y > end or r["POS"] == "DH": continue
-        acc.posG[(r["playerID"], y)][fielding_pos(r["POS"])] += num(r["G"])
+        acc.posG[(canon.get(r["playerID"], r["playerID"]), y)][fielding_pos(r["POS"])] += num(r["G"])
 
 
 def add_statsapi(start, end, acc, to_bbref):
@@ -155,6 +164,8 @@ def add_statsapi(start, end, acc, to_bbref):
             mid = str(person["id"])
             pid = to_bbref.get(mid) or "m" + mid
             acc.names[pid] = person.get("fullName") or pid
+            if pid in acc.lahman_names and last_name(acc.lahman_names[pid]) != last_name(acc.names[pid]):
+                print(f"  WARNING id {pid}: Lahman '{acc.lahman_names[pid]}' vs Stats API '{acc.names[pid]}'")
             acc.mlbam[pid] = mid
             for st in person.get("stats", []):
                 group = st["group"]["displayName"]
@@ -182,6 +193,13 @@ def add_statsapi(start, end, acc, to_bbref):
                         pos = (s.get("position") or {}).get("abbreviation")
                         if pos and pos != "DH":
                             acc.posG[k][fielding_pos(pos)] += num(x.get("gamesPlayed"))
+
+
+def last_name(nm):
+    """Accent/punctuation-free surname, for the Lahman <-> Stats API id check."""
+    parts = [t for t in nm.split(" ") if t.rstrip(".") not in ("Jr", "Sr", "II", "III", "IV")]
+    s = unicodedata.normalize("NFD", parts[-1] if parts else nm)
+    return re.sub(r"[^a-z]", "", s.lower())
 
 
 def primary_pos(field, skip=()):
@@ -251,7 +269,7 @@ def build():
             rec["headshot"] = HEADSHOT.format(mid)
         players.append(rec)
 
-    players.sort(key=lambda r: (r["season"], r["name"]))
+    players.sort(key=lambda r: (r["season"], r["name"], r["id"]))
     out = {
         "generated": date.today().isoformat(),
         "source": "Lahman / Chadwick baseball databank (through 2021) + MLB Stats API",

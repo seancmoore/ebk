@@ -6,10 +6,12 @@
   const rand = (a) => a[(Math.random() * a.length) | 0];
   const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const take = (a) => a.splice((Math.random() * a.length) | 0, 1)[0];
+  // reveal-sized photo (raw headshots are up to 600px / several MB)
+  const photo = (url) => (EBKD.img ? EBKD.img(url, 160) : url);
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=4";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=5";
   const BEST_KEY = SPORT === "nfl" ? "ebk_careerpath_best_v2" : "ebk_careerpath_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "career-path", score); } catch (e) {} };
@@ -236,7 +238,7 @@
     $("#banner").textContent = ""; $("#banner").className = "banner";
     $("#reveal").hidden = true;
     $("#next-row").hidden = true; $("#next-row").innerHTML = "";
-    preloadImg(S.mystery.headshot);                  // reveal photo, ahead of time
+    preloadImg(photo(S.mystery.headshot));           // reveal photo, ahead of time
     render();
     rtStart();
   }
@@ -299,7 +301,7 @@
 
   function showReveal(c) {
     const r = $("#reveal");
-    const img = `<img alt="" src="${c.headshot || "/img/avatar.svg"}" onerror="this.onerror=null;this.src='/img/avatar.svg'" />`;
+    const img = `<img alt="" src="${photo(c.headshot) || "/img/avatar.svg"}" onerror="this.onerror=null;this.src='/img/avatar.svg'" />`;
     r.innerHTML = `${img}<div class="pr-name">${c.name}</div>` +
       `<div class="pr-meta">${posName(c.pos)} · ${CFG.seasonFmt(c.min)}–${CFG.seasonFmt(c.max)}</div>`;
     r.hidden = false;

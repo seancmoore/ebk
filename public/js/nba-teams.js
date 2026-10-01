@@ -44,6 +44,6 @@ window.NBA = (function () {
     franchises: FRANCHISES,
     keyOf,
     name: (abbr) => nameByKey[keyOf(abbr)] || abbr,
-    logo: (abbr) => "https://a.espncdn.com/i/teamlogos/nba/500/" + keyOf(abbr).toLowerCase() + ".png",
+    logo: (abbr) => "https://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/" + keyOf(abbr).toLowerCase() + ".png&w=128",
   };
 })();

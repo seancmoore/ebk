@@ -2,17 +2,17 @@
 window.EBK = {
   sports: [
     { key: "nfl",    name: "NFL",        emoji: "\u{1F3C8}", accent: "#3ddc97", status: "live", blurb: "Pro football, 1999–present.",
-      logo: "https://a.espncdn.com/i/teamlogos/leagues/500/nfl.png" },
+      logo: "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nfl.png&w=128" },
     { key: "cfb",    name: "College FB", emoji: "\u{1F3DF}️", accent: "#f4a300", status: "live", blurb: "FBS, 2014–2025.",
-      logo: "https://a.espncdn.com/i/espn/misc_logos/500/ncaa_football.png" },
+      logo: "https://a.espncdn.com/combiner/i?img=/i/espn/misc_logos/500/ncaa_football.png&w=128" },
     { key: "nba",    name: "NBA",        emoji: "\u{1F3C0}", accent: "#ff7a3c", status: "live", blurb: "Pro basketball, 2002–2026.",
-      logo: "https://a.espncdn.com/i/teamlogos/leagues/500/nba.png" },
+      logo: "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nba.png&w=128" },
     { key: "mlb",    name: "MLB",        emoji: "⚾",    accent: "#4aa3ff", status: "live", blurb: "America's pastime, 2000–2026.",
-      logo: "https://a.espncdn.com/i/teamlogos/leagues/500/mlb.png" },
+      logo: "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/mlb.png&w=128" },
     { key: "nhl",    name: "NHL",        emoji: "\u{1F3D2}", accent: "#5fd0e6", status: "live", blurb: "Pro hockey, 2000–2026.",
-      logo: "https://a.espncdn.com/i/teamlogos/leagues/500/nhl.png" },
+      logo: "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nhl.png&w=128" },
     { key: "soccer", name: "Soccer",     emoji: "⚽",    accent: "#8ee04a", status: "live", blurb: "Premier League, 2016–2026.",
-      logo: "https://a.espncdn.com/i/leaguelogos/soccer/500/23.png" },
+      logo: "https://a.espncdn.com/combiner/i?img=/i/leaguelogos/soccer/500/23.png&w=128" },
   ],
 
   // small league-logo <img> (falls back to the emoji if the logo can't load)

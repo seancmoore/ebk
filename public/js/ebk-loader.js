@@ -31,10 +31,29 @@ window.EBKD = {
   hlEligible: function (p, key, label) {
     var v = p.stats[key];
     if (v == null || v <= 0) return false;
-    if (/yard|yds/i.test(key + " " + (label || "")) && v < 10) return false;
-    return true;
+    // the yardage floor is per category: test it once per key, not per record
+    // (this runs categories x players times while the start screen builds)
+    var m = HL_MIN[key];
+    if (!m || m.label !== label)
+      m = HL_MIN[key] = { label: label, min: /yard|yds/i.test(key + " " + (label || "")) ? 10 : 0 };
+    return v >= m.min;
+  },
+  // Sized variant of a remote headshot, for the CDNs that resize on the fly
+  // (raw files are 600px+ and 100KB-5MB; the slots are 40-128 CSS px). A
+  // missing file still 404s at the sized URL, so onerror fallbacks keep
+  // working. Other hosts (mlbstatic is already sized, NHL mugs have no
+  // resizer, PL photos are 110x140) pass through unchanged. Team and league
+  // logos are stored pre-sized in the *-teams.js / catalog.js helpers.
+  img: function (url, w) {
+    if (!url) return url;
+    if (url.indexOf("https://a.espncdn.com/i/") === 0)
+      return "https://a.espncdn.com/combiner/i?img=" + url.slice(21) + "&w=" + w;
+    if (url.indexOf("https://static.www.nfl.com/image/") === 0)
+      return url.replace("/f_auto,q_auto/", "/f_auto,q_auto,w_" + w + "/");
+    return url;
   },
 };
+var HL_MIN = {};
 
 (function () {
   "use strict";

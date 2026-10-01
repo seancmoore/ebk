@@ -6,7 +6,7 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=4";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=5";
   const BEST_KEY = SPORT === "nfl" ? "ebk_grid_best" : "ebk_grid_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "player-grid", score); } catch (e) {} };
@@ -208,9 +208,14 @@
   // Every position a season lists: "grps" marks an NBA season split across
   // groups, "poss" an MLB two-way season (hitter who also pitched).
   const posOf = (p) => (p.poss || p.grps || [p[CFG.posKey] || p.grp || normPos(p.pos)]).filter(Boolean);
-  // "joao" should find "João", "lukasz" should find "Łukasz"
+  // "joao" should find "João", "lukasz" should find "Łukasz"; spaces, dots,
+  // hyphens and apostrophes are dropped so "TJ Watt" finds "T.J. Watt" and
+  // "oneal" finds "O'Neal"
   const fold = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "")
-    .replace(/[łŁ]/g, "l").replace(/[øØ]/g, "o").replace(/[đĐ]/g, "d").toLowerCase();
+    .replace(/[łŁ]/g, "l").replace(/[øØ]/g, "o").replace(/[đĐ]/g, "d").toLowerCase()
+    .replace(/[\s.'’`-]/g, "");
+  // cell-sized photo (raw headshots are up to 600px / several MB)
+  const photo = (url) => (EBKD.img ? EBKD.img(url, 128) : url);
   const getBest = () => { try { return +localStorage.getItem(BEST_KEY) || 0; } catch { return 0; } };
   const setBest = (v) => { try { localStorage.setItem(BEST_KEY, v); } catch {} };
   const shuffle = (a, rnd = Math.random) => { for (let i = a.length - 1; i > 0; i--) { const j = (rnd() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -570,7 +575,7 @@
     if (state && state !== "dead") {
       d.classList.add("filled");
       const head = state.headshot
-        ? `<img class="cell-ph" src="${state.headshot}" alt="" loading="lazy" onerror="this.remove()" />`
+        ? `<img class="cell-ph" src="${photo(state.headshot)}" alt="" loading="lazy" onerror="this.remove()" />`
         : `<div class="cell-ph ph-blank"></div>`;
       const pts = (S.pts && S.pts[idx] != null) ? `<div class="cell-pts">+${S.pts[idx]}</div>` : "";
       d.innerHTML = head + `<div class="cell-name">${state.name}</div>` + pts;

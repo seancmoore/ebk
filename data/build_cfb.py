@@ -75,7 +75,7 @@ def build():
         for t in cached(f"teams_{y}.json", lambda y=y: api_get(f"/teams/fbs?year={y}", key)):
             # CFBD's own logo URLs moved to its CDN in 2026; its team ids are ESPN's,
             # so keep serving the ESPN logos the rest of the site uses.
-            logo = f"https://a.espncdn.com/i/teamlogos/ncaa/500/{t['id']}.png"
+            logo = f"https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/{t['id']}.png&w=128"
             schools[t["school"]] = {"name": t["school"], "logo": logo, "conf": t.get("conference")}
 
     # pivot stats

@@ -6,7 +6,7 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=4";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=5";
   const BEST_KEY = SPORT === "nfl" ? "ebk_statline_best_v2" : "ebk_statline_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "stat-line", score); } catch (e) {} };
@@ -107,7 +107,11 @@
     },
   }[SPORT];
 
-  const fmt = (v, d = 0) => Number(v).toLocaleString("en-US", { maximumFractionDigits: d });
+  // cached Intl formatter per decimal count (toLocaleString(opts) builds a new one per call)
+  const NF = {};
+  const fmt = (v, d = 0) => (NF[d] || (NF[d] = new Intl.NumberFormat("en-US", { maximumFractionDigits: d }))).format(Number(v));
+  // reveal-sized photo (raw headshots are up to 600px / several MB)
+  const photo = (url) => (EBKD.img ? EBKD.img(url, 160) : url);
   const rand = (a) => a[(Math.random() * a.length) | 0];
   const take = (a) => a.splice((Math.random() * a.length) | 0, 1)[0];
   const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -252,7 +256,7 @@
     S.range = seasonRange(S.mystery.season);
     S.locked = false;
     S.options = pickOptions(S.mystery);
-    preloadImg(S.mystery.headshot);                  // reveal photo, ahead of time
+    preloadImg(photo(S.mystery.headshot));           // reveal photo, ahead of time
     render();
     rtStart();
   }
@@ -322,7 +326,7 @@
 
   function showReveal(m) {
     const r = $("#reveal");
-    const img = `<img alt="" src="${m.headshot || "/img/avatar.svg"}" onerror="this.onerror=null;this.src='/img/avatar.svg'" />`;
+    const img = `<img alt="" src="${photo(m.headshot) || "/img/avatar.svg"}" onerror="this.onerror=null;this.src='/img/avatar.svg'" />`;
     r.innerHTML = `${img}<div class="pr-name">${m.name}</div>` +
       `<div class="pr-meta">${CFG.seasonFmt(m.season)} · ${LEAGUE.name(m.team)} · ${posName(m.pos)}</div>`;
     r.hidden = false;

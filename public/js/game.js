@@ -5,7 +5,7 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL; // team logo/name helper
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=4";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=5";
   const BEST_KEY = SPORT === "nfl" ? "ebk_best" : "ebk_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "higher-lower", score); } catch (e) {} };
@@ -25,18 +25,32 @@
     streak: 0,
     best: 0,
     locked: false,
+    run: 0,           // bumped on every start / quit; stale timers check it
   };
 
   // ---- utilities ------------------------------------------------------------
 
   const randItem = (arr) => arr[(Math.random() * arr.length) | 0];
 
+  // setTimeout that is dropped if the run it belongs to has ended (quitting
+  // mid-reveal must not fire that run's advance / gameOver afterwards)
+  function later(fn, ms) {
+    const run = state.run;
+    setTimeout(() => { if (run === state.run) fn(); }, ms);
+  }
+
+  // one cached Intl formatter per decimal count: toLocaleString(opts) builds a
+  // new formatter per call, and the count-up runs this every animation frame
+  const NF = {};
   function fmt(value, decimals) {
-    return Number(value).toLocaleString("en-US", {
+    const nf = NF[decimals] || (NF[decimals] = new Intl.NumberFormat("en-US", {
       minimumFractionDigits: 0,
       maximumFractionDigits: decimals,
-    });
+    }));
+    return nf.format(Number(value));
   }
+  // panel-sized photo (raw headshots are up to 600px / several MB)
+  const photo = (url) => (EBKD.img ? EBKD.img(url, 256) : url);
 
   function bestStore() {
     try { return JSON.parse(localStorage.getItem(BEST_KEY)) || {}; }
@@ -67,7 +81,7 @@
     });
   }
   const preloadPlayer = (p) =>
-    Promise.all([preloadImg(p && p.headshot),
+    Promise.all([preloadImg(p && photo(p.headshot)),
                  preloadImg(p && p.team && LEAGUE ? LEAGUE.logo(p.team) : null, 1200)]);
 
   // Entrance animations are enhancement only: content is visible by default,
@@ -124,8 +138,14 @@
     }
   }
 
-  const eligibleCount = (cat) =>
-    state.data.players.reduce((n, p) => (EBKD.hlEligible(p, cat.key, cat.label) ? n + 1 : n), 0);
+  // pool sizes never change for a loaded dataset; the grid is rebuilt every
+  // time the player returns to the menu, so count each category once
+  const counts = new Map();
+  const eligibleCount = (cat) => {
+    if (!counts.has(cat.key))
+      counts.set(cat.key, state.data.players.reduce((n, p) => (EBKD.hlEligible(p, cat.key, cat.label) ? n + 1 : n), 0));
+    return counts.get(cat.key);
+  };
 
   function buildCategoryGrid() {
     const grid = $("#category-grid");
@@ -164,6 +184,7 @@
   function startRun(cat) {
     try { window.EBKA && EBKA.send("start"); } catch (e) {}
     state.category = cat;
+    const run = ++state.run;
     state.pool = state.data.players.filter((p) => EBKD.hlEligible(p, cat.key, cat.label));
     state.streak = 0;
     state.best = getBest(cat.key);
@@ -175,6 +196,7 @@
     $("#best").textContent = state.best;
     // wait for both photos before the panels appear (timer starts after)
     Promise.all([preloadPlayer(state.anchor), preloadPlayer(state.challenger)]).then(() => {
+      if (run !== state.run) return;              // quit while photos loaded
       showScreen("screen-game");
       renderRound(true);
     });
@@ -245,7 +267,7 @@
     const verdict = $("#verdict");
     verdict.textContent = "⏱ Time's up!";
     verdict.className = "verdict bad show";
-    setTimeout(gameOver, REVEAL_PAUSE + 200);
+    later(gameOver, REVEAL_PAUSE + 200);
   }
 
   function fillPanel(sel, p, revealed) {
@@ -261,8 +283,9 @@
     const bg = $(".panel-bg", panel);
     img.style.display = "";
     img.onerror = () => { img.onerror = null; img.src = "/img/avatar.svg"; };
-    img.src = p.headshot || "/img/avatar.svg";
-    bg.style.backgroundImage = p.headshot ? `url("${p.headshot}")` : "";
+    const src = photo(p.headshot);
+    img.src = src || "/img/avatar.svg";
+    bg.style.backgroundImage = src ? `url("${src}")` : "";
 
     if (revealed) {
       $(".stat-value", panel).textContent = fmt(statValue(p), dec);
@@ -335,13 +358,13 @@
       state.nextReady = preloadPlayer(state.next);
       verdict.textContent = "Correct! +1";
       verdict.className = "verdict good show";
-      setTimeout(advance, REVEAL_PAUSE);
+      later(advance, REVEAL_PAUSE);
     } else {
       if (!reduceMotion) panel.classList.add("shake");
       sfx("wrong");
       verdict.textContent = "Wrong!";
       verdict.className = "verdict bad show";
-      setTimeout(gameOver, REVEAL_PAUSE + 200);
+      later(gameOver, REVEAL_PAUSE + 200);
     }
   }
 
@@ -365,10 +388,11 @@
     // firing (a stalled rAF would freeze the game mid-run) — a plain timeout
     // watchdog advances regardless, whichever comes first
     let advanced = false;
+    const run = state.run;
     const go = () => {
       if (advanced) return;
       advanced = true;
-      ready.then(() => renderRound(true));
+      ready.then(() => { if (run === state.run) renderRound(true); });
     };
     const anime = A();
     if (anime && !document.hidden) {
@@ -421,7 +445,7 @@
   document.querySelectorAll(".guess-btn").forEach((b) =>
     b.addEventListener("click", () => guess(b.dataset.dir)));
   $("#again-btn").addEventListener("click", () => startRun(state.category));
-  const toMenu = () => { stopTimer(); state.locked = true; showScreen("screen-start"); buildCategoryGrid(); };
+  const toMenu = () => { stopTimer(); state.locked = true; state.run++; showScreen("screen-start"); buildCategoryGrid(); };
   $("#menu-btn").addEventListener("click", toMenu);
   $("#quit-btn").addEventListener("click", toMenu);
 

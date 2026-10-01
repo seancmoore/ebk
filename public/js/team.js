@@ -3,11 +3,14 @@
 (() => {
   "use strict";
   const $ = (s, r = document) => r.querySelector(s);
-  const fmt = (v, d = 0) => (v == null ? "—" : Number(v).toLocaleString("en-US", { maximumFractionDigits: d }));
+  // cached Intl formatter per decimal count (toLocaleString(opts) builds a new
+  // one per call, which made big table renders take seconds on phones)
+  const NF = {};
+  const fmt = (v, d = 0) => (v == null ? "—" : (NF[d] || (NF[d] = new Intl.NumberFormat("en-US", { maximumFractionDigits: d }))).format(Number(v)));
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=4";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=5";
 
   const CFG = {
     nfl: {

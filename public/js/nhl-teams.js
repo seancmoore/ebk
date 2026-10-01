@@ -30,6 +30,6 @@ window.NHL = (function () {
   return {
     franchises, keyOf,
     name: (a) => nameByKey[keyOf(a)] || a,
-    logo: (a) => "https://a.espncdn.com/i/teamlogos/nhl/500/" + (espnByKey[keyOf(a)] || String(keyOf(a)).toLowerCase()) + ".png",
+    logo: (a) => "https://a.espncdn.com/combiner/i?img=/i/teamlogos/nhl/500/" + (espnByKey[keyOf(a)] || String(keyOf(a)).toLowerCase()) + ".png&w=128",
   };
 })();
