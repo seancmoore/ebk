@@ -6,7 +6,7 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=5";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=6";
   const BEST_KEY = SPORT === "nfl" ? "ebk_statline_best_v2" : "ebk_statline_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "stat-line", score); } catch (e) {} };
@@ -71,7 +71,7 @@
         ["shots", "Shots"], ["ppg_g", "PP Goals"], ["ppg", "Points/Game"],
         ["w", "Wins"], ["sv", "Saves"], ["svpct", "Save %"], ["gaa", "GAA"], ["so", "Shutouts"],
       ],
-      dec: { ppg: 1, svpct: 3, gaa: 2 },
+      dec: { ppg: 2, svpct: 3, gaa: 2 },
       posNames: { C: "Center", L: "Left Wing", R: "Right Wing", D: "Defense", G: "Goalie", F: "Forward" },
       sides: { F: "skater", D: "skater", G: "goalie" },
       notable: [["pts", 30], ["g", 15], ["a", 20], ["w", 15], ["sv", 600], ["so", 3]],
@@ -109,7 +109,7 @@
 
   // cached Intl formatter per decimal count (toLocaleString(opts) builds a new one per call)
   const NF = {};
-  const fmt = (v, d = 0) => (NF[d] || (NF[d] = new Intl.NumberFormat("en-US", { maximumFractionDigits: d }))).format(Number(v));
+  const fmt = (v, d = 0) => (NF[d] || (NF[d] = new Intl.NumberFormat("en-US", { minimumFractionDigits: d, maximumFractionDigits: d }))).format(Number(v));
   // reveal-sized photo (raw headshots are up to 600px / several MB)
   const photo = (url) => (EBKD.img ? EBKD.img(url, 160) : url);
   const rand = (a) => a[(Math.random() * a.length) | 0];
@@ -268,7 +268,8 @@
     $("#season-badge").textContent = S.exactShown ? CFG.seasonFmt(m.season)
       : `Sometime between ${CFG.seasonFmt(S.range[0])} and ${CFG.seasonFmt(S.range[1])}`;
 
-    const rows = [`<div class="s-k">Games</div><div class="s-v">${m.games || "—"}</div>`];
+    // CFB and soccer sources carry no games count (always 0): skip the row
+    const rows = m.games ? [`<div class="s-k">Games</div><div class="s-v">${m.games}</div>`] : [];
     for (const [k, label] of CFG.display) {
       if (m.stats[k] == null) continue;
       rows.push(`<div class="s-k">${label}</div><div class="s-v">${fmt(m.stats[k], decOf(k))}</div>`);

@@ -51,7 +51,7 @@
   const dataCache = {};
   async function loadData(sport) {
     if (dataCache[sport]) return dataCache[sport];
-    const url = (sport === "nfl" ? "/data/players.json" : "/data/" + sport + "/players.json") + "?v=5";
+    const url = (sport === "nfl" ? "/data/players.json" : "/data/" + sport + "/players.json") + "?v=6";
     const res = await fetch(url, { cache: "force-cache" });
     if (!res.ok) throw new Error("data " + res.status);
     dataCache[sport] = EBKD.inflate(await res.json());
@@ -365,7 +365,7 @@
     return chain;
   }
   const NF = {};      // cached Intl formatter per decimal count
-  const fmtN = (v, d) => (NF[d || 0] || (NF[d || 0] = new Intl.NumberFormat("en-US", { maximumFractionDigits: d || 0 }))).format(Number(v));
+  const fmtN = (v, d) => (NF[d || 0] || (NF[d || 0] = new Intl.NumberFormat("en-US", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }))).format(Number(v));
   const photo = (url) => (EBKD.img ? EBKD.img(url, 256) : url);
   function hlCard(p, revealedVal) {
     const L = M.league, cat = M._cat;
@@ -413,7 +413,7 @@
       if (!p.id) continue;
       let c = careers.get(p.id);
       if (!c) { const bio = people[p.id] || {}; c = { id: p.id, name: p.name, pos: p.pos, headshot: p.headshot, college: bio.college || "", dy: bio.draftYear, dr: bio.draftRound, dp: bio.draftPick, dt: bio.draftTeam || "", years: new Map(), notable: false }; careers.set(p.id, c); }
-      c.years.set(p.season, p.team);
+      c.years.set(p.season, p.teams ? (p.teams.includes(p.team) ? p.teams : p.teams.concat(p.team)) : [p.team]);
       if (p.headshot && !c.headshot) c.headshot = p.headshot;
       if (cfg.notable.some(([k, thr]) => (p.stats[k] || 0) >= thr)) c.nSeasons = (c.nSeasons || 0) + 1;
       if (cfg.notable.some(([k, thr]) => (p.stats[k] || 0) >= thr * 2)) c.star = true;
@@ -425,7 +425,15 @@
       if (!(c.star || (c.nSeasons || 0) >= 3)) continue;
       const yrs = [...c.years.keys()].sort((a, b) => a - b);
       c.min = yrs[0]; c.max = yrs[yrs.length - 1]; c.count = yrs.length;
-      const path = []; for (const y of yrs) { const k = L.keyOf(c.years.get(y)); if (path[path.length - 1] !== k) path.push(k); }
+      // every club incl. traded stints; same ordering as solo career-path.js
+      const path = [];
+      yrs.forEach((y, i) => {
+        const ks = [...new Set(c.years.get(y).map((t) => L.keyOf(t)))], prev = path[path.length - 1];
+        const next = new Set(i + 1 < yrs.length ? c.years.get(yrs[i + 1]).map((t) => L.keyOf(t)) : []);
+        const rank = (k) => (k === prev ? 0 : next.has(k) ? 2 : 1);
+        ks.sort((a, b) => rank(a) - rank(b));
+        for (const k of ks) if (path[path.length - 1] !== k) path.push(k);
+      });
       c.path = path; pool.push(c);
     }
     pool.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));

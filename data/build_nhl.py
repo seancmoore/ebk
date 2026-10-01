@@ -15,7 +15,7 @@ API = ("https://api.nhle.com/stats/rest/en/{kind}/summary?isAggregate=false&isGa
 
 CATEGORIES = [
     ("g",  "Goals",         0, "\U0001F3D2"), ("a", "Assists", 0, "\U0001F91D"),
-    ("pts", "Points",       0, "\U0001F3AF"), ("ppg", "Points / Game", 1, "\U0001F4C8"),
+    ("pts", "Points",       0, "\U0001F3AF"), ("ppg", "Points / Game", 2, "\U0001F4C8"),
     ("plus", "Plus / Minus", 0, "➕"), ("shots", "Shots", 0, "\U0001F3AF"),
     ("ppg_g", "Power-Play Goals", 0, "⚡"),
     ("w", "Wins",           0, "\U0001F947"), ("sv", "Saves", 0, "\U0001F9E4"),

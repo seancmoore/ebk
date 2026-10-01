@@ -6,7 +6,7 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=5";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=6";
   const BEST_KEY = SPORT === "nfl" ? "ebk_grid_best" : "ebk_grid_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "player-grid", score); } catch (e) {} };
@@ -208,12 +208,14 @@
   // Every position a season lists: "grps" marks an NBA season split across
   // groups, "poss" an MLB two-way season (hitter who also pitched).
   const posOf = (p) => (p.poss || p.grps || [p[CFG.posKey] || p.grp || normPos(p.pos)]).filter(Boolean);
-  // "joao" should find "João", "lukasz" should find "Łukasz"; spaces, dots,
-  // hyphens and apostrophes are dropped so "TJ Watt" finds "T.J. Watt" and
-  // "oneal" finds "O'Neal"
-  const fold = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "")
+  // "joao" should find "João", "lukasz" should find "Łukasz"; dots and
+  // apostrophes are dropped so "TJ Watt" finds "T.J. Watt" and "oneal" finds
+  // "O'Neal". Hyphens become spaces (word breaks). foldC also drops spaces,
+  // for "tjwatt" / "mccaffrey" typed as one word.
+  const foldW = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "")
     .replace(/[łŁ]/g, "l").replace(/[øØ]/g, "o").replace(/[đĐ]/g, "d").toLowerCase()
-    .replace(/[\s.'’`-]/g, "");
+    .replace(/[.'’`]/g, "").replace(/[\s-]+/g, " ").trim();
+  const foldC = (s) => s.replace(/ /g, "");
   // cell-sized photo (raw headshots are up to 600px / several MB)
   const photo = (url) => (EBKD.img ? EBKD.img(url, 128) : url);
   const getBest = () => { try { return +localStorage.getItem(BEST_KEY) || 0; } catch { return 0; } };
@@ -378,7 +380,7 @@
     for (const a of byId.values())
       for (const [key, , col, thr] of CAREER) if ((a.career[col] || 0) >= thr) a.ach.add(key);
     S.R = [...byId.values()];
-    S.R.forEach((a) => (a.nameLC = fold(a.name)));
+    S.R.forEach((a) => { a.nameW = foldW(a.name); a.nameC = foldC(a.nameW); });
     S.R.sort((x, y) => x.name.localeCompare(y.name));
   }
 
@@ -605,16 +607,20 @@
 
   function renderAC(q) {
     const list = $("#ac-list");
-    q = fold(q.trim());
-    if (q.length < 2) { list.hidden = true; return; }
-    const starts = [], has = [];
+    const qW = foldW(q), qC = foldC(qW);
+    if (qC.length < 2) { list.hidden = true; return; }
+    // name starts with q, then a word starts with q, then q inside a word.
+    // The space-free form only matches across words as a prefix or for 4+
+    // letters, so "mc" doesn't surface "Adam Clendening".
+    const starts = [], words = [], has = [];
+    const wq = " " + qW, cross = qC.length >= 4;
     for (const p of S.R) {
-      const i = p.nameLC.indexOf(q);
-      if (i === 0) starts.push(p);
-      else if (i > 0) has.push(p);
+      if (p.nameW.startsWith(qW) || p.nameC.startsWith(qC)) starts.push(p);
+      else if (p.nameW.includes(wq)) words.push(p);
+      else if (p.nameW.includes(qW) || (cross && p.nameC.includes(qC))) has.push(p);
       if (starts.length >= 8) break;
     }
-    const items = starts.concat(has).slice(0, 8);
+    const items = starts.concat(words, has).slice(0, 8);
     S.acItems = items;
     if (!items.length) { list.innerHTML = `<div class="ac-empty">No players found</div>`; list.hidden = false; return; }
     list.innerHTML = items.map((p, i) =>
@@ -705,10 +711,12 @@
     const erow = $("#end-row"); erow.hidden = false; erow.innerHTML = "";
     addShareBtn(erow, total);
     addBtn(erow, "Back to EBK", "ghost", () => (location.href = "/" + SPORT));
-    try { window.EBKDaily && EBKDaily.markPlayed(S.date); } catch (e) {}
-    showDailyCard();
+    // save the finished play first: the daily card counts today's done grids
+    // from these local records, so it would still read this one as unfinished
     const cells = serializeCells();
     saveLocalPlay({ cells, board: boardKeys(), score: S.score, rarity: total, pts, done: true, ts: Date.now() });
+    try { window.EBKDaily && EBKDaily.markPlayed(S.date); } catch (e) {}
+    showDailyCard();
     try {
       if (window.EBKF)
         EBKF.saveGridPlay(SPORT, S.date, { cells, score: S.score, rarity: total, pts }).catch(() => {

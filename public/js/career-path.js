@@ -11,7 +11,7 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=5";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=6";
   const BEST_KEY = SPORT === "nfl" ? "ebk_careerpath_best_v2" : "ebk_careerpath_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "career-path", score); } catch (e) {} };
@@ -145,14 +145,15 @@
   };
 
   async function load() {
+    // college logos (NFL) download alongside the dataset, not after it
+    const collP = CFG.facts.includes("college")
+      ? fetch("/data/colleges.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({})) : null;
     try {
       const res = await fetch(DATA_URL);
       if (!res.ok) throw new Error("HTTP " + res.status);
       const data = EBKD.inflate(await res.json());
       const people = data.people || {};
-      if (CFG.facts.includes("college")) {
-        try { const cr = await fetch("/data/colleges.json"); if (cr.ok) S.colleges = await cr.json(); } catch {}
-      }
+      if (collP) S.colleges = (await collP) || {};
 
       for (const p of data.players) {
         if (!p.id) continue;
@@ -164,7 +165,7 @@
                 dp: bio.draftPick, dt: bio.draftTeam || "", years: new Map(), notable: false };
           S.careers.set(p.id, c);
         }
-        c.years.set(p.season, p.team);
+        c.years.set(p.season, seasonTeams(p));
         if (p.headshot && !c.headshot) c.headshot = p.headshot;
         if (isNotable(p.stats)) c.nSeasons = (c.nSeasons || 0) + 1;
         if (isStar(p.stats)) c.star = true;
@@ -175,9 +176,7 @@
         if (!(c.star || (c.nSeasons || 0) >= 3)) continue;
         const yrs = [...c.years.keys()].sort((a, b) => a - b);
         c.min = yrs[0]; c.max = yrs[yrs.length - 1]; c.count = yrs.length;
-        const path = [];
-        for (const y of yrs) { const k = LEAGUE.keyOf(c.years.get(y)); if (path[path.length - 1] !== k) path.push(k); }
-        c.path = path;
+        c.path = teamPath(yrs, c.years, (t) => LEAGUE.keyOf(t));
         S.pool.push(c);
       }
 
@@ -190,6 +189,25 @@
     } catch (e) {
       $("#loading").textContent = "Couldn't load player data. " + e.message;
     }
+  }
+
+  // every club a player suited up for that season (p.teams lists traded
+  // players' stints), not just the primary one
+  const seasonTeams = (p) => (p.teams ? (p.teams.includes(p.team) ? p.teams : p.teams.concat(p.team)) : [p.team]);
+  // Team path, oldest club first. Builders list a season's stints by games
+  // played (or week), so within a season pin last season's club first and
+  // next season's club last (Siakam 2023-24: TOR then IND).
+  function teamPath(yrs, years, keyOf) {
+    const path = [];
+    yrs.forEach((y, i) => {
+      const ks = [...new Set(years.get(y).map(keyOf))];
+      const prev = path[path.length - 1];
+      const next = new Set(i + 1 < yrs.length ? years.get(yrs[i + 1]).map(keyOf) : []);
+      const rank = (k) => (k === prev ? 0 : next.has(k) ? 2 : 1);
+      ks.sort((a, b) => rank(a) - rank(b));       // stable within a rank
+      for (const k of ks) if (path[path.length - 1] !== k) path.push(k);
+    });
+    return path;
   }
 
   const teamTag = (k) => `<img class="tlogo" src="${LEAGUE.logo(k)}" alt="" /> ${LEAGUE.name(k)}`;

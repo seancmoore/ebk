@@ -33,6 +33,8 @@ cd data
 python build_players.py
 ```
 
+`build_players.py` also HEADs the old NFL.com headshots (cached in `data/raw/nfl_headshot_probe.json`): NFL.com answers a missing photo with a generic helmet and a 200, so those rows switch to the player's ESPN headshot, or to none. The first run takes a few minutes; delete the cache file to re-check.
+
 When a season ends, raise `LAST` in that sport's builder (`SEASONS` for soccer), rebuild, and bump the `?v=N` on `DATA_URL` in the game scripts so browsers pick up the new data. Ship the output as-is - `tools/slim_players.py` prunes the low-stat and traded stints the Player Grid needs.
 
 ## Running it locally

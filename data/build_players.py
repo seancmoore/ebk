@@ -27,7 +27,9 @@ import os
 import re
 import sys
 import unicodedata
+import urllib.error
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 
 # --- config ------------------------------------------------------------------
@@ -94,7 +96,8 @@ def group_of(row):
 # stat AREA. Activity = ANY column in the area is non-zero. This is robust to
 # early seasons where a single "opportunity" column is unreliable (e.g. 2003
 # has targets=0 for players who clearly caught passes). "tackles" is synthesized
-# (solo + assists) before processing.
+# (solo + with-assist + assists, which is how ESPN/PFR count total tackles)
+# before processing.
 AREA_COLS = {
     "pass": ["attempts", "passing_yards", "passing_tds"],
     "rush": ["carries", "rushing_yards", "rushing_tds"],
@@ -219,6 +222,86 @@ def fetch_players_csv():
     with open(cache, "w", encoding="utf-8") as f:
         f.write(text)
     return text
+
+
+# NFL.com returns HTTP 200 with one generic helmet image for most players who
+# retired before ~2020, so the browser's onerror never fires. The sized w_64
+# rendition (requested with Accept */*) has a fixed ETag we can HEAD for.
+# Confirmed identical on Romo, Palmer and Tiki Barber.
+NFL_PLACEHOLDER_ETAG = '"13c852b4c81c1d014f7db01fec96b97f"'
+ESPN_HEADSHOT = "https://a.espncdn.com/i/headshots/nfl/players/full/{}.png"
+HEADSHOT_CACHE = os.path.join(RAW_DIR, "nfl_headshot_probe.json")
+
+
+def head(url):
+    """(status, etag) for a HEAD request, or None on a network error."""
+    req = urllib.request.Request(url, method="HEAD",
+                                 headers={"User-Agent": "ebk/1.0", "Accept": "*/*"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return [resp.status, resp.headers.get("ETag") or ""]
+    except urllib.error.HTTPError as exc:
+        return [exc.code, ""]
+    except Exception:  # noqa: BLE001 — transient; leave uncached, retry next build
+        return None
+
+
+def probe(urls, cache):
+    """HEAD every url not already cached (8 at a time), updating `cache`."""
+    todo = sorted(u for u in set(urls) if u not in cache)
+    if todo:
+        print(f"  probing {len(todo):,} headshot urls ...")
+        with ThreadPoolExecutor(max_workers=8) as pool:
+            for url, res in zip(todo, pool.map(head, todo)):
+                if res is not None:
+                    cache[url] = res
+        with open(HEADSHOT_CACHE, "w", encoding="utf-8") as f:
+            json.dump(cache, f, indent=0, sort_keys=True)
+
+
+def fix_headshots(players):
+    """Swap NFL.com helmet placeholders for a real photo of the same player:
+    one of their other NFL.com headshots, else their ESPN headshot (espn_id
+    from nflverse players.csv), else drop the field so the site avatar shows."""
+    cache = {}
+    if os.path.exists(HEADSHOT_CACHE):
+        with open(HEADSHOT_CACHE, encoding="utf-8") as f:
+            cache = json.load(f)
+    sized = lambda u: u.replace("/f_auto,q_auto/", "/f_auto,q_auto,w_64/")
+    priv = {r["headshot"] for r in players if "/image/private/" in r.get("headshot", "")}
+    probe([sized(u) for u in priv], cache)
+    placeholder = {u for u in priv
+                   if cache.get(sized(u), [0, ""])[1] == NFL_PLACEHOLDER_ETAG}
+    if not placeholder:
+        return
+    good = {}                       # player id -> latest real NFL.com headshot
+    for r in players:
+        u = r.get("headshot")
+        if u and u not in placeholder:
+            good[r["id"]] = u
+    espn_ids = {}
+    for row in csv.DictReader(io.StringIO(fetch_players_csv())):
+        if (row.get("espn_id") or "").strip():
+            espn_ids[row["gsis_id"]] = row["espn_id"].strip()
+    need = {r["id"] for r in players
+            if r.get("headshot") in placeholder and r["id"] not in good}
+    espn = {pid: ESPN_HEADSHOT.format(espn_ids[pid]) for pid in need if pid in espn_ids}
+    probe(espn.values(), cache)
+    fixed = {"nfl": 0, "espn": 0, "none": 0}
+    for r in players:
+        if r.get("headshot") not in placeholder:
+            continue
+        alt = good.get(r["id"])
+        if not alt and cache.get(espn.get(r["id"]), [0])[0] == 200:
+            alt = espn[r["id"]]
+        if alt:
+            r["headshot"] = alt
+            fixed["espn" if "espncdn" in alt else "nfl"] += 1
+        else:
+            del r["headshot"]
+            fixed["none"] += 1
+    print(f"  placeholder headshots: {len(placeholder):,} urls; rows -> other NFL.com "
+          f"{fixed['nfl']:,}, ESPN {fixed['espn']:,}, avatar {fixed['none']:,}")
 
 
 def to_int(raw):
@@ -365,8 +448,13 @@ def build():
                 continue
 
             games = to_num(row.get("games")) or 0
-            # synthesize total tackles (solo + assists)
+            # synthesize total tackles. nflverse splits tackle credit three
+            # ways: solo, "with assist" (made the tackle, a teammate helped)
+            # and assist. ESPN/PFR totals are all three (T.J. Watt 2021:
+            # 42 + 6 + 16 = 64); leaving out with_assist undercounted ~71%
+            # of defensive seasons.
             row["tackles"] = (to_num(row.get("def_tackles_solo")) or 0) + \
+                             (to_num(row.get("def_tackles_with_assist")) or 0) + \
                              (to_num(row.get("def_tackle_assists")) or 0)
 
             # which stat areas was this player-season active in?
@@ -423,6 +511,7 @@ def build():
         print(f"  {year}: kept {kept} player-seasons")
 
     players.sort(key=lambda r: (r["season"], r["name"]))
+    fix_headshots(players)
 
     used_ids = {r["id"] for r in players if r["id"]}
     people = build_people(used_ids)

@@ -11,6 +11,9 @@
   justify-content: space-between;
   gap: var(--sp-sm);
   padding: calc(var(--sp-sm) + var(--safe-t)) var(--sp-md) var(--sp-sm);
+  /* reserve the 42px mute button's row (ebk-sound.js appends it after first
+     paint), so the page below doesn't jump 10px on load */
+  min-height: calc(42px + 2 * var(--sp-sm) + 1px + var(--safe-t));
   background: rgba(10, 14, 28, 0.72);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);

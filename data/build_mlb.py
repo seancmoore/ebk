@@ -253,7 +253,10 @@ def build():
         elif isPitcher:
             pos, grp = "P", "P"
         else:
-            pos, grp = primary_pos(field) or "DH", "H"
+            # DH isn't a fielding position, so a hitter who also threw a few
+            # innings (Ohtani 2020: 153 AB, 1.2 IP) would otherwise read "P"
+            pos = (primary_pos(field, skip=("P",)) or "DH") if b and b["AB"] >= 50 else ""
+            pos, grp = pos or primary_pos(field) or "DH", "H"
         games = int(p["G"] if isPitcher and not twoWay else (b["G"] if b else p["G"]))
         rec = {
             "id": pid, "name": acc.names.get(pid, pid),

@@ -44,7 +44,7 @@ const CFG_SRC = slice(/^  const CFG = \{$/m, /^  \}\[SPORT\];$/m, "CFG");
 const FN_SRC = ["seededRng", "buildRoster", "satisfies", "fits", "enough", "generate"]
   .map((n) => slice(new RegExp("^  function " + n + "\\(", "m"), /^  \}$/m, n))
   .join("\n");
-const CONST_SRC = ["shuffle", "normPos", "posOf", "fold", "teamPosPair"]
+const CONST_SRC = ["shuffle", "normPos", "posOf", "foldW", "foldC", "teamPosPair"]
   .map((n) => slice(new RegExp("^  const " + n + " = ", "m"), /;$/m, n))
   .join("\n");
 // GEN_ATTEMPTS is defined next to generate() when the attempt cap has been

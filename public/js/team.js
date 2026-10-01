@@ -6,11 +6,11 @@
   // cached Intl formatter per decimal count (toLocaleString(opts) builds a new
   // one per call, which made big table renders take seconds on phones)
   const NF = {};
-  const fmt = (v, d = 0) => (v == null ? "—" : (NF[d] || (NF[d] = new Intl.NumberFormat("en-US", { maximumFractionDigits: d }))).format(Number(v)));
+  const fmt = (v, d = 0) => (v == null ? "—" : (NF[d] || (NF[d] = new Intl.NumberFormat("en-US", { minimumFractionDigits: d, maximumFractionDigits: d }))).format(Number(v)));
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=5";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=6";
 
   const CFG = {
     nfl: {
@@ -68,7 +68,7 @@
       groups: ["all", "F", "D", "G"],
       labels: { games: "GP", g: "G", a: "A", pts: "P", plus: "+/-", shots: "S",
                 ppg_g: "PPG", ppg: "P/G", w: "W", sv: "SV", svpct: "SV%", gaa: "GAA", so: "SO" },
-      dec: { ppg: 1, svpct: 3, gaa: 2 },
+      dec: { ppg: 2, svpct: 3, gaa: 2 },
       colsets: {
         all: ["games", "g", "a", "pts"],
         F: ["games", "g", "a", "pts", "plus", "shots", "ppg_g"],
@@ -140,9 +140,11 @@
     }
   }
 
+  // the 60px header logo needs more than the 128px list size on 3x phones
+  const headLogo = (u) => u.replace("&w=128", "&w=192").replace(/(\/badges\/100\/t\d+)\.png$/, "$1@x2.png");
   function buildHead() {
     $("#team-head").innerHTML =
-      `<img src="${LEAGUE.logo(S.teamKey)}" alt="" />` +
+      `<img src="${headLogo(LEAGUE.logo(S.teamKey))}" alt="" />` +
       `<div><h1>${LEAGUE.name(S.teamKey)}</h1>` +
       `<div class="sub">Every player-season in the EBK pool · ${CFG.seasons}</div></div>`;
     document.title = LEAGUE.name(S.teamKey) + " · Team Study · EBK";
@@ -169,7 +171,16 @@
     from.value = minY; to.value = maxY;
     from.addEventListener("change", () => { S.from = +from.value; if (S.from > S.to) { to.value = from.value; S.to = S.from; } render(); });
     to.addEventListener("change", () => { S.to = +to.value; if (S.to < S.from) { from.value = to.value; S.from = S.to; } render(); });
-    $("#search").addEventListener("input", (e) => { S.q = e.target.value.trim().toLowerCase(); render(); });
+    let qTO = null;   // a full re-render per keystroke froze phones for 1-2s
+    $("#search").addEventListener("input", (e) => {
+      clearTimeout(qTO);
+      qTO = setTimeout(() => { S.q = e.target.value.trim().toLowerCase(); render(); }, 150);
+    });
+    // rows are painted in batches; fill in more as the table scrolls
+    const wrap = $(".table-wrap");
+    wrap.addEventListener("scroll", () => {
+      if (wrap.scrollTop + wrap.clientHeight > wrap.scrollHeight - 600) more();
+    }, { passive: true });
   }
 
   function columns() {
@@ -219,15 +230,29 @@
     const rows = sortRows(filtered());
     $("#count").textContent = `${rows.length.toLocaleString()} player-season${rows.length === 1 ? "" : "s"}`;
     const tbody = $("#tbody");
+    S.list = rows; S.cols = cols; S.shown = 0;
     if (!rows.length) { tbody.innerHTML = `<tr><td class="empty" colspan="${cols.length}">No players match these filters.</td></tr>`; return; }
-    tbody.innerHTML = rows.map((r) =>
+    tbody.innerHTML = "";
+    $(".table-wrap").scrollTop = 0;   // new order or filter starts at its top
+    more();
+  }
+
+  // Append the next batch of rows. Laying out all 400-1,200 rows on every
+  // sort, filter or keystroke cost 1-4s on phones; the first batch fills the
+  // 70vh table box and the scroll handler adds the rest as it is reached.
+  const BATCH = 100;
+  function more() {
+    if (!S.list || S.shown >= S.list.length) return;
+    const cols = S.cols, part = S.list.slice(S.shown, S.shown + BATCH);
+    S.shown += part.length;
+    $("#tbody").insertAdjacentHTML("beforeend", part.map((r) =>
       "<tr>" + cols.map((c) => {
         if (c.key === "name") return `<td><span class="pname">${r.name}</span></td>`;
         if (c.key === "pos") return `<td class="ppos">${r.pos}</td>`;
         if (c.key === "season") return `<td>${r.seasonLabel || r.season}</td>`;
         return `<td>${fmt(val(r, c.key), c.dec)}</td>`;
       }).join("") + "</tr>"
-    ).join("");
+    ).join(""));
   }
 
   load();
