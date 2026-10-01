@@ -3,62 +3,53 @@
    nothing happens and the CSS hero stays as the fallback. Honors reduced-motion
    (renders a single static frame) and pauses when the tab is hidden.
 
-   Every surface is generated here — no image files:
-   - basketball: pebbled orange leather, 8-panel channel layout cut as grooves
-   - soccer:     a true truncated icosahedron (12 pentagons, 20 hexagons) with
-                 stitched seams and slightly puffed panels
-   - baseball:   white cowhide with the real figure-eight seam and raised
-                 red stitches (geometry, not paint)
-   - football:   pointed prolate leather body, panel seams, raised laces
-   - puck:       vulcanised rubber with a knurled edge and a debossed EBK
-   Textures are equirectangular and computed per texel from the sphere
-   direction, so nothing pinches at the poles or tears at the seam. */
+   Ball skins are procedural but baked ahead of time: tools/hero_textures/gen.js
+   builds them and tools/bake_hero_textures.py writes public/img/hero/*.webp.
+   (Generating them here froze the page for seconds on every visit.)
+   Geometry is built here: the baseball seam + raised stitches, the football's
+   lathe body + laces, the puck's knurled edge and face stamp. */
 
 const MOUNT = document.getElementById("hero3d");
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const CDN = "https://cdn.jsdelivr.net/npm/three@0.160.0/";
+const TEX = "/img/hero/";
+const SKINS = ["basketball", "soccer", "baseball", "football"];
 
 function webglOK() {
   try { const c = document.createElement("canvas"); return !!(window.WebGLRenderingContext && (c.getContext("webgl") || c.getContext("experimental-webgl"))); }
   catch (e) { return false; }
 }
 
+// <img> for a baked texture; fetched in parallel with three.js
+function loadImg(src) {
+  return new Promise((res, rej) => {
+    const im = new Image();
+    im.onload = () => res(im); im.onerror = rej; im.src = src;
+  });
+}
+
 if (MOUNT && webglOK()) {
+  const imgs = {};
   Promise.all([
     import(CDN + "build/three.module.js"),
     import(CDN + "examples/jsm/environments/RoomEnvironment.js").catch(() => null),
-  ]).then(([THREE, env]) => start(THREE, env && env.RoomEnvironment))
-    .catch(() => { /* CDN blocked — keep the CSS fallback */ });
+    ...SKINS.flatMap(b => ["map", "bump"].map(k => loadImg(`${TEX}${b}-${k}.webp`).then(im => { imgs[`${b}-${k}`] = im; }))),
+  ]).then(([THREE, env]) => start(THREE, env && env.RoomEnvironment, imgs))
+    .catch(() => { /* CDN or textures blocked — keep the CSS fallback */ });
 }
 
-function start(THREE, RoomEnvironment) {
+function start(THREE, RoomEnvironment, imgs) {
   const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#3ddc97";
-  const small = Math.min(window.innerWidth, window.innerHeight) < 700;
-  const TW = small ? 768 : 1024, TH = TW / 2;          // texture size
 
-  // ---------- helpers ----------
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const smooth = (e0, e1, x) => { const t = clamp((x - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); };
-  // cheap deterministic hash → [0,1)
-  const hash = (x, y, z) => { const s = Math.sin(x * 127.1 + y * 311.7 + z * 74.7) * 43758.5453; return s - Math.floor(s); };
-  // 3D value noise (trilinear) for leather pebbling
-  function vnoise(x, y, z) {
-    const xi = Math.floor(x), yi = Math.floor(y), zi = Math.floor(z);
-    const xf = x - xi, yf = y - yi, zf = z - zi;
-    const u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf), w = zf * zf * (3 - 2 * zf);
-    const l = (a, b, t) => a + (b - a) * t;
-    const c = (i, j, k) => hash(xi + i, yi + j, zi + k);
-    return l(l(l(c(0,0,0), c(1,0,0), u), l(c(0,1,0), c(1,1,0), u), v),
-             l(l(c(0,0,1), c(1,0,1), u), l(c(0,1,1), c(1,1,1), u), v), w);
-  }
-  // "pebble" field: bumps like basketball / football leather (0..1, peaks = pebbles)
-  function pebble(x, y, z, f) {
-    const n = vnoise(x * f, y * f, z * f);
-    return smooth(0.35, 0.85, n);
+  // baked skin → { map, bump } textures
+  function skin(ball, wrap = true) {
+    const mk = (k) => { const t = new THREE.Texture(imgs[`${ball}-${k}`]); t.anisotropy = 8; if (wrap) t.wrapS = THREE.RepeatWrapping; t.needsUpdate = true; return t; };
+    const map = mk("map"); map.colorSpace = THREE.SRGBColorSpace;
+    return { map, bump: mk("bump") };
   }
 
-  /* The EBK stamp — the same mark on every ball, each in its own "flavor":
-     ring + E · B · K, with the B carrying that ball's colour. */
+  /* The EBK stamp for the puck face (the other balls have it baked in;
+     the same function lives in tools/hero_textures/gen.js). */
   function ebkStamp(f, S = 512) {
     const cv = document.createElement("canvas"); cv.width = cv.height = S;
     const d = cv.getContext("2d"), m = S / 512;
@@ -70,94 +61,11 @@ function start(THREE, RoomEnvironment) {
     d.fillStyle = f.b; d.fillText("B", 256 * m, 262 * m);
     return cv;
   }
-  /* Project a stamp onto the sphere around direction c (angular radius R).
-     Returns a sampler (x,y,z) → [r,g,b,a 0..1] or null outside. */
-  function sphereDecal(cv, c, R, roll = 0) {
-    const S = cv.width, px = cv.getContext("2d").getImageData(0, 0, S, S).data;
-    const n = Math.hypot(...c), C = c.map(v => v / n);
-    let up = Math.abs(C[1]) > 0.95 ? [1, 0, 0] : [0, 1, 0];
-    // t1 = up × C (right), t2 = C × t1 (up) — then roll in-plane
-    let t1 = [up[1] * C[2] - up[2] * C[1], up[2] * C[0] - up[0] * C[2], up[0] * C[1] - up[1] * C[0]];
-    const l1 = Math.hypot(...t1); t1 = t1.map(v => v / l1);
-    let t2 = [C[1] * t1[2] - C[2] * t1[1], C[2] * t1[0] - C[0] * t1[2], C[0] * t1[1] - C[1] * t1[0]];
-    const cr = Math.cos(roll), sr = Math.sin(roll);
-    [t1, t2] = [t1.map((v, i) => v * cr + t2[i] * sr), t2.map((v, i) => v * cr - t1[i] * sr)];
-    const cosR = Math.cos(R), tR = Math.tan(R);
-    return (x, y, z) => {
-      const dc = x * C[0] + y * C[1] + z * C[2];
-      if (dc < cosR) return null;
-      const u = (x * t1[0] + y * t1[1] + z * t1[2]) / dc / tR, v = (x * t2[0] + y * t2[1] + z * t2[2]) / dc / tR;
-      const ix = Math.round((u * 0.5 + 0.5) * (S - 1)), iy = Math.round((0.5 - v * 0.5) * (S - 1));
-      if (ix < 0 || iy < 0 || ix >= S || iy >= S) return null;
-      const i = (iy * S + ix) * 4;
-      return px[i + 3] ? [px[i], px[i + 1], px[i + 2], px[i + 3] / 255] : null;
-    };
-  }
-
-  /* Build an equirect color map + bump map from a per-direction shader.
-     fn(dx,dy,dz) → [r,g,b,height]  (rgb 0..255, height 0..1)
-     decal (optional): sampler from sphereDecal, printed over the surface. */
-  function sphereMaps(fn, decal = null, w = TW, h = TH) {
-    const cc = document.createElement("canvas"); cc.width = w; cc.height = h;
-    const bc = document.createElement("canvas"); bc.width = w; bc.height = h;
-    const cx = cc.getContext("2d"), bx = bc.getContext("2d");
-    const ci = cx.createImageData(w, h), bi = bx.createImageData(w, h);
-    const C = ci.data, B = bi.data;
-    for (let py = 0; py < h; py++) {
-      const th = (py + 0.5) / h * Math.PI, st = Math.sin(th), ct = Math.cos(th);
-      for (let px = 0; px < w; px++) {
-        const ph = (px + 0.5) / w * Math.PI * 2;
-        const dx = -Math.cos(ph) * st, dz = Math.sin(ph) * st;
-        const o = fn(dx, ct, dz);
-        if (decal) {
-          const s = decal(dx, ct, dz);
-          if (s) { const a = s[3]; o[0] += (s[0] - o[0]) * a; o[1] += (s[1] - o[1]) * a; o[2] += (s[2] - o[2]) * a; o[3] -= 0.04 * a; }
-        }
-        const i = (py * w + px) * 4;
-        C[i] = o[0]; C[i + 1] = o[1]; C[i + 2] = o[2]; C[i + 3] = 255;
-        const b = clamp(o[3], 0, 1) * 255; B[i] = B[i + 1] = B[i + 2] = b; B[i + 3] = 255;
-      }
-    }
-    cx.putImageData(ci, 0, 0); bx.putImageData(bi, 0, 0);
-    const map = new THREE.CanvasTexture(cc); map.colorSpace = THREE.SRGBColorSpace;
-    const bump = new THREE.CanvasTexture(bc);
-    for (const t of [map, bump]) { t.anisotropy = 8; t.wrapS = THREE.RepeatWrapping; }
-    return { map, bump };
-  }
-  // one mark, five flavors — the B always carries the ball's own colour
-  const FLAVOR = {
-    puck:       { ring: "rgba(255,255,255,0.16)", ek: "rgba(255,255,255,0.22)", b: accent },
-    basketball: { disc: "#15100d", ring: "rgba(255,138,42,0.75)", ek: "#f3ece2", b: "#ff8a2a" },   // solid black badge, orange B
-    soccer:     { ring: "rgba(23,33,74,0.5)",       ek: "#17214a",               b: "#2f6bff" },
-    baseball:   { ring: "rgba(29,42,74,0.45)",      ek: "#1d2a4a",               b: "#c7262b" },
-    football:   { ring: "rgba(244,239,228,0.7)",    ek: "#f4efe4",               b: accent, bLine: "rgba(20,10,4,0.7)" },   // white lace-ink, EBK-green B
-  };
-  const mix = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+  const PUCK_FLAVOR = { ring: "rgba(255,255,255,0.16)", ek: "rgba(255,255,255,0.22)", b: accent };
 
   // ---------- BASKETBALL ----------
-  // Real 8-panel layout: two perpendicular great-circle channels (planes x=0 and
-  // y=0) plus two curved "ear" channels — small circles around the ±x axis that
-  // cross the y=0 channel but never touch the x=0 one.
   function basketball() {
-    const base = [201, 92, 34], deep = [166, 70, 24], line = [22, 13, 9];
-    const HW = 0.03;                                   // channel half-width, radians
-    const EAR = 0.98;                                  // ear circle angular radius
-    const { map, bump } = sphereMaps((x, y, z) => {
-      const dA = Math.asin(Math.min(1, Math.abs(x)));  // to great circle x=0
-      const dB = Math.asin(Math.min(1, Math.abs(y)));  // to great circle y=0
-      const dE = Math.abs(Math.acos(Math.min(1, Math.abs(x))) - EAR);   // to the ear on this side
-      const d = Math.min(dA, dB, dE);
-      const groove = 1 - smooth(HW * 0.7, HW * 1.15, d);       // 1 inside channel
-      const lip = smooth(HW * 1.1, HW * 3.2, d);               // panels round over into the channel
-      const peb = pebble(x, y, z, 150);
-      const tone = vnoise(x * 3.5, y * 3.5, z * 3.5);
-      let col = mix(deep, base, 0.45 + 0.55 * tone);
-      col = mix(col, [214, 106, 46], peb * 0.08);
-      col = mix(col, [120, 48, 16], (1 - lip) * 0.35);
-      col = mix(col, line, groove);
-      const hgt = 0.55 + 0.3 * lip + peb * 0.06 - groove * 0.5;
-      return [col[0], col[1], col[2], hgt];
-    }, sphereDecal(ebkStamp(FLAVOR.basketball), [0.29, 0.6, 0.745], 0.27));
+    const { map, bump } = skin("basketball");
     const mat = new THREE.MeshPhysicalMaterial({
       map, bumpMap: bump, bumpScale: 2.4, roughness: 0.72, metalness: 0,
       sheen: 0.5, sheenRoughness: 0.6, sheenColor: new THREE.Color("#ff9a5c"),
@@ -168,38 +76,16 @@ function start(THREE, RoomEnvironment) {
     return m;
   }
 
-  // ---------- SOCCER (truncated icosahedron) ----------
+  // ---------- SOCCER ----------
   function soccer() {
-    const p = (1 + Math.sqrt(5)) / 2;
-    const ico = [[-1,p,0],[1,p,0],[-1,-p,0],[1,-p,0],[0,-1,p],[0,1,p],[0,-1,-p],[0,1,-p],[p,0,-1],[p,0,1],[-p,0,-1],[-p,0,1]]
-      .map(v => { const l = Math.hypot(...v); return v.map(c => c / l); });
-    const faces = [[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],
-                   [3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]];
-    const hexC = faces.map(f => { const s = [0,1,2].map(k => ico[f[0]][k] + ico[f[1]][k] + ico[f[2]][k]); const l = Math.hypot(...s); return s.map(c => c / l); });
-    // pentagon centres weighted so cells meet on the true truncation boundary
-    const centers = ico.map(v => ({ v, pent: true })).concat(hexC.map(v => ({ v, pent: false })));
-    const PW = 1.0, HW = 1.02653;                     // weights → pentagon/hexagon edge balance
-    const white = [242, 242, 238], black = [20, 22, 30], seamC = [150, 152, 158];
-    const { map, bump } = sphereMaps((x, y, z) => {
-      let b1 = -9, b2 = -9, pent = false;
-      for (const c of centers) {
-        const d = (c.v[0] * x + c.v[1] * y + c.v[2] * z) * (c.pent ? PW : HW);
-        if (d > b1) { b2 = b1; b1 = d; pent = c.pent; } else if (d > b2) b2 = d;
-      }
-      const gap = b1 - b2;                             // ~0 on seams
-      const seam = 1 - smooth(0.004, 0.012, gap);
-      const puff = smooth(0.0, 0.09, gap);             // panels bulge toward their centres
-      let col = pent ? black : white;
-      col = mix(col, pent ? [34, 36, 46] : [226, 228, 230], 1 - puff);   // soft shading near edges
-      col = mix(col, pent ? [10, 10, 14] : seamC, seam * 0.85);
-      return [col[0], col[1], col[2], 0.35 + puff * 0.55 - seam * 0.35];
-    }, sphereDecal(ebkStamp(FLAVOR.soccer), hexC[1], 0.27));
+    const { map, bump } = skin("soccer");
     const mat = new THREE.MeshPhysicalMaterial({
       map, bumpMap: bump, bumpScale: 2.2, roughness: 0.42, metalness: 0,
       clearcoat: 0.35, clearcoatRoughness: 0.35,
     });
     const m = new THREE.Mesh(new THREE.SphereGeometry(1, 96, 64), mat);
-    m.userData.logo = hexC[1];
+    // hexagon centre the stamp is baked on (ico face [0,5,1] of the truncated icosahedron)
+    m.userData.logo = [0, 0.934172, 0.356822];
     return m;
   }
 
@@ -207,11 +93,7 @@ function start(THREE, RoomEnvironment) {
   function baseball() {
     const g = new THREE.Group();
     const BB_LOGO = [0.666, 0.327, 0.671];             // centre of a leather lobe, farthest from the seam
-    const { map, bump } = sphereMaps((x, y, z) => {
-      const n = vnoise(x * 9, y * 9, z * 9), fine = vnoise(x * 70, y * 70, z * 70);
-      const col = mix([232, 226, 210], [248, 245, 236], 0.55 + 0.45 * n);
-      return [col[0], col[1], col[2], 0.5 + fine * 0.12];
-    }, sphereDecal(ebkStamp(FLAVOR.baseball), BB_LOGO, 0.36));
+    const { map, bump } = skin("baseball");
     g.add(new THREE.Mesh(new THREE.SphereGeometry(1, 96, 64),
       new THREE.MeshPhysicalMaterial({ map, bumpMap: bump, bumpScale: 0.8, roughness: 0.62, sheen: 0.4, sheenColor: new THREE.Color("#fff6e8") })));
 
@@ -256,37 +138,8 @@ function start(THREE, RoomEnvironment) {
     for (let i = 0; i <= 64; i++) { const y = -L + (2 * L * i) / 64; prof.push(new THREE.Vector2(Math.max(r(y), 0.001), y)); }
     const geo = new THREE.LatheGeometry(prof, 128);
 
-    // texture in lathe UV: u around (0..1), v along the axis (0..1)
-    const W = 1024, H = 512, cv = document.createElement("canvas"); cv.width = W; cv.height = H;
-    const bc = document.createElement("canvas"); bc.width = W; bc.height = H;
-    const cx = cv.getContext("2d"), bx = bc.getContext("2d");
-    const ci = cx.createImageData(W, H), bi = bx.createImageData(W, H);
-    for (let py = 0; py < H; py++) {
-      const v = py / H;
-      for (let px = 0; px < W; px++) {
-        const u = px / W, ang = u * Math.PI * 2;
-        const x = Math.sin(ang), z = Math.cos(ang), yy = (v - 0.5) * 3;
-        const peb = pebble(x * 1.0, yy, z * 1.0, 60);
-        const tone = 0.5 + 0.5 * vnoise(x * 4, yy * 2, z * 4);
-        let col = mix([92, 44, 20], [128, 64, 30], tone);
-        col = mix(col, [146, 76, 38], peb * 0.25);
-        // four panel seams at u = 1/8, 3/8, 5/8, 7/8 (laces sit on the panel at u=0)
-        const du = Math.min(...[0.125, 0.375, 0.625, 0.875].map(s => Math.abs(u - s))) * W;
-        const seam = 1 - smooth(1.2, 3.2, du * (0.6 + 0.8 * Math.abs(v - 0.5)));
-        col = mix(col, [42, 18, 8], seam * 0.9);
-        const i = (py * W + px) * 4;
-        ci.data[i] = col[0]; ci.data[i + 1] = col[1]; ci.data[i + 2] = col[2]; ci.data[i + 3] = 255;
-        const hgt = (0.6 + peb * 0.25 - seam * 0.55) * 255;
-        bi.data[i] = bi.data[i + 1] = bi.data[i + 2] = hgt; bi.data[i + 3] = 255;
-      }
-    }
-    cx.putImageData(ci, 0, 0); bx.putImageData(bi, 0, 0);
-    // stamp on the side panel (u = 0.25), centred along the ball's length
-    { const st = ebkStamp(FLAVOR.football, 256), sz = 170;
-      cx.save(); cx.translate(W * 0.25, H * 0.5); cx.rotate(Math.PI / 2);
-      cx.drawImage(st, -sz / 2, -sz / 2, sz, sz); cx.restore(); }
-    const map = new THREE.CanvasTexture(cv); map.colorSpace = THREE.SRGBColorSpace; map.anisotropy = 8;
-    const bump = new THREE.CanvasTexture(bc); bump.anisotropy = 8;
+    // baked skin in lathe UV: u around (0..1), v along the axis (0..1); stamp on the u = 0.25 panel
+    const { map, bump } = skin("football", false);
     g.add(new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({
       map, bumpMap: bump, bumpScale: 1.6, roughness: 0.7, sheen: 0.3, sheenColor: new THREE.Color("#c98a55"),
     })));
@@ -329,7 +182,7 @@ function start(THREE, RoomEnvironment) {
       color: "#16171b", roughness: 0.62, bumpMap: bump, bumpScale: 2.5, clearcoat: 0.15, clearcoatRoughness: 0.6,
     })));
     // debossed EBK on the face — a slightly glossier decal sitting just above
-    const dc = ebkStamp(FLAVOR.puck);
+    const dc = ebkStamp(PUCK_FLAVOR);
     const decal = new THREE.CanvasTexture(dc); decal.colorSpace = THREE.SRGBColorSpace;
     const face = new THREE.Mesh(new THREE.CircleGeometry(0.9, 64),
       new THREE.MeshStandardMaterial({ map: decal, transparent: true, roughness: 0.4, depthWrite: false }));
@@ -401,7 +254,6 @@ function start(THREE, RoomEnvironment) {
   }
   resize();
   window.addEventListener("resize", resize);
-  MOUNT.classList.add("on");           // reveal canvas / dim CSS fallback
 
   // ---------- pointer parallax ----------
   let px = 0, py = 0, tx = 0, ty = 0;
@@ -424,18 +276,26 @@ function start(THREE, RoomEnvironment) {
     }
   }
 
-  if (reduce) { pose(0); renderer.render(scene, camera); return; }   // static frame only
+  // Compile every shader off the main thread (KHR_parallel_shader_compile)
+  // before the first draw; a plain first render compiled them synchronously and
+  // froze the page for seconds. The canvas fades in once the first frame is up.
+  const ready = renderer.compileAsync ? renderer.compileAsync(scene, camera).catch(() => {}) : Promise.resolve();
+  ready.then(() => {
+    pose(0); renderer.render(scene, camera);
+    MOUNT.classList.add("on");           // reveal canvas / dim CSS fallback
+    if (reduce) return;                  // static frame only
 
-  let raf = null, t0 = performance.now(), tOff = 0;
-  function tick(now) {
+    let raf = null, t0 = performance.now(), tOff = 0;
+    function tick(now) {
+      raf = requestAnimationFrame(tick);
+      pose(tOff + (now - t0) / 1000);
+      renderer.render(scene, camera);
+    }
     raf = requestAnimationFrame(tick);
-    pose(tOff + (now - t0) / 1000);
-    renderer.render(scene, camera);
-  }
-  raf = requestAnimationFrame(tick);
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) { if (raf) { cancelAnimationFrame(raf); raf = null; tOff += (performance.now() - t0) / 1000; } }
-    else if (!raf) { t0 = performance.now(); raf = requestAnimationFrame(tick); }
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) { if (raf) { cancelAnimationFrame(raf); raf = null; tOff += (performance.now() - t0) / 1000; } }
+      else if (!raf) { t0 = performance.now(); raf = requestAnimationFrame(tick); }
+    });
   });
   window.__ebkHero = { pose, render: () => renderer.render(scene, camera), balls, camera, scene, renderer, group };
 }

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!-- Driven by tools/bake_hero_textures.py (headless Chrome). Generates the
+     hero ball textures and POSTs each one back to the script as WebP. -->
+<meta charset="utf-8" />
+<script type="module">
+  import { bake } from "./gen.js";
+  const q = new URLSearchParams(location.search);
+  const accent = q.get("accent") || "#3ddc97";
+  const quality = { map: Number(q.get("qmap") || 0.86), bump: Number(q.get("qbump") || 0.9) };
+  const post = (path, body) => fetch(path, { method: "POST", body });
+  try {
+    const tex = bake(accent, Number(q.get("size") || 1024));
+    for (const [ball, maps] of Object.entries(tex)) {
+      for (const kind of ["map", "bump"]) {
+        const blob = await new Promise(r => maps[kind].toBlob(r, "image/webp", quality[kind]));
+        await post(`/save/${ball}-${kind}.webp`, blob);
+      }
+    }
+    await post("/done", "ok");
+  } catch (e) {
+    await post("/done", "error: " + (e && e.stack || e));
+  }
+</script>
