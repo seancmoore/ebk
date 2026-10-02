@@ -174,6 +174,16 @@ def fetch_week_csv(year):
 # data for these two seasons at all — fall back to the season-aggregate
 # file's single recent_team, same as every year before this feature existed.
 BROKEN_WEEK_YEARS = {2001, 2002}
+
+# Official-record corrections, approved by the owner. nflverse derives season
+# totals from play-by-play, which can drift from the league's official line.
+# Each entry pins the official figures (cite the source); fantasy points move
+# with passing yards at nflverse's 0.04/yd so every derived stat stays
+# consistent. Keyed by (nflverse player_id, season).
+OFFICIAL_FIXES = {
+    # Drew Brees 2011: NFL/PFR official 468/657, 5,476 yds (nflverse: 471/660, 5,535)
+    ("00-0020531", "2011"): {"completions": 468, "attempts": 657, "passing_yards": 5476},
+}
 # Defense in depth for years we haven't individually audited: across the
 # other 25 seasons (1999-2025 minus the two above), the real single-season
 # max is 3 different teams (e.g. Randy Moss's NE->MIN->TEN 2010). Anything
@@ -490,6 +500,14 @@ def build():
                 continue
 
             games = to_num(row.get("games")) or 0
+            fix = OFFICIAL_FIXES.get(key)
+            if fix:
+                dy = fix.get("passing_yards", to_num(row.get("passing_yards")) or 0) - (to_num(row.get("passing_yards")) or 0)
+                for col in ("fantasy_points", "fantasy_points_ppr"):
+                    if row.get(col) not in (None, ""):
+                        row[col] = str((to_num(row.get(col)) or 0) + dy * 0.04)
+                for col, val in fix.items():
+                    row[col] = str(val)
             # synthesize total tackles. nflverse splits tackle credit three
             # ways: solo, "with assist" (made the tackle, a teammate helped)
             # and assist. ESPN/PFR totals are all three (T.J. Watt 2021:

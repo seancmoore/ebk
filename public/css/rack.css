@@ -154,17 +154,19 @@
 /* ================= sport cards ================= */
 #sports .sp-h{margin:var(--sp-xl) 0 var(--sp-md);font-size:var(--fs-xl);font-weight:900;letter-spacing:-.02em;line-height:1.05;color:var(--text)}
 #sports .sports-a{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-#sports .sp{--c:var(--accent);position:relative;display:flex;align-items:center;gap:18px;padding:20px;min-height:128px;overflow:hidden;
-  border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));color:var(--text);text-decoration:none;
+/* .sp (the link) never moves, so hover can't flicker at its edges; .spc is the visible card that lifts */
+#sports .sp{--c:var(--accent);position:relative;display:grid;border-radius:20px;color:var(--text);text-decoration:none}
+#sports .spc{position:relative;display:flex;align-items:center;gap:18px;padding:20px;min-height:128px;overflow:hidden;
+  border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));
   transition:transform var(--dur) var(--ease-spring),border-color var(--dur) var(--ease)}
-#sports .sp::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 120% at 0% 50%,color-mix(in srgb,var(--c) 16%,transparent),transparent 65%);pointer-events:none}
+#sports .spc::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 120% at 0% 50%,color-mix(in srgb,var(--c) 16%,transparent),transparent 65%);pointer-events:none}
 #sports .sp:focus-visible{outline:2px solid var(--c);outline-offset:3px}
 #sports .sp .st{position:relative;z-index:1;min-width:0;flex:1}
 #sports .sp h3{margin:0;font-size:1.45rem;font-weight:900;letter-spacing:-.02em;line-height:1}
 #sports .sp p{margin:6px 0 10px;color:var(--muted);font-size:var(--fs-sm)}
 #sports .sp .cnt{display:flex;align-items:center;gap:6px;color:var(--c);font-weight:800;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
 #sports .sp .cnt svg{width:15px;height:15px}
-#sports .sp.istoday{border-color:color-mix(in srgb,var(--c) 55%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 30%,transparent),0 18px 40px -20px color-mix(in srgb,var(--c) 50%,transparent)}
+#sports .sp.istoday .spc{border-color:color-mix(in srgb,var(--c) 55%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 30%,transparent),0 18px 40px -20px color-mix(in srgb,var(--c) 50%,transparent)}
 #sports .sp .todaytag{position:absolute;top:12px;right:12px;z-index:1;font-size:.58rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;padding:4px 8px;border-radius:999px;background:var(--c);color:#07101f;transition:opacity .2s}
 
 /* the ball: a still sprite at rest; on play it swaps to a 24-frame spin strip */
@@ -192,59 +194,60 @@
 #sports .k-hockey::before{left:-6px;bottom:10px;width:40px;height:24px;z-index:4;background:radial-gradient(circle,#f4fdff 1.8px,transparent 2.4px) 0 0/6px 5px;
   -webkit-mask:radial-gradient(60% 60% at 100% 70%,#000,transparent);mask:radial-gradient(60% 60% at 100% 70%,#000,transparent)}
 
-/* play states: tap (.play) and keyboard focus everywhere; hover only where hover exists */
-#sports .sp:is(:focus-visible,.play) .sball{z-index:3}
-#sports .sp:is(:focus-visible,.play) .todaytag{opacity:0}
-#sports .sp:is(:focus-visible,.play) .tgt{opacity:1;transform:none}
-#sports .sp:is(:focus-visible,.play) .bat{animation:rk-swing 2.4s cubic-bezier(.3,0,.2,1) infinite}
-#sports .sp:is(:focus-visible,.play) .k-baseball i{background-image:url("/img/balls/spin/baseball.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .28s steps(24) infinite,rk-homer 2.4s linear infinite}
-#sports .sp:is(:focus-visible,.play) .k-baseball::after{animation:rk-crack 2.4s linear infinite}
-#sports .sp.lg-mlb:is(:focus-visible,.play){animation:rk-jolt 2.4s linear infinite}
-#sports .sp:is(:focus-visible,.play) .stick{animation:rk-slap 2.2s cubic-bezier(.3,0,.2,1) infinite}
-#sports .sp:is(:focus-visible,.play) .k-hockey i{background-image:url("/img/balls/spin/hockey.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .45s steps(24) infinite,rk-puck 2.2s linear infinite}
-#sports .sp:is(:focus-visible,.play) .k-hockey::before{animation:rk-spray 2.2s ease-out infinite}
-#sports .sp:is(:focus-visible,.play) .hoop{animation:rk-rim 2.2s linear infinite}
-#sports .sp:is(:focus-visible,.play) .k-basketball .ax{animation:rk-shotx 2.2s linear infinite}
-#sports .sp:is(:focus-visible,.play) .k-basketball i{background-image:url("/img/balls/spin/basketball.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .6s steps(24) infinite,rk-shoty 2.2s linear infinite}
-#sports .sp.lg-nfl:is(:focus-visible,.play) .k-football .ax{animation:rk-fgx 2.3s linear infinite}
-#sports .sp.lg-nfl:is(:focus-visible,.play) .k-football i{background-image:url("/img/balls/spin/kick.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .2s steps(24) .18s infinite,rk-fgy 2.3s linear infinite}
-#sports .sp.lg-nfl:is(:focus-visible,.play) .uprights{animation:rk-goodfg 2.3s linear infinite}
-#sports .sp.lg-cfb:is(:focus-visible,.play) .k-football .ax{animation:rk-catchx 2.3s linear infinite}
-#sports .sp.lg-cfb:is(:focus-visible,.play) .k-football i{background-image:url("/img/balls/spin/football.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .34s steps(24) infinite,rk-catchy 2.3s linear infinite}
-#sports .sp.lg-cfb:is(:focus-visible,.play) .gloves{animation:rk-squeeze 2.3s linear infinite}
-#sports .sp.lg-soccer:is(:focus-visible,.play) .k-soccer .ax{animation:rk-goalx 2.3s cubic-bezier(.3,0,.7,1) infinite}
-#sports .sp.lg-soccer:is(:focus-visible,.play) .k-soccer i{background-image:url("/img/balls/spin/soccer.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .45s steps(24) infinite,rk-goaly 2.3s linear infinite}
-#sports .sp.lg-soccer:is(:focus-visible,.play) .goal{animation:rk-ripple 2.3s linear infinite}
+/* play states: tap (.play) and keyboard focus everywhere; hover only where hover exists.
+   All gated on .armed (set by ebk-rack.js) so a card plays its full shot or nothing. */
+#sports .sp.armed:is(:focus-visible,.play) .sball{z-index:3}
+#sports .sp.armed:is(:focus-visible,.play) .todaytag{opacity:0}
+#sports .sp.armed:is(:focus-visible,.play) .tgt{opacity:1;transform:none}
+#sports .sp.armed:is(:focus-visible,.play) .bat{animation:rk-swing 2.4s cubic-bezier(.3,0,.2,1) infinite}
+#sports .sp.armed:is(:focus-visible,.play) .k-baseball i{background-image:url("/img/balls/spin/baseball.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .28s steps(24) infinite,rk-homer 2.4s linear infinite}
+#sports .sp.armed:is(:focus-visible,.play) .k-baseball::after{animation:rk-crack 2.4s linear infinite}
+#sports .sp.lg-mlb.armed:is(:focus-visible,.play) .spc{animation:rk-jolt 2.4s linear infinite}
+#sports .sp.armed:is(:focus-visible,.play) .stick{animation:rk-slap 2.2s cubic-bezier(.3,0,.2,1) infinite}
+#sports .sp.armed:is(:focus-visible,.play) .k-hockey i{background-image:url("/img/balls/spin/hockey.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .45s steps(24) infinite,rk-puck 2.2s linear infinite}
+#sports .sp.armed:is(:focus-visible,.play) .k-hockey::before{animation:rk-spray 2.2s ease-out infinite}
+#sports .sp.armed:is(:focus-visible,.play) .hoop{animation:rk-rim 2.2s linear infinite}
+#sports .sp.armed:is(:focus-visible,.play) .k-basketball .ax{animation:rk-shotx 2.2s linear infinite}
+#sports .sp.armed:is(:focus-visible,.play) .k-basketball i{background-image:url("/img/balls/spin/basketball.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .6s steps(24) infinite,rk-shoty 2.2s linear infinite}
+#sports .sp.lg-nfl.armed:is(:focus-visible,.play) .k-football .ax{animation:rk-fgx 2.3s linear infinite}
+#sports .sp.lg-nfl.armed:is(:focus-visible,.play) .k-football i{background-image:url("/img/balls/spin/kick.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .2s steps(24) .18s infinite,rk-fgy 2.3s linear infinite}
+#sports .sp.lg-nfl.armed:is(:focus-visible,.play) .uprights{animation:rk-goodfg 2.3s linear infinite}
+#sports .sp.lg-cfb.armed:is(:focus-visible,.play) .k-football .ax{animation:rk-catchx 2.3s linear infinite}
+#sports .sp.lg-cfb.armed:is(:focus-visible,.play) .k-football i{background-image:url("/img/balls/spin/football.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .34s steps(24) infinite,rk-catchy 2.3s linear infinite}
+#sports .sp.lg-cfb.armed:is(:focus-visible,.play) .gloves{animation:rk-squeeze 2.3s linear infinite}
+#sports .sp.lg-soccer.armed:is(:focus-visible,.play) .k-soccer .ax{animation:rk-goalx 2.3s cubic-bezier(.3,0,.7,1) infinite}
+#sports .sp.lg-soccer.armed:is(:focus-visible,.play) .k-soccer i{background-image:url("/img/balls/spin/soccer.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .45s steps(24) infinite,rk-goaly 2.3s linear infinite}
+#sports .sp.lg-soccer.armed:is(:focus-visible,.play) .goal{animation:rk-ripple 2.3s linear infinite}
 @media (hover:hover){
-  #sports .sp:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--c) 70%,transparent)}
-  #sports .sp:hover .sball{z-index:3}
-  #sports .sp:hover .todaytag{opacity:0}
-  #sports .sp:hover .tgt{opacity:1;transform:none}
-  #sports .sp:hover .bat{animation:rk-swing 2.4s cubic-bezier(.3,0,.2,1) infinite}
-  #sports .sp:hover .k-baseball i{background-image:url("/img/balls/spin/baseball.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .28s steps(24) infinite,rk-homer 2.4s linear infinite}
-  #sports .sp:hover .k-baseball::after{animation:rk-crack 2.4s linear infinite}
-  #sports .sp.lg-mlb:hover{animation:rk-jolt 2.4s linear infinite}
-  #sports .sp:hover .stick{animation:rk-slap 2.2s cubic-bezier(.3,0,.2,1) infinite}
-  #sports .sp:hover .k-hockey i{background-image:url("/img/balls/spin/hockey.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .45s steps(24) infinite,rk-puck 2.2s linear infinite}
-  #sports .sp:hover .k-hockey::before{animation:rk-spray 2.2s ease-out infinite}
-  #sports .sp:hover .hoop{animation:rk-rim 2.2s linear infinite}
-  #sports .sp:hover .k-basketball .ax{animation:rk-shotx 2.2s linear infinite}
-  #sports .sp:hover .k-basketball i{background-image:url("/img/balls/spin/basketball.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .6s steps(24) infinite,rk-shoty 2.2s linear infinite}
-  #sports .sp.lg-nfl:hover .k-football .ax{animation:rk-fgx 2.3s linear infinite}
-  #sports .sp.lg-nfl:hover .k-football i{background-image:url("/img/balls/spin/kick.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .2s steps(24) .18s infinite,rk-fgy 2.3s linear infinite}
-  #sports .sp.lg-nfl:hover .uprights{animation:rk-goodfg 2.3s linear infinite}
-  #sports .sp.lg-cfb:hover .k-football .ax{animation:rk-catchx 2.3s linear infinite}
-  #sports .sp.lg-cfb:hover .k-football i{background-image:url("/img/balls/spin/football.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .34s steps(24) infinite,rk-catchy 2.3s linear infinite}
-  #sports .sp.lg-cfb:hover .gloves{animation:rk-squeeze 2.3s linear infinite}
-  #sports .sp.lg-soccer:hover .k-soccer .ax{animation:rk-goalx 2.3s cubic-bezier(.3,0,.7,1) infinite}
-  #sports .sp.lg-soccer:hover .k-soccer i{background-image:url("/img/balls/spin/soccer.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .45s steps(24) infinite,rk-goaly 2.3s linear infinite}
-  #sports .sp.lg-soccer:hover .goal{animation:rk-ripple 2.3s linear infinite}
+  #sports .sp:hover .spc{transform:translateY(-3px);border-color:color-mix(in srgb,var(--c) 70%,transparent)}
+  #sports .sp.armed:hover .sball{z-index:3}
+  #sports .sp.armed:hover .todaytag{opacity:0}
+  #sports .sp.armed:hover .tgt{opacity:1;transform:none}
+  #sports .sp.armed:hover .bat{animation:rk-swing 2.4s cubic-bezier(.3,0,.2,1) infinite}
+  #sports .sp.armed:hover .k-baseball i{background-image:url("/img/balls/spin/baseball.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .28s steps(24) infinite,rk-homer 2.4s linear infinite}
+  #sports .sp.armed:hover .k-baseball::after{animation:rk-crack 2.4s linear infinite}
+  #sports .sp.lg-mlb.armed:hover .spc{animation:rk-jolt 2.4s linear infinite}
+  #sports .sp.armed:hover .stick{animation:rk-slap 2.2s cubic-bezier(.3,0,.2,1) infinite}
+  #sports .sp.armed:hover .k-hockey i{background-image:url("/img/balls/spin/hockey.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .45s steps(24) infinite,rk-puck 2.2s linear infinite}
+  #sports .sp.armed:hover .k-hockey::before{animation:rk-spray 2.2s ease-out infinite}
+  #sports .sp.armed:hover .hoop{animation:rk-rim 2.2s linear infinite}
+  #sports .sp.armed:hover .k-basketball .ax{animation:rk-shotx 2.2s linear infinite}
+  #sports .sp.armed:hover .k-basketball i{background-image:url("/img/balls/spin/basketball.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .6s steps(24) infinite,rk-shoty 2.2s linear infinite}
+  #sports .sp.lg-nfl.armed:hover .k-football .ax{animation:rk-fgx 2.3s linear infinite}
+  #sports .sp.lg-nfl.armed:hover .k-football i{background-image:url("/img/balls/spin/kick.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .2s steps(24) .18s infinite,rk-fgy 2.3s linear infinite}
+  #sports .sp.lg-nfl.armed:hover .uprights{animation:rk-goodfg 2.3s linear infinite}
+  #sports .sp.lg-cfb.armed:hover .k-football .ax{animation:rk-catchx 2.3s linear infinite}
+  #sports .sp.lg-cfb.armed:hover .k-football i{background-image:url("/img/balls/spin/football.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .34s steps(24) infinite,rk-catchy 2.3s linear infinite}
+  #sports .sp.lg-cfb.armed:hover .gloves{animation:rk-squeeze 2.3s linear infinite}
+  #sports .sp.lg-soccer.armed:hover .k-soccer .ax{animation:rk-goalx 2.3s cubic-bezier(.3,0,.7,1) infinite}
+  #sports .sp.lg-soccer.armed:hover .k-soccer i{background-image:url("/img/balls/spin/soccer.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .45s steps(24) infinite,rk-goaly 2.3s linear infinite}
+  #sports .sp.lg-soccer.armed:hover .goal{animation:rk-ripple 2.3s linear infinite}
 }
 
 @media (max-width:900px){#sports .sports-a{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){#sports .sball{--s:68px}}
 @media (max-width:560px){
-  #sports .sp{flex-direction:column;align-items:flex-start;gap:12px;padding:16px;min-height:0}
+  #sports .spc{flex-direction:column;align-items:flex-start;gap:12px;padding:16px;min-height:0}
   #sports .sp h3{font-size:1.2rem}
   #sports .sp p{font-size:.8rem;margin:4px 0 8px}
 }
@@ -262,7 +265,7 @@
 @keyframes rk-swing{0%{transform:rotate(-75deg);opacity:0}10%{transform:rotate(-62deg);opacity:1}30%{transform:rotate(-80deg);opacity:1;animation-timing-function:cubic-bezier(.7,0,1,.6)}38%{transform:rotate(15deg)}50%{transform:rotate(110deg);opacity:1}60%,100%{transform:rotate(120deg);opacity:0}}
 @keyframes rk-homer{0%,37.9%{transform:none;opacity:1}38%{transform:translate(-2px,2px) scale(.92)}40%{transform:translate(30px,-16px) scale(.9)}56%{transform:translate(300px,-150px) scale(.3);opacity:1}57%,84%{opacity:0;transform:none}100%{opacity:1;transform:none}}
 @keyframes rk-crack{0%,37.5%{opacity:0;transform:scale(.4)}39%{opacity:1;transform:scale(.8);filter:drop-shadow(0 0 6px #fff)}48%,100%{opacity:0;transform:scale(1.35) rotate(14deg)}}
-@keyframes rk-jolt{0%,37.9%,44%,100%{transform:none}39%{transform:translate(-2px,1px)}41%{transform:translate(2px,-1px)}43%{transform:translate(-1px,0)}}
+@keyframes rk-jolt{0%,37.9%,44%,100%{translate:none}39%{translate:-2px 1px}41%{translate:2px -1px}43%{translate:-1px 0}}
 @keyframes rk-slap{0%{transform:rotate(55deg);opacity:0}12%{transform:rotate(48deg);opacity:1}30%{transform:rotate(70deg);opacity:1;animation-timing-function:cubic-bezier(.8,0,1,.7)}38%{transform:rotate(14deg)}48%{transform:rotate(-18deg);opacity:1}60%,100%{transform:rotate(-22deg);opacity:0}}
 @keyframes rk-puck{0%,37.9%{transform:none;opacity:1}38%{transform:translateX(-2px) scale(.96)}52%{transform:translateX(340px);opacity:1}53%,84%{opacity:0;transform:none}100%{opacity:1;transform:none}}
 @keyframes rk-spray{0%,37%{opacity:0;transform:none}41%{opacity:.95}56%,100%{opacity:0;transform:translate(-14px,-8px)}}

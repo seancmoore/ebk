@@ -134,6 +134,13 @@
     soccer: '<span class="tgt goal" data-fx=".74" data-fy=".34"></span>',
   };
 
+  // the images each card's shot needs: its spin strip and its prop/target
+  var ASSETS = {
+    nfl: ["balls/spin/kick", "props/uprights"], cfb: ["balls/spin/football", "props/gloves"],
+    nba: ["balls/spin/basketball", "props/hoop"], mlb: ["balls/spin/baseball", "props/bat"],
+    nhl: ["balls/spin/hockey", "props/stick"], soccer: ["balls/spin/soccer", "props/goal"],
+  };
+
   function renderSports(grid) {
     if (!window.EBK) return;
     var today = window.EBKDaily ? EBKDaily.sportOn() : null;
@@ -141,12 +148,12 @@
     EBK.sports.forEach(function (s) {
       if (!EBK.sportLive(s.key)) return;
       var isToday = s.key === today, n = (EBK.live[s.key] || []).length;
-      h += '<a class="sp lg-' + s.key + (isToday ? " istoday" : "") + '" href="/' + s.key + '" style="--c:' + s.accent + '">' +
+      h += '<a class="sp lg-' + s.key + (isToday ? " istoday" : "") + '" href="/' + s.key + '" style="--c:' + s.accent + '"><span class="spc">' +
         (isToday ? '<span class="todaytag">Today\'s grid</span>' : "") +
         (PROP[s.key] || "") +
         '<span class="sball k-' + BALL[s.key] + '" aria-hidden="true"><b class="ax"><i></i></b></span>' +
         (TGT[s.key] || "") +
-        '<span class="st"><h3>' + esc(s.name) + "</h3><p>" + esc(s.blurb) + '</p><span class="cnt">' + n + " games" + ARROW + "</span></span></a>";
+        '<span class="st"><h3>' + esc(s.name) + "</h3><p>" + esc(s.blurb) + '</p><span class="cnt">' + n + " games" + ARROW + "</span></span></span></a>";
     });
     grid.innerHTML = h;
   }
@@ -164,18 +171,38 @@
     card.style.setProperty("--ap", Math.round(Math.max(Math.min(dy, 0) - 34, -46)) + "px");
   }
 
-  /* Spin strips are only needed once a card plays; fetch them when the
-     section is close to the viewport so the first play never flashes. */
-  function preloadStrips(section) {
+  /* A card plays its shot only once it is "armed": the flight is measured and
+     its spin strip + prop have loaded. Until then hover just lifts the card and
+     a tap goes straight to the page, so a half-ready shot (a ball spinning in
+     place, a blank strip) never shows. Strips are fetched when the section is
+     close to the viewport, so cards are normally armed before anyone reaches them. */
+  var loaded = {};
+  function arm(grid) {
+    grid.querySelectorAll(".sp").forEach(function (c) {
+      var key = (c.className.match(/lg-(\w+)/) || [])[1], need = ASSETS[key] || [];
+      aim(c);
+      // cards with a target (hoop, uprights, gloves, goal) also need a measured flight
+      var aimed = !c.querySelector(".tgt") || c.style.getPropertyValue("--dx") !== "";
+      var ok = aimed && need.every(function (a) { return loaded[a]; });
+      c.classList.toggle("armed", ok);
+    });
+  }
+  function preloadStrips(grid) {
     var done = false;
     function go() {
       if (done) return; done = true;
-      ["basketball", "football", "kick", "soccer", "baseball", "hockey"].forEach(function (k) { var i = new Image(); i.src = "/img/balls/spin/" + k + ".webp"; });
-      ["bat", "stick", "hoop", "uprights", "gloves", "goal"].forEach(function (k) { var i = new Image(); i.src = "/img/props/" + k + ".webp"; });
+      Object.keys(ASSETS).forEach(function (k) {
+        ASSETS[k].forEach(function (a) {
+          if (loaded[a] !== undefined) return; loaded[a] = false;
+          var i = new Image();
+          i.onload = function () { loaded[a] = true; arm(grid); };
+          i.src = "/img/" + a + ".webp";
+        });
+      });
     }
     if (!("IntersectionObserver" in window)) { setTimeout(go, 1500); return; }
     var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); go(); } }, { rootMargin: "600px 0px" });
-    io.observe(section);
+    io.observe(grid);
   }
 
   /* Warm the next page the moment a finger lands: the HTML and the sport's
@@ -187,7 +214,7 @@
     var add = function (url, as) { var l = document.createElement("link"); l.rel = "prefetch"; l.href = url; if (as) l.as = as; document.head.appendChild(l); };
     add(href);
     var key = href.replace(/^\//, "").split("/")[0];
-    if (key) add((key === "nfl" ? "/data/players.json" : "/data/" + key + "/players.json") + "?v=7", "fetch");
+    if (key) add((key === "nfl" ? "/data/players.json" : "/data/" + key + "/players.json") + "?v=8", "fetch");
   }
 
   function wireCards(grid) {
@@ -202,7 +229,7 @@
       var href = c.getAttribute("href");
       var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
       var save = navigator.connection && navigator.connection.saveData;
-      if (reduce || save) { warm(href); return; }                       // go straight there
+      if (reduce || save || !c.classList.contains("armed")) { warm(href); return; }   // go straight there
       e.preventDefault();
       if (c.classList.contains("play")) { clearTimeout(c.__t); location.href = href; return; } // second tap skips
       warm(href); aim(c);
@@ -219,7 +246,12 @@
       try { renderRack(host); setInterval(tick, 1000); } catch (e) { host.hidden = true; }
     }
     var grid = document.getElementById("sport-cards");
-    if (grid) { renderSports(grid); wireCards(grid); preloadStrips(grid); }
+    if (grid) {
+      renderSports(grid); wireCards(grid); preloadStrips(grid);
+      // re-measure flights whenever the cards change size (resize, fonts, breakpoints)
+      if ("ResizeObserver" in window) new ResizeObserver(function () { arm(grid); }).observe(grid);
+      else window.addEventListener("resize", function () { arm(grid); });
+    }
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();

@@ -6,8 +6,8 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=7";
-  const ROSTER_URL = (SPORT === "nfl" ? "/data/grid-roster.json" : "/data/" + SPORT + "/grid-roster.json") + "?v=7";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=8";
+  const ROSTER_URL = (SPORT === "nfl" ? "/data/grid-roster.json" : "/data/" + SPORT + "/grid-roster.json") + "?v=8";
   const BEST_KEY = SPORT === "nfl" ? "ebk_grid_best" : "ebk_grid_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "player-grid", score); } catch (e) {} };
