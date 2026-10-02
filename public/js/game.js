@@ -5,7 +5,7 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL; // team logo/name helper
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=6";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=7";
   const BEST_KEY = SPORT === "nfl" ? "ebk_best" : "ebk_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "higher-lower", score); } catch (e) {} };
@@ -277,7 +277,10 @@
 
     $(".panel-name", panel).textContent = p.name;
     const logo = (p.team && LEAGUE) ? `<img class="tlogo" src="${LEAGUE.logo(p.team)}" alt="" /> ` : "";
-    $(".panel-meta", panel).innerHTML = `${p.seasonLabel || p.season} · ${logo}${p.team || "—"} · ${p.pos || "—"}`;
+    // soccer teams are FPL codes ("14") and MLB's are franchise ids ("ANA"),
+    // so show the club name there, as h2h.js does
+    const tname = p.team && LEAGUE && (SPORT === "soccer" || SPORT === "mlb") ? LEAGUE.name(p.team) : p.team;
+    $(".panel-meta", panel).innerHTML = `${p.seasonLabel || p.season} · ${logo}${tname || "—"} · ${p.pos || "—"}`;
 
     const img = $(".panel-photo img", panel);
     const bg = $(".panel-bg", panel);

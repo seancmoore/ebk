@@ -16,7 +16,9 @@
  *   node tools/solvable.cjs --date 2026-09-01 soccer
  *   node tools/solvable.cjs --json          # machine-readable
  *
- * Exit code 1 if any cell in any checked board has ZERO valid answers.
+ * Exit code 1 if any cell in any checked board has ZERO valid answers, or if
+ * a sport's grid-roster.json (the precomputed roster the page loads first) no
+ * longer matches what its players.json builds.
  */
 "use strict";
 const fs = require("fs");
@@ -29,6 +31,7 @@ const SRC = fs.readFileSync(path.join(PUB, "js", "player-grid.js"), "utf8");
 const ALL_SPORTS = ["nfl", "nba", "mlb", "nhl", "soccer"];
 const TEAM_FILE = { nfl: "teams.js", nba: "nba-teams.js", mlb: "mlb-teams.js", nhl: "nhl-teams.js", soccer: "soccer-teams.js", cfb: "cfb-teams.js" };
 const DATA_FILE = (s) => (s === "nfl" ? path.join(PUB, "data", "players.json") : path.join(PUB, "data", s, "players.json"));
+const ROSTER_FILE = (s) => path.join(path.dirname(DATA_FILE(s)), "grid-roster.json");
 
 // ---- slice the real implementation out of player-grid.js -------------------
 function slice(startRe, endRe, label) {
@@ -41,7 +44,7 @@ function slice(startRe, endRe, label) {
 }
 
 const CFG_SRC = slice(/^  const CFG = \{$/m, /^  \}\[SPORT\];$/m, "CFG");
-const FN_SRC = ["seededRng", "buildRoster", "satisfies", "fits", "enough", "generate"]
+const FN_SRC = ["seededRng", "buildRoster", "hydrateRoster", "finishRoster", "satisfies", "fits", "enough", "generate"]
   .map((n) => slice(new RegExp("^  function " + n + "\\(", "m"), /^  \}$/m, n))
   .join("\n");
 const CONST_SRC = ["shuffle", "normPos", "posOf", "foldW", "foldC", "teamPosPair"]
@@ -66,14 +69,19 @@ const FLOORS = (() => {
 
 const etDate = () => new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York" }).format(new Date());
 
-function boardFor(sport, date) {
+// The roster + board machinery for one sport, built either from the dataset
+// (buildRoster, what the page falls back to) or from the precomputed
+// grid-roster.json (hydrateRoster, what the page loads first).
+function engine(sport, src) {
   const teamsSrc = fs.readFileSync(path.join(PUB, "js", TEAM_FILE[sport]), "utf8");
   const sandboxWindow = {};
   new Function("window", teamsSrc)(sandboxWindow);
   const LEAGUE = sandboxWindow[sport.toUpperCase()];
   if (!LEAGUE) throw new Error("no league helper for " + sport);
 
-  const data = JSON.parse(fs.readFileSync(DATA_FILE(sport), "utf8"));
+  const file = src === "roster" ? ROSTER_FILE(sport) : DATA_FILE(sport);
+  const input = JSON.parse(fs.readFileSync(file, "utf8"));
+  if (src !== "roster") inflate(input);
 
   const body = `
     const SPORT = ${JSON.stringify(sport)};
@@ -85,7 +93,7 @@ function boardFor(sport, date) {
     const GEN_ATTEMPTS = ${GEN_ATTEMPTS};
     ${CONST_SRC}
     ${FN_SRC}
-    buildRoster(DATA);
+    if (ROSTER) hydrateRoster(INPUT); else buildRoster(INPUT);
     // buildCriteria, inlined so the tool keeps the criteria order the page uses
     const crit = [];
     LEAGUE.franchises.forEach((f) => crit.push({ type: "team", key: f.key, label: f.name }));
@@ -98,31 +106,87 @@ function boardFor(sport, date) {
     S.crit = crit;
     S.teams = crit.filter((c) => c.type === "team");
     S.specials = crit.filter((c) => c.type !== "team");
-    // buildBoard, minus the DOM writes
-    const seed = SPORT + "|" + DATE;
-    let floor = null, g = null;
-    for (const f of ${JSON.stringify(FLOORS)}) {
-      g = generate(f, seededRng(seed));
-      if (g) { floor = f; break; }
+    // buildBoard, minus the DOM writes (generate only reads S, so this can
+    // be called for many dates)
+    function board(DATE) {
+      const seed = SPORT + "|" + DATE;
+      let floor = null, g = null;
+      for (const f of ${JSON.stringify(FLOORS)}) {
+        g = generate(f, seededRng(seed));
+        if (g) { floor = f; break; }
+      }
+      return { rows: g.rows, cols: g.cols, floor };
     }
-    return { rows: g.rows, cols: g.cols, R: S.R, floor, fits };
+    return { R: S.R, fits, board };
   `;
-  const run = new Function("DATA", "DATE", "LEAGUE", body);
-  const { rows, cols, R, floor, fits } = run(data, date, LEAGUE);
+  return new Function("INPUT", "ROSTER", "LEAGUE", body)(input, src === "roster", LEAGUE);
+}
 
-  const cells = [];
+// EBKD.inflate (public/js/ebk-loader.js), for slimmed datasets
+function inflate(d) {
+  const pre = d.hsPrefix || "", cols = d.statCols || [];
+  for (const r of d.players || []) {
+    if (pre && r.headshot && r.headshot[0] === "~") r.headshot = pre + r.headshot.slice(1);
+    if (r.z) { const s = r.stats || (r.stats = {}); for (const i of r.z) s[cols[i]] = 0; delete r.z; }
+  }
+  return d;
+}
+
+// grid-roster.json rows, in the order hydrateRoster() reads them
+function serializeRoster(R) {
+  // hoist the most common headshot directory
+  const cnt = {};
+  for (const a of R) { const m = a.headshot && a.headshot.match(/^(.*\/)/); if (m) cnt[m[1]] = (cnt[m[1]] || 0) + 1; }
+  const pre = (Object.entries(cnt).sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1))[0] || [""])[0];
+  const players = R.map((a) => {
+    const tp = [...a.teamPos].map(([t, s]) => [t, [...s]]);
+    const inTp = new Set(tp.flatMap(([, ps]) => ps));
+    const extra = [...a.positions].filter((x) => !inTp.has(x));
+    const hs = a.headshot ? (pre && a.headshot.startsWith(pre) ? "~" + a.headshot.slice(pre.length) : a.headshot) : 0;
+    const row = [a.id, a.name, a.pos, hs, tp, [...a.ach], (a.r1 ? 1 : 0) | (a.undrafted ? 2 : 0), a.min, a.max];
+    if (extra.length || a.alts.size) row.push(extra.length ? extra : 0);
+    if (a.alts.size) row.push([...a.alts]);
+    return row;
+  });
+  return { hsPrefix: pre, players };
+}
+
+function cellsOf(eng, b) {
+  const { rows, cols } = b, R = eng.R, cells = [];
   for (let r = 0; r < 3; r++) {
     for (let c = 0; c < 3; c++) {
-      const ids = [...rows[r].set].filter((i) => cols[c].set.has(i) && fits(R[i], rows[r], cols[c]));
+      const ids = [...rows[r].set].filter((i) => cols[c].set.has(i) && eng.fits(R[i], rows[r], cols[c]));
       cells.push({
         row: rows[r].label, col: cols[c].label,
         n: ids.length,
         answers: ids.map((i) => R[i].name).sort(),
+        ids: ids.map((i) => R[i].id).sort(),
       });
     }
   }
-  return { sport, date, floor, rows: rows.map((x) => x.label), cols: cols.map((x) => x.label), cells };
+  return cells;
 }
+
+function boardFor(sport, date, eng) {
+  eng = eng || engine(sport, "data");
+  const b = eng.board(date);
+  return { sport, date, floor: b.floor, rows: b.rows.map((x) => x.label), cols: b.cols.map((x) => x.label), cells: cellsOf(eng, b) };
+}
+
+// The page loads grid-roster.json first, so it must be exactly what the
+// current dataset builds. Returns an error string, or null when it matches.
+function rosterCheck(sport, eng, date) {
+  if (!fs.existsSync(ROSTER_FILE(sport))) return "missing " + path.relative(ROOT, ROSTER_FILE(sport));
+  const J = JSON.parse(fs.readFileSync(ROSTER_FILE(sport), "utf8"));
+  const want = serializeRoster(eng.R);
+  if (JSON.stringify([J.hsPrefix, J.players]) !== JSON.stringify([want.hsPrefix, want.players]))
+    return path.relative(ROOT, ROSTER_FILE(sport)) + " is stale (run node tools/build_grid_roster.cjs)";
+  const a = JSON.stringify(boardFor(sport, date, eng)), b = JSON.stringify(boardFor(sport, date, engine(sport, "roster")));
+  return a === b ? null : "board from grid-roster.json differs from the dataset board";
+}
+
+module.exports = { ALL_SPORTS, DATA_FILE, ROSTER_FILE, engine, serializeRoster, boardFor, rosterCheck };
+if (require.main !== module) return;
 
 // ---- cli -------------------------------------------------------------------
 const argv = process.argv.slice(2);
@@ -134,7 +198,12 @@ const targets = sports.length ? sports : ALL_SPORTS;
 
 const out = { date, genAttempts: GEN_ATTEMPTS, floors: FLOORS, boards: [], errors: [] };
 for (const s of targets) {
-  try { out.boards.push(boardFor(s, date)); }
+  try {
+    const eng = engine(s, "data");
+    out.boards.push(boardFor(s, date, eng));
+    const bad = rosterCheck(s, eng, date);
+    if (bad) out.errors.push({ sport: s, error: bad });
+  }
   catch (e) { out.errors.push({ sport: s, error: String((e && e.message) || e) }); }
 }
 

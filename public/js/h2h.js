@@ -51,7 +51,7 @@
   const dataCache = {};
   async function loadData(sport) {
     if (dataCache[sport]) return dataCache[sport];
-    const url = (sport === "nfl" ? "/data/players.json" : "/data/" + sport + "/players.json") + "?v=6";
+    const url = (sport === "nfl" ? "/data/players.json" : "/data/" + sport + "/players.json") + "?v=7";
     const res = await fetch(url, { cache: "force-cache" });
     if (!res.ok) throw new Error("data " + res.status);
     dataCache[sport] = EBKD.inflate(await res.json());
@@ -427,13 +427,8 @@
       c.min = yrs[0]; c.max = yrs[yrs.length - 1]; c.count = yrs.length;
       // every club incl. traded stints; same ordering as solo career-path.js
       const path = [];
-      yrs.forEach((y, i) => {
-        const ks = [...new Set(c.years.get(y).map((t) => L.keyOf(t)))], prev = path[path.length - 1];
-        const next = new Set(i + 1 < yrs.length ? c.years.get(yrs[i + 1]).map((t) => L.keyOf(t)) : []);
-        const rank = (k) => (k === prev ? 0 : next.has(k) ? 2 : 1);
-        ks.sort((a, b) => rank(a) - rank(b));
-        for (const k of ks) if (path[path.length - 1] !== k) path.push(k);
-      });
+      for (const y of yrs)
+        for (const k of c.years.get(y).map((t) => L.keyOf(t))) if (path[path.length - 1] !== k) path.push(k);
       c.path = path; pool.push(c);
     }
     pool.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));

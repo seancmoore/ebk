@@ -111,6 +111,7 @@ class Seasons:
         self.bat = defaultdict(lambda: defaultdict(float))
         self.pit = defaultdict(lambda: defaultdict(float))
         self.teamG = defaultdict(lambda: defaultdict(float))   # -> franchise -> games
+        self.teamOrd = defaultdict(dict)                       # -> franchise -> first stint #
         self.posG = defaultdict(lambda: defaultdict(float))    # -> fielding pos -> games
         self.names = {}
         self.lahman_names = {}
@@ -137,7 +138,10 @@ def add_lahman(start, end, acc):
             k = (canon.get(r["playerID"], r["playerID"]), y)
             for c in cols:
                 into[k][c] += num(r[c])
-            acc.teamG[k][teamFranch.get(r["teamID"], r["teamID"])] += num(r["G"])
+            fr = teamFranch.get(r["teamID"], r["teamID"])
+            acc.teamG[k][fr] += num(r["G"])
+            stint = int(r["stint"] or 1)
+            acc.teamOrd[k][fr] = min(acc.teamOrd[k].get(fr, stint), stint)
     for r in fetch("Fielding.csv"):
         y = int(r["yearID"])
         if y < start or y > end or r["POS"] == "DH": continue
@@ -169,6 +173,7 @@ def add_statsapi(start, end, acc, to_bbref):
             acc.mlbam[pid] = mid
             for st in person.get("stats", []):
                 group = st["group"]["displayName"]
+                stint = defaultdict(int)        # splits are listed in stint order
                 for s in st["splits"]:
                     y = int(s["season"])
                     if y < start or y > end or s.get("gameType") != "R" or s.get("sport", {}).get("id") != 1:
@@ -177,6 +182,8 @@ def add_statsapi(start, end, acc, to_bbref):
                     if not fr:          # the team-less row is the multi-team total
                         continue
                     k, x = (pid, y), s["stat"]
+                    stint[y] += 1
+                    acc.teamOrd[k][fr] = min(acc.teamOrd[k].get(fr, stint[y]), stint[y])
                     if group == "hitting":
                         for c, src in (("G", "gamesPlayed"), ("AB", "atBats"), ("R", "runs"), ("H", "hits"),
                                        ("HR", "homeRuns"), ("RBI", "rbi"), ("SB", "stolenBases")):
@@ -222,13 +229,16 @@ def build():
     cat_counts = defaultdict(int)
     for k in set(acc.bat) | set(acc.pit):
         pid, yr = k
-        # Every franchise the player appeared for that season, most games
-        # first — not just the top one, so a mid-season trade still registers
-        # on both teams' grids.
+        # Every franchise the player appeared for that season, not just the
+        # top one, so a mid-season trade still registers on both teams' grids.
+        # `team` is the most-games club; `teams` is in stint (date) order so
+        # Career Path can draw the real path.
         tg = acc.teamG[k]
         franchises = [f for f, _ in sorted(tg.items(), key=lambda kv: -kv[1]) if f in ESPN]
         if not franchises:
             continue
+        ordr = acc.teamOrd[k]
+        stints = sorted(franchises, key=lambda f: ordr.get(f, 99))
         b, p = acc.bat.get(k), acc.pit.get(k)
         field = acc.posG.get(k, {})
         ipouts = p["IPouts"] if p else 0
@@ -266,7 +276,7 @@ def build():
         if twoWay:
             rec["poss"] = [pos, "P"]
         if len(franchises) > 1:
-            rec["teams"] = franchises
+            rec["teams"] = stints
         mid = acc.mlbam.get(pid) or to_mlbam.get(pid)
         if mid:
             rec["headshot"] = HEADSHOT.format(mid)

@@ -35,8 +35,10 @@
 
   /* ET calendar date, optionally shifted by whole days. Arithmetic is done on
      the calendar string via UTC so it never drifts across a DST boundary. */
+  var ETF = null, ETH = null;   // built once: each construction costs ~0.4ms
   function etDate(offsetDays) {
-    var s = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York" }).format(new Date());
+    ETF = ETF || new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York" });
+    var s = ETF.format(new Date());
     if (!offsetDays) return s;
     var p = s.split("-");
     var d = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2]));
@@ -45,10 +47,11 @@
   }
 
   function hoursToReset() {
-    var p = new Intl.DateTimeFormat("en-US", {
+    ETH = ETH || new Intl.DateTimeFormat("en-US", {
       timeZone: "America/New_York", hour12: false,
       hour: "2-digit", minute: "2-digit",
-    }).formatToParts(new Date());
+    });
+    var p = ETH.formatToParts(new Date());
     var g = function (t) { return +p.find(function (x) { return x.type === t; }).value; };
     var mins = 1440 - ((g("hour") % 24) * 60 + g("minute"));
     return Math.floor(mins / 60) + "h " + (mins % 60) + "m";

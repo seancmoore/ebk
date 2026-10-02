@@ -292,10 +292,16 @@ function start(THREE, RoomEnvironment, imgs) {
       renderer.render(scene, camera);
     }
     raf = requestAnimationFrame(tick);
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) { if (raf) { cancelAnimationFrame(raf); raf = null; tOff += (performance.now() - t0) / 1000; } }
+    // pause while the tab is hidden or the hero is scrolled out of view
+    // (it kept drawing under the sport cards: ~600ms of script per 5s)
+    let inView = true;
+    const sync = () => {
+      if (document.hidden || !inView) { if (raf) { cancelAnimationFrame(raf); raf = null; tOff += (performance.now() - t0) / 1000; } }
       else if (!raf) { t0 = performance.now(); raf = requestAnimationFrame(tick); }
-    });
+    };
+    document.addEventListener("visibilitychange", sync);
+    if ("IntersectionObserver" in window)
+      new IntersectionObserver(([e]) => { inView = e.isIntersecting; sync(); }).observe(MOUNT);
   });
   window.__ebkHero = { pose, render: () => renderer.render(scene, camera), balls, camera, scene, renderer, group };
 }

@@ -5,7 +5,8 @@ Writes public/data/soccer/players.json + generated public/js/soccer-teams.js.
 
 Usage: python build_soccer.py
 """
-import os, sys, csv, io, json, urllib.request
+import os, sys, csv, io, json, re, unicodedata, urllib.request, urllib.error
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 
 SEASONS = ["2016-17", "2017-18", "2018-19", "2019-20", "2020-21",
@@ -48,6 +49,64 @@ def fetch_csv_opt(url, cache):
         return []
 
 
+# Player photos. The PL's 2025 site moved them to premierleague25/ and the
+# legacy p{code} path 403s for many current players (Alisson, Wirtz); the new
+# path lacks a few older ones. HEAD both once per code (cached), prefer the
+# new one, else drop the field so the site avatar shows instead of a 404.
+PHOTO_NEW = "https://resources.premierleague.com/premierleague25/photos/players/110x140/{}.png"
+PHOTO_OLD = "https://resources.premierleague.com/premierleague/photos/players/110x140/p{}.png"
+PHOTO_CACHE = os.path.join(RAW, "headshot_probe.json")
+
+
+def head(url):
+    """[status, content-length] for a HEAD request, or None on a network error."""
+    req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "ebk/1.0", "Accept": "*/*"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            return [r.status, int(r.headers.get("Content-Length") or 0)]
+    except urllib.error.HTTPError as exc:
+        return [exc.code, 0]
+    except Exception:  # noqa: BLE001 — transient; leave uncached, retry next build
+        return None
+
+
+def photos(codes):
+    """code -> best photo url (or None)."""
+    cache = {}
+    if os.path.exists(PHOTO_CACHE):
+        with open(PHOTO_CACHE, encoding="utf-8") as f:
+            cache = json.load(f)
+    urls = [t.format(c) for c in codes for t in (PHOTO_NEW, PHOTO_OLD)]
+    todo = sorted(u for u in set(urls) if u not in cache)
+    if todo:
+        print(f"  probing {len(todo):,} photo urls ...")
+        with ThreadPoolExecutor(max_workers=8) as pool:
+            for u, res in zip(todo, pool.map(head, todo)):
+                if res is not None:
+                    cache[u] = res
+        with open(PHOTO_CACHE, "w", encoding="utf-8") as f:
+            json.dump(cache, f, indent=0, sort_keys=True)
+    out = {}
+    for c in codes:
+        out[c] = next((t.format(c) for t in (PHOTO_NEW, PHOTO_OLD)
+                       if cache.get(t.format(c), [0])[0] == 200), None)
+    return out
+
+
+def fold(s):
+    s = unicodedata.normalize("NFD", (s or "").replace("-", " "))
+    return re.sub(r"[^a-z ]", "", "".join(c for c in s if not unicodedata.combining(c)).lower())
+
+
+def aka(name, web):
+    """FPL's web_name when it's a name fans search by that isn't already a
+    word of the legal name (Casemiro, Fabinho, Jorginho), else None."""
+    if not web or "." in web or " " in web.strip():
+        return None
+    w = fold(web).split()
+    return web if w and not set(w) <= set(fold(name).split()) else None
+
+
 def build():
     # master list covers 2016-17..2023-24; per-season teams.csv covers the rest
     mtl = {}
@@ -80,14 +139,25 @@ def build():
             for k in stats:
                 cat_counts[k] += 1
             name = (p.get("first_name", "") + " " + p.get("second_name", "")).strip() or p.get("web_name")
-            players.append({
+            rec = {
                 "id": p["code"], "name": name, "pos": pos, "grp": pos,
                 "season": endyr, "seasonLabel": season, "team": code, "games": 0,
-                "headshot": f"https://resources.premierleague.com/premierleague/photos/players/110x140/p{p['code']}.png",
                 "stats": stats,
-            })
+            }
+            a = aka(name, p.get("web_name"))
+            if a:
+                rec["aka"] = a
+            players.append(rec)
             kept += 1
         print(f"  {season}: {kept} players")
+
+    best = photos(sorted({r["id"] for r in players}))
+    for r in players:
+        if best[r["id"]]:
+            r["headshot"] = best[r["id"]]
+    print(f"  photos: {sum(1 for u in best.values() if u and '25/' in u):,} new path, "
+          f"{sum(1 for u in best.values() if u and '/p' in u.rsplit('110x140', 1)[1]):,} legacy, "
+          f"{sum(1 for u in best.values() if not u):,} none (of {len(best):,})")
 
     players.sort(key=lambda r: (r["season"], r["name"] or ""))
     out = {

@@ -179,6 +179,41 @@ BROKEN_WEEK_YEARS = {2001, 2002}
 # max is 3 different teams (e.g. Randy Moss's NE->MIN->TEN 2010). Anything
 # longer is certainly the same kind of data corruption, not a real player.
 MAX_PLAUSIBLE_TEAMS = 3
+# The same mixup reaches the 2001/2002 season file's recent_team: 28 Jaguars
+# come out on an opponent (Fred Taylor TEN 2001, Brunell TEN 2002). For those
+# years, check recent_team against nflverse's weekly-built season rosters.
+ROSTER_URL = ("https://github.com/nflverse/nflverse-data/releases/download/"
+              "rosters/roster_{year}.csv")
+# roster files use older club codes than the stats files
+ROSTER_CODES = {"JAX": "JAC", "ARZ": "ARI", "BLT": "BAL", "CLV": "CLE",
+                "HST": "HOU", "SL": "STL"}
+
+
+def roster_teams(year):
+    """gsis_id -> set of clubs (stats-file codes) on nflverse's roster_{year}."""
+    cache = os.path.join(RAW_DIR, f"roster_{year}.csv")
+    if not (os.path.exists(cache) and os.path.getsize(cache) > 0):
+        req = urllib.request.Request(ROSTER_URL.format(year=year), headers={"User-Agent": "ebk/1.0"})
+        with urllib.request.urlopen(req, timeout=60) as resp, open(cache, "wb") as f:
+            f.write(resp.read())
+    out = {}
+    with open(cache, "r", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            team = (row.get("team") or "").strip()
+            if row.get("gsis_id") and team:
+                out.setdefault(row["gsis_id"], set()).add(ROSTER_CODES.get(team, team))
+    return out
+
+
+def roster_fix(rostered, recent_team):
+    """recent_team, or the rostered club when the stats file named one the
+    player was never on. Only JAX's rows are affected, so a multi-club
+    roster entry resolves to JAC."""
+    if not rostered or recent_team in rostered:
+        return recent_team
+    if len(rostered) == 1:
+        return next(iter(rostered))
+    return "JAC" if "JAC" in rostered else recent_team
 
 
 def build_season_teams(year):
@@ -323,12 +358,17 @@ def build_people(used_ids):
         if pid not in used_ids:
             continue
         college = (row.get("college_name") or "").strip()
+        draft_year = to_int(row.get("draft_year"))
+        draft_team = (row.get("draft_team") or "").strip()
+        # "HOU" before the Texans (2002) is the Oilers, now the Titans franchise
+        if draft_team == "HOU" and draft_year and draft_year < 2002:
+            draft_team = "TEN"
         people[pid] = {
             "college": college,
-            "draftYear": to_int(row.get("draft_year")),
+            "draftYear": draft_year,
             "draftRound": to_int(row.get("draft_round")),
             "draftPick": to_int(row.get("draft_pick")),
-            "draftTeam": (row.get("draft_team") or "").strip(),
+            "draftTeam": draft_team,
         }
     return people
 
@@ -435,6 +475,8 @@ def build():
             continue
 
         season_teams = build_season_teams(year)
+        rosters = roster_teams(year) if year in BROKEN_WEEK_YEARS else {}
+        fixed = 0
         reader = csv.DictReader(io.StringIO(text))
         kept = 0
         for row in reader:
@@ -477,6 +519,10 @@ def build():
                 cat_counts[col] += 1
 
             recent_team = row.get("recent_team") or ""
+            if rosters:
+                rt = roster_fix(rosters.get(row.get("player_id")), recent_team)
+                fixed += rt != recent_team
+                recent_team = rt
             teams = season_teams.get(key) or ([recent_team] if recent_team else [])
             if not teams:
                 # No week-level appearance and no recent_team — nothing to
@@ -508,7 +554,8 @@ def build():
             players.append(record)
             kept += 1
 
-        print(f"  {year}: kept {kept} player-seasons")
+        print(f"  {year}: kept {kept} player-seasons"
+              + (f" ({fixed} teams corrected from roster_{year})" if fixed else ""))
 
     players.sort(key=lambda r: (r["season"], r["name"]))
     fix_headshots(players)

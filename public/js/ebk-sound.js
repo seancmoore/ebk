@@ -24,6 +24,20 @@
     if (ctx.state === "suspended") { try { ctx.resume(); } catch (e) {} }
     return ctx;
   }
+  // Constructing the context opens the audio device (360-700ms on desktop),
+  // which made the first tap on every page slow. Build it (suspended) once the
+  // page is idle, so the first gesture below only has to resume() it.
+  function warm() {
+    if (!on || ctx) return;
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (AC) try { ctx = new AC(); } catch (e) {}
+  }
+  function idle() {
+    if (window.requestIdleCallback) window.requestIdleCallback(warm);
+    else setTimeout(warm, 1500);
+  }
+  if (document.readyState === "complete") idle();
+  else window.addEventListener("load", idle);
   // wake the context on the first gesture so timed sounds (timeouts) can play
   ["pointerdown", "keydown", "touchstart"].forEach(function (ev) {
     document.addEventListener(ev, function once() {

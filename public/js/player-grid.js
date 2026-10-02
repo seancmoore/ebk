@@ -6,7 +6,8 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=6";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=7";
+  const ROSTER_URL = (SPORT === "nfl" ? "/data/grid-roster.json" : "/data/" + SPORT + "/grid-roster.json") + "?v=7";
   const BEST_KEY = SPORT === "nfl" ? "ebk_grid_best" : "ebk_grid_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "player-grid", score); } catch (e) {} };
@@ -281,10 +282,14 @@
 
   async function load() {
     try {
-      const res = await fetch(DATA_URL);
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      const data = EBKD.inflate(await res.json());
-      buildRoster(data);
+      // precomputed roster first; the full dataset is the fallback
+      let ok = false;
+      try { const r = await fetch(ROSTER_URL); if (r.ok) { hydrateRoster(await r.json()); ok = true; } } catch (e) {}
+      if (!ok) {
+        const res = await fetch(DATA_URL);
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        buildRoster(EBKD.inflate(await res.json()));
+      }
       buildCriteria();
       S.best = getBest();
       $("#best").textContent = S.best;
@@ -352,7 +357,7 @@
       if (!a) {
         const bio = people[p.id] || {};
         a = { id: p.id, name: p.name, pos: p[CFG.posKey] || p.grp || normPos(p.pos), headshot: p.headshot,
-              teams: new Set(), positions: new Set(), teamPos: new Map(), ach: new Set(), career: {},
+              teams: new Set(), positions: new Set(), teamPos: new Map(), ach: new Set(), career: {}, alts: new Set(),
               r1: bio.draftRound === 1, undrafted: bio.draftYear == null,
               min: p.season, max: p.season };
         byId.set(p.id, a);
@@ -374,13 +379,51 @@
       seasonPos.forEach((x) => a.positions.add(x));
       a.min = Math.min(a.min, p.season); a.max = Math.max(a.max, p.season);
       if (p.headshot && !a.headshot) a.headshot = p.headshot;
+      if (p.name && p.name !== a.name) a.alts.add(p.name);
+      if (p.aka) a.alts.add(p.aka);
       for (const [key, , col, thr] of ACH) if ((p.stats[col] || 0) >= thr) a.ach.add(key);
       for (const col of CAREER_COLS) a.career[col] = (a.career[col] || 0) + (p.stats[col] || 0);
     }
-    for (const a of byId.values())
+    for (const a of byId.values()) {
       for (const [key, , col, thr] of CAREER) if ((a.career[col] || 0) >= thr) a.ach.add(key);
+      delete a.career;
+    }
     S.R = [...byId.values()];
-    S.R.forEach((a) => { a.nameW = foldW(a.name); a.nameC = foldC(a.nameW); });
+    finishRoster();
+  }
+
+  // The same roster, precomputed by tools/build_grid_roster.cjs (about a third
+  // of the bytes, no per-season pass). Rows are [id, name, pos, headshot,
+  // [[team, [pos...]]...], ach, flags (1 = 1st round, 2 = undrafted), min,
+  // max, positions not tied to a team (or 0), alternate names].
+  function hydrateRoster(J) {
+    const pre = J.hsPrefix || "";
+    S.R = J.players.map(([id, name, pos, hs, tp, ach, fl, min, max, extra, alts]) => {
+      const teams = new Set(), positions = new Set(), teamPos = new Map();
+      for (const [t, ps] of tp) { teams.add(t); teamPos.set(t, new Set(ps)); ps.forEach((x) => positions.add(x)); }
+      (extra || []).forEach((x) => positions.add(x));
+      return { id, name, pos, headshot: hs ? (hs[0] === "~" ? pre + hs.slice(1) : hs) : undefined,
+               teams, positions, teamPos, ach: new Set(ach), r1: !!(fl & 1), undrafted: !!(fl & 2),
+               min, max, alts: new Set(alts || []) };
+    });
+    finishRoster();
+  }
+
+  function finishRoster() {
+    // Search keys: the shown name, then other spellings fans type: a later
+    // season's name ("Ben Chilwell"), FPL's short name ("Casemiro") and the
+    // first + last word of a long legal name ("Bruno Fernandes").
+    S.R.forEach((a) => {
+      a.nameW = foldW(a.name); a.nameC = foldC(a.nameW);
+      const ws = new Set();
+      for (const n of [a.name, ...a.alts]) {
+        const w = foldW(n), parts = w.split(" ");
+        ws.add(w);
+        if (parts.length >= 3) ws.add(parts[0] + " " + parts[parts.length - 1]);
+      }
+      ws.delete(a.nameW);
+      a.altW = [...ws]; a.altC = a.altW.map(foldC);
+    });
     S.R.sort((x, y) => x.name.localeCompare(y.name));
   }
 
@@ -614,10 +657,13 @@
     // letters, so "mc" doesn't surface "Adam Clendening".
     const starts = [], words = [], has = [];
     const wq = " " + qW, cross = qC.length >= 4;
+    // best tier over the shown name and its alternate spellings
+    const tier = (w, c) => (w.startsWith(qW) || c.startsWith(qC) ? 0 : w.includes(wq) ? 1
+      : w.includes(qW) || (cross && c.includes(qC)) ? 2 : 3);
     for (const p of S.R) {
-      if (p.nameW.startsWith(qW) || p.nameC.startsWith(qC)) starts.push(p);
-      else if (p.nameW.includes(wq)) words.push(p);
-      else if (p.nameW.includes(qW) || (cross && p.nameC.includes(qC))) has.push(p);
+      let t = tier(p.nameW, p.nameC);
+      for (let i = 0; t && i < p.altW.length; i++) t = Math.min(t, tier(p.altW[i], p.altC[i]));
+      if (t < 3) [starts, words, has][t].push(p);
       if (starts.length >= 8) break;
     }
     const items = starts.concat(words, has).slice(0, 8);

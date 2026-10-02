@@ -426,6 +426,11 @@ footer.site-footer {
   margin-top: var(--sp-lg);
 }
 footer.site-footer a { color: var(--accent); }
+/* hubs: the banner and game cards are filled by end-of-body scripts. Reserve
+   the banner's box and keep the footer hidden until the cards land, so the
+   first paint doesn't shift (desktop CLS 0.07-0.11 -> ~0). */
+#sport-banner:empty { height: 116px; margin-top: var(--sp-lg); }
+body:has(#games:empty) .site-footer { visibility: hidden; }
 
 /* responsive header — let the brand + nav stack cleanly on phones */
 @media (max-width: 560px) {

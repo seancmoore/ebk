@@ -98,6 +98,10 @@ def build():
             continue
         df = df[df["season_type"] == 2]                      # regular season
         df = df[df["did_not_play"] != True]                  # noqa: E712 — actually played
+        # 2002-2012 files also list inactive/injured players as rows with no
+        # minutes and no points (did_not_play is False). Those aren't games
+        # played: they inflated G and deflated PPG (McGrady 2009: 82 G, ESPN 35).
+        df = df[df["minutes"].notna() | df["points"].notna()]
         # season_type == 2 still includes All-Star/Rising Stars exhibition
         # games, logged under fictional "teams" (draft captains, conferences)
         # rather than real franchises — e.g. Joel Embiid's 2018 box scores
@@ -109,6 +113,15 @@ def build():
         frames.append(df)
         print(f"  {y}: {len(df):,} player-games")
     allg = pd.concat(frames, ignore_index=True)
+    # ESPN occasionally logs one player's game under two athlete ids (Corey
+    # Brewer 2019, Isaiah Canaan 2019, Daryl Macon 2020). Keep the row of the
+    # id with more games that season, so the phantom id doesn't double-count.
+    n_games = allg.groupby(["season", "athlete_id"])["game_id"].transform("size")
+    allg = (allg.assign(_n=n_games)
+                .sort_values("_n", ascending=False, kind="stable")
+                .drop_duplicates(["game_id", "team_abbreviation", "athlete_display_name"])
+                .sort_index()
+                .drop(columns="_n"))
 
     num = ["points", "rebounds", "assists", "steals", "blocks",
            "three_point_field_goals_made"]
@@ -126,8 +139,9 @@ def build():
         blk = float(g["blocks"].sum()); tpm = float(g["three_point_field_goals_made"].sum())
         # Every team a player suited up for that season, in the order they
         # first appeared for it — not just the most-common one, so a
-        # mid-season trade still registers on both teams' grids.
-        teams = list(dict.fromkeys(g["team_abbreviation"]))
+        # mid-season trade still registers on both teams' grids. The box files
+        # are newest-first, so sort by date to make this order chronological.
+        teams = list(dict.fromkeys(g.sort_values("game_date", kind="stable")["team_abbreviation"]))
         team = g["team_abbreviation"].mode()
         team = team.iloc[0] if len(team) else (g["team_abbreviation"].iloc[-1] or "")
         pos = g["athlete_position_abbreviation"].mode()

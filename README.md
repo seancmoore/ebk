@@ -33,9 +33,18 @@ cd data
 python build_players.py
 ```
 
-`build_players.py` also HEADs the old NFL.com headshots (cached in `data/raw/nfl_headshot_probe.json`): NFL.com answers a missing photo with a generic helmet and a 200, so those rows switch to the player's ESPN headshot, or to none. The first run takes a few minutes; delete the cache file to re-check.
+`build_players.py` also HEADs the old NFL.com headshots (cached in `data/raw/nfl_headshot_probe.json`): NFL.com answers a missing photo with a generic helmet and a 200, so those rows switch to the player's ESPN headshot, or to none. The first run takes a few minutes; delete the cache file to re-check. `build_soccer.py` does the same for Premier League photos (`data/raw/soccer/headshot_probe.json`), preferring the PL's newer `premierleague25` path.
 
-When a season ends, raise `LAST` in that sport's builder (`SEASONS` for soccer), rebuild, and bump the `?v=N` on `DATA_URL` in the game scripts so browsers pick up the new data. Ship the output as-is - `tools/slim_players.py` prunes the low-stat and traded stints the Player Grid needs.
+After any rebuild, regenerate the Player Grid rosters and check the boards:
+
+```
+node tools/build_grid_roster.cjs
+node tools/solvable.cjs
+```
+
+The grid page loads the small `grid-roster.json` next to each `players.json` instead of the whole dataset (it falls back to `players.json` if the roster is missing). `solvable.cjs` fails while a roster is stale.
+
+When a season ends, raise `LAST` in that sport's builder (`SEASONS` for soccer), rebuild, and bump the `?v=N` on `DATA_URL` (and `ROSTER_URL` in `player-grid.js`) in the game scripts so browsers pick up the new data. Ship the output as-is - `tools/slim_players.py` prunes the low-stat and traded stints the Player Grid needs.
 
 ## Running it locally
 
