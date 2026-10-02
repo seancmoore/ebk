@@ -1,0 +1,280 @@
+/* EBK · home: "This Week's Rack" + sport cards.
+   One counted Daily Grid a day (sport rotates weekly), streak days + points on
+   an LED scoreboard, a shot clock to midnight ET, and sport cards that play
+   their sport on hover (desktop) or tap (touch). Everything is scoped to
+   #rack / #sports so it can't leak into the rest of the site. */
+#rack,#sports{--line-2:rgba(255,255,255,.16);--pts:#ffd166}
+
+/* ---------- panel ---------- */
+#rack{margin-top:var(--sp-md)}
+#rack .rk-panel{--r:28px;--bs:72px;--bt:108px;--oh:156px;position:relative;overflow:hidden;border-radius:var(--r);
+  border:1px solid var(--line-2);box-shadow:var(--elev-2);padding:var(--sp-lg) var(--sp-lg) 0;
+  background:radial-gradient(40% 70% at var(--tx,57%) -10%,rgba(255,255,255,.12),transparent 70%),
+    radial-gradient(70% 60% at 50% 105%,rgba(61,220,151,.12),transparent 70%),linear-gradient(180deg,#0f1532,#090d1b)}
+#rack .rk-top{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 24px;align-items:start}
+#rack .rk-title{margin:2px 0 0;font-size:clamp(1.9rem,3.4vw,2.9rem);font-weight:900;letter-spacing:-.02em;line-height:1;white-space:nowrap;color:var(--text)}
+
+/* ---------- scoreboard: Days · Pts ---------- */
+#rack .rk-board{display:flex;align-items:stretch;gap:10px}
+#rack .sbx{display:grid;grid-template-columns:auto auto;border-radius:16px;background:#040509;border:2px solid #2a3150;
+  box-shadow:0 0 0 4px #0d1226,0 14px 30px rgba(0,0,0,.6);overflow:hidden}
+#rack .sbx>div{position:relative;padding:10px 20px 12px;text-align:center}
+#rack .sbx>div+div{border-left:2px solid #1d2340}
+#rack .lbl{font-size:.62rem;font-weight:900;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+#rack .led{display:flex;justify-content:center;align-items:center;gap:.06em;font-size:3.1rem;line-height:1;margin-top:8px}
+#rack .led.g{color:var(--accent)}
+#rack .led.y{color:var(--pts)}
+#rack .led.off{color:#5d6890}
+#rack .led.off .s7 .on{opacity:.38;filter:none}
+
+/* seven-segment digits: unlit segments stay faintly visible, like a real board */
+#rack .s7{height:1em;width:.6em;transform:skewX(-6deg);overflow:visible}
+#rack .s7c{height:1em;width:.2em;overflow:visible}
+#rack .s7 .on,#rack .s7c circle{fill:currentColor;filter:drop-shadow(0 0 .1em color-mix(in srgb,currentColor 70%,transparent))}
+#rack .s7 .off{fill:currentColor;opacity:.09}
+/* bulb texture over every LED face */
+#rack .sbx>div::after,#rack .rk-clock::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  background:radial-gradient(circle at 50% 50%,transparent 50%,rgba(2,3,8,.6) 75%) 0 0/3px 3px;opacity:.35}
+
+/* ---------- shot clock ---------- */
+#rack .rk-clock{position:relative;z-index:1;border-radius:16px;padding:12px 14px 14px;text-align:center;background:#040509;border:2px solid #2a3150;
+  box-shadow:0 0 0 4px #0d1226,0 14px 30px rgba(0,0,0,.6);display:flex;flex-direction:column;justify-content:center}
+#rack .rk-clock.risk{border-color:#6b4a1a}
+#rack .rk-clock .dig{display:flex;justify-content:center;align-items:center;gap:.06em;font-size:2.7rem;line-height:1;margin:8px 0 6px;color:#ff6b57}
+#rack .rk-clock .dig .ss{display:inline-flex;align-items:center;gap:.06em;font-size:.55em;color:#ff9d8f;align-self:flex-end;margin-bottom:.12em}
+#rack .rk-clock .dig .ss .s7c circle{animation:rk-blink 1s steps(1) infinite}
+#rack .rk-clock .sub{font-size:.7rem;color:var(--muted);font-weight:700}
+
+/* ---------- the rack: seven balls on a rail ---------- */
+#rack .rk-row{position:relative;list-style:none;margin:var(--sp-md) 0 0;padding:0;display:grid;gap:6px;align-items:start}
+#rack .rk-row::after{content:"";position:absolute;left:-8px;right:-8px;top:calc(var(--oh) - 14px);height:10px;border-radius:6px;z-index:0;
+  background:linear-gradient(180deg,#e9eefc,#7c88ad 45%,#2b3354);box-shadow:0 -18px 40px rgba(61,220,151,.14),0 10px 24px rgba(0,0,0,.6)}
+#rack .r7{--c:var(--accent);--rc:#3ddc97;--f:0;position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0}
+#rack .r7 .o{position:relative;height:var(--oh);display:flex;align-items:flex-end;justify-content:center;padding-bottom:12px;width:100%}
+#rack .r7 .bw{--b:var(--bs);position:relative;display:grid;place-items:center;width:calc(var(--b) + 18px);height:calc(var(--b) + 18px)}
+#rack .r7 .bw::after{content:"";position:absolute;bottom:-4px;left:28%;right:28%;height:8px;border-radius:50%;background:rgba(0,0,0,.55);filter:blur(3px);z-index:-1}
+#rack .rb{display:block;width:var(--b);height:var(--b);border-radius:50%;background:center/contain no-repeat;filter:drop-shadow(0 6px 10px rgba(0,0,0,.45))}
+#rack .rb.basketball{background-image:url("/img/balls/basketball.webp")}
+#rack .rb.football{background-image:url("/img/balls/football.webp")}
+#rack .rb.soccer{background-image:url("/img/balls/soccer.webp")}
+#rack .rb.baseball{background-image:url("/img/balls/baseball.webp")}
+#rack .rb.hockey{background-image:url("/img/balls/hockey.webp")}
+/* the ball's colour scales with squares filled; missed days go grey */
+#rack .r7.played .rb{filter:saturate(calc(.15 + .85*var(--f))) brightness(calc(.55 + .45*var(--f)))}
+#rack .r7.t3 .rb{box-shadow:0 0 26px color-mix(in srgb,var(--c) 45%,transparent)}
+#rack .r7.t4 .rb{box-shadow:0 0 34px rgba(255,209,102,.55)}
+#rack .r7.missed .rb{filter:grayscale(1) brightness(.4);opacity:.5}
+#rack .r7.missed .bw{opacity:.6}
+#rack .r7.blank .rb{filter:grayscale(.8) brightness(.45)}
+#rack .r7.future .rb{filter:saturate(.25) brightness(.42);opacity:.45}
+#rack .r7.future .bw::before{content:"";position:absolute;inset:7px;border-radius:50%;border:1px dashed rgba(255,255,255,.18)}
+#rack .r7.today .bw{--b:var(--bt);transform:translateY(-8px)}
+#rack .r7.today:not(.played) .rb{filter:saturate(.85) brightness(.9)}
+
+/* rings: 9 bulbs, one lit per square; a perfect 9/9 turns solid gold with a light sweeping round it */
+#rack .ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:1;pointer-events:none}
+#rack .ring .trk{fill:none;stroke:transparent;stroke-width:5}
+#rack .ring .trk.dash{stroke:color-mix(in srgb,var(--c) 70%,transparent);stroke-dasharray:22 8;stroke-width:3.5;filter:drop-shadow(0 0 3px var(--c))}
+#rack .r7.today:not(.played) .ring{animation:rk-spin 7s linear infinite}
+#rack .ring .sg{fill:none;stroke:rgba(255,255,255,.09);stroke-width:7;stroke-linecap:round}
+#rack .ring .sg.on{stroke:var(--rc);filter:drop-shadow(0 0 3px var(--rc))}
+#rack .r7.t1{--rc:#5b7cff}
+#rack .r7.t3{--rc:#a6ff6b}
+#rack .r7.t4{--rc:var(--pts)}
+#rack .ring .prg,#rack .ring .sweep{display:none}
+#rack .r7.t4 .ring .sg{display:none}
+#rack .r7.t4 .ring .trk{stroke:rgba(255,209,102,.25)}
+#rack .r7.t4 .ring .prg{display:inline;fill:none;stroke:var(--pts);stroke-width:7;stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(255,209,102,.75));animation:rk-glow 3.2s ease-in-out infinite}
+#rack .r7.t4 .ring .sweep{display:inline;transform-origin:50% 50%;transform-box:view-box;animation:rk-spin 4.5s linear infinite}
+#rack .r7.t4 .ring .sweep circle{fill:none;stroke-width:7;stroke-linecap:round;filter:drop-shadow(0 0 4px #fff3c4) drop-shadow(0 0 8px rgba(255,209,102,.9))}
+#rack .r7 .star{position:absolute;top:-2px;right:-2px;z-index:2;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--pts);color:#2b1d00;box-shadow:0 0 14px rgba(255,209,102,.8)}
+#rack .r7 .star svg{width:15px;height:15px}
+
+/* labels under each ball */
+#rack .r7 .lab{padding:16px 0 14px;display:grid;gap:3px;justify-items:center;align-content:start;min-height:100px}
+#rack .r7 .lab .w{font-size:.66rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+#rack .r7 .lab .w i{font-style:normal;font-weight:700;letter-spacing:.04em;color:color-mix(in srgb,var(--muted) 75%,transparent);margin-left:2px}
+#rack .r7.today .lab .w{color:var(--c)}
+#rack .r7.today .lab .w i{color:inherit;opacity:.8}
+#rack .r7 .lab b{font-size:1rem;font-weight:900}
+#rack .r7 .lab .r{font-size:.72rem;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
+#rack .r7 .lab .r .n{color:var(--text);margin-right:3px}
+#rack .r7.played .lab .r{color:var(--pts)}
+#rack .r7.missed .lab .r{color:#ff8a95}
+#rack .r7.missed .lab b,#rack .r7.future .lab b{color:var(--muted)}
+#rack .r7 a.go{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:0 16px;margin-top:6px;border-radius:12px;background:var(--c);color:#07101f;font-weight:900;font-size:.85rem;text-decoration:none}
+#rack .r7 a.go svg{width:16px;height:16px}
+#rack .r7 a.go.ghost{background:transparent;border:1px solid var(--line-2);color:var(--text)}
+
+/* footer: career (gold) · best streak (green) */
+#rack .rk-foot{position:relative;display:flex;justify-content:space-between;gap:10px 20px;flex-wrap:wrap;align-items:center;margin:6px calc(var(--sp-lg)*-1) 0;
+  padding:14px var(--sp-lg);border-top:1px solid var(--line);background:rgba(4,6,14,.55);font-size:var(--fs-xs);color:var(--muted);font-weight:700}
+#rack .fstats{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+#rack .fstats .st{display:inline-flex;align-items:baseline;gap:7px;white-space:nowrap}
+#rack .fstats .k{font-size:.66rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+#rack .fstats .v{font-size:1.05rem;font-weight:900;font-variant-numeric:tabular-nums;color:var(--text)}
+#rack .fstats .v.y{color:var(--pts)}
+#rack .fstats .v.g{color:var(--accent)}
+#rack .fstats .u{font-size:.72rem;font-weight:700;color:var(--muted)}
+#rack .fstats .sep{width:1px;height:18px;background:var(--line-2)}
+
+@media (max-width:980px){
+  #rack .rk-top{grid-template-columns:1fr}
+  #rack .rk-panel{--bs:54px;--bt:82px;--oh:124px}
+}
+@media (max-width:640px){
+  #rack .rk-panel{--bs:30px;--bt:52px;--oh:86px;padding:16px 12px 0}
+  #rack .rk-title{font-size:1.7rem}
+  #rack .rk-board{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  #rack .sbx{grid-column:1/-1}
+  #rack .sbx>div{padding:8px 10px}
+  #rack .led{font-size:2.2rem}
+  #rack .rk-clock{grid-column:1/-1;display:grid;grid-template-columns:auto auto;grid-template-areas:"lbl dig" "sub dig";justify-content:space-between;align-items:center;column-gap:12px;text-align:left;padding:10px 14px}
+  #rack .rk-clock .lbl{grid-area:lbl}
+  #rack .rk-clock .dig{grid-area:dig;font-size:2rem;margin:0}
+  #rack .rk-clock .sub{grid-area:sub;font-size:.62rem;white-space:nowrap}
+  #rack .rk-row{gap:2px}
+  #rack .rk-row::after{top:calc(var(--oh) - 10px);height:7px;left:-4px;right:-4px}
+  #rack .r7 .o{padding-bottom:8px}
+  #rack .r7 .bw{width:calc(var(--b) + 12px);height:calc(var(--b) + 12px)}
+  #rack .ring .sg{stroke-width:8}
+  #rack .ring .trk.dash{stroke-width:4}
+  #rack .r7 .star{width:16px;height:16px;top:-4px;right:-4px}
+  #rack .r7 .star svg{width:10px;height:10px}
+  #rack .r7 .lab{padding:12px 0 10px;min-height:0}
+  #rack .r7 .lab .w{font-size:.55rem;letter-spacing:.04em}
+  #rack .r7 .lab .w i{display:block}
+  #rack .r7 .lab b{font-size:.74rem}
+  #rack .r7 .lab .r{font-size:.58rem;line-height:1.25}
+  #rack .r7 .lab .r .n{display:block;font-size:.66rem}
+  #rack .r7 a.go{padding:0 10px;font-size:.78rem}
+  #rack .rk-foot{margin:6px -12px 0;padding:12px}
+}
+
+/* ================= sport cards ================= */
+#sports .sp-h{margin:var(--sp-xl) 0 var(--sp-md);font-size:var(--fs-xl);font-weight:900;letter-spacing:-.02em;line-height:1.05;color:var(--text)}
+#sports .sports-a{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+#sports .sp{--c:var(--accent);position:relative;display:flex;align-items:center;gap:18px;padding:20px;min-height:128px;overflow:hidden;
+  border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));color:var(--text);text-decoration:none;
+  transition:transform var(--dur) var(--ease-spring),border-color var(--dur) var(--ease)}
+#sports .sp::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 120% at 0% 50%,color-mix(in srgb,var(--c) 16%,transparent),transparent 65%);pointer-events:none}
+#sports .sp:focus-visible{outline:2px solid var(--c);outline-offset:3px}
+#sports .sp .st{position:relative;z-index:1;min-width:0;flex:1}
+#sports .sp h3{margin:0;font-size:1.45rem;font-weight:900;letter-spacing:-.02em;line-height:1}
+#sports .sp p{margin:6px 0 10px;color:var(--muted);font-size:var(--fs-sm)}
+#sports .sp .cnt{display:flex;align-items:center;gap:6px;color:var(--c);font-weight:800;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+#sports .sp .cnt svg{width:15px;height:15px}
+#sports .sp.istoday{border-color:color-mix(in srgb,var(--c) 55%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 30%,transparent),0 18px 40px -20px color-mix(in srgb,var(--c) 50%,transparent)}
+#sports .sp .todaytag{position:absolute;top:12px;right:12px;z-index:1;font-size:.58rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;padding:4px 8px;border-radius:999px;background:var(--c);color:#07101f;transition:opacity .2s}
+
+/* the ball: a still sprite at rest; on play it swaps to a 24-frame spin strip */
+#sports .sball{--s:84px;position:relative;flex:none;width:var(--s);height:var(--s);display:block}
+#sports .sball .ax{position:absolute;inset:0;display:block}
+#sports .sball i{position:absolute;inset:0;background:center/contain no-repeat;filter:drop-shadow(0 8px 10px rgba(0,0,0,.5))}
+#sports .sball::before,#sports .sball::after{content:"";position:absolute;pointer-events:none;opacity:0}
+#sports .k-basketball i{background-image:url("/img/balls/basketball.webp")}
+#sports .k-football i{background-image:url("/img/balls/football.webp")}
+#sports .k-soccer i{background-image:url("/img/balls/soccer.webp")}
+#sports .k-baseball i{background-image:url("/img/balls/baseball.webp")}
+#sports .k-hockey i{background-image:url("/img/balls/hockey.webp")}
+
+/* props that appear on play */
+#sports .prop{position:absolute;pointer-events:none;opacity:0;background:center/100% 100% no-repeat;filter:drop-shadow(0 4px 6px rgba(0,0,0,.5));z-index:2}
+#sports .bat{left:1px;top:-5px;width:16px;height:170px;background-image:url("/img/props/bat.webp");transform-origin:50% 100%;transform:rotate(-75deg)}
+#sports .stick{left:-34px;top:-80px;width:76px;height:120px;background-image:url("/img/props/stick.webp");transform-origin:4px 0;transform:rotate(55deg)}
+#sports .tgt{position:absolute;opacity:0;transform:translateY(-8px);transition:opacity .3s,transform .4s var(--ease);z-index:2;pointer-events:none;
+  background-position:center;background-size:100% 100%;background-repeat:no-repeat;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5))}
+#sports .hoop{--lift:10px;right:14px;top:4px;width:76px;height:87px;background-image:url("/img/props/hoop.webp")}
+#sports .uprights{right:34px;bottom:-4px;width:45px;height:112px;background-image:url("/img/props/uprights.webp")}
+#sports .gloves{right:18px;top:22px;width:82px;height:75px;background-image:url("/img/props/gloves.webp")}
+#sports .goal{right:10px;top:10px;width:114px;height:65px;background-image:url("/img/props/goal.webp")}
+#sports .k-baseball::after{inset:-30px;z-index:4;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg stroke='%23fff' stroke-width='4' stroke-linecap='round'%3E%3Cpath d='M50 6v14M50 80v14M6 50h14M80 50h14M19 19l10 10M71 71l10 10M81 19 71 29M29 71 19 81'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+#sports .k-hockey::before{left:-6px;bottom:10px;width:40px;height:24px;z-index:4;background:radial-gradient(circle,#f4fdff 1.8px,transparent 2.4px) 0 0/6px 5px;
+  -webkit-mask:radial-gradient(60% 60% at 100% 70%,#000,transparent);mask:radial-gradient(60% 60% at 100% 70%,#000,transparent)}
+
+/* play states: tap (.play) and keyboard focus everywhere; hover only where hover exists */
+#sports .sp:is(:focus-visible,.play) .sball{z-index:3}
+#sports .sp:is(:focus-visible,.play) .todaytag{opacity:0}
+#sports .sp:is(:focus-visible,.play) .tgt{opacity:1;transform:none}
+#sports .sp:is(:focus-visible,.play) .bat{animation:rk-swing 2.4s cubic-bezier(.3,0,.2,1) infinite}
+#sports .sp:is(:focus-visible,.play) .k-baseball i{background-image:url("/img/balls/spin/baseball.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .28s steps(24) infinite,rk-homer 2.4s linear infinite}
+#sports .sp:is(:focus-visible,.play) .k-baseball::after{animation:rk-crack 2.4s linear infinite}
+#sports .sp.lg-mlb:is(:focus-visible,.play){animation:rk-jolt 2.4s linear infinite}
+#sports .sp:is(:focus-visible,.play) .stick{animation:rk-slap 2.2s cubic-bezier(.3,0,.2,1) infinite}
+#sports .sp:is(:focus-visible,.play) .k-hockey i{background-image:url("/img/balls/spin/hockey.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .45s steps(24) infinite,rk-puck 2.2s linear infinite}
+#sports .sp:is(:focus-visible,.play) .k-hockey::before{animation:rk-spray 2.2s ease-out infinite}
+#sports .sp:is(:focus-visible,.play) .hoop{animation:rk-rim 2.2s linear infinite}
+#sports .sp:is(:focus-visible,.play) .k-basketball .ax{animation:rk-shotx 2.2s linear infinite}
+#sports .sp:is(:focus-visible,.play) .k-basketball i{background-image:url("/img/balls/spin/basketball.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .6s steps(24) infinite,rk-shoty 2.2s linear infinite}
+#sports .sp.lg-nfl:is(:focus-visible,.play) .k-football .ax{animation:rk-fgx 2.3s linear infinite}
+#sports .sp.lg-nfl:is(:focus-visible,.play) .k-football i{background-image:url("/img/balls/spin/kick.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .2s steps(24) .18s infinite,rk-fgy 2.3s linear infinite}
+#sports .sp.lg-nfl:is(:focus-visible,.play) .uprights{animation:rk-goodfg 2.3s linear infinite}
+#sports .sp.lg-cfb:is(:focus-visible,.play) .k-football .ax{animation:rk-catchx 2.3s linear infinite}
+#sports .sp.lg-cfb:is(:focus-visible,.play) .k-football i{background-image:url("/img/balls/spin/football.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .34s steps(24) infinite,rk-catchy 2.3s linear infinite}
+#sports .sp.lg-cfb:is(:focus-visible,.play) .gloves{animation:rk-squeeze 2.3s linear infinite}
+#sports .sp.lg-soccer:is(:focus-visible,.play) .k-soccer .ax{animation:rk-goalx 2.3s cubic-bezier(.3,0,.7,1) infinite}
+#sports .sp.lg-soccer:is(:focus-visible,.play) .k-soccer i{background-image:url("/img/balls/spin/soccer.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .45s steps(24) infinite,rk-goaly 2.3s linear infinite}
+#sports .sp.lg-soccer:is(:focus-visible,.play) .goal{animation:rk-ripple 2.3s linear infinite}
+@media (hover:hover){
+  #sports .sp:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--c) 70%,transparent)}
+  #sports .sp:hover .sball{z-index:3}
+  #sports .sp:hover .todaytag{opacity:0}
+  #sports .sp:hover .tgt{opacity:1;transform:none}
+  #sports .sp:hover .bat{animation:rk-swing 2.4s cubic-bezier(.3,0,.2,1) infinite}
+  #sports .sp:hover .k-baseball i{background-image:url("/img/balls/spin/baseball.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .28s steps(24) infinite,rk-homer 2.4s linear infinite}
+  #sports .sp:hover .k-baseball::after{animation:rk-crack 2.4s linear infinite}
+  #sports .sp.lg-mlb:hover{animation:rk-jolt 2.4s linear infinite}
+  #sports .sp:hover .stick{animation:rk-slap 2.2s cubic-bezier(.3,0,.2,1) infinite}
+  #sports .sp:hover .k-hockey i{background-image:url("/img/balls/spin/hockey.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .45s steps(24) infinite,rk-puck 2.2s linear infinite}
+  #sports .sp:hover .k-hockey::before{animation:rk-spray 2.2s ease-out infinite}
+  #sports .sp:hover .hoop{animation:rk-rim 2.2s linear infinite}
+  #sports .sp:hover .k-basketball .ax{animation:rk-shotx 2.2s linear infinite}
+  #sports .sp:hover .k-basketball i{background-image:url("/img/balls/spin/basketball.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .6s steps(24) infinite,rk-shoty 2.2s linear infinite}
+  #sports .sp.lg-nfl:hover .k-football .ax{animation:rk-fgx 2.3s linear infinite}
+  #sports .sp.lg-nfl:hover .k-football i{background-image:url("/img/balls/spin/kick.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .2s steps(24) .18s infinite,rk-fgy 2.3s linear infinite}
+  #sports .sp.lg-nfl:hover .uprights{animation:rk-goodfg 2.3s linear infinite}
+  #sports .sp.lg-cfb:hover .k-football .ax{animation:rk-catchx 2.3s linear infinite}
+  #sports .sp.lg-cfb:hover .k-football i{background-image:url("/img/balls/spin/football.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .34s steps(24) infinite,rk-catchy 2.3s linear infinite}
+  #sports .sp.lg-cfb:hover .gloves{animation:rk-squeeze 2.3s linear infinite}
+  #sports .sp.lg-soccer:hover .k-soccer .ax{animation:rk-goalx 2.3s cubic-bezier(.3,0,.7,1) infinite}
+  #sports .sp.lg-soccer:hover .k-soccer i{background-image:url("/img/balls/spin/soccer.webp");background-size:calc(var(--s)*24) var(--s);background-position:0 0;animation:rk-strip .45s steps(24) infinite,rk-goaly 2.3s linear infinite}
+  #sports .sp.lg-soccer:hover .goal{animation:rk-ripple 2.3s linear infinite}
+}
+
+@media (max-width:900px){#sports .sports-a{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){#sports .sball{--s:68px}}
+@media (max-width:560px){
+  #sports .sp{flex-direction:column;align-items:flex-start;gap:12px;padding:16px;min-height:0}
+  #sports .sp h3{font-size:1.2rem}
+  #sports .sp p{font-size:.8rem;margin:4px 0 8px}
+}
+@media (prefers-reduced-motion:reduce){
+  #rack .r7.today:not(.played) .ring,#rack .r7.t4 .ring .prg,#rack .rk-clock .dig .ss .s7c circle{animation:none}
+  #rack .r7.t4 .ring .sweep{display:none}
+  #sports .sp *,#sports .sp *::before,#sports .sp *::after,#sports .sp{animation:none!important}
+}
+
+/* ---------- keyframes ---------- */
+@keyframes rk-spin{to{transform:rotate(360deg)}}
+@keyframes rk-blink{50%{opacity:.15}}
+@keyframes rk-glow{50%{filter:drop-shadow(0 0 9px rgba(255,209,102,.95))}}
+@keyframes rk-strip{to{background-position:calc(var(--s)*-24) 0}}
+@keyframes rk-swing{0%{transform:rotate(-75deg);opacity:0}10%{transform:rotate(-62deg);opacity:1}30%{transform:rotate(-80deg);opacity:1;animation-timing-function:cubic-bezier(.7,0,1,.6)}38%{transform:rotate(15deg)}50%{transform:rotate(110deg);opacity:1}60%,100%{transform:rotate(120deg);opacity:0}}
+@keyframes rk-homer{0%,37.9%{transform:none;opacity:1}38%{transform:translate(-2px,2px) scale(.92)}40%{transform:translate(30px,-16px) scale(.9)}56%{transform:translate(300px,-150px) scale(.3);opacity:1}57%,84%{opacity:0;transform:none}100%{opacity:1;transform:none}}
+@keyframes rk-crack{0%,37.5%{opacity:0;transform:scale(.4)}39%{opacity:1;transform:scale(.8);filter:drop-shadow(0 0 6px #fff)}48%,100%{opacity:0;transform:scale(1.35) rotate(14deg)}}
+@keyframes rk-jolt{0%,37.9%,44%,100%{transform:none}39%{transform:translate(-2px,1px)}41%{transform:translate(2px,-1px)}43%{transform:translate(-1px,0)}}
+@keyframes rk-slap{0%{transform:rotate(55deg);opacity:0}12%{transform:rotate(48deg);opacity:1}30%{transform:rotate(70deg);opacity:1;animation-timing-function:cubic-bezier(.8,0,1,.7)}38%{transform:rotate(14deg)}48%{transform:rotate(-18deg);opacity:1}60%,100%{transform:rotate(-22deg);opacity:0}}
+@keyframes rk-puck{0%,37.9%{transform:none;opacity:1}38%{transform:translateX(-2px) scale(.96)}52%{transform:translateX(340px);opacity:1}53%,84%{opacity:0;transform:none}100%{opacity:1;transform:none}}
+@keyframes rk-spray{0%,37%{opacity:0;transform:none}41%{opacity:.95}56%,100%{opacity:0;transform:translate(-14px,-8px)}}
+@keyframes rk-rim{0%,55%,66%,100%{transform:none}58%{transform:translateY(2px)}61%{transform:translateY(-1px)}}
+@keyframes rk-shotx{0%,10%{transform:none}52%,70%{transform:translateX(var(--dx,230px))}71%,100%{transform:none}}
+@keyframes rk-shoty{0%{transform:none;opacity:1}10%{transform:translateY(6px) scale(.98);animation-timing-function:cubic-bezier(.25,.6,.45,1)}32%{transform:translateY(var(--ap,-40px)) scale(.62);animation-timing-function:cubic-bezier(.55,0,.75,.4)}52%{transform:translateY(var(--dy,-30px)) scale(.5)}64%{transform:translateY(calc(var(--dy,-30px) + 40px)) scale(.48);opacity:1}70%{transform:translateY(calc(var(--dy,-30px) + 48px)) scale(.48);opacity:0}71%,84%{transform:none;opacity:0}100%{transform:none;opacity:1}}
+@keyframes rk-fgx{0%,10%{transform:none}54%{transform:translateX(var(--dx))}66%{transform:translateX(calc(var(--dx) + 6px))}67%,100%{transform:none}}
+@keyframes rk-fgy{0%{transform:scale(1.15);opacity:1}8%{transform:translateY(3px) scale(1.18,1.08)}10%{transform:translateY(-4px) scale(1.05) rotate(-10deg);animation-timing-function:cubic-bezier(.25,.6,.45,1)}32%{transform:translateY(var(--ap)) scale(.8) rotate(-18deg);animation-timing-function:cubic-bezier(.55,0,.75,.4)}54%{transform:translateY(var(--dy)) scale(.42) rotate(-10deg);opacity:1}66%{transform:translateY(calc(var(--dy) - 4px)) scale(.28) rotate(-6deg);opacity:0}67%,84%{transform:none;opacity:0}100%{transform:scale(1.15);opacity:1}}
+@keyframes rk-goodfg{0%,55%,70%,100%{filter:drop-shadow(0 6px 10px rgba(0,0,0,.5))}58%{filter:drop-shadow(0 0 10px rgba(255,210,31,.9))}}
+@keyframes rk-catchx{0%,10%{transform:none}52%,80%{transform:translateX(var(--dx))}81%,100%{transform:none}}
+@keyframes rk-catchy{0%{transform:none;opacity:1}10%{transform:translateY(5px);animation-timing-function:cubic-bezier(.25,.6,.45,1)}32%{transform:translateY(var(--ap)) scale(.8) rotate(-12deg);animation-timing-function:cubic-bezier(.55,0,.75,.4)}52%{transform:translateY(var(--dy)) scale(.62)}55%{transform:translateY(calc(var(--dy) + 3px)) scale(.6)}76%{transform:translateY(var(--dy)) scale(.62);opacity:1}80%{opacity:0}81%,88%{transform:none;opacity:0}100%{transform:none;opacity:1}}
+@keyframes rk-squeeze{0%,51%{transform:none;opacity:1}55%{transform:scale(.93,.97)}62%,76%{transform:scale(.96,.98);opacity:1}82%{opacity:0;transform:none}92%,100%{opacity:1}}
+@keyframes rk-goalx{0%,8%{transform:none}50%{transform:translateX(var(--dx))}60%,70%{transform:translateX(calc(var(--dx) + 4px))}71%,100%{transform:none}}
+@keyframes rk-goaly{0%{transform:none;opacity:1}8%{transform:translateY(4px) scale(.98)}22%{transform:translateY(calc(var(--ap) + 10px)) scale(.72)}50%{transform:translateY(var(--dy)) scale(.36)}60%{transform:translateY(calc(var(--dy) + 2px)) scale(.33)}70%{transform:translateY(calc(var(--dy) + 22px)) scale(.33);opacity:1}72%{opacity:0}73%,86%{transform:none;opacity:0}100%{transform:none;opacity:1}}
+@keyframes rk-ripple{0%,49%,64%,100%{transform:none}52%{transform:scale(1.035,1.02) translateX(1px)}56%{transform:scale(.99)}60%{transform:scale(1.01)}}

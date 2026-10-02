@@ -28,6 +28,7 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
   <link rel="stylesheet" href="/css/base.css" />
   <link rel="stylesheet" href="/css/home.css" />
+  <link rel="stylesheet" href="/css/rack.css" />
   <script src="/js/ebk-analytics.js" defer></script>
 </head>
 <body>
@@ -45,58 +46,21 @@
       <canvas id="hero3d" class="hero-canvas" aria-hidden="true"></canvas>
       <div class="hero-fade" aria-hidden="true"></div>
       <div class="hero-inner wrap">
-        <h1 class="rise">How <span class="elite-cycle"><span class="elite-base">elite</span><span class="elite-skin sk-basketball" aria-hidden="true">elite</span><span class="elite-skin sk-football" aria-hidden="true">elite</span><span class="elite-skin sk-soccer" aria-hidden="true">elite</span><span class="elite-skin sk-hockey" aria-hidden="true">elite</span><span class="elite-skin sk-baseball" aria-hidden="true">elite</span></span> is your ball knowledge, <span class="hero-name" id="hero-name">guest</span>?</h1>
-        <a class="hero-scroll rise d2" href="#sports" aria-label="Jump to games">▾</a>
+        <h1 class="rise">How <span class="elite-cycle" id="elite" tabindex="0" aria-label="elite"><span class="elite-base">elite</span><span class="elite-skin" aria-hidden="true">elite</span><span class="elite-skin" aria-hidden="true">elite</span></span> is your ball knowledge, <span class="hero-name" id="hero-name">guest</span>?</h1>
       </div>
     </section>
 
     <div class="wrap">
-      <!-- streak + today's five daily grids; filled by /js/ebk-daily.js.
-           Stays hidden if localStorage is unavailable (private windows). -->
-      <section id="daily-card" hidden></section>
+      <!-- This Week's Rack: one counted Daily Grid a day, sport rotates weekly.
+           Drawn by /js/ebk-rack.js from EBKDaily.rack(); stays hidden without localStorage. -->
+      <section id="rack" class="rack" aria-labelledby="rack-h" hidden></section>
 
-      <section class="replay-band" aria-label="Keep playing">
-        <a class="replay-card daily" href="/nfl/player-grid">
-          <span class="rc-ic">🔲</span>
-          <span class="rc-body"><span class="rc-title">Daily Grid</span>
-            <span class="rc-desc">A fresh 9-square grid in every sport. One shot a day.</span></span>
-          <span class="rc-foot" id="daily-reset">New grids daily</span>
-        </a>
-        <a class="replay-card cut" href="/deep-cut">
-          <span class="rc-ic">🗝️</span>
-          <span class="rc-body"><span class="rc-title">Deep Cut</span>
-            <span class="rc-desc">One deep ball-knowledge question a day. Three guesses, every sport.</span></span>
-          <span class="rc-foot">New question daily</span>
-        </a>
-        <a class="replay-card h2h" href="/h2h">
-          <span class="rc-ic">⚔️</span>
-          <span class="rc-body"><span class="rc-title">Head-to-Head</span>
-            <span class="rc-desc">Challenge a friend or climb the ranked ladder, live.</span></span>
-          <span class="rc-foot">Ranked &amp; private rooms</span>
-        </a>
-        <a class="replay-card board" href="/leaderboard">
-          <span class="rc-ic">🏆</span>
-          <span class="rc-body"><span class="rc-title">Leaderboards</span>
-            <span class="rc-desc">See where you rank across every game and sport.</span></span>
-          <span class="rc-foot">Global top 100</span>
-        </a>
-        <a class="replay-card deepbag" href="/deep-bag">
-          <span class="rc-ic">🎒</span>
-          <span class="rc-body"><span class="rc-title">Deep Bag</span>
-            <span class="rc-desc">Sports research, deep dives and hot takes.</span></span>
-          <span class="rc-foot">EBK's blog</span>
-        </a>
-      </section>
-      <p class="replay-you" id="replay-you" hidden></p>
+      <!-- Head-to-Head / Leaderboards / Deep Bag strip and the team browser are
+           parked for now; they come back below the sport cards later. -->
 
-      <section class="sport-section" id="sports" aria-label="Choose your sport">
-        <h2 class="section-eyebrow">Choose your sport</h2>
-        <div class="game-grid" id="sports-grid"></div>
-      </section>
-
-      <section class="teams-strip" aria-label="Browse teams">
-        <h2 class="section-eyebrow">Browse every team</h2>
-        <div class="logo-strip" id="logo-strip" aria-hidden="true"></div>
+      <section class="sport-section" id="sports" aria-labelledby="sports-h">
+        <h2 class="sp-h" id="sports-h">Choose your sport</h2>
+        <div class="sports-a" id="sport-cards"></div>
       </section>
     </div>
   </main>
@@ -108,14 +72,8 @@
 
   <script src="/js/catalog.js"></script>
   <script src="/js/ebk-ui.js"></script>
-  <script src="/js/teams.js"></script>
-  <script src="/js/nba-teams.js"></script>
-  <script src="/js/mlb-teams.js"></script>
-  <script src="/js/nhl-teams.js"></script>
-  <script src="/js/cfb-teams.js"></script>
-  <script src="/js/soccer-teams.js"></script>
-  <script src="/js/sport-banner.js"></script>
   <script src="/js/ebk-daily.js"></script>
+  <script src="/js/ebk-rack.js"></script>
   <script src="/js/home.js"></script>
   <script src="/js/fx.js"></script>
   <script src="/js/ebk-sound.js"></script>

@@ -72,7 +72,10 @@ function start(THREE, RoomEnvironment, imgs) {
       clearcoat: 0.08, clearcoatRoughness: 0.6,
     });
     const m = new THREE.Mesh(new THREE.SphereGeometry(1, 128, 96), mat);
-    m.userData.logo = [0.29, 0.6, 0.745];
+    // stamp centred in a side panel (same direction as BB_STAMP in tools/hero_textures/gen.js)
+    m.userData.logo = [Math.cos(0.4) * Math.sin(1.26), Math.sin(0.4), Math.cos(0.4) * Math.cos(1.26)];
+    m.userData.face = [0.81, 0.31, 0.5]; // 3/4 view: stamp panel plus the "+" seam junction on the left
+    m.userData.up = [0, 1, 0];          // keep the equator level, the curved seam arching over the stamp
     return m;
   }
 
@@ -224,7 +227,18 @@ function start(THREE, RoomEnvironment, imgs) {
   const balls = defs.map((d, i) => {
     const holder = new THREE.Group(), m = makers[d.k]();
     // start every ball with its EBK stamp turned toward the viewer
-    if (m.userData.logo) {
+    if (m.userData.logo && m.userData.up) {
+      // aim the stamp at the viewer AND keep the ball's own "up" axis pointing up
+      const V = new THREE.Vector3(0.22, 0.12, 1).normalize();
+      const L = new THREE.Vector3(...(m.userData.face || m.userData.logo)).normalize();
+      const U = new THREE.Vector3(...m.userData.up); U.addScaledVector(L, -U.dot(L)).normalize();
+      const W = new THREE.Vector3(0, 1, 0); W.addScaledVector(V, -W.dot(V)).normalize();
+      const from = new THREE.Matrix4().makeBasis(L, U, new THREE.Vector3().crossVectors(L, U));
+      const to = new THREE.Matrix4().makeBasis(V, W, new THREE.Vector3().crossVectors(V, W));
+      const q = new THREE.Quaternion().setFromRotationMatrix(to.multiply(from.transpose()));
+      if (m.userData.roll) q.premultiply(new THREE.Quaternion().setFromAxisAngle(V, m.userData.roll));
+      m.rotation.setFromQuaternion(q);
+    } else if (m.userData.logo) {
       const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(...m.userData.logo).normalize(), new THREE.Vector3(0.22, 0.12, 1).normalize());
       if (m.userData.roll) q.premultiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0.22, 0.12, 1).normalize(), m.userData.roll));
       m.rotation.setFromQuaternion(q);

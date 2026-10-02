@@ -113,18 +113,29 @@ export function bake(accent = "#3ddc97", TW = 1024) {
   };
 
   // ---------- BASKETBALL ----------
-  // Real 8-panel layout: two perpendicular great-circle channels (planes x=0 and
-  // y=0) plus two curved "ear" channels — small circles around the ±x axis that
-  // cross the y=0 channel but never touch the x=0 one.
+  // Real 8-panel layout: an equator (y=0) and one meridian (x=0) as straight
+  // channels, plus one curved channel looping around EACH pole. The loop dips to
+  // ~13° latitude where it crosses the meridian and rises to ~46° halfway
+  // between, so it never touches the equator.
+  // stamp sits centred in a side panel: straight equator seam below it,
+  // the curved seam arching over it (where brands print theirs)
+  const BB_STAMP = [Math.cos(0.4) * Math.sin(1.26), Math.sin(0.4), Math.cos(0.4) * Math.cos(1.26)];
   function basketball() {
     const base = [201, 92, 34], deep = [166, 70, 24], line = [22, 13, 9];
-    const HW = 0.03;                                   // channel half-width, radians
-    const EAR = 0.98;                                  // ear circle angular radius
+    const HW = 0.028;                                  // channel half-width, radians
+    const LO = 13 * Math.PI / 180, HI = 46 * Math.PI / 180;
+    const MID = (LO + HI) / 2, AMP = (HI - LO) / 2;
     return sphereMaps((x, y, z) => {
-      const dA = Math.asin(Math.min(1, Math.abs(x)));  // to great circle x=0
-      const dB = Math.asin(Math.min(1, Math.abs(y)));  // to great circle y=0
-      const dE = Math.abs(Math.acos(Math.min(1, Math.abs(x))) - EAR);   // to the ear on this side
-      const d = Math.min(dA, dB, dE);
+      const lat = Math.asin(Math.max(-1, Math.min(1, y)));
+      const lon = Math.atan2(x, z);                    // 0 on the meridian plane x=0
+      const dEq = Math.abs(lat);                       // equator
+      const dMer = Math.asin(Math.min(1, Math.abs(x))); // meridian
+      // curved loop: latitude follows MID - AMP·cos(2·lon) in each hemisphere;
+      // divide by the local slope so the channel keeps one width
+      const f = MID - AMP * Math.cos(2 * lon);
+      const slope = (2 * AMP * Math.sin(2 * lon)) * Math.cos(Math.abs(lat));
+      const dLoop = Math.abs(Math.abs(lat) - f) / Math.sqrt(1 + slope * slope);
+      const d = Math.min(dEq, dMer, dLoop);
       const groove = 1 - smooth(HW * 0.7, HW * 1.15, d);       // 1 inside channel
       const lip = smooth(HW * 1.1, HW * 3.2, d);               // panels round over into the channel
       const peb = pebble(x, y, z, 150);
@@ -135,7 +146,7 @@ export function bake(accent = "#3ddc97", TW = 1024) {
       col = mix(col, line, groove);
       const hgt = 0.55 + 0.3 * lip + peb * 0.06 - groove * 0.5;
       return [col[0], col[1], col[2], hgt];
-    }, sphereDecal(ebkStamp(FLAVOR.basketball), [0.29, 0.6, 0.745], 0.27));
+    }, sphereDecal(ebkStamp(FLAVOR.basketball), BB_STAMP, 0.25));
   }
 
   // ---------- SOCCER (truncated icosahedron) ----------

@@ -100,20 +100,77 @@
     if (days.indexOf(d) === -1) { days.push(d); days.sort(); set(LEDGER, JSON.stringify(days)); }
   }
 
+  /* ---- the rack: one counted grid a day, sport on a weekly rotation ----
+   *
+   * Only today's rotation sport counts toward the streak (the other grids are
+   * still playable as practice). Filling at least one square keeps the streak;
+   * every square filled is worth one point (max 9 a day). A missed day resets
+   * the day count, but points are banked forever as career points.
+   *
+   * Points per day live in a small `ebk_rack` ledger {"YYYY-MM-DD": squares},
+   * filled from the raw per-day grid keys while they still exist (14 days),
+   * so a player who already played this week gets credit on first load. */
+  var ROTATION = ["nfl", "nba", "nhl", "mlb", "nfl", "soccer", "soccer"]; // by ET weekday, Sun..Sat
+  var RACK = "ebk_rack";
+
+  function dayOfWeek(date) { var p = date.split("-"); return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2])).getUTCDay(); }
+  function sportOn(date) { return ROTATION[dayOfWeek(date || etDate())]; }
+
+  function squaresOn(date) {
+    var rec = parse(get("ebk_daily_" + sportOn(date) + "_" + date));
+    return rec && typeof rec.score === "number" ? Math.max(0, Math.min(9, rec.score)) : 0;
+  }
+
+  function rackSync() {
+    syncLedger();                       // keeps pruning the raw per-day keys
+    var led = parse(get(RACK));
+    if (!led || typeof led !== "object" || Array.isArray(led)) led = {};
+    for (var i = 0; i >= -KEEP_RAW_DAYS; i--) {
+      var d = etDate(i), n = squaresOn(d);
+      if (n > (led[d] || 0)) led[d] = n;
+    }
+    var keys = Object.keys(led).sort();
+    if (keys.length > LEDGER_CAP) keys.slice(0, keys.length - LEDGER_CAP).forEach(function (k) { delete led[k]; });
+    set(RACK, JSON.stringify(led));
+    return led;
+  }
+
+  /* Everything the home rack needs, in one pass. */
+  function rack() {
+    var led = rackSync(), today = etDate();
+    var playedToday = (led[today] || 0) > 0;
+    var anchor = playedToday ? 0 : ((led[etDate(-1)] || 0) > 0 ? -1 : null);
+    var days = 0, pts = 0;
+    if (anchor !== null) for (var i = anchor; i > -LEDGER_CAP; i--) { var n = led[etDate(i)] || 0; if (!n) break; days++; pts += n; }
+    var career = 0, best = null, run = null, keys = Object.keys(led).sort(), prev = null;
+    keys.forEach(function (k) {
+      var n = led[k] || 0; career += n;
+      if (!n) { run = null; prev = k; return; }
+      var consecutive = prev && run && (Date.parse(k) - Date.parse(prev) === 864e5);
+      run = consecutive ? { d: run.d + 1, p: run.p + n } : { d: 1, p: n };
+      if (!best || run.d > best.d || (run.d === best.d && run.p > best.p)) best = { d: run.d, p: run.p };
+      prev = k;
+    });
+    // this ET week, Monday first
+    var wd = (dayOfWeek(today) + 6) % 7, week = [];
+    for (var j = 0; j < 7; j++) {
+      var off = j - wd, date = etDate(off);
+      week.push({ date: date, off: off, sport: sportOn(date), squares: off <= 0 ? (led[date] || 0) : null });
+    }
+    return {
+      today: today, sport: sportOn(today), playedToday: playedToday, squaresToday: led[today] || 0,
+      days: days, pts: pts, atRisk: days > 0 && !playedToday,
+      career: career, best: best, fresh: keys.length === 0, week: week,
+    };
+  }
+
   /* ---- derived state --------------------------------------------------- */
 
+  /* Streak under the rack rules (today's rotation sport only). Kept under
+     the old name so the share text and end screens follow the same count. */
   function streak() {
-    var days = syncLedger();
-    var have = Object.create(null);
-    days.forEach(function (d) { have[d] = 1; });
-    var today = etDate(), playedToday = !!have[today];
-    /* Count back from today if played, else from yesterday — an unplayed today
-       leaves the streak standing but at risk, which is the whole hook. */
-    var anchor = playedToday ? 0 : (have[etDate(-1)] ? -1 : null);
-    if (anchor === null) return { days: 0, atRisk: false, playedToday: false };
-    var n = 0;
-    for (var i = anchor; i > -LEDGER_CAP; i--) { if (!have[etDate(i)]) break; n++; }
-    return { days: n, atRisk: !playedToday, playedToday: playedToday };
+    var r = rack();
+    return { days: r.days, pts: r.pts, atRisk: r.atRisk, playedToday: r.playedToday, sport: r.sport };
   }
 
   function today() {
@@ -159,78 +216,51 @@
     return (meta && meta.accent) || (FALLBACK[key] || {}).accent || null;
   }
 
-  /* opts.exclude — a sport to leave out (the one just played)
-     opts.compact — no streak headline, used inline on an end screen */
+  /* The small end-screen card (grid + Deep Cut pages).
+     opts.exclude — the sport/page just played
+     opts.compact — no streak headline */
   function card(opts) {
     opts = opts || {};
-    var st = streak(), td = today();
-    var sports = GRID_SPORTS.filter(function (s) { return s !== opts.exclude; });
-    var ALL = ["deep-cut"].concat(GRID_SPORTS);
-    var doneCount = ALL.filter(function (s) { return td[s].state === "done"; }).length;
-
+    var r = rack(), s = r.sport, here = opts.exclude;
     var root = el("section", "daily-card");
-    root.setAttribute("aria-label", "Your dailies");
+    root.setAttribute("aria-label", "Your streak");
 
     if (!opts.compact) {
       var head = el("div", "dc-head");
-      var flame = el("span", "dc-flame", st.days > 0 ? "\u{1F525}" : "\u{1F532}");
+      var flame = el("span", "dc-flame", r.days > 0 ? "\u{1F525}" : "\u{1F532}");
       flame.setAttribute("aria-hidden", "true");
       head.appendChild(flame);
-      /* A cold visitor should be invited, not shown a zero. */
-      if (st.days > 0) head.appendChild(el("span", "dc-num", String(st.days)));
+      if (r.days > 0) head.appendChild(el("span", "dc-num", String(r.days)));
       var lab = el("div", "dc-lab");
-      lab.appendChild(el("span", "dc-lab-k", st.days > 0 ? "DAY STREAK" : "START A STREAK"));
+      lab.appendChild(el("span", "dc-lab-k", r.days > 0 ? "DAY STREAK · " + r.pts + " PTS" : "START A STREAK"));
       lab.appendChild(el("span", "dc-lab-v",
-        st.days === 0
-          ? "Finish any daily today and it counts from here."
-          : st.atRisk
-            ? "Play any daily today to make it " + (st.days + 1) + "."
-            : "Come back tomorrow to make it " + (st.days + 1) + "."));
+        r.playedToday ? "Today's " + sportLabel(s) + " grid is in: +" + r.squaresToday + " pts. Back tomorrow to make it " + (r.days + 1) + "."
+          : r.days > 0 ? "Fill a square in today's " + sportLabel(s) + " grid to make it " + (r.days + 1) + "."
+          : "Fill one square in today's " + sportLabel(s) + " grid and it counts from here."));
       head.appendChild(lab);
-      if (st.atRisk && st.days > 0) head.appendChild(el("span", "dc-risk", "AT RISK"));
       root.appendChild(head);
     }
 
     var row = el("div", "dc-row");
-    row.appendChild(el("span", "dc-row-k", opts.compact ? "STILL OPEN TODAY" : "TODAY"));
+    row.appendChild(el("span", "dc-row-k", here && here !== s && here !== "deep-cut" ? "THAT WAS PRACTICE · TODAY'S GRID" : "TODAY'S GRID"));
     var chips = el("div", "dc-chips");
-    if (opts.exclude !== "deep-cut") {
-      var q = td["deep-cut"];
-      var c = el("a", "dc-chip dc-chip-cut is-" + q.state);
-      c.href = "/deep-cut";
-      c.style.setProperty("--accent", "#c77dff");
-      c.appendChild(el("span", "dc-chip-s", "CUT"));
-      c.appendChild(el("span", "dc-chip-v",
-        q.state === "done" ? (q.win ? q.n + "/3" : "X") : q.state === "partial" ? "…" : "?"));
-      c.setAttribute("aria-label", "Deep Cut, the daily question: " +
-        (q.state === "done" ? (q.win ? "solved in " + q.n : "missed")
-          : q.state === "partial" ? "in progress" : "not played yet"));
-      chips.appendChild(c);
-    }
-    sports.forEach(function (s) {
-      var t = td[s];
-      var a = el("a", "dc-chip is-" + t.state);
-      a.href = "/" + s + "/player-grid";
-      var accent = sportAccent(s);
-      if (accent) a.style.setProperty("--accent", accent);
-      a.appendChild(el("span", "dc-chip-s", sportLabel(s)));
-      a.appendChild(el("span", "dc-chip-v",
-        t.state === "done" ? t.score + "/9" : t.state === "partial" ? "…" : "·"));
-      a.setAttribute("aria-label",
-        sportLabel(s) + " daily grid — " +
-        (t.state === "done" ? "finished, " + t.score + " of 9"
-          : t.state === "partial" ? "in progress" : "not played yet"));
-      chips.appendChild(a);
-    });
+    var a = el("a", "dc-chip is-" + (r.playedToday ? "done" : "none"));
+    a.href = "/" + s + "/player-grid";
+    var accent = sportAccent(s);
+    if (accent) a.style.setProperty("--accent", accent);
+    a.appendChild(el("span", "dc-chip-s", sportLabel(s)));
+    a.appendChild(el("span", "dc-chip-v", r.playedToday ? r.squaresToday + "/9" : "·"));
+    a.setAttribute("aria-label", sportLabel(s) + " daily grid, today's counted grid — " +
+      (r.playedToday ? r.squaresToday + " of 9 squares" : "not played yet"));
+    chips.appendChild(a);
     row.appendChild(chips);
     root.appendChild(row);
 
     var foot = el("p", "dc-foot");
-    foot.appendChild(el("span", null, doneCount + " of " + ALL.length + " dailies done today"));
+    foot.appendChild(el("span", null, "Career " + r.career + " pts"));
     foot.appendChild(el("span", "dc-dot", "·"));
-    foot.appendChild(el("span", "dc-reset", "new ones in " + hoursToReset()));
+    foot.appendChild(el("span", "dc-reset", "new grid in " + hoursToReset()));
     root.appendChild(foot);
-
     return root;
   }
 
@@ -250,6 +280,9 @@
     etDate: etDate,
     hoursToReset: hoursToReset,
     streak: streak,
+    rack: rack,
+    sportOn: sportOn,
+    ROTATION: ROTATION,
     today: today,
     markPlayed: markPlayed,
     card: card,

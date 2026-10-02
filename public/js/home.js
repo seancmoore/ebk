@@ -17,6 +17,35 @@
     tick();
   })();
 
+  // ---- "elite" skin swap: each ball wipes through the word; hover/tap = next
+  (function () {
+    var host = document.getElementById("elite"), cap = document.getElementById("elite-cap");
+    if (!host) return;
+    var layers = host.querySelectorAll(".elite-skin");
+    if (layers.length < 2) return;
+    var balls = [["basketball", "Basketball"], ["football", "Football"], ["soccer", "Soccer"], ["hockey", "Hockey"], ["baseball", "Baseball"]];
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var k = 0, front = layers[0], back = layers[1], busy = false, hovering = false;
+    function paint(el, i) { el.style.backgroundImage = 'url("/img/ball-' + balls[i][0] + '.svg")'; }
+    paint(front, 0); front.classList.add("in");
+    host.setAttribute("aria-label", "elite, wearing a " + balls[0][1].toLowerCase() + " skin");
+    function next() {
+      if (busy) return;
+      busy = true; k = (k + 1) % balls.length;
+      back.className = "elite-skin"; paint(back, k);
+      void back.offsetWidth;                       // restart the wipe
+      back.classList.add("in"); front.classList.add("out");
+      if (cap) { var name = balls[k][1]; setTimeout(function () { cap.textContent = name; }, reduce ? 0 : 260); }
+      host.setAttribute("aria-label", "elite, wearing a " + balls[k][1].toLowerCase() + " skin");
+      setTimeout(function () { front.className = "elite-skin"; var t = front; front = back; back = t; busy = false; }, reduce ? 0 : 560);
+    }
+    host.addEventListener("pointerenter", function () { hovering = true; next(); });
+    host.addEventListener("pointerleave", function () { hovering = false; });
+    host.addEventListener("click", next);
+    host.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); next(); } });
+    if (!reduce) setInterval(function () { if (!hovering && !document.hidden) next(); }, 3200);
+  })();
+
   // ---- all-sports marquee: each league logo leads a run of its team logos
   (function () {
     var strip = document.getElementById("logo-strip");

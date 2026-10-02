@@ -44,10 +44,12 @@
   max-width: 16ch;
   font-weight: 900;
 }
-/* "elite" cycles through ball skins — stacked copies of the word cross-fade,
-   easing in and out, over the always-present green base so it stays readable */
+/* "elite" wears a ball skin. Each new ball wipes through the word left to
+   right (driven by home.js); hover/tap brings in the next one. The green base
+   underneath is the no-JS / reduced-motion fallback. */
 .hero-name { color: var(--accent); }
-.elite-cycle { position: relative; display: inline-block; }
+.elite-cycle { position: relative; display: inline-block; cursor: pointer; outline: none; }
+.elite-cycle:focus-visible { box-shadow: 0 0 0 3px var(--accent); border-radius: 6px; }
 .elite-base,
 .elite-skin {
   -webkit-background-clip: text;
@@ -60,35 +62,19 @@
   background-image: linear-gradient(100deg, var(--accent), #6ee8ff 90%);
 }
 .elite-skin {
-  position: absolute;
-  left: 0; top: 0;
+  position: absolute; inset: 0;
   white-space: nowrap;
-  opacity: 0;
-  /* the ball texture (an SVG) is clipped to the letters */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  animation: eliteSkin 27s infinite ease-in-out;
-  will-change: opacity;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.55s cubic-bezier(.7, 0, .2, 1);
+  will-change: clip-path;
 }
-/* five balls, each owns ~1/5 of the loop (staggered by negative delay) */
-.sk-basketball { background-image: url("/img/ball-basketball.svg"); animation-delay: 0s; }
-.sk-football   { background-image: url("/img/ball-football.svg");   animation-delay: -5.4s; }
-.sk-soccer     { background-image: url("/img/ball-soccer.svg");     animation-delay: -10.8s; }
-.sk-hockey     { background-image: url("/img/ball-hockey.svg");     animation-delay: -16.2s; }
-.sk-baseball   { background-image: url("/img/ball-baseball.svg");   animation-delay: -21.6s; }
-
-/* visible most of its 1/5 window with brief eased cross-fades, so a ball is
-   almost always showing (the green base only peeks through the handoffs) */
-@keyframes eliteSkin {
-  0%   { opacity: 0; }
-  2%   { opacity: 1; }
-  18%  { opacity: 1; }
-  21%  { opacity: 0; }
-  100% { opacity: 0; }
-}
+.elite-skin.in  { clip-path: inset(0 0 0 0); }
+.elite-skin.out { clip-path: inset(0 0 0 100%); }
 @media (prefers-reduced-motion: reduce) {
-  .elite-skin { display: none; }   /* fall back to the static green base */
+  .elite-skin { transition: none; }
 }
 .hero p {
   color: var(--muted);
