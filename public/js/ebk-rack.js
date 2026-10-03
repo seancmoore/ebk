@@ -240,6 +240,8 @@
     window.addEventListener("pageshow", function () { grid.querySelectorAll(".sp.play").forEach(function (c) { c.classList.remove("play"); clearTimeout(c.__t); }); });
   }
 
+  window.EBKRack = { seg7: seg7 };
+
   function init() {
     var host = document.getElementById("rack");
     if (host && window.EBKDaily) {

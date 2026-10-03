@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="/css/base.css" />
   <link rel="stylesheet" href="/css/home.css" />
   <link rel="stylesheet" href="/css/rack.css" />
+  <link rel="stylesheet" href="/css/home-sections.css" />
   <script src="/js/ebk-analytics.js" defer></script>
 </head>
 <body>
@@ -55,12 +56,56 @@
            Drawn by /js/ebk-rack.js from EBKDaily.rack(); stays hidden without localStorage. -->
       <section id="rack" class="rack" aria-labelledby="rack-h" hidden></section>
 
-      <!-- Head-to-Head / Leaderboards / Deep Bag strip and the team browser are
-           parked for now; they come back below the sport cards later. -->
-
       <section class="sport-section" id="sports" aria-labelledby="sports-h">
-        <h2 class="sp-h" id="sports-h">Choose your sport</h2>
+        <div class="shd"><span class="shd-n" data-seg="01" aria-hidden="true"></span><h2 class="shd-t" id="sports-h">Choose Your Sport</h2><span class="shd-rail" aria-hidden="true"></span><span class="shd-r">6 leagues</span></div>
         <div class="sports-a" id="sport-cards"></div>
+      </section>
+
+      <!-- 02 · More Ways to Play: Head-to-Head + Deep Cut. Live bits filled by /js/ebk-home-sections.js -->
+      <section class="sec2" id="modes" aria-labelledby="modes-h">
+        <div class="shd"><span class="shd-n" data-seg="02" aria-hidden="true"></span><h2 class="shd-t" id="modes-h">More Ways to Play</h2><span class="shd-rail" aria-hidden="true"></span></div>
+        <div class="tiles2">
+          <a class="h2x" href="/h2h">
+            <span class="x-k">Head-to-Head <i>Ranked · private rooms</i></span>
+            <div class="mu">
+              <div class="side"><span class="medal"><span class="mw">E<span>B</span>K</span></span><b data-h2h-name>You</b><span class="mled g" data-h2h-elo>Unranked</span></div>
+              <div class="vs2"><span class="sw" aria-hidden="true"></span><span class="vsx">VS</span><span class="sc" data-seg="0:0" aria-hidden="true"></span></div>
+              <div class="side"><span class="medal q"><svg class="ring2" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/></svg><span class="qm">?</span></span><b>Next opponent</b><span class="mled dim">Live</span></div>
+            </div>
+            <div class="x-foot"><span>Same question, same clock.</span><span class="x-btn">Find a match <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </a>
+          <a class="dcx" href="/deep-cut" data-dc>
+            <span class="x-k">Deep Cut <i>No.</i><span class="no" data-dc-no aria-hidden="true"></span></span>
+            <div class="vault cut">
+              <div class="vq"><span class="qmark" aria-hidden="true">&ldquo;</span><span data-dc-q>One deep ball-knowledge question a day, any sport. Only real heads get it in <span class="blur">three guesses.</span></span></div>
+              <span class="slash" aria-hidden="true"></span><span class="sparks" aria-hidden="true"></span><span class="bl" aria-hidden="true"></span>
+            </div>
+            <div class="x-foot"><span class="tries" data-dc-tries aria-label="3 guesses"><i></i><i></i><i></i><small>3 guesses</small></span><span class="x-btn" data-dc-cta>Take a guess <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </a>
+        </div>
+      </section>
+
+      <!-- 03 · The Stat Lab: data readout, Deep Bag, team + player search with profiles -->
+      <section class="sec2 lab3" id="stat-lab" aria-labelledby="lab-h">
+        <div class="shd"><span class="shd-n" data-seg="03" aria-hidden="true"></span><h2 class="shd-t" id="lab-h">The Stat Lab</h2><span class="shd-rail" aria-hidden="true"></span><code class="q">SELECT * FROM player_seasons;</code></div>
+        <div class="dstrip" role="list" aria-label="What is in the data" data-meta>
+          <div role="listitem"><span class="dv" data-m="playerSeasons">202,506</span><span class="dk">player-seasons</span></div>
+          <div role="listitem"><span class="dv" data-m="categories">62</span><span class="dk">stat categories</span></div>
+          <div role="listitem"><span class="dv" data-m="teams">296</span><span class="dk">teams</span></div>
+          <div role="listitem"><span class="dv" data-m="span">1999&ndash;2026</span><span class="dk">seasons</span></div>
+        </div>
+        <div class="lab-grid">
+          <div class="bagcard">
+            <a class="bc-top" href="/deep-bag"><span class="bagopen" aria-hidden="true"></span><span><span class="bc-k">Deep Bag</span><b>Research, deep dives &amp; hot takes</b></span></a>
+            <ol class="bc-list" data-bag-list><li class="bc-empty">Loading the latest research&hellip;</li></ol>
+            <span class="bc-foot"><span></span><a class="t-cta" href="/deep-bag">Open the Bag <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></span>
+          </div>
+          <div class="dpanel">
+            <label class="f-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><input type="search" placeholder="Search any team or player: Packers, Mahomes, Arsenal&hellip;" aria-label="Search teams and players" data-dsearch autocomplete="off" /></label>
+            <div class="roll" data-roll></div>
+            <div class="dres" data-dres hidden aria-live="polite"></div>
+          </div>
+        </div>
       </section>
     </div>
   </main>
@@ -74,6 +119,13 @@
   <script src="/js/ebk-ui.js"></script>
   <script src="/js/ebk-daily.js"></script>
   <script src="/js/ebk-rack.js"></script>
+  <script src="/js/teams.js"></script>
+  <script src="/js/nba-teams.js"></script>
+  <script src="/js/mlb-teams.js"></script>
+  <script src="/js/nhl-teams.js"></script>
+  <script src="/js/cfb-teams.js"></script>
+  <script src="/js/soccer-teams.js"></script>
+  <script src="/js/ebk-home-sections.js"></script>
   <script src="/js/home.js"></script>
   <script src="/js/fx.js"></script>
   <script src="/js/ebk-sound.js"></script>
