@@ -171,7 +171,9 @@ html, body { height: 100%; }
 .hl-timer .fill {
   height: 100%;
   width: 100%;
-  margin: 0 auto;          /* symmetric drain toward center */
+  margin: 0 auto;
+  transform-origin: center; /* symmetric drain toward center, via scaleX */
+  will-change: transform;
   background: var(--accent, #3ddc97);
   border-radius: 999px;
   box-shadow: 0 0 12px var(--accent, #3ddc97);

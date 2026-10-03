@@ -122,7 +122,7 @@
 .f-box input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--text);font:inherit;font-weight:700;font-size:1rem}
 .f-box:focus-within{border-color:var(--accent)}
 .roll{display:grid;gap:6px;margin:0 calc(var(--sp-md)*-1);overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
-.lane2{display:flex;width:max-content;gap:10px;animation:hs-tick 80s linear infinite}
+.lane2{display:flex;width:max-content;gap:10px;animation:hs-tick 80s linear infinite;will-change:transform}
 .lane2.rev{animation-direction:reverse;animation-duration:100s}
 .lane2.slow{animation-duration:120s}
 .roll:hover .lane2{animation-play-state:paused}
@@ -210,3 +210,6 @@
 @keyframes hs-slash{0%,12%{transform:rotate(-4deg) scaleX(0);opacity:1}52%,100%{transform:rotate(-4deg) scaleX(1);opacity:.85}}
 @keyframes hs-shine{0%{opacity:1;background-position:-200% 0}100%{opacity:1;background-position:300% 0}}
 @keyframes hs-spark{0%{opacity:1;transform:translate(0,0) scale(1.2)}100%{opacity:0;transform:translate(var(--sx),var(--sy)) scale(.3)}}
+
+/* set by ebk-home-sections.js while a home section is scrolled out of view */
+.offscreen,.offscreen *,.offscreen *::before,.offscreen *::after{animation-play-state:paused!important}

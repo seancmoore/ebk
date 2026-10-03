@@ -50,6 +50,8 @@
 }
 .round-timer .fill {
   height: 100%; width: 100%;
+  transform-origin: left center;   /* drains via scaleX (no layout per frame) */
+  will-change: transform;
   background: var(--accent);
   border-radius: inherit;
 }

@@ -31,14 +31,14 @@ function loadImg(src) {
 if (MOUNT && webglOK()) {
   const imgs = {};
   Promise.all([
-    import(CDN + "build/three.module.js"),
-    import(CDN + "examples/jsm/environments/RoomEnvironment.js").catch(() => null),
+    // minified build: same library, ~35% less to download and half the code to parse
+    import(CDN + "build/three.module.min.js"),
     ...SKINS.flatMap(b => ["map", "bump"].map(k => loadImg(`${TEX}${b}-${k}.webp`).then(im => { imgs[`${b}-${k}`] = im; }))),
-  ]).then(([THREE, env]) => start(THREE, env && env.RoomEnvironment, imgs))
+  ]).then(([THREE]) => start(THREE, imgs))
     .catch(() => { /* CDN or textures blocked — keep the CSS fallback */ });
 }
 
-function start(THREE, RoomEnvironment, imgs) {
+function start(THREE, imgs) {
   const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#3ddc97";
 
   // baked skin → { map, bump } textures
@@ -199,15 +199,15 @@ function start(THREE, RoomEnvironment, imgs) {
   // long lens: balls near the frame edge stay round instead of stretching
   const camera = new THREE.PerspectiveCamera(24, 2, 0.1, 100);
   camera.position.set(0, 0, 21.5);
-  const renderer = new THREE.WebGLRenderer({ canvas: MOUNT, alpha: true, antialias: true });
+  // The hero is ambient: slow drift behind the headline. Keep it cheap: pixel
+  // density is capped at 1.5x (a 3x phone was drawing 4x the pixels per frame
+  // for no visible gain behind the vignette). Keep MSAA on: at 1.5x the ball
+  // silhouettes visibly stair-step without it.
+  const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+  const renderer = new THREE.WebGLRenderer({ canvas: MOUNT, alpha: true, antialias: true, powerPreference: "low-power" });
   renderer.setClearColor(0x000000, 0);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
-  if (RoomEnvironment) {
-    const pm = new THREE.PMREMGenerator(renderer);
-    scene.environment = pm.fromScene(new RoomEnvironment(renderer), 0.04).texture;
-    scene.environmentIntensity = 0.55;
-  }
   scene.add(new THREE.HemisphereLight(0xdfe6ff, 0x1a1408, 0.35));
   const key = new THREE.DirectionalLight(0xfff1e0, 2.2); key.position.set(-5, 7, 9); scene.add(key);
   const rim = new THREE.DirectionalLight(new THREE.Color(accent), 1.1); rim.position.set(6, -2, -6); scene.add(rim);
@@ -253,7 +253,7 @@ function start(THREE, RoomEnvironment, imgs) {
   function resize() {
     const r = MOUNT.getBoundingClientRect();
     const w = Math.max(1, r.width), h = Math.max(1, r.height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(DPR);
     renderer.setSize(w, h, false);
     camera.aspect = w / h; camera.updateProjectionMatrix();
     // portrait phones get their own arrangement; tablets scale the desktop one
@@ -293,25 +293,42 @@ function start(THREE, RoomEnvironment, imgs) {
   // Compile every shader off the main thread (KHR_parallel_shader_compile)
   // before the first draw; a plain first render compiled them synchronously and
   // froze the page for seconds. The canvas fades in once the first frame is up.
-  const ready = renderer.compileAsync ? renderer.compileAsync(scene, camera).catch(() => {}) : Promise.resolve();
+  // Then upload the textures one per task: done inside the first render, the
+  // eight 1024px uploads (plus mipmaps) were one ~0.5s main-thread freeze.
+  function uploadTextures() {
+    const list = [];
+    scene.traverse((o) => { const m = o.material; if (m) for (const k of ["map", "bumpMap"]) if (m[k] && !list.includes(m[k])) list.push(m[k]); });
+    if (!renderer.initTexture) return Promise.resolve();
+    return new Promise((done) => { (function next() { const t = list.shift(); if (!t) return done(); renderer.initTexture(t); setTimeout(next, 0); })(); });
+  }
+  const ready = (renderer.compileAsync ? renderer.compileAsync(scene, camera).catch(() => {}) : Promise.resolve()).then(uploadTextures);
   ready.then(() => {
     pose(0); renderer.render(scene, camera);
     MOUNT.classList.add("on");           // reveal canvas / dim CSS fallback
     if (reduce) return;                  // static frame only
 
-    let raf = null, t0 = performance.now(), tOff = 0;
+    // 30 fps is plenty for balls that drift a fraction of a turn per second.
+    // Wait out the gap with a timer and only then ask for a frame: every
+    // requestAnimationFrame makes the browser run a full page update, so
+    // skipping frames inside a 60-120 Hz rAF loop still cost nearly as much.
+    const FRAME = 1000 / 30;
+    let raf = null, wait = null, t0 = performance.now(), tOff = 0;
     function tick(now) {
-      raf = requestAnimationFrame(tick);
+      raf = null;
       pose(tOff + (now - t0) / 1000);
       renderer.render(scene, camera);
+      const spent = performance.now() - now;
+      wait = setTimeout(() => { wait = null; raf = requestAnimationFrame(tick); }, Math.max(0, FRAME - spent - 4));
     }
+    const running = () => raf !== null || wait !== null;
+    const stop = () => { if (raf) cancelAnimationFrame(raf); if (wait) clearTimeout(wait); raf = wait = null; };
     raf = requestAnimationFrame(tick);
     // pause while the tab is hidden or the hero is scrolled out of view
     // (it kept drawing under the sport cards: ~600ms of script per 5s)
     let inView = true;
     const sync = () => {
-      if (document.hidden || !inView) { if (raf) { cancelAnimationFrame(raf); raf = null; tOff += (performance.now() - t0) / 1000; } }
-      else if (!raf) { t0 = performance.now(); raf = requestAnimationFrame(tick); }
+      if (document.hidden || !inView) { if (running()) { stop(); tOff += (performance.now() - t0) / 1000; } }
+      else if (!running()) { t0 = performance.now(); raf = requestAnimationFrame(tick); }
     };
     document.addEventListener("visibilitychange", sync);
     if ("IntersectionObserver" in window)

@@ -246,8 +246,8 @@
     M.deadline = Date.now() + TIME_LIMIT;
     const fill = $(".h2h-timer .fill");
     if (fill) {
-      fill.classList.remove("low"); fill.style.transition = "none"; fill.style.width = "100%"; void fill.offsetWidth;
-      fill.style.transition = `width ${TIME_LIMIT}ms linear`; fill.style.width = "0%";
+      fill.classList.remove("low"); fill.style.transition = "none"; fill.style.transform = "scaleX(1)"; void fill.offsetWidth;
+      fill.style.transition = `transform ${TIME_LIMIT}ms linear`; fill.style.transform = "scaleX(0)";
       tLowTO = setTimeout(() => { if (!M.locked) fill.classList.add("low"); }, TIME_LIMIT - 2500);
     }
     clearTimeout(tTO); clearInterval(tTick);
@@ -256,7 +256,7 @@
   }
   function timerStop() {
     clearTimeout(tTO); clearTimeout(tLowTO); clearInterval(tTick);
-    const fill = $(".h2h-timer .fill"); if (fill) { fill.style.transition = "none"; fill.style.width = getComputedStyle(fill).width; }
+    const fill = $(".h2h-timer .fill"); if (fill) { fill.style.transition = "none"; fill.style.transform = getComputedStyle(fill).transform; }
   }
   document.addEventListener("visibilitychange", () => { if (!document.hidden && !M.locked && M.deadline && Date.now() >= M.deadline) onAnswer(null); });
 

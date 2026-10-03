@@ -234,10 +234,10 @@
     clearTimeout(timerTO); clearTimeout(timerLowTO);
     fill.classList.remove("low");
     fill.style.transition = "none";
-    fill.style.width = "100%";
+    fill.style.transform = "scaleX(1)";
     void fill.offsetWidth;                       // flush so the transition restarts
-    fill.style.transition = `width ${TIME_LIMIT}ms linear`;
-    fill.style.width = "0%";
+    fill.style.transition = `transform ${TIME_LIMIT}ms linear`;
+    fill.style.transform = "scaleX(0)";
     timerLowTO = setTimeout(() => { if (!state.locked) fill.classList.add("low"); }, TIME_LIMIT - 2500);
     timerTO = setTimeout(timeUp, TIME_LIMIT);
   }
@@ -246,9 +246,9 @@
     clearTimeout(timerTO); clearTimeout(timerLowTO);
     if (!timerEl) return;
     const fill = $(".fill", timerEl);
-    const w = getComputedStyle(fill).width;     // freeze at current position
+    const w = getComputedStyle(fill).transform; // freeze at current position
     fill.style.transition = "none";
-    fill.style.width = w;
+    fill.style.transform = w;
   }
 
   function timeUp() {

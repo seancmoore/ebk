@@ -164,10 +164,10 @@
     clearTimeout(rtTO); clearTimeout(rtLowTO);
     fill.classList.remove("low");
     fill.style.transition = "none";
-    fill.style.width = "100%";
+    fill.style.transform = "scaleX(1)";
     void fill.offsetWidth;
-    fill.style.transition = `width ${SHOT_MS}ms linear`;
-    fill.style.width = "0%";
+    fill.style.transition = `transform ${SHOT_MS}ms linear`;
+    fill.style.transform = "scaleX(0)";
     rtLowTO = setTimeout(() => { if (!S.over) fill.classList.add("low"); }, SHOT_MS - 5000);
     rtTO = setTimeout(shotClockOut, SHOT_MS);
   }
@@ -176,7 +176,7 @@
     if (!rtEl) return;
     const fill = $(".fill", rtEl);
     fill.style.transition = "none";
-    fill.style.width = getComputedStyle(fill).width;
+    fill.style.transform = getComputedStyle(fill).transform;
   }
 
   function shotClockOut() {

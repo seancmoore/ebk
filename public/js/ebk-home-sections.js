@@ -321,7 +321,18 @@
     panel.addEventListener("click", openFrom);
   }
 
+  /* Looping decorations (logo rows, rack rings, LED blink) keep costing frames
+     even when scrolled away; pause each home section while it is off screen. */
+  function calmOffscreen() {
+    if (!("IntersectionObserver" in window)) return;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { e.target.classList.toggle("offscreen", !e.isIntersecting); });
+    }, { rootMargin: "100px 0px" });
+    ["rack", "sports", "modes", "stat-lab"].forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+  }
+
   function init() {
+    calmOffscreen();
     digits();
     try { h2h(); } catch (e) {}
     try { deepCut(); } catch (e) {}
