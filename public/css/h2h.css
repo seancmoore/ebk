@@ -4,11 +4,15 @@
    Relies on base.css tokens, ebk-kit.css and game-common.css.
    ============================================================ */
 .h2h-main { --accent: var(--h2h); --c: var(--h2h); --accent-ink: var(--ink); padding-bottom: var(--sp-xl); }
-.h2h-wrap { max-width: 880px; }
+/* the lobby uses the site's 1040 column; a match and a room lobby stay a
+   focused centre column so the cards never stretch */
+#match, .h2-room, .h2-room ~ * { max-width: 760px; margin-left: auto; margin-right: auto; }
 .muted { color: var(--muted); }
 
 /* ---------- lobby hero ---------- */
 .h2-hero { padding-bottom: var(--sp-md); }
+.h2-hero .k-hero-t { flex-basis: 380px; }
+.h2-hero .k-hero-side { flex: 0 1 480px; min-width: 0; }
 .h2-room { padding-bottom: var(--sp-md); }
 .h2-room h1 { font-size: clamp(2rem, 1.5rem + 2.4vw, 3rem); }
 
@@ -50,12 +54,51 @@
 .h2-vsx { position: relative; font-weight: 900; font-style: italic; font-size: 2.4rem; line-height: 1; color: #fff; text-shadow: 0 0 18px rgba(125, 149, 255, .8); }
 .h2-sc { position: relative; font-size: 1.45rem; color: var(--clock); background: var(--led-bg); border: 2px solid var(--led-edge); border-radius: 9px; padding: 5px 9px; box-shadow: 0 0 0 3px var(--led-ring); }
 
-/* signed-out gate */
-.h2-gate { margin-top: 16px; }
-.h2-gate .k-btn { margin-top: 6px; }
+/* signed-out gate: a navy panel with a dim preview of what signing in unlocks */
+.h2-gate {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: center; gap: clamp(18px, 1rem + 2vw, 40px);
+  padding: clamp(20px, 1rem + 1.6vw, 34px);
+  border-radius: var(--r-xl); border: 1px solid var(--line-2);
+  background:
+    radial-gradient(40% 70% at 57% -10%, rgba(255, 255, 255, .10), transparent 70%),
+    radial-gradient(60% 80% at 0% 100%, color-mix(in srgb, var(--h2h) 16%, transparent), transparent 70%),
+    var(--panel-bg);
+  box-shadow: var(--elev-2);
+}
+.h2-gate[hidden] { display: none; }
+.h2-gate-t h3 { margin: 8px 0 0; font-size: clamp(1.45rem, 1.1rem + 1.2vw, 1.9rem); font-weight: 900; letter-spacing: -.025em; line-height: 1.05; }
+.h2-gate-t p { margin: 10px 0 18px; color: var(--muted); font-size: var(--fs-sm); line-height: 1.55; max-width: 40ch; }
+.h2-gate-prev { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.h2-prev {
+  display: grid; align-content: start; gap: 6px; min-width: 0;
+  padding: 16px; border-radius: var(--r-lg);
+  border: 1px dashed var(--line-2); background: rgba(4, 6, 14, .4);
+  opacity: .8;
+}
+.h2-prev b { font-size: 1.1rem; font-weight: 900; letter-spacing: -.015em; color: #c6cde6; }
+.h2-prev .k-board { margin-top: 6px; width: 100%; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+.h2-prev .k-cell { padding: 8px 6px 10px; }
+.h2-prev-code {
+  margin-top: 6px; padding: 10px 0; text-align: center;
+  font-family: var(--mono); font-weight: 800; font-size: 1.4rem; letter-spacing: .3em; color: #5d6890;
+  background: var(--led-bg); border: 2px solid var(--led-edge); border-radius: var(--r-md); box-shadow: 0 0 0 3px var(--led-ring);
+}
+
+/* footer links take the page accent too (the footer sits outside .h2h-main) */
+footer.site-footer a { color: var(--h2h); }
+.site-header a.header-tag b { color: var(--h2h); }
+.site-header a.header-tag:hover { border-color: var(--h2h); }
+
+/* how a match works: three fact cards, each led by an LED readout */
+.h2-how { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.h2-step { display: grid; align-content: start; justify-items: start; gap: 8px; padding: 20px; }
+.h2-step .k-led { margin: 0 0 6px; font-size: 1.7rem; padding: 8px 12px 9px; border-radius: 12px; background: var(--led-bg); border: 2px solid var(--led-edge); box-shadow: 0 0 0 3px var(--led-ring); }
+.h2-step .k-led:not(.r):not(.y) { color: var(--h2h); }
+.h2-step h3 { margin: 0; font-size: 1.2rem; font-weight: 900; letter-spacing: -.015em; line-height: 1.15; }
+.h2-step p { margin: 0; color: var(--muted); font-size: var(--fs-sm); line-height: 1.5; }
 
 /* ---------- ranked + private panels ---------- */
-.h2-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+.h2-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .h2h-panel {
   position: relative; overflow: hidden;
   display: flex; flex-direction: column; gap: 4px;
@@ -217,7 +260,8 @@
 .hl2-btns .gbtn { flex: 1; max-width: 200px; min-height: 54px; border-radius: 999px; border: 0; }
 .hl2-btns .gbtn svg { width: 18px; height: 18px; flex: none; }
 .hl2-btns .hl-up { background: var(--h2h); color: var(--ink); box-shadow: 0 14px 30px -14px var(--h2h); }
-.hl2-btns .hl-down { background: var(--lower); color: #2a0b0f; box-shadow: 0 14px 30px -14px var(--lower); }
+/* one filled accent: Lower is the red-outline ghost pill, like the solo game */
+.hl2-btns .hl-down { background: rgba(4, 6, 14, .55); color: #ff8a95; box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--lower) 85%, transparent), 0 14px 30px -18px var(--lower); }
 
 /* ---------- in-match: career path (clues reuse game-common .clue / .opt) ---------- */
 .cp2 { display: flex; flex-direction: column; gap: 10px; }
@@ -264,6 +308,17 @@
   .h2-vsx { font-size: 1.8rem; }
   .h2-sc { font-size: 1.1rem; }
   .h2-grid { grid-template-columns: 1fr; }
+  .h2-gate { grid-template-columns: 1fr; border-radius: 24px; padding: 20px 18px; }
+  .h2-gate .k-btn { width: 100%; }
+  .h2-gate-prev { gap: 10px; }
+  .h2-prev { padding: 12px; }
+  .h2-prev b { font-size: .95rem; }
+  .h2-prev .k-lbl { font-size: .5rem; letter-spacing: .14em; }
+  .h2-prev .k-led.sm { font-size: 1.15rem; }
+  .h2-prev-code { font-size: 1.05rem; letter-spacing: .2em; }
+  .h2-how { grid-template-columns: 1fr; gap: 10px; }
+  .h2-step { grid-template-columns: 84px minmax(0, 1fr); column-gap: 14px; row-gap: 4px; padding: 16px; }
+  .h2-step .k-led { grid-row: span 2; margin: 0; font-size: 1.3rem; align-self: center; justify-self: stretch; }
   .h2h-panel { padding: 16px; }
   .h2h-standings .st-streak { font-size: 1.7rem; }
   .hl2-btns .gbtn { min-height: 52px; }

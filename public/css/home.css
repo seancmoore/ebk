@@ -262,32 +262,7 @@
 
 /* sport section */
 .sport, .sport-section { margin: var(--sp-lg) 0; }
-.sport-card .game-emoji { font-size: 2.2rem; }
 
-/* team directory grid */
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: var(--sp-sm);
-  margin-bottom: var(--sp-xl);
-}
-.team-tile {
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  padding: var(--sp-md) var(--sp-sm);
-  border: 1px solid var(--line); border-radius: 14px; background: var(--glass);
-  text-align: center; font-weight: 700; font-size: var(--fs-sm); color: var(--text);
-  transition: transform var(--dur) var(--ease-spring), border-color var(--dur) var(--ease), background var(--dur) var(--ease);
-}
-.team-tile img { width: 52px; height: 52px; object-fit: contain; }
-.team-tile:hover { transform: translateY(-4px); border-color: var(--accent); background: var(--glass-strong); }
-.sport-head {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-sm);
-  margin-bottom: var(--sp-md);
-}
-.sport-icon { font-size: 1.8rem; line-height: 1; }
-.sport-name { font-size: var(--fs-lg); font-weight: 800; margin: 0; }
 .sport-count {
   margin-left: auto;
   color: var(--muted);
@@ -295,87 +270,6 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-
-.game-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: var(--sp-md);
-}
-
-.game-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-height: 168px;
-  padding: var(--sp-md);
-  border-radius: 18px;
-  border: 1px solid var(--line);
-  background: var(--glass);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  overflow: hidden;
-  transition: transform var(--dur) var(--ease-spring),
-              border-color var(--dur) var(--ease),
-              background var(--dur) var(--ease);
-}
-.game-card.live { cursor: pointer; }
-.game-card.live:hover {
-  transform: translateY(-5px);
-  border-color: var(--accent);
-  background: var(--glass-strong);
-}
-/* while the 3D tilt follows the pointer, don't ease the transform */
-.game-card.tilting { transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease); }
-/* touch press feedback (hover doesn't exist on touch) */
-@media (hover: none) {
-  .game-card.live:active { transform: scale(0.97); border-color: var(--accent); background: var(--glass-strong); }
-  .team-tile:active { transform: scale(0.96); border-color: var(--accent); }
-}
-.game-card.live::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--accent) 17%, transparent), transparent 60%);
-  pointer-events: none;
-}
-.game-card.live:hover { box-shadow: 0 12px 32px color-mix(in srgb, var(--accent) 22%, transparent); }
-/* colored top edge keyed to each card's accent */
-.game-card.live::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 14px; right: 14px; height: 2px;
-  border-radius: 0 0 4px 4px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity: 0.7;
-  pointer-events: none;
-}
-.game-card.soon { opacity: 0.62; }
-
-.game-emoji { font-size: 1.9rem; line-height: 1; }
-.game-title { font-size: var(--fs-lg); font-weight: 800; margin: var(--sp-sm) 0 4px; }
-.game-desc { color: var(--muted); font-size: var(--fs-sm); line-height: 1.5; margin: 0; }
-.game-foot {
-  margin-top: auto;
-  padding-top: var(--sp-sm);
-  color: var(--muted);
-  font-size: var(--fs-xs);
-  letter-spacing: 0.06em;
-}
-.game-card.live .game-foot { color: var(--accent); font-weight: 700; }
-
-.badge {
-  position: absolute;
-  top: var(--sp-md);
-  right: var(--sp-md);
-  font-size: 0.66rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 999px;
-}
-.badge.play { background: var(--accent); color: var(--accent-ink); }
-.badge.soon { background: var(--glass-strong); color: var(--muted); border: 1px solid var(--line); }
 
 /* future sports */
 .more-sports {
@@ -412,11 +306,6 @@ footer.site-footer {
   margin-top: var(--sp-lg);
 }
 footer.site-footer a { color: var(--accent); }
-/* hubs: the banner and game cards are filled by end-of-body scripts. Reserve
-   the banner's box and keep the footer hidden until the cards land, so the
-   first paint doesn't shift (desktop CLS 0.07-0.11 -> ~0). */
-#sport-banner:empty { height: 116px; margin-top: var(--sp-lg); }
-body:has(#games:empty) .site-footer { visibility: hidden; }
 
 /* responsive header — let the brand + nav stack cleanly on phones */
 @media (max-width: 560px) {

@@ -45,18 +45,13 @@
   var todayCell = document.getElementById("hub-today");
   if (todayCell && K && gridState !== "none") {
     var led = todayCell.querySelector(".k-led");
-    led.removeAttribute("data-seg");       // so the kit's DOMContentLoaded scan leaves it alone
-    led.classList.remove("off", "k-seg");
-    led.classList.add("y");
-    led.innerHTML = "";
-    var d = document.createElement("span");
-    led.appendChild(d);
-    K.seg(d, String(gridScore), gridScore + " of 9 squares today");
-    var of9 = document.createElement("span");
-    of9.className = "hub-of";
-    of9.setAttribute("aria-hidden", "true");
-    of9.textContent = "/9";
-    led.appendChild(of9);
+    var d = led && led.querySelector("span:first-child");
+    if (d) {
+      d.removeAttribute("data-seg");       // so the kit's DOMContentLoaded scan leaves it alone
+      d.classList.remove("off");
+      led.classList.add("y");
+      K.seg(d, String(gridScore), gridScore + " of 9 squares today");
+    }
   }
 
   /* ---------- game cards ---------- */
@@ -115,7 +110,7 @@
     var tag = '<span class="k-tag soft">' + m.tag + "</span>", foot = m.foot, left = "";
     if (!live) tag = '<span class="k-tag hub-soon">Coming soon</span>';
     if (slug === "player-grid" && live) {
-      if (onRack) tag = '<span class="k-tag">Today\'s Rack</span>' + tag;
+      if (onRack) tag = '<span class="k-tag">Today\'s Rack</span>';   // one tag: the Rack outranks "Daily"
       if (gridState === "done") { left = '<span class="k-mled y">Today ' + gridScore + "/9</span>"; foot = "See your grid"; }
       else {
         el.classList.add("ring");
@@ -125,7 +120,11 @@
       }
     } else if (live) {
       var b = best(slug);
-      if (b) left = '<span class="k-mled y">Best ' + b + "</span>";
+      if (b) {
+        left = '<span class="k-mled y">Best ' + b + "</span>";
+        // phone rows show the best where the tag sits
+        tag = '<span class="k-tag soft hub-tag-d">' + m.tag + '</span><span class="k-mled y hub-best-m" aria-hidden="true">Best ' + b + "</span>";
+      }
     }
     var title = g.title === "Guess the Stat Line" ? "Stat Line" : g.title;
     var body =

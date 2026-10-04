@@ -221,6 +221,16 @@
   const teamTag = (k) => `<img class="tlogo" src="${LEAGUE.logo(k)}" alt="" /> ${LEAGUE.name(k)}`;
   const collegeTag = (name) => { if (!name) return "Unknown"; const u = S.colleges[name]; return u ? `<img class="tlogo" src="${u}" alt="" /> ${name}` : name; };
 
+  // "2000-01 to 2013-14 · 13 seasons" as two mono LED chips and a count,
+  // so hyphenated seasons never run into a range dash
+  function careerSpan(c) {
+    const a = CFG.seasonFmt(c.min), b = CFG.seasonFmt(c.max), n = c.count + " season" + (c.count > 1 ? "s" : "");
+    const chips = a === b
+      ? `<span class="k-mled cp-yr"><i>in</i> ${a}</span>`
+      : `<span class="k-mled cp-yr"><i>from</i> ${a}</span><span class="k-mled cp-yr"><i>to</i> ${b}</span>`;
+    return `<span class="cp-span">${chips}<span class="cp-n">${n}</span></span>`;
+  }
+
   function facts(c) {
     const draft = c.dy
       ? `${c.dy} · Round ${c.dr || "?"} · Pick ${c.dp || "?"}${c.dt ? " · " + teamTag(c.dt) : ""}`
@@ -229,7 +239,7 @@
       position: { icon: BALL, k: "Position", v: posName(c.pos) },
       draft: { icon: ICON.draft, k: "Draft", v: draft },
       college: { icon: ICON.college, k: "College", v: collegeTag(c.college) },
-      career: { icon: ICON.career, k: "Career", v: `${CFG.seasonFmt(c.min)}–${CFG.seasonFmt(c.max)} · ${c.count} season${c.count > 1 ? "s" : ""}` },
+      career: { icon: ICON.career, k: "Career", v: careerSpan(c) },
       teampath: { icon: ICON.teampath, k: "Team path", v: c.path.map(teamTag).join('<span class="arr" aria-label="then">&rarr;</span>') },
     };
     return CFG.facts.map((key) => all[key]);
@@ -329,7 +339,7 @@
     const r = $("#reveal");
     const img = `<img alt="" src="${photo(c.headshot) || "/img/avatar.svg"}" onerror="this.onerror=null;this.src='/img/avatar.svg'" />`;
     r.innerHTML = `${img}<div class="pr-name">${c.name}</div>` +
-      `<div class="pr-meta">${posName(c.pos)} · ${CFG.seasonFmt(c.min)}–${CFG.seasonFmt(c.max)}</div>`;
+      `<div class="pr-meta">${posName(c.pos)} · ${CFG.seasonFmt(c.min)}${c.max !== c.min ? " to " + CFG.seasonFmt(c.max) : ""}</div>`;
     r.hidden = false;
   }
 

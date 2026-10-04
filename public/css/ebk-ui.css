@@ -34,6 +34,7 @@
   transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
 }
 .site-header a.header-tag:hover { color: var(--text); border-color: var(--accent); }
+.site-header a.header-tag b { color: var(--accent); font-weight: 900; margin-left: 5px; }   /* the destination, in the page accent */
 
 /* phones: two rows (brand + tag, then nav + mute) instead of three */
 @media (max-width: 560px) {

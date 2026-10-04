@@ -29,20 +29,28 @@
   <link rel="stylesheet" href="/css/base.css" />
   <link rel="stylesheet" href="/css/ebk-kit.css" />
   <script src="/js/ebk-kit.js"></script>
+  <link rel="stylesheet" href="/css/game-common.css" />
   <link rel="stylesheet" href="/css/styles.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
   <script src="/js/ebk-analytics.js" defer></script>
 </head>
 <body data-sport="nba">
-  <main id="app">
+  <main id="app" data-screen="screen-start">
+    <!-- TOP BAR: the same bar as every EBK game (brand, back pill, title, LED board, mute) -->
+    <header class="gtop hl-bar">
+      <a class="gbrand" href="/" aria-label="EBK home"><span class="wordmark" aria-hidden="true">E<span>B</span>K</span></a>
+      <a class="ghome hl-out" href="/nba">&larr; <b>NBA</b></a>
+      <button id="quit-btn" class="ghome hl-quit" type="button" aria-label="Back to stat select">&larr; <b>Stats</b></button>
+      <div class="gname" id="hud-cat"><span class="k-kick">NBA <i>Higher / Lower</i></span><p class="gtitle">Pick a stat</p></div>
+      <div class="gscore hl-score" role="group" aria-label="Scoreboard">
+        <div class="chip"><span class="k">Streak</span><span class="v y" id="streak" data-seg="00" data-seg-label="0">0</span></div>
+        <div class="chip"><span class="k">Best</span><span class="v" id="best" data-seg="00" data-seg-label="0">0</span></div>
+      </div>
+    </header>
 
     <!-- START / CATEGORY SELECT -->
     <section id="screen-start" class="screen is-active" aria-label="Choose a stat">
       <div class="start-inner">
-        <nav class="hl-nav" aria-label="Breadcrumb">
-          <a class="gbrand" href="/" aria-label="EBK home"><span class="wordmark" aria-hidden="true">E<span>B</span>K</span></a>
-          <a class="home-link k-back" href="/nba">&larr; <b>NBA</b></a>
-        </nav>
         <header class="k-hero hl-hero">
           <span class="k-ball auto lift float" style="--s:96px" aria-hidden="true"></span>
           <div class="k-hero-t">
@@ -66,20 +74,6 @@
 
     <!-- GAME -->
     <section id="screen-game" class="screen" aria-label="Game">
-      <header class="hud">
-        <button id="quit-btn" class="ghost-btn" aria-label="Back to stat select">&larr;</button>
-        <div class="hud-cat" id="hud-cat"></div>
-        <div class="hud-board" role="group" aria-label="Scoreboard">
-          <div class="hud-stat">
-            <span class="hud-label">Streak</span>
-            <span id="streak" class="hud-value y" data-seg="00" data-seg-label="0">0</span>
-          </div>
-          <div class="hud-stat">
-            <span class="hud-label">Best</span>
-            <span id="best" class="hud-value" data-seg="00" data-seg-label="0">0</span>
-          </div>
-        </div>
-      </header>
 
       <div class="panels">
         <article class="panel anchor" id="panel-anchor">
@@ -143,6 +137,10 @@
             <button id="again-btn" class="primary-btn">Play again</button>
             <button id="menu-btn" class="secondary-btn">Change stat</button>
           </div>
+        </div>
+        <div class="over-more" id="over-more">
+          <span class="k-kick">Keep playing <i>Pick another stat</i></span>
+          <div class="over-cats" id="over-cats"></div>
         </div>
       </div>
     </section>

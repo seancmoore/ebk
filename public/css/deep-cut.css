@@ -50,10 +50,13 @@ body.dcut {
 .dc-sport {
   display: inline-flex; align-items: center; gap: 8px; min-height: 36px;
   padding: 4px 14px 4px 6px; border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--sport) 45%, transparent);
-  background: color-mix(in srgb, var(--sport) 12%, #0b0820);
+  border: 1px solid var(--line-2);
+  background: rgba(255, 255, 255, .05);
+  color: var(--text);
   font-weight: 900; font-size: var(--fs-sm);
 }
+/* the league logo carries the sport; violet stays the only accent */
+.dc-sport-logo { filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .5)); }
 .dc-sport-logo { width: 24px; height: 24px; object-fit: contain; }
 .dc-sport-emoji { font-size: 1.1rem; line-height: 1; padding-left: 4px; }
 .dc-level { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: .66rem; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
@@ -156,8 +159,8 @@ body.dcut {
 .dc-bar { display: grid; grid-template-columns: 44px 1fr 48px; align-items: center; gap: 10px; font-size: var(--fs-xs); font-weight: 800; }
 .dc-bar-k { color: var(--muted); }
 .dc-bar-t { height: 14px; border-radius: 999px; background: #0c0820; box-shadow: inset 0 0 0 1px #2c2150; overflow: hidden; }
-.dc-bar-t span { display: block; height: 100%; border-radius: inherit; background: color-mix(in srgb, var(--higher) 75%, transparent); }
-.dc-bar.miss .dc-bar-t span { background: color-mix(in srgb, var(--lower) 70%, transparent); }
+.dc-bar-t span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, color-mix(in srgb, var(--cut) 55%, transparent), var(--cut)); }  /* solves glow violet, the page's one accent */
+.dc-bar.miss .dc-bar-t span { background: color-mix(in srgb, var(--lower) 55%, transparent); }
 .dc-bar.me .dc-bar-k, .dc-bar.me .dc-bar-v { color: var(--text); }
 .dc-bar.me .dc-bar-t { outline: 2px solid var(--cut); outline-offset: 1px; }
 .dc-bar-v { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
@@ -172,9 +175,9 @@ body.dcut {
 
 /* ---------- yesterday: a quieter card ---------- */
 .dc-yday.k-card { --c: var(--cut); padding: 18px 20px; border-radius: var(--r-lg); }
-.dc-yday-k { margin: 0 0 8px; font-size: .62rem; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.dc-yday .dc-yday-k { margin: 0 0 8px; line-height: 1.3; font-size: .62rem; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
 .dc-yday .dc-yday-q { margin: 0 0 8px; line-height: 1.55; color: var(--text); font-size: var(--fs-md); }
-.dc-yday-a { margin: 0; }
+.dc-yday .dc-yday-a { margin: 0; font-size: var(--fs-sm); }
 .dc-yday-a span { color: var(--muted); font-weight: 700; }
 .dc-yday-a b { color: var(--cut); }
 
@@ -193,3 +196,7 @@ body.dcut {
 @media (prefers-reduced-motion: reduce) {
   .dc-card.shake { animation: none; }
 }
+
+/* top bar: brand + back pill + title, mute pinned to the right edge */
+.gtop #ebk-mute { margin-left: auto; }
+.dc-gname .k-kick { color: #d9b3ff; }

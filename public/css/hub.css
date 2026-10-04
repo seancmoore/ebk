@@ -10,6 +10,12 @@
 /* ---------- hero: ball, kicker, heavy title, scoreboard ---------- */
 .hub-hero { gap: 28px; padding: clamp(2.2rem, 1rem + 4vw, 4.6rem) 0 var(--sp-lg); }
 .hub-ball { --s: 112px; align-self: center; }
+@media (min-width: 1252px) {
+  /* the text column starts on the same line as the LED section numbers;
+     the ball hangs in the gutter beside it */
+  .hub-hero .k-ball.hub-ball { --s: 88px; position: absolute; left: calc(-1 * var(--s) - 24px); top: calc(50% - var(--s) / 2 + 10px); }
+}
+@media (min-width: 1320px) { .hub-hero .k-ball.hub-ball { --s: 112px; left: calc(-1 * var(--s) - 30px); } }
 .hub-hero h1 { font-size: clamp(2.6rem, 1.6rem + 3vw, 3.7rem); margin-top: 10px; }
 @media (min-width: 901px) { .hub-hero h1 { white-space: nowrap; } }
 .hub-hero p { margin-top: 14px; max-width: 46ch; }
@@ -20,6 +26,11 @@
 .hub-board .k-cell { min-width: 96px; padding: 12px 20px 14px; }
 .hub-board .k-led { font-size: 2.6rem; }
 .hub-of { align-self: flex-end; margin-left: .2em; font-family: var(--mono); font-size: .38em; font-weight: 800; color: var(--muted); }
+/* before today's grid is played: an unlit 0 /9, like the Rack's dim 00 */
+.hub-today-led .k-seg.off + .hub-of { color: #5d6890; }
+/* NBA orange and CFB amber sit too close to gold: points read white there */
+[data-sport="nba"] .hub .k-led.y, [data-sport="nba"] .hub .k-mled.y,
+[data-sport="cfb"] .hub .k-led.y, [data-sport="cfb"] .hub .k-mled.y { color: var(--text); }
 
 /* ---------- logo banner: a soft rounded strip with an accent glow ring ---------- */
 .hub .logo-strip, #sport-banner.hub-banner:empty {
@@ -35,8 +46,10 @@
     0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent),
     0 22px 44px -26px color-mix(in srgb, var(--accent) 60%, transparent);
 }
-.hub .strip-logo { width: 58px; height: 58px; margin-right: 34px; background: radial-gradient(circle at 35% 30%, #2a3358, #0b0f20 72%); border: 2px solid rgba(255, 255, 255, .22); box-shadow: inset 0 -3px 8px rgba(0, 0, 0, .5), 0 6px 14px rgba(0, 0, 0, .45); }
+.hub .strip-logo { width: 58px; height: 58px; margin-right: 34px; background: radial-gradient(circle at 50% 44%, #414d80, #1d2548 50%, #0b0f20 80%); border: 2px solid rgba(255, 255, 255, .22); box-shadow: inset 0 -3px 8px rgba(0, 0, 0, .5), 0 6px 14px rgba(0, 0, 0, .45); }
 .hub .strip-logo img { width: 36px; height: 36px; }
+/* a thin sticker edge plus a soft halo, so dark marks (Capitals, Lightning, Ravens) read on navy */
+.hub .strip-logo img, .hub-coin img { filter: drop-shadow(0 0 .6px rgba(255, 255, 255, .95)) drop-shadow(0 0 .6px rgba(255, 255, 255, .7)) drop-shadow(0 0 7px rgba(255, 255, 255, .16)); }
 
 /* ---------- 01 Games ---------- */
 .hub-games { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
@@ -55,6 +68,7 @@
 .hub-reset b { font-family: var(--mono); font-weight: 800; color: var(--text); }
 .hub-dev { font-size: .66rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .hub-g .k-mled { font-size: .82rem; }
+.hub-best-m { display: none; }
 
 /* coming soon (CFB grid): quiet, not broken */
 .hub-g.soon { background: rgba(255, 255, 255, .02); border-style: dashed; border-color: var(--line-2); }
@@ -66,7 +80,9 @@
 /* featured card (the daily grid, or Higher/Lower for CFB): spans two columns */
 .hub-g.feat { grid-column: span 2; flex-direction: row; align-items: stretch; gap: 22px; }
 .hub-g-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.hub-mini { flex: none; display: grid; place-items: center; width: 40%; border-radius: 18px; background: radial-gradient(60% 70% at 50% 45%, color-mix(in srgb, var(--c) 14%, transparent), transparent 70%); }
+.hub-g.feat .hub-g-top { justify-content: flex-start; gap: 14px; }
+.hub-g.feat p { max-width: 44ch; }
+.hub-mini { flex: none; display: grid; place-items: center; width: auto; padding: 0 22px; border-radius: 18px; background: radial-gradient(60% 70% at 50% 45%, color-mix(in srgb, var(--c) 14%, transparent), transparent 70%); }
 .hub-nine { display: grid; grid-template-columns: repeat(3, 46px); gap: 7px; padding: 12px; border-radius: var(--r-md); background: var(--led-bg); border: 2px solid var(--led-edge); box-shadow: 0 0 0 4px var(--led-ring), 0 14px 30px rgba(0, 0, 0, .6); }
 .hub-nine i { position: relative; display: block; aspect-ratio: 1; border-radius: 9px; background: rgba(255, 255, 255, .035); box-shadow: inset 0 0 0 1px var(--led-div); }
 .hub-nine i.c { display: grid; place-items: center; }
@@ -97,11 +113,15 @@
 .hub-h2h h3 { margin: 10px 0 0; font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.2rem); font-weight: 900; letter-spacing: -.02em; line-height: 1.05; }
 .hub-h2h h3 em { font-style: normal; color: var(--accent); }
 .hub-h2h p { margin: 10px 0 0; max-width: 44ch; color: var(--muted); font-size: var(--fs-sm); line-height: 1.55; }
-.hub-h2h-btn { --c: var(--h2h); margin-top: 20px; }
+.hub-h2h-btn { --c: var(--h2h); margin-top: 22px; min-height: 44px; padding: 0 20px; border-radius: var(--r-sm); font-size: .88rem; }
 .hub-mu { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; }
 .hub-side { display: grid; justify-items: center; gap: 8px; text-align: center; }
 .hub-side b { font-size: .85rem; font-weight: 900; }
-.hub-side .k-mled { --c: var(--accent); font-size: .8rem; }
+.hub-st { --c: var(--accent); display: inline-flex; align-items: center; gap: 7px; padding: 4px 11px 4px 9px; border-radius: 999px; font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; border: 1px solid color-mix(in srgb, var(--c) 34%, var(--led-div)); box-shadow: 0 0 0 3px var(--led-ring), 0 0 16px -4px color-mix(in srgb, var(--c) 55%, transparent); text-shadow: 0 0 .5em color-mix(in srgb, var(--c) 60%, transparent); }
+.hub-st i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
+.hub-st.live { --c: #8ea2ff; }
+.hub-st.live i { animation: hub-blink 1.6s var(--ease) infinite; }
+@keyframes hub-blink { 50% { opacity: .25; } }
 .hub-medal { position: relative; display: grid; place-items: center; width: 92px; height: 92px; border-radius: 50%; background: radial-gradient(circle at 35% 28%, #2b3354, #0b0f20 72%); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .12), inset 0 -6px 12px rgba(0, 0, 0, .6), 0 10px 20px rgba(0, 0, 0, .5); }
 .hub-medal::before { content: ""; position: absolute; inset: 7px; border-radius: 50%; border: 1.5px solid color-mix(in srgb, var(--accent) 60%, transparent); }
 .hub-medal.q { background: #0b0f20; }
@@ -132,7 +152,7 @@
 .hub-teams { display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 12px; }
 .hub-team { --c: var(--accent); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 12px; min-width: 0; padding: 20px 10px 18px; border-radius: 18px; border: 1px solid var(--line); background: var(--card-bg); color: var(--text); text-align: center; text-decoration: none; transition: transform var(--dur) var(--ease-spring), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
 .hub-team:focus-visible { outline: 2px solid var(--c); outline-offset: 3px; }
-.hub-coin { flex: none; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #2a3358, #0b0f20 70%); border: 2px solid color-mix(in srgb, var(--c) 70%, transparent); box-shadow: inset 0 -3px 8px rgba(0, 0, 0, .5), 0 6px 14px rgba(0, 0, 0, .45); overflow: hidden; transition: transform .25s var(--ease-spring); }
+.hub-coin { flex: none; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: radial-gradient(circle at 50% 44%, #414d80, #1d2548 50%, #0b0f20 80%); border: 2px solid color-mix(in srgb, var(--c) 70%, transparent); box-shadow: inset 0 -3px 8px rgba(0, 0, 0, .5), 0 6px 14px rgba(0, 0, 0, .45); overflow: hidden; transition: transform .25s var(--ease-spring); }
 .hub-coin img { width: 44px; height: 44px; object-fit: contain; opacity: 0; transition: opacity .3s; }
 .hub-coin img.ld { opacity: 1; }
 .hub-coin b { font-size: .8rem; font-weight: 900; color: #fff; }
@@ -144,6 +164,9 @@
 @media (hover: none) { .hub-team:active { transform: scale(.97); border-color: color-mix(in srgb, var(--c) 70%, transparent); } }
 .hub-none { margin-top: 4px; }
 
+/* the game cards land from an end-of-body script: keep the footer hidden until
+   they do, so first paint does not shift (same rule home.css carries today) */
+.hub-page:has(#games:empty) .site-footer { visibility: hidden; }
 /* the site footer sits on the same airy ground */
 .hub-page footer.site-footer { margin-top: var(--sp-xl); border-top-color: rgba(255, 255, 255, .06); }
 
@@ -174,12 +197,33 @@
   .hub-g h3 { font-size: 1.3rem; }
   .hub-g-top { margin-bottom: 14px; }
   .hub-ico { width: 44px; height: 44px; border-radius: 12px; }
+  /* secondary cards become compact rows: glyph | title + tag / one-line desc | arrow */
+  .hub-games { gap: 10px; }
+  .hub-g:not(.feat) {
+    display: grid; grid-template-columns: 44px auto minmax(0, 1fr) 36px;
+    grid-template-areas: "i t g c" "i d d c"; align-items: center; align-content: center;
+    column-gap: 14px; row-gap: 3px; min-height: 88px; padding: 14px 14px 14px 16px; border-radius: 18px;
+  }
+  .hub-g:not(.feat) .hub-g-top, .hub-g:not(.feat) .k-foot { display: contents; }
+  .hub-g:not(.feat) .hub-ico { grid-area: i; }
+  .hub-g:not(.feat) h3 { grid-area: t; font-size: 1.12rem; white-space: nowrap; }
+  .hub-g:not(.feat) .hub-tags { grid-area: g; justify-content: flex-start; flex-wrap: nowrap; min-width: 0; margin-left: -4px; overflow: hidden; }
+  .hub-g:not(.feat) p { grid-area: d; margin: 0; max-width: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: .84rem; }
+  .hub-g:not(.feat) .k-foot > :first-child { display: none; }
+  .hub-g:not(.feat) .k-cta { grid-area: c; justify-self: end; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; font-size: 0; letter-spacing: 0; background: color-mix(in srgb, var(--c) 14%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 40%, transparent); }
+  .hub-g:not(.feat) .k-cta svg { width: 16px; height: 16px; }
+  .hub-g:not(.feat) .hub-dev { display: none; }
+  .hub-g:not(.feat) .hub-tag-d { display: none; }
+  .hub-g:not(.feat) .hub-best-m { display: inline-block; font-size: .72rem; }
   /* phone: the 3x3 board becomes the card icon, top right */
   .hub-g.feat { display: block; position: relative; }
   .hub-g.feat .hub-ico { display: none; }
-  .hub-g.feat .hub-g-top { justify-content: flex-start; align-items: flex-start; min-height: 96px; margin-bottom: 4px; padding-right: 112px; }
+  .hub-g.feat .hub-g-top { justify-content: flex-start; align-items: flex-start; min-height: 0; margin-bottom: 0; padding-right: 112px; }
   .hub-g.feat .hub-tags { justify-content: flex-start; }
-  .hub-g.feat:has(.k-board) .hub-g-top { min-height: 76px; padding-right: 150px; }
+  .hub-g.feat h3 { display: flex; align-items: flex-end; min-height: 70px; padding-right: 112px; }
+  .hub-g.feat:has(.k-board) .hub-g-top { padding-right: 150px; }
+  .hub-g.feat:has(.k-board) h3 { min-height: 52px; padding-right: 150px; }
+  .hub-g.feat p { margin-top: 10px; }
   .hub-mini { position: absolute; top: 16px; right: 16px; width: auto; background: none; }
   .hub-nine { grid-template-columns: repeat(3, 24px); gap: 4px; padding: 7px; border-radius: 12px; box-shadow: 0 0 0 3px var(--led-ring), 0 10px 22px rgba(0, 0, 0, .55); }
   .hub-nine i { border-radius: 6px; }
@@ -201,7 +245,7 @@
   .hub-find input::placeholder { font-size: .9rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hub-ring { animation: none; }
+  .hub-ring, .hub-st.live i { animation: none; }
   .hub-nine i::after { animation: none !important; }
   .hub-team, .hub-h2h, .hub-ico, .hub-coin { transition: none; }
 }

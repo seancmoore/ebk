@@ -64,6 +64,46 @@
     el.innerHTML = '<span class="k-seg" aria-hidden="true">' +
       str.split(",").map(EBKKit.seg7).join('<i class="cm">,</i>') + '</span><span class="k-sr">' + str + "</span>";
   }
+  // stat glyphs: the hub cards' stroke-icon set on an LED bezel (no emoji)
+  const G = {
+    rate: '<path d="M3 17l5.5-5.5 4 3.5L20 7"/><path d="M15 7h5v5"/>',
+    pct: '<circle cx="7" cy="7" r="2.4"/><circle cx="17" cy="17" r="2.4"/><path d="M18.5 5.5l-13 13"/>',
+    shield: '<path d="M12 3l7 3v5.5c0 4.6-3.2 8-7 9.5-3.8-1.5-7-4.9-7-9.5V6z"/>',
+    post: '<path d="M12 21v-8M5 13h14M5 13V3M19 13V3"/>',
+    yards: '<path d="M3 19h18M7 19v-2.5M12 19v-2.5M17 19v-2.5"/><path d="M4 10h14M14 6l4 4-4 4"/>',
+    arc: '<path d="M3 20c2.5-8.5 8.5-14 17-15"/><circle cx="20" cy="5" r="1.6" class="f"/>',
+    bolt: '<path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/>',
+    net: '<path d="M3 19V7h18v12"/><path d="M3 11h18M3 15h18M9 7v12M15 7v12"/>',
+    pass: '<circle cx="5.5" cy="17.5" r="2.3"/><circle cx="18.5" cy="6.5" r="2.3"/><path d="M7.5 16l8.5-7.5" stroke-dasharray="2.4 2.4"/>',
+    cycle: '<path d="M19.5 9A8 8 0 0 0 5.2 7.5"/><path d="M4.5 3.5v4.4h4.4"/><path d="M4.5 15a8 8 0 0 0 14.3 1.5"/><path d="M19.5 20.5v-4.4h-4.4"/>',
+    swap: '<path d="M4 8h12.5a3.5 3.5 0 0 1 0 7H8"/><path d="M11 12l-3 3 3 3"/>',
+    block: '<circle cx="12" cy="12" r="8.5"/><path d="M6 6l12 12"/>',
+    burst: '<path d="M12 3v4.5M12 16.5V21M3 12h4.5M16.5 12H21M5.6 5.6l3.2 3.2M15.2 15.2l3.2 3.2M5.6 18.4l3.2-3.2M15.2 8.8l3.2-3.2"/>',
+    catch: '<path d="M12 3v10M8 9.5l4 4 4-4"/><path d="M4 14.5V18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3.5"/>',
+    k: '<path d="M7 4v16M17.5 4L9 12l8.5 8"/>',
+    plate: '<path d="M5 4h14v8l-7 8-7-8z"/>',
+    target: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/><path d="M12 1.5v3.5M12 19v3.5M1.5 12H5M19 12h3.5"/>',
+    run: '<path d="M4 6l6 6-6 6M12.5 6l6 6-6 6"/>',
+    trophy: '<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4.5M16 6h3a3 3 0 0 1-3 4.5M12 13v4M8 20.5h8"/>',
+    lock: '<rect x="5" y="11" width="14" height="9.5" rx="2.2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+    clock: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4.2l2.8 1.8M9.5 2.5h5"/>',
+    pm: '<path d="M3.5 8h7M7 4.5v7M13.5 16h7"/><path d="M17 4L7 20" opacity=".55"/>',
+    star: '<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>',
+    bars: '<path d="M5 20v-8M12 20V4M19 20v-11"/>',
+  };
+  const GLYPH_RULES = [
+    [/\/ ?game/i, "rate"], [/avg|%/i, "pct"], [/^era$|gaa|conceded|defended/i, "shield"],
+    [/\btds?\b/i, "post"], [/yards/i, "yards"], [/home run/i, "arc"], [/power-play|stolen/i, "bolt"],
+    [/goal/i, "net"], [/assist/i, "pass"], [/rebound/i, "cycle"], [/steal|intercept|forced/i, "swap"],
+    [/block/i, "block"], [/sack|tackle/i, "burst"], [/reception/i, "catch"], [/strikeout/i, "k"],
+    [/rbi/i, "plate"], [/hits|shots|pointers/i, "target"], [/runs|rushing|carries/i, "run"],
+    [/wins/i, "trophy"], [/save|shutout|clean/i, "lock"], [/minute/i, "clock"], [/plus/i, "pm"],
+    [/fantasy|bonus|fpl/i, "star"],
+  ];
+  const glyph = (cat) => {
+    const hit = GLYPH_RULES.find(([re]) => re.test(cat.label));
+    return '<svg viewBox="0 0 24 24">' + G[hit ? hit[1] : "bars"] + "</svg>";
+  };
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const LEAGUE_NAME = { nfl: "NFL", nba: "NBA", mlb: "MLB", nhl: "NHL", cfb: "College FB", soccer: "Premier League" }[SPORT] || SPORT.toUpperCase();
 
@@ -84,6 +124,7 @@
   function showScreen(id) {
     document.querySelectorAll(".screen").forEach((s) => s.classList.remove("is-active"));
     $("#" + id).classList.add("is-active");
+    $("#app").dataset.screen = id;               // the top bar adapts per screen (CSS)
   }
 
   // Resolve once an image is cached (or after a short timeout / on error) so
@@ -173,8 +214,8 @@
       el.className = "cat-card";
       const b = getBest(cat.key);
       el.innerHTML =
-        `<span class="cat-top"><span class="cat-icon" aria-hidden="true">${cat.icon}</span>` +
-        `<span class="k-mled${b ? " y" : " dim"}" aria-label="Best streak ${b}">${b ? "Best " + b : "Best 0"}</span></span>` +
+        `<span class="cat-top"><span class="cat-icon" aria-hidden="true">${glyph(cat)}</span>` +
+        (b ? `<span class="k-mled y"><span aria-hidden="true">Best </span>${b}<span class="k-sr"> best streak</span></span>` : "") + `</span>` +
         `<span class="cat-label">${cat.label}</span>` +
         `<span class="cat-count"><b>${eligibleCount(cat).toLocaleString()}</b> seasons</span>` +
         `<span class="cat-go" aria-hidden="true">Play <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
@@ -183,8 +224,9 @@
     });
     $("#loading").hidden = true;
     grid.hidden = false;
-    led($("#start-best"), Math.max(
-      0, ...state.data.categories.map((c) => getBest(c.key))));
+    const top = Math.max(0, ...state.data.categories.map((c) => getBest(c.key)));
+    led($("#start-best"), top);
+    $("#start-best").classList.toggle("off", !top);   // no best yet: an unlit board
     const cc = $("#cat-count");
     if (cc) cc.textContent = state.data.categories.length + " stats";
 
@@ -214,7 +256,7 @@
     state.anchor = randItem(state.pool);
     state.challenger = pickChallenger(state.anchor);
 
-    $("#hud-cat").innerHTML = `<span class="hc-k">${LEAGUE_NAME}</span><span class="hc-l"><span aria-hidden="true">${cat.icon}</span> ${esc(cat.label)}</span>`;
+    $("#hud-cat").innerHTML = `<span class="k-kick">${LEAGUE_NAME} <i>Higher / Lower</i></span><p class="gtitle">${esc(cat.label)}</p>`;
     led($("#streak"), 0);
     led($("#best"), state.best);
     // wait for both photos before the panels appear (timer starts after)
@@ -443,6 +485,7 @@
     const cat = state.category;
     const a = state.anchor, c = state.challenger;
     led($("#final-streak"), state.streak);
+    $("#final-streak").classList.toggle("off", !state.streak);   // a zero streak stays unlit
     led($("#over-best"), Math.max(state.best, getBest(cat.key)));
     $("#over-cat").innerHTML = `${LEAGUE_NAME} <i>${esc(cat.label)}</i>`;
     const isNewBest = state.streak > 0 && state.streak === state.best &&
@@ -456,11 +499,24 @@
     $("#over-detail").innerHTML =
       `<span class="od-k">The call that ended it <i>${esc(cat.label)}</i></span>` +
       odRow(a, "a") + odRow(c, "c");
+    // keep playing: the other stats as glyph pills (same action as the menu tiles)
+    const more = $("#over-cats");
+    if (more) {
+      more.innerHTML = "";
+      state.data.categories.filter((o) => o.key !== cat.key).forEach((o) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "over-cat";
+        b.innerHTML = `<span class="oc-ic" aria-hidden="true">${glyph(o)}</span>${esc(o.label)}`;
+        b.addEventListener("click", () => startRun(o));
+        more.appendChild(b);
+      });
+    }
     showScreen("screen-over");
     const anime = A();
     if (anime && !document.hidden) {
       entrance({
-        targets: "#screen-over .over-card > *",
+        targets: ["#screen-over .over-card > *", "#over-more"],
         opacity: [0, 1],
         translateY: [16, 0],
         delay: anime.stagger(60),

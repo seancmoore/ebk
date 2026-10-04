@@ -58,9 +58,11 @@
 .lb-chip[aria-pressed="true"] { box-shadow: 0 10px 24px -14px var(--pts); }
 
 .lb-res { margin-top: var(--sp-xl); }
-.lb-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
-.lb-what { font-size: .74rem; }
-.lb-count { color: var(--muted); font-size: var(--fs-xs); font-weight: 800; font-family: var(--mono); }
+/* results heading: the home's LED number + white title + chrome rail */
+.lb-head { margin: 0 0 var(--sp-md); }
+.lb-head .k-shd-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.lb-head .k-shd-t i { font-style: normal; }
+.lb-count { font-family: var(--mono); }
 
 /* podium: 2nd · 1st · 3rd on desktop, 1st raised */
 .lb-pod { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: end; }
@@ -116,7 +118,11 @@
   .lb-sb .k-led.sm { font-size: 1.1rem; margin-top: 8px; }
 }
 @media (max-width: 560px) {
-  .pg-coin { --s: 76px; }
+  /* phone heroes: a small coin stacked above the kicker, so the title keeps the full width */
+  .pg .k-hero > .pg-coin { --s: 60px; }
+  .pg .k-hero > .pg-coin + .k-hero-t { flex-basis: 100%; }
+  .pg .k-hero > .pg-coin::before { inset: 5px; }
+  .lb-head .k-shd-r { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .lb-bar { grid-template-columns: minmax(0, 1fr); padding: 16px; gap: 14px; }
   .lb-chip { padding: 0 14px 0 6px; }
   .lb-tbl td, .lb-tbl th { padding: 11px 10px; }
@@ -128,6 +134,7 @@
    ============================================================ */
 .lg-wrap { font-size: var(--fs-md); max-width: calc(68ch + 2 * var(--sp-md)); }
 .pg-legal .site-header a.k-back { min-height: 40px; margin: 0 auto 0 6px; }
+@media (max-width: 560px) { .pg-legal .site-header a.k-back { margin: 0 0 0 auto; } }   /* phones: back pill sits with the mute, like the hubs */
 .lg-hero .pg-coin { --s: 88px; }
 .lg-hero .updated { margin-top: 12px; color: var(--muted); font-size: var(--fs-sm); font-weight: 700; }
 .lg-hero .updated .k-mled { margin-left: 6px; font-family: var(--mono); font-size: .78rem; font-weight: 800; padding: 3px 10px; }
@@ -162,7 +169,7 @@
 .pg-legal .legal-callout p + p { margin-top: 10px; }
 
 @media (max-width: 560px) {
-  .lg-hero .pg-coin { --s: 64px; }
+  .lg-hero .pg-coin { --s: 60px; }
   .pg-legal .legal-toc { padding: 16px 18px; }
   .pg-legal .legal-toc ol { columns: 1; }
   .pg-legal .legal-page h2 { gap: 10px; }
@@ -172,6 +179,7 @@
    ADMIN · light touch, same shell
    ============================================================ */
 .ad-wrap { max-width: 860px; }
+.pg-admin { --accent: var(--clock); }  /* utility page: the shield's red is its one accent */
 .ad-coin { --c: var(--clock); }
 .ad-loading { padding: var(--sp-lg) 0; text-align: center; color: var(--muted); font-weight: 700; }
 .ad-reports { display: grid; gap: 12px; }
@@ -196,3 +204,6 @@
 .lb-open .lb-pl { color: var(--muted); }
 .lb-open-t { margin: 0; color: var(--muted); font-size: var(--fs-sm); }
 @media (max-width: 760px) { .lb-p.lb-open { padding: 12px 14px; } .lb-open-t { display: none; } }
+
+/* site footer: same airy ground as the hubs */
+.pg footer.site-footer { margin-top: var(--sp-xl); border-top-color: rgba(255, 255, 255, .06); }

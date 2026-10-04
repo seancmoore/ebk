@@ -118,8 +118,9 @@
     "box-shadow:0 6px 18px rgba(0,0,0,0.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}" +
     /* always last in the header row, even though the account nav is injected async */
     ".site-header #ebk-mute{order:99;}" +
-    ".gtop #ebk-mute{width:38px;height:38px;font-size:0.95rem;}" +
-    "@media (max-width:420px){.gtop #ebk-mute{width:32px;height:32px;font-size:0.85rem;}}" +
+    /* in a game bar: a 40px circle with an invisible ring that makes the hit area 44px */
+    ".gtop #ebk-mute{position:relative;width:40px;height:40px;font-size:0.95rem;}" +
+    ".gtop #ebk-mute::after{content:\"\";position:absolute;inset:-2px;border-radius:50%;}" +
     "#ebk-mute.off{opacity:0.55;}#ebk-mute:active{transform:scale(0.92);}";
   function mount() {
     (document.head || document.documentElement).appendChild(css);

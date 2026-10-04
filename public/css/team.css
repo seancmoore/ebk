@@ -7,18 +7,19 @@
 .ts-main { padding-top: var(--sp-lg); padding-bottom: var(--sp-xl); }
 .ts-loading { padding: var(--sp-xl) 0; text-align: center; color: var(--muted); font-weight: 700; }
 .ts-back span { color: var(--muted); font-weight: 700; }
-.site-header .ts-back { margin-left: auto; margin-right: 8px; }
+.site-header .ts-back { min-height: 40px; margin: 0 auto 0 6px; }  /* next to the brand, like the hubs */
 
 /* ---------- hero ---------- */
 .ts-hero { padding: clamp(20px, 3vw, 32px); }
 .ts-id { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 26px); }
 .ts-coin {
   flex: none; display: grid; place-items: center; width: 112px; height: 112px; border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #2a3358, #0b0f20 70%);
+  background: radial-gradient(circle at 50% 46%, #3a4675, #1a2142 46%, #0b0f20 76%);
   border: 2px solid color-mix(in srgb, var(--accent) 70%, transparent);
   box-shadow: inset 0 -6px 14px rgba(0, 0, 0, .55), 0 14px 28px rgba(0, 0, 0, .5), 0 0 40px -10px color-mix(in srgb, var(--accent) 60%, transparent);
 }
-.ts-coin img { width: 70%; height: 70%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .45)); }
+/* a faint light rim keeps dark marks (Capitals, Lightning, Liverpool) readable on the navy coin */
+.ts-coin img { width: 70%; height: 70%; object-fit: contain; filter: drop-shadow(0 0 1px rgba(255, 255, 255, .85)) drop-shadow(0 0 6px rgba(200, 214, 255, .28)) drop-shadow(0 4px 6px rgba(0, 0, 0, .45)); }
 .ts-t { min-width: 0; }
 .ts-t h1 { margin: 6px 0 0; font-size: clamp(2.2rem, 1.6rem + 3vw, 3.6rem); font-weight: 900; letter-spacing: -.03em; line-height: 1; overflow-wrap: anywhere; }
 .ts-t p { margin: 10px 0 0; color: var(--muted); font-size: var(--fs-md); line-height: 1.5; max-width: 56ch; }
@@ -26,7 +27,7 @@
 
 /* ---------- filter panel ---------- */
 .ts-bar {
-  display: grid; grid-template-columns: auto auto minmax(200px, 1fr); align-items: end; gap: 16px 22px;
+  display: grid; grid-template-columns: auto minmax(200px, 1fr); align-items: end; gap: 16px 22px;
   margin-top: 14px; padding: 18px 22px 20px; border-color: var(--line-2);
 }
 .ts-f { display: grid; gap: 8px; min-width: 0; }
@@ -58,9 +59,11 @@
 .field select:focus-visible, .ts-bar .search:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); }
 .field select option { background: #0d1226; color: var(--text); }
 
-/* ---------- table ---------- */
-.ts-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: var(--sp-lg) 0 12px; }
-.count { margin: 0; white-space: nowrap; color: var(--muted); font-size: var(--fs-xs); font-weight: 800; font-family: var(--mono); }
+/* ---------- table: the home's LED section heading, count as a small LED pill ---------- */
+.ts-head { margin: var(--sp-xl) 0 var(--sp-md); }
+.ts-hint { color: var(--muted); font-size: var(--fs-xs); font-weight: 800; white-space: nowrap; }
+.ts-head .count { font-family: var(--mono); font-size: .8rem; padding: 4px 10px; }
+.ts-head .count:empty { display: none; }
 
 .table-wrap {
   overflow: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
@@ -100,13 +103,23 @@ table.tbl { border-collapse: separate; border-spacing: 0; width: 100%; font-size
 @media (max-width: 560px) {
   .ts-main { padding-top: var(--sp-md); }
   .ts-back span { display: none; }
-  .ts-head .k-kick i { display: none; }
+  .site-header .ts-back { margin: 0 0 0 auto; }
+  .ts-hint { display: none; }
+  .ts-head { margin-top: var(--sp-lg); }
+  /* compact filters: chips are one swipeable row, seasons on one row, search below */
+  .ts-bar .ts-l { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .ts-pos { margin: 0 -16px; min-width: 0; }
+  .chip-row2 { flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; padding: 2px 16px 4px; scroll-padding-inline: 16px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 22px), transparent); mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 22px), transparent); }
+  .chip-row2::-webkit-scrollbar { display: none; }
+  .chip-row2 .k-chip { flex: none; }
   .ts-hero { padding: 18px 16px; }
   .ts-id { gap: 14px; }
-  .ts-coin { width: 76px; height: 76px; }
+  .ts-coin { width: 72px; height: 72px; }
   .ts-t h1 { font-size: 2rem; }
   .ts-t p { font-size: var(--fs-sm); }
-  .ts-bar { grid-template-columns: minmax(0, 1fr); padding: 16px; gap: 14px; }
+  .ts-bar { grid-template-columns: minmax(0, 1fr); padding: 14px 16px 16px; gap: 12px; margin-top: 12px; }
+  .field select, .ts-bar .search { min-height: 48px; }
   .ts-yrs .field { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
   .ts-yrs select { width: 100%; }
   .chip-row2 .k-chip { padding: 0 12px; min-width: 48px; }

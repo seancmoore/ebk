@@ -70,8 +70,11 @@
 .gscore .chip .v.k-seg { text-shadow: none; }
 .gscore .chip .v.pop { animation: gpop var(--dur-slow) var(--ease-spring); }
 @keyframes gpop { 0%{transform:scale(1)} 40%{transform:scale(1.3)} 100%{transform:scale(1)} }
-/* the mute toggle (ebk-sound.js) sits in the bar; keep it a 40px glass circle */
-body .gtop #ebk-mute { width: 40px; height: 40px; border-color: var(--line-2); }
+/* the mute toggle (ebk-sound.js, 40px with a 44px hit area) sits in the bar */
+.gtop #ebk-mute { border-color: var(--line-2); }
+/* always the last thing on the right, whether or not the bar has a board */
+.gtop > #ebk-mute { margin-left: auto; }
+.gtop > .gscore ~ #ebk-mute { margin-left: 0; }
 
 /* ---------- shot clock: a rail-like track, accent fill, drains via scaleX ---------- */
 .round-timer {
@@ -101,6 +104,21 @@ body .gtop #ebk-mute { width: 40px; height: 40px; border-color: var(--line-2); }
   padding: var(--sp-lg) var(--sp-md) calc(var(--sp-lg) + var(--safe-b));
   display: flex; flex-direction: column;
 }
+/* Stat Line + Career Path: a wider stage on desktop so the round fills the
+   viewport the way the Higher / Lower cards do */
+@media (min-width: 900px) {
+  .gquiz { max-width: 908px; }
+  .gquiz .opt-list { gap: 12px; margin-top: 16px; }
+  .gquiz .opt { min-height: 72px; padding: 12px 20px 12px 14px; font-size: 1.15rem; border-radius: 18px; gap: 14px; }
+  .gquiz .opt::before { width: 36px; height: 36px; border-radius: 11px; font-size: .9rem; }
+  .gquiz .gcard { padding: 28px 30px; }
+  .gquiz .statline { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .gquiz .statline .s-cell { padding: 14px 16px 15px; border-radius: 16px; }
+  .gquiz .statline .s-v { font-size: 1.9rem; }
+  .gquiz .clue { padding: 14px 16px; }
+  .gquiz .clue .c-v { font-size: 1.05rem; }
+}
+
 /* the round's question card: the page's single navy hero panel */
 .gcard {
   position: relative;
@@ -192,6 +210,20 @@ body .gtop #ebk-mute { width: 40px; height: 40px; border-color: var(--line-2); }
 .sl-pos { margin: 0; font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.1rem); font-weight: 900; letter-spacing: -.025em; line-height: 1; }
 .sl-team { display: flex; align-items: center; gap: 8px; color: var(--muted); font-weight: 800; font-size: var(--fs-sm); }
 .sl-team .tlogo { width: 22px; height: 22px; vertical-align: middle; }
+/* club logo coin: lighter navy core + a faint white halo on the mark, so dark
+   logos (Yankees, Spurs, Kings) never vanish into the card */
+.t-coin, .gh-coin {
+  flex: none; display: inline-grid; place-items: center;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: radial-gradient(circle at 50% 42%, #36416e, #1a2142 46%, #0b0f20 78%);
+  border: 2px solid color-mix(in srgb, var(--accent) 65%, transparent);
+  box-shadow: inset 0 -3px 8px rgba(0, 0, 0, .5), 0 6px 14px rgba(0, 0, 0, .45);
+}
+.t-coin .tlogo { width: 22px; height: 22px; }
+.t-coin img, .gh-coin img, .clue .c-v .tlogo, .panel-meta .tlogo, .player-reveal .tlogo {
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, .7)) drop-shadow(0 0 6px rgba(255, 255, 255, .16));
+}
+.sl-team { color: var(--text); font-size: var(--fs-md); gap: 10px; }
 .sl-season { display: grid; justify-items: end; gap: 6px; }
 .sl-season .k-lbl { font-size: .58rem; }
 
@@ -264,6 +296,11 @@ body .gtop #ebk-mute { width: 40px; height: 40px; border-color: var(--line-2); }
 .clue .c-v .tlogo { width: 20px; height: 20px; vertical-align: -5px; }
 .clue .c-v .arr { color: var(--muted); font-weight: 600; margin: 0 4px; }
 .clue.locked { opacity: 0.55; border-style: dashed; }
+/* career span: "from 2000-01" "to 2013-14" LED chips + the season count */
+.cp-span { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px 8px; vertical-align: middle; }
+.cp-yr { font-family: var(--mono); font-size: .86rem; font-weight: 800; color: var(--accent); letter-spacing: .02em; padding: 3px 9px; text-shadow: 0 0 .35em color-mix(in srgb, currentColor 40%, transparent); }
+.cp-yr i { font-style: normal; font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; color: var(--muted); font-size: .58rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; margin-right: 4px; text-shadow: none; }
+.cp-n { font-weight: 800; color: var(--text); }
 /* desktop: clues pair up two by two (the long team path takes a full row) */
 @media (min-width: 640px) {
   .gcard .clues { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -309,6 +346,10 @@ body .gtop #ebk-mute { width: 40px; height: 40px; border-color: var(--line-2); }
   padding: 12px 0 calc(12px + var(--safe-b));
   background: linear-gradient(to top, var(--bg) 62%, transparent);
 }
+/* desktop: the pinned backdrop fades out at the sides too, so it never reads as a box */
+@media (min-width: 700px) {
+  #next-row:not(:empty) { -webkit-mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent); mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent); }
+}
 
 /* ============================================================
    PLAYER GRID
@@ -318,6 +359,20 @@ body .gtop #ebk-mute { width: 40px; height: 40px; border-color: var(--line-2); }
 .grid-intro .k-kick { margin-bottom: 4px; }
 .grid-intro h1 { margin: 0; font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.1rem); font-weight: 900; letter-spacing: -.025em; line-height: 1; }
 #status-line { margin: 0 0 14px; font-size: var(--fs-sm); line-height: 1.5; }
+/* finished grid: Filled / Rarity / New grid in, as a mono data strip */
+.g-strip {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-radius: var(--r-md); overflow: hidden;
+  background: var(--led-bg); border: 2px solid var(--led-edge); box-shadow: 0 0 0 3px var(--led-ring);
+  text-align: center;
+}
+.g-strip > span { display: grid; gap: 4px; padding: 10px 8px 11px; }
+.g-strip > span + span { border-left: 2px solid var(--led-div); }
+#status-line .g-strip .k-dv { font-family: var(--mono); font-weight: 800; font-size: 1.3rem; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; text-shadow: 0 0 .35em color-mix(in srgb, currentColor 45%, transparent); }
+#status-line .g-strip .k-dv.y { color: var(--pts); }
+#status-line .g-strip .k-dv.w { color: var(--text); }
+.g-strip .k-dv small { font-size: .62em; color: var(--muted); text-shadow: none; margin-left: 1px; }
+.g-strip .k-dk { font-size: .58rem; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
 #status-line b { color: var(--text); font-family: var(--mono); }
 .grid-panel {
   position: relative;
@@ -347,20 +402,15 @@ body .gtop #ebk-mute { width: 40px; height: 40px; border-color: var(--line-2); }
 .gh.corner .k-ball { --s: 44px; opacity: .85; }
 .gh .gh-ic { font-size: 1.2rem; }
 /* team header: a logo coin like the home team badges (.tb) */
-.gh-logo {
-  width: 46px; height: 46px; padding: 8px; object-fit: contain;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #2a3358, #0b0f20 70%);
-  border: 2px solid color-mix(in srgb, var(--accent) 65%, transparent);
-  box-shadow: inset 0 -3px 8px rgba(0, 0, 0, .5), 0 6px 14px rgba(0, 0, 0, .45);
-}
+.gh-coin { width: 50px; height: 50px; }
+.gh-logo { width: 32px; height: 32px; object-fit: contain; }
 .gh-name { font-size: var(--fs-xs); line-height: 1.1; font-weight: 800; }
 /* stat headers: an LED-ish caps label on the scoreboard face */
-.gh:not(.corner):not(:has(.gh-logo)) {
+.gh:not(.corner):not(:has(.gh-coin)) {
   background: rgba(4, 6, 14, .55);
   box-shadow: inset 0 0 0 1px var(--led-div);
 }
-.gh:not(.corner):not(:has(.gh-logo)) .gh-name { color: var(--text); font-size: .74rem; font-weight: 900; letter-spacing: .01em; }
+.gh:not(.corner):not(:has(.gh-coin)) .gh-name { color: var(--text); font-size: .74rem; font-weight: 900; letter-spacing: .01em; }
 
 /* small inline team logo used across games */
 .tlogo { width: 18px; height: 18px; object-fit: contain; vertical-align: -4px; }
@@ -469,32 +519,38 @@ body .gtop #ebk-mute { width: 40px; height: 40px; border-color: var(--line-2); }
   .ghome { min-height: 40px; padding: 0 11px; }
   .gname .k-kick { display: none; }
   .gtitle { font-size: 1rem; }
-  .gtitle small { display: none; }
+  .gtitle small, .gtitle .gt-pre { display: none; }
   .gscore { border-radius: 12px; box-shadow: 0 0 0 2px var(--led-ring), 0 8px 18px rgba(0, 0, 0, .5); }
   .gscore .chip { min-width: 40px; padding: 4px 7px 5px; }
   .gscore .chip .k { font-size: .5rem; letter-spacing: .14em; }
   .gscore .chip .v { font-size: 1.05rem; margin-top: 3px; }
-  body .gtop #ebk-mute { width: 40px; height: 40px; }
   .gwrap { padding-top: var(--sp-md); }
   .gcard { border-radius: 22px; }
   .opt { min-height: 56px; padding: 8px 12px 8px 10px; gap: 10px; font-size: .95rem; }
   .opt::before { width: 26px; height: 26px; font-size: .72rem; }
   .statline { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 14px; }
   .statline .s-cell { padding: 8px 9px 9px; border-radius: 12px; }
-  .statline .s-k { font-size: .55rem; letter-spacing: .08em; }
+  .statline .s-k { font-size: .55rem; letter-spacing: .08em; white-space: normal; line-height: 1.2; overflow: visible; }
   .statline .s-v { font-size: 1.12rem; }
   .sl-season { justify-items: start; }
   .clue { padding: 9px 12px; gap: 12px; }
   .clue .c-icon { width: 34px; height: 34px; }
   .grid-panel { border-radius: 20px; }
   .grid3 { gap: 5px; }
-  .gh-logo { width: 38px; height: 38px; padding: 6px; }
+  .gh-coin { width: 40px; height: 40px; }
+  .gh-logo { width: 26px; height: 26px; }
+  #status-line .g-strip .k-dv { font-size: 1.1rem; }
+  .g-strip .k-dk { font-size: .5rem; letter-spacing: .12em; }
   .gcell { border-radius: 12px; padding: 4px; }
   .gcell .cell-name { font-size: .62rem; }
   .player-reveal { border-radius: 20px; width: 100%; padding-right: 14px; }
   /* result dock: after a guess the reveal rides above the pinned buttons */
   #next-row:not(:empty) { padding-top: 10px; }
   .player-reveal:not([hidden]) { position: sticky; bottom: calc(78px + var(--safe-b)); z-index: 8; box-shadow: 0 -12px 30px rgba(5, 8, 18, .8); }
+  /* the verdict pins with the answer card and the buttons, so a long stat line never hides "Wrong!" behind them */
+  .banner:has(+ .player-reveal:not([hidden])) { position: sticky; bottom: calc(164px + var(--safe-b)); z-index: 8; }
+  .banner.bad:has(+ .player-reveal:not([hidden])) { background-color: color-mix(in srgb, var(--lower) 14%, var(--bg)); }
+  .banner.good:has(+ .player-reveal:not([hidden])) { background-color: color-mix(in srgb, var(--accent) 14%, var(--bg)); }
 }
 @media (max-width: 360px) {
   .opt-list { grid-template-columns: 1fr; }

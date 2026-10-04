@@ -164,8 +164,8 @@
       `<div class="k-dstrip ts-strip">` +
       cell(fmt(S.rows.length), "player-seasons") +
       cell(fmt(players.size), "players", "w") +
-      cell(seasons.size, "seasons", "y") +
-      cell(lo === hi ? lo : `${lo}–${String(hi).slice(-2)}`, "span", "b") +
+      cell(seasons.size, "seasons", "w") +
+      cell(lo === hi ? lo : `${lo}–${String(hi).slice(-2)}`, "span", "w") +
       `</div>`;
     document.title = LEAGUE.name(S.teamKey) + " · Team Study · EBK";
   }
@@ -256,7 +256,7 @@
     });
 
     const rows = sortRows(filtered());
-    $("#count").textContent = `${rows.length.toLocaleString()} player-season${rows.length === 1 ? "" : "s"}`;
+    $("#count").innerHTML = `${rows.length.toLocaleString()}<span class="k-sr"> player-season${rows.length === 1 ? "" : "s"}</span>`;
     const tbody = $("#tbody");
     S.list = rows; S.cols = cols; S.shown = 0;
     if (!rows.length) { tbody.innerHTML = `<tr><td class="empty" colspan="${cols.length}">No players match these filters.</td></tr>`; return; }

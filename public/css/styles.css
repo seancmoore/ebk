@@ -6,15 +6,24 @@
    ============================================================ */
 
 html, body { height: 100%; }
-#app { height: 100dvh; }
+#app { height: 100dvh; display: flex; flex-direction: column; }
 
-/* screens */
-.screen { display: none; height: 100%; }
-.screen.is-active { display: flex; flex-direction: column; }
+/* screens: the top bar stays put, the active screen fills the rest */
+.screen { display: none; }
+.screen.is-active { display: flex; flex-direction: column; flex: 1; min-height: 0; }
 
-/* brand + back pill (also used by the quiz games' top bar) */
-.gbrand { flex: none; display: inline-flex; align-items: center; min-height: 44px; padding: 0 4px; border-radius: 12px; text-decoration: none; }
-.gbrand .wordmark { font-size: 1.45rem; color: var(--text); }
+/* ---------- top bar (game-common.css .gtop): one bar on all three screens ----------
+   start: brand + "<- NBA" + mute (the hero below carries the title and board)
+   game:  brand + "<- Stats" (back to the stat menu) + stat title + LED board + mute
+   over:  brand + "<- NBA" + stat title + LED board + mute */
+.hl-bar { flex: none; }
+.hl-quit { font: inherit; font-weight: 800; font-size: var(--fs-sm); cursor: pointer; }
+#app:not([data-screen="screen-game"]) .hl-quit,
+#app[data-screen="screen-game"] .hl-out { display: none; }
+/* on the menu the hero below carries the title and board: hide them in the bar
+   without collapsing it, so the bar is the same height on every screen */
+#app[data-screen="screen-start"] .hl-bar .gname,
+#app[data-screen="screen-start"] .hl-score { visibility: hidden; }
 
 /* ============================================================
    START SCREEN
@@ -26,8 +35,6 @@ html, body { height: 100%; }
   margin: 0 auto;
   padding: calc(var(--sp-md) + var(--safe-t)) var(--sp-md) calc(var(--sp-xl) + var(--safe-b));
 }
-.hl-nav { display: flex; align-items: center; gap: 12px; }
-.home-link b { color: var(--accent); }
 .hl-hero { padding-top: var(--sp-lg); }
 .hl-hero .title { margin: 6px 0 0; font-size: clamp(2.4rem, 1.6rem + 3.4vw, 4rem); font-weight: 900; letter-spacing: -.035em; line-height: .95; }
 .hl-hero .title em, .title span { font-style: normal; color: var(--accent); }
@@ -62,13 +69,22 @@ html, body { height: 100%; }
 }
 .cat-card:active { transform: scale(0.98); }
 .cat-top { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 4px; }
+/* stat glyph on an LED bezel: the same treatment as the hub game cards (.hub-ico) */
 .cat-icon {
-  display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%;
-  font-size: 1.05rem; line-height: 1;
-  background: radial-gradient(circle at 35% 30%, #2a3358, #0b0f20 70%);
-  border: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
-  box-shadow: inset 0 -3px 8px rgba(0, 0, 0, .5);
+  flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 13px;
+  color: var(--accent);
+  background: var(--led-bg);
+  border: 2px solid var(--led-edge);
+  box-shadow: 0 0 0 3px var(--led-ring);
+  transition: transform var(--dur) var(--ease-spring);
 }
+.cat-icon svg {
+  width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, currentColor 65%, transparent));
+}
+.cat-icon .f { fill: currentColor; }
+@media (hover: hover) { .cat-card:hover .cat-icon { transform: translateY(-2px) rotate(-4deg); } }
+.cat-top { min-height: 50px; }
 .cat-top .k-mled { font-size: .72rem; }
 .cat-label { font-weight: 900; font-size: 1.12rem; letter-spacing: -.015em; line-height: 1.1; }
 .cat-count { margin-top: auto; font-family: var(--mono); font-size: .72rem; color: var(--muted); letter-spacing: .02em; }
@@ -86,66 +102,8 @@ html, body { height: 100%; }
 .credit { color: var(--muted); opacity: 0.7; font-size: var(--fs-xs); margin: var(--sp-md) 0 0; text-align: center; }
 
 /* ============================================================
-   GAME — HUD (a sticky navy bar like the site header)
+   GAME
    ============================================================ */
-.hud {
-  position: relative;
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: calc(10px + var(--safe-t)) var(--sp-md) 10px;
-  background: rgba(10, 14, 28, 0.78);
-  border-bottom: 1px solid var(--line);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-}
-.hud-cat {
-  flex: 1; min-width: 0;
-  display: grid; gap: 3px;
-  white-space: nowrap; overflow: hidden;
-}
-.hc-k { font-size: .62rem; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
-.hc-l { font-weight: 900; font-size: clamp(1rem, .9rem + .5vw, 1.3rem); letter-spacing: -.02em; line-height: 1.05; overflow: hidden; text-overflow: ellipsis; }
-/* streak + best: the Rack's LED scoreboard */
-.hud-board {
-  flex: none;
-  display: inline-grid; grid-auto-flow: column;
-  border-radius: 14px;
-  background: var(--led-bg);
-  border: 2px solid var(--led-edge);
-  box-shadow: 0 0 0 3px var(--led-ring), 0 10px 24px rgba(0, 0, 0, .5);
-  overflow: hidden;
-}
-.hud-stat { position: relative; text-align: center; min-width: 58px; padding: 5px 12px 6px; }
-.hud-stat + .hud-stat { border-left: 2px solid var(--led-div); }
-.hud-stat::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 50% 50%, transparent 50%, rgba(2, 3, 8, .6) 75%) 0 0/3px 3px; opacity: .35; }
-.hud-label {
-  display: block;
-  font-size: .56rem; font-weight: 900;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.hud-value { display: flex; justify-content: center; align-items: center; margin-top: 4px; font-family: var(--mono); font-size: 1.4rem; font-weight: 800; line-height: 1; color: var(--accent); }
-.hud-value.y { color: var(--pts); }
-.hud-value.pop { animation: pop var(--dur-slow) var(--ease-spring); }
-.ghost-btn {
-  flex: none;
-  display: grid; place-items: center;
-  background: var(--glass);
-  border: 1px solid var(--line);
-  color: var(--text);
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  font-size: 1.15rem; font-weight: 800;
-  cursor: pointer;
-  transition: transform var(--dur-fast) var(--ease), border-color var(--dur) var(--ease);
-}
-.ghost-btn:hover { border-color: var(--accent); }
-.ghost-btn:active { transform: scale(0.92); }
-body .hud #ebk-mute { width: 40px; height: 40px; }
-
 /* guess countdown: a rail between the two cards that drains toward the VS
    badge from both ends (scaleX, transform only) */
 #screen-game { position: relative; }
@@ -291,7 +249,10 @@ body .hud #ebk-mute { width: 40px; height: 40px; }
 }
 .guess-btn svg { width: 18px; height: 18px; flex: none; }
 .guess-btn.higher { background: var(--accent); color: var(--ink); box-shadow: 0 14px 30px -14px var(--accent); }
-.guess-btn.lower  { background: var(--lower); color: #2a0b0f; box-shadow: 0 14px 30px -14px var(--lower); }
+/* one filled accent per page: Lower is a red-outline ghost pill, so the two
+   choices never read as two near-identical loud fills (NBA / CFB orange) */
+.guess-btn.lower  { background: rgba(4, 6, 14, .55); color: #ff8a95; box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--lower) 85%, transparent), 0 14px 30px -18px var(--lower); }
+.guess-btn.lower:hover { background: color-mix(in srgb, var(--lower) 14%, rgba(4, 6, 14, .55)); }
 .guess-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
 .guess-btn:active { transform: scale(0.95); }
 .guess-btn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
@@ -377,10 +338,10 @@ body .hud #ebk-mute { width: 40px; height: 40px; }
    ============================================================ */
 #screen-over { overflow-y: auto; }
 .over-inner {
-  margin: auto;
+  margin: 0 auto;
   width: 100%;
-  max-width: 560px;
-  padding: calc(var(--sp-lg) + var(--safe-t)) var(--sp-md) calc(var(--sp-lg) + var(--safe-b));
+  max-width: 688px;
+  padding: var(--sp-lg) var(--sp-md) calc(var(--sp-lg) + var(--safe-b));
 }
 .over-card {
   position: relative;
@@ -418,6 +379,24 @@ body .hud #ebk-mute { width: 40px; height: 40px; }
 .od-v { font-family: var(--mono); font-weight: 800; font-size: 1.25rem; color: var(--accent); font-variant-numeric: tabular-nums; }
 .od-row.c .od-v { color: #ff8a95; }
 .over-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+/* keep playing: the other stats as glyph pills under the result card */
+.over-more { display: grid; gap: 12px; margin-top: var(--sp-lg); justify-items: center; text-align: center; }
+.over-cats { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.over-cat {
+  display: inline-flex; align-items: center; gap: 9px;
+  min-height: 44px; padding: 0 16px 0 6px;
+  border-radius: 999px; border: 1px solid var(--line);
+  background: var(--card-bg); color: var(--text);
+  font: inherit; font-weight: 800; font-size: var(--fs-sm); cursor: pointer;
+  transition: transform var(--dur) var(--ease-spring), border-color var(--dur) var(--ease);
+}
+.oc-ic { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; color: var(--accent); background: var(--led-bg); border: 1px solid var(--led-div); }
+.oc-ic svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 3px color-mix(in srgb, currentColor 60%, transparent)); }
+.oc-ic .f { fill: currentColor; }
+@media (hover: hover) { .over-cat:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--accent) 70%, transparent); } }
+.over-cat:active { transform: scale(.96); }
+.over-cat:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
 .primary-btn, .secondary-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   min-height: 52px;
@@ -460,21 +439,15 @@ body .hud #ebk-mute { width: 40px; height: 40px; }
    PHONE
    ============================================================ */
 @media (max-width: 560px) {
-  .hl-nav .gbrand { display: none; }
   .hl-hero { padding-top: var(--sp-md); }
   .hl-hero .k-ball { --s: 64px !important; }
   .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .cat-card { min-height: 118px; padding: 14px; }
-  .cat-icon { width: 34px; height: 34px; font-size: .95rem; }
+  .cat-icon { width: 40px; height: 40px; border-radius: 12px; }
+  .cat-icon svg { width: 20px; height: 20px; }
+  .cat-top { min-height: 46px; }
   .cat-label { font-size: 1rem; }
   .cat-go { display: none; }
-  .hud { gap: 8px; padding-left: 12px; padding-right: 12px; }
-  .hud-stat { min-width: 44px; padding: 4px 8px 5px; }
-  .hud-label { font-size: .5rem; letter-spacing: .14em; }
-  .hud-value { font-size: 1.1rem; margin-top: 3px; }
-  .hud-board { border-radius: 12px; box-shadow: 0 0 0 2px var(--led-ring), 0 8px 18px rgba(0, 0, 0, .5); }
-  .ghost-btn { width: 40px; height: 40px; }
-  body body .hud #ebk-mute { width: 40px; height: 40px; }
   .panels { gap: 14px; padding: 10px 10px calc(10px + var(--safe-b)); }
   .panel { border-radius: 22px; }
   .panel-body { padding: 12px 16px; }
@@ -490,5 +463,5 @@ body .hud #ebk-mute { width: 40px; height: 40px; }
   .od-v { font-size: 1.05rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cat-card, .cat-go, .guess-btn, .panel { transition: none; }
+  .cat-card, .cat-go, .guess-btn, .panel, .over-cat, .cat-icon { transition: none; }
 }

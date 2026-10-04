@@ -12,6 +12,12 @@
 .db-out h2 { margin: 8px 0 0; font-size: clamp(1.6rem, 2.6vw, 2.2rem); font-weight: 900; letter-spacing: -.02em; line-height: 1.05; }
 .db-out p { max-width: 46ch; margin: 10px 0 20px; font-size: var(--fs-md); }
 .db-out-b .k-cell { min-width: 96px; }
+/* signed out: an unlit preview of 01 By sport, so the page keeps the home's rhythm */
+.db-preview { position: relative; margin-top: var(--sp-xl); pointer-events: none; user-select: none;
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent); mask-image: linear-gradient(180deg, #000 55%, transparent); }
+.db-preview .k-shd { margin-top: 0; }
+.db-preview .k-shd-n { color: #5d6890; }
+.db-preview .db-sport { opacity: .55; filter: saturate(.35); }
 .db-loading { padding: var(--sp-xl) 0; text-align: center; color: var(--muted); font-weight: 700; }
 
 /* top scoreboard row */

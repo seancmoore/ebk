@@ -576,9 +576,7 @@
     setEntries(0);
     led($("#score"), S.score);
     const total = saved.rarity != null ? saved.rarity : (S.pts ? S.pts.reduce((a, b) => a + (b || 0), 0) : 0);
-    $("#status-line").innerHTML =
-      "You've played today's " + SPORT.toUpperCase() + " grid: <b>" + S.score + "/9</b>" +
-      " · score <b>" + total + "</b> · new grid in " + hoursToReset();
+    $("#status-line").innerHTML = statusStrip("You've played today's " + SPORT.toUpperCase() + " grid", S.score, total);
     render();
     const row = $("#end-row"); row.hidden = false; row.innerHTML = "";
     addShareBtn(row, total);
@@ -594,7 +592,7 @@
       // Team logos are hotlinked to third-party CDNs and can fail without notice.
       // Drop the broken image rather than render a broken-image glyph — the axis
       // name alone is still a complete, playable header.
-      return `<img class="gh-logo" src="${LEAGUE.logo(c.key)}" alt="${c.label}" loading="lazy" onerror="this.remove()" />` +
+      return `<span class="gh-coin"><img class="gh-logo" src="${LEAGUE.logo(c.key)}" alt="${c.label}" loading="lazy" onerror="this.parentNode.remove()" /></span>` +
              `<span class="gh-name">${c.label}</span>`;
     return `<span class="gh-name">${c.label}</span>`;
   }
@@ -723,6 +721,18 @@
     const b = $("#banner"); b.textContent = msg; b.className = "banner " + (good ? "good" : "bad");
   }
 
+  // finished-grid readout: an LED-style data strip (Filled / Rarity / Resets)
+  // with the full sentence kept for screen readers
+  function statusStrip(lead, score, total) {
+    const reset = hoursToReset();
+    return `<span class="k-sr">${lead}: ${score} of 9 filled, rarity score ${total} of 900 (rarer picks score more), new grid in ${reset}.</span>` +
+      `<span class="g-strip" aria-hidden="true">` +
+      `<span><b class="k-dv">${score}<small>/9</small></b><span class="k-dk">Filled</span></span>` +
+      `<span><b class="k-dv y">${total}<small>/900</small></b><span class="k-dk">Rarity</span></span>` +
+      `<span><b class="k-dv w">${reset}</b><span class="k-dk">New grid in</span></span>` +
+      `</span>`;
+  }
+
   function finish() {
     S.over = true;
     rtStop();
@@ -762,9 +772,7 @@
     S.pts = pts;
     const total = pts.reduce((a, b) => a + b, 0);
     render();
-    $("#status-line").innerHTML =
-      `Daily ${S.date}: <b>${S.score}/9</b> · rarity score <b>${total}</b> / 900 ` +
-      `<span class="muted">(rarer picks score more)</span> · new grid in ${hoursToReset()}`;
+    $("#status-line").innerHTML = statusStrip("Daily " + S.date, S.score, total);
     const erow = $("#end-row"); erow.hidden = false; erow.innerHTML = "";
     addShareBtn(erow, total);
     addBtn(erow, "Back to EBK", "ghost", () => (location.href = "/" + SPORT));

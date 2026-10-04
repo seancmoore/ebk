@@ -139,7 +139,9 @@
         '<span class="k-sr">Sometime between ' + a + " and " + b + "</span>";
     }
   }
-  const teamLine = (m) => `<img class="tlogo" src="${LEAGUE.logo(m.team)}" alt="" /> ${LEAGUE.name(m.team)}`;
+  // the club logo sits on a small coin with a light halo, so dark marks
+  // (Yankees navy, Spurs black) stay visible on the navy card
+  const teamLine = (m) => `<span class="t-coin" aria-hidden="true"><img class="tlogo" src="${LEAGUE.logo(m.team)}" alt="" onerror="this.remove()" /></span><span>${LEAGUE.name(m.team)}</span>`;
 
   const EXACT_REVEALS = 5;
   const ROUND_MS = 7000;                // per-round clock; timeout ends the run

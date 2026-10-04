@@ -99,19 +99,27 @@
   function renderLobby() {
     const params = new URLSearchParams(location.search);
     const preSport = SPORTS.includes(params.get("sport")) ? params.get("sport") : "nfl";
+    const led = (v, cls) => '<span class="k-led k-seg ' + (cls || "") + '" aria-hidden="true">' + seg(v) + "</span>";
     $("#lobby").innerHTML =
       '<header class="k-hero h2-hero"><div class="k-hero-t">' +
       '<span class="k-kick">Head-to-Head <i>Ranked and private rooms</i></span>' +
       '<h1>Same question. <em>Same clock.</em></h1>' +
-      '<p>Everyone gets the same questions and the highest streak wins. Jump into a ranked quick match, or make a private room and share the code with friends.</p></div></header>' +
-      '<div class="h2-mu" aria-hidden="true">' +
+      '<p>Everyone gets the same questions and the highest streak wins. Jump into a ranked quick match, or make a private room and share the code with friends.</p></div>' +
+      '<div class="k-hero-side"><div class="h2-mu" aria-hidden="true">' +
       '<div class="h2-side"><span class="h2-medal"><span class="h2-mw">E<span>B</span>K</span></span><b>You</b><span class="k-mled" id="mu-elo">Unranked</span></div>' +
       '<div class="h2-vs"><span class="h2-sw"></span><span class="h2-vsx">VS</span><span class="h2-sc k-seg">' + seg("0:0") + "</span></div>" +
       '<div class="h2-side"><span class="h2-medal q"><svg class="h2-ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46"/></svg><span class="h2-qm">?</span></span><b>Next opponent</b><span class="k-mled dim">Live</span></div>' +
-      "</div>" +
-      '<div id="signgate" class="k-empty h2-gate" hidden><b>Sign in to play head-to-head</b>' +
+      "</div></div></header>" +
+      '<div class="k-shd"><span class="k-shd-n k-seg" aria-hidden="true">' + seg("01") + '</span><h2 class="k-shd-t">Play</h2><span class="k-shd-rail" aria-hidden="true"></span><span class="k-shd-r">Ranked or private</span></div>' +
+      '<div id="signgate" class="h2-gate" hidden>' +
+      '<div class="h2-gate-t"><span class="k-kick">Sign in <i>to play</i></span><h3>Get your name on the board</h3>' +
       "<p>Ranked matches track your Elo in every sport, and private rooms need a name on the board.</p>" +
       '<button class="k-btn lg" id="h2h-signin">Sign in ' + ARROW + "</button></div>" +
+      '<div class="h2-gate-prev" aria-hidden="true">' +
+      '<div class="h2-prev"><span class="k-kick">Ranked <i>Quick match</i></span><b>Find a match</b>' +
+      '<div class="k-board"><div class="k-cell"><span class="k-lbl">Elo</span>' + led("1000", "sm off") + '</div><div class="k-cell"><span class="k-lbl">Clock</span>' + led("0:07", "sm r off") + "</div></div></div>" +
+      '<div class="h2-prev"><span class="k-kick">Private room <i>Unrated</i></span><b>Play your friends</b><span class="h2-prev-code">------</span></div>' +
+      "</div></div>" +
       '<div id="setup" hidden>' +
       '  <div class="h2-grid">' +
       '  <div class="h2h-panel ranked"><span class="k-kick">Ranked <i>Quick match</i></span><h2>Find a match</h2>' +
@@ -127,6 +135,12 @@
       '      <button class="k-btn ghost lg" id="btn-join">Join</button></div></div>' +
       "  </div>" +
       '  <p class="h2h-msg" id="lobby-msg"></p>' +
+      "</div>" +
+      '<div class="k-shd"><span class="k-shd-n k-seg" aria-hidden="true">' + seg("02") + '</span><h2 class="k-shd-t">How a match works</h2><span class="k-shd-rail" aria-hidden="true"></span><span class="k-shd-r">Higher / Lower or Career Path</span></div>' +
+      '<div class="h2-how">' +
+      '<div class="k-card h2-step">' + led("0:07", "r") + "<h3>Same question, same clock</h3><p>Everyone in the match gets the same questions in the same order, with seven seconds for each call.</p></div>" +
+      '<div class="k-card h2-step">' + led("01", "y") + "<h3>One miss ends your run</h3><p>A wrong call or a timeout stops your streak. The highest streak in the room wins.</p></div>" +
+      '<div class="k-card h2-step">' + led("08") + "<h3>Ranked or up to eight</h3><p>Ranked is one on one and moves your Elo in that sport. Private rooms hold up to eight players, unrated.</p></div>" +
       "</div>";
     try { window.EBKKit && EBKKit.calm(".h2-mu"); } catch (e) {}
     $("#h2h-signin") && $("#h2h-signin").addEventListener("click", () => window.EBKopenAuth && EBKopenAuth());

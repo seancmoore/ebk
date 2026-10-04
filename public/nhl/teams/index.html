@@ -38,7 +38,7 @@
       <span class="wordmark" aria-label="EBK">E<span>B</span>K</span>
       <span class="brand-sub">Elite Ball Knowledge</span>
     </a>
-    <a class="header-tag" href="/nhl">← NHL</a>
+    <a class="header-tag" href="/nhl">← <b>NHL</b></a>
   </header>
 
   <main class="hub k-wrap">
@@ -61,7 +61,7 @@
       <div class="k-shd"><span class="k-shd-n" data-seg="01" aria-hidden="true"></span><h2 class="k-shd-t" id="teams-h">Teams</h2><span class="k-shd-rail" aria-hidden="true"></span><span class="k-shd-r">A to Z</span></div>
       <label class="hub-find">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M20 20l-3.6-3.6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
-        <input id="team-q" type="search" autocomplete="off" spellcheck="false" placeholder="Find a team: Bruins, Rangers, Oilers" aria-label="Filter teams" aria-controls="team-grid" />
+        <input id="team-q" type="search" autocomplete="off" spellcheck="false" placeholder="Find a team: Bruins, Rangers, Oilers" data-ph-short="Find a team" aria-label="Filter teams" aria-controls="team-grid" />
         <span class="k-mled dim" id="team-shown" aria-live="polite">33</span>
       </label>
       <div class="hub-teams" id="team-grid"></div>
@@ -97,6 +97,8 @@
       if (count && window.EBKKit) EBKKit.seg(count, String(tiles.length), tiles.length + " teams");
       var q = document.getElementById("team-q"), shown = document.getElementById("team-shown"), none = document.getElementById("team-none");
       if (shown) shown.textContent = tiles.length;
+      // phones: the example names do not fit, so keep the placeholder short
+      if (q && window.matchMedia && matchMedia("(max-width: 560px)").matches) q.placeholder = q.getAttribute("data-ph-short");
       if (q) q.addEventListener("input", function () {
         var v = q.value.trim().toLowerCase(), n = 0;
         tiles.forEach(function (t) { var hit = !v || t.getAttribute("data-q").indexOf(v) !== -1; t.hidden = !hit; if (hit) n++; });

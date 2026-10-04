@@ -99,28 +99,4 @@
     var tick = function () { if (window.EBKF && EBKF.onChange) EBKF.onChange(show); else setTimeout(tick, 80); };
     tick();
   })();
-
-  // ---- sports grid
-  (function () {
-    var grid = document.getElementById("sports-grid");
-    if (!grid || !window.EBK) return;
-    var liveCount = 0;
-    EBK.sports.forEach(function (s) {
-      var live = EBK.sportLive(s.key);
-      if (live) liveCount++;
-      var a = document.createElement("a");
-      a.className = "game-card live sport-card";
-      a.href = "/" + s.key;
-      a.style.setProperty("--accent", s.accent);
-      a.innerHTML =
-        '<span class="badge ' + (live ? "play" : "soon") + '">' + (live ? "Play" : "Soon") + "</span>" +
-        '<span class="card-logo">' + EBK.logoTag(s) + "</span>" +
-        '<h3 class="game-title">' + s.name + "</h3>" +
-        '<p class="game-desc">' + s.blurb + "</p>" +
-        '<span class="game-foot">' + (live ? ((EBK.live[s.key] || []).length + " games live") : "Preview games") + "</span>";
-      grid.appendChild(a);
-    });
-    var c = document.getElementById("sport-count");
-    if (c) c.textContent = liveCount + " live · " + (EBK.sports.length - liveCount) + " coming soon";
-  })();
 })();

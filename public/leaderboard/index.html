@@ -73,9 +73,11 @@
     </div>
 
     <div class="lb-res" id="lb-res">
-      <div class="lb-head">
-        <span class="k-kick lb-what" id="lb-what"></span>
-        <span class="lb-count" id="status" role="status" aria-live="polite"></span>
+      <div class="k-shd lb-head">
+        <span class="k-shd-n" data-seg="01" aria-hidden="true"></span>
+        <h2 class="k-shd-t lb-what" id="lb-what">Top runs</h2>
+        <span class="k-shd-rail" aria-hidden="true"></span>
+        <span class="k-shd-r lb-count" id="status" role="status" aria-live="polite"></span>
       </div>
       <ol class="lb-pod" id="podium" aria-label="Top three"></ol>
       <div class="k-tbl-wrap lb-tw" id="lb-tw" hidden>
@@ -84,6 +86,11 @@
       </div>
     </div>
   </main>
+
+  <footer class="site-footer">
+    <p>EBK · Elite Ball Knowledge &nbsp;·&nbsp; stats from public sources: nflverse, ESPN, Lahman, MLB Stats API, NHL, CFBD, FPL</p>
+    <p class="legal-links"><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · Not affiliated with any league. Logos and trademarks belong to their owners.</p>
+  </footer>
   <script src="/js/catalog.js"></script>
   <script src="/js/ebk-ui.js"></script>
   <script src="/js/leaderboard.js"></script>
