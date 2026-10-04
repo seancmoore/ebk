@@ -156,10 +156,16 @@
         '<a class="ebk-dash-link" href="/dashboard">Dashboard</a>' +
         '<span class="ebk-acct"></span>';
       h.appendChild(nav);
+      // mark the page you're on (purely visual + aria)
+      var here = location.pathname.replace(/\/+$/, "") || "/";
+      nav.querySelectorAll("a[href]").forEach(function (a) {
+        if (a.getAttribute("href") === here) a.setAttribute("aria-current", "page");
+      });
     });
     renderAccount(window.EBKF && EBKF.user);
   }
   function esc(s) { return String(s).replace(/[<>&"']/g, function (c) { return { "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function initial(nm) { var c = String(nm).trim().match(/[A-Za-z0-9]/); return c ? c[0].toUpperCase() : "#"; }
   function renderAccount(user) {
     var admin = !!(window.EBKF && EBKF.isAdmin && EBKF.isAdmin());
     document.querySelectorAll(".ebk-admin-link").forEach(function (el) { el.hidden = !admin; });
@@ -170,14 +176,15 @@
       if (user) {
         var nm = (window.EBKF && EBKF.profileName) || user.displayName || "Player";
         el.innerHTML = '<a class="ebk-user" href="/dashboard" title="Your dashboard">' +
-          '<span class="nm">' + esc(nm) + "</span></a>";
+          '<span class="av0" aria-hidden="true">' + esc(initial(nm)) + '</span><span class="nm">' + esc(nm) + "</span></a>";
       } else {
         el.innerHTML = '<button class="ebk-signin">Sign in</button>';
       }
     });
   }
   document.addEventListener("click", function (e) {
-    if (e.target.classList.contains("ebk-signin")) openModal();
+    // only the header's Sign in button (admin tools reuse the .ebk-signin look)
+    if (e.target.classList.contains("ebk-signin") && e.target.closest(".ebk-acct")) openModal();
     if (e.target.classList.contains("ebk-out")) EBKF.signOut();
   });
 

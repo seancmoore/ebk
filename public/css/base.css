@@ -50,6 +50,26 @@
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
+  /* ---- home design language (shared with /css/ebk-kit.css) ----
+     The home page scopes the same values to its own sections, so these
+     :root copies never change its pixels. */
+  --line-2: rgba(255, 255, 255, 0.16);   /* card edge one step up from --line */
+  --pts: #ffd166;                        /* points / gold LED */
+  --h2h: #7d95ff;                        /* Head-to-Head indigo */
+  --cut: #c77dff;                        /* Deep Cut violet */
+  --bag: #4fd1c5;                        /* Deep Bag teal */
+  --clock: #ff6b57;                      /* shot-clock red LED */
+  --ink: #07101f;                        /* text on an accent fill */
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --led-bg: #040509;                     /* scoreboard face */
+  --led-edge: #2a3150;                   /* scoreboard bezel */
+  --led-ring: #0d1226;                   /* outer bezel ring */
+  --led-div: #1d2340;                    /* divider between LED cells */
+  --chrome: linear-gradient(180deg, #e9eefc, #7c88ad 45%, #2b3354);  /* the rail */
+  --card-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.025));
+  --panel-bg: linear-gradient(180deg, #0f1532, #090d1b);
+  --r-sm: 12px; --r-md: 16px; --r-lg: 20px; --r-xl: 28px;
+
   /* safe areas (notches) */
   --safe-t: env(safe-area-inset-top, 0px);
   --safe-b: env(safe-area-inset-bottom, 0px);
