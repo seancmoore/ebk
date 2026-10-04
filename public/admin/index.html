@@ -29,40 +29,52 @@
   <link rel="stylesheet" href="/css/ebk-kit.css" />
   <script src="/js/ebk-kit.js"></script>
   <link rel="stylesheet" href="/css/home.css" />
+  <link rel="stylesheet" href="/css/pages.css" />
   <script src="/js/ebk-analytics.js" defer></script>
 </head>
-<body>
+<body class="pg pg-admin">
   <header class="site-header">
     <a class="brand" href="/">
       <span class="wordmark" aria-label="EBK">E<span>B</span>K</span>
       <span class="brand-sub">Elite Ball Knowledge</span>
     </a>
   </header>
-  <main>
-    <section class="hero wrap" style="padding-bottom: var(--sp-md)">
-      <h1 class="rise">🛡️ Admin</h1>
-      <p class="rise d1">Reported display names — most-reported first.</p>
+  <main class="k-wrap ad-wrap">
+    <section class="k-hero">
+      <span class="pg-coin ad-coin" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M32 6l20 7v15c0 13-8.6 23.6-20 28C20.6 51.6 12 41 12 28V13z" fill="#ff6b57"/><path d="M32 6l20 7v15c0 13-8.6 23.6-20 28z" fill="#e2503d"/><path d="M23 31l7 7 12-14" fill="none" stroke="#07101f" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="k-hero-t">
+        <span class="k-kick">Admin <i>Moderation</i></span>
+        <h1>Reported <em>names</em></h1>
+        <p>Most-reported first. Rename, wipe or dismiss.</p>
+      </div>
     </section>
-    <div class="wrap" style="max-width:760px">
-      <div id="denied" hidden class="center muted" style="padding:var(--sp-lg)">
-        Admins only. <button class="ebk-signin" onclick="window.EBKopenAuth&&EBKopenAuth()">Sign in</button>
-      </div>
-      <div id="loading" class="center muted" style="padding:var(--sp-lg)">Loading…</div>
-      <p id="none" hidden class="center muted" style="padding:var(--sp-lg)">No open reports. 🎉</p>
-      <div id="reports"></div>
-      <div id="traffic" hidden style="margin-top:var(--sp-xl);border-top:1px solid var(--line);padding-top:var(--sp-md)">
-        <h3>Traffic</h3>
-        <div id="traffic-body" class="muted">Loading…</div>
-      </div>
-      <div id="tools" hidden style="margin-top:var(--sp-xl);border-top:1px solid var(--line);padding-top:var(--sp-md)">
-        <h3>Tools</h3>
-        <p class="muted" style="font-size:var(--fs-sm)">Rebuild every player's aggregate totals
+
+    <div id="denied" hidden class="k-empty">
+      <span class="pg-coin ad-coin" aria-hidden="true" style="--s:64px"><svg viewBox="0 0 64 64"><path d="M32 6l20 7v15c0 13-8.6 23.6-20 28C20.6 51.6 12 41 12 28V13z" fill="#5d6890"/><rect x="24" y="28" width="16" height="13" rx="3" fill="#07101f"/><path d="M27 28v-3a5 5 0 0 1 10 0v3" fill="none" stroke="#07101f" stroke-width="3"/></svg></span>
+      <b>Admins only</b>
+      <p>Sign in with an admin account to review reports.</p>
+      <button class="ebk-signin k-btn pill" onclick="window.EBKopenAuth&&EBKopenAuth()">Sign in</button>
+    </div>
+    <div id="loading" class="ad-loading" role="status">Loading…</div>
+    <div id="none" hidden class="k-empty">
+      <b>No open reports</b>
+      <p>Every name on the board is clean right now.</p>
+    </div>
+    <div id="reports" class="ad-reports"></div>
+    <section id="traffic" hidden class="ad-sec">
+      <div class="k-shd"><span class="k-shd-n" data-seg="01" aria-hidden="true"></span><h2 class="k-shd-t">Traffic</h2><span class="k-shd-rail" aria-hidden="true"></span></div>
+      <div id="traffic-body" class="k-card ad-traffic">Loading…</div>
+    </section>
+    <section id="tools" hidden class="ad-sec">
+      <div class="k-shd"><span class="k-shd-n" data-seg="02" aria-hidden="true"></span><h2 class="k-shd-t">Tools</h2><span class="k-shd-rail" aria-hidden="true"></span></div>
+      <div class="k-card ad-tool">
+        <p>Rebuild every player's aggregate totals
           (overall / per-sport / per-game leaderboards) from their existing scores. Run once after
           the aggregate-leaderboards update, or if totals ever drift.</p>
-        <button class="hero-cta" id="backfill">Backfill totals</button>
-        <span id="backfill-msg" class="muted" style="margin-left:10px"></span>
+        <div class="k-foot"><button class="k-btn" id="backfill">Backfill totals</button>
+        <span id="backfill-msg" class="ad-msg"></span></div>
       </div>
-    </div>
+    </section>
   </main>
   <script src="/js/ebk-ui.js"></script>
   <script src="/js/admin.js"></script>

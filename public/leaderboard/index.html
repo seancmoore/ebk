@@ -28,36 +28,58 @@
   <link rel="stylesheet" href="/css/ebk-kit.css" />
   <script src="/js/ebk-kit.js"></script>
   <link rel="stylesheet" href="/css/home.css" />
-  <link rel="stylesheet" href="/css/team.css" />
+  <link rel="stylesheet" href="/css/pages.css" />
   <script src="/js/ebk-analytics.js" defer></script>
 </head>
-<body>
+<body class="pg pg-lb">
   <header class="site-header">
     <a class="brand" href="/">
       <span class="wordmark" aria-label="EBK">E<span>B</span>K</span>
       <span class="brand-sub">Elite Ball Knowledge</span>
     </a>
   </header>
-  <main>
-    <section class="hero wrap" style="padding-bottom: var(--sp-md)">
-      <h1 class="rise">🏆 Leaderboards</h1>
-      <p class="rise d1">Top runs for every game, every sport.</p>
+  <main class="k-wrap">
+    <section class="k-hero">
+      <span class="pg-coin lb-coin" aria-hidden="true">
+        <svg viewBox="0 0 64 64"><defs><linearGradient id="lb-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3c9"/><stop offset=".5" stop-color="#ffd166"/><stop offset="1" stop-color="#c4841a"/></linearGradient></defs><path d="M21 15h-7.5c0 7.5 3.2 11.5 8.5 12.5M43 15h7.5c0 7.5-3.2 11.5-8.5 12.5" fill="none" stroke="url(#lb-g)" stroke-width="3.6" stroke-linecap="round"/><path d="M20 10h24v13c0 8-5.4 14-12 14s-12-6-12-14z" fill="url(#lb-g)"/><path d="M25.5 14v8.5c0 4 1.4 7 3.4 9" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2.4" stroke-linecap="round"/><path d="M29 36.5h6v7.5h-6z" fill="#d99a2b"/><rect x="22" y="44" width="20" height="5" rx="2" fill="url(#lb-g)"/><rect x="18" y="49" width="28" height="6.5" rx="2.6" fill="#a86d15"/></svg>
+      </span>
+      <div class="k-hero-t">
+        <span class="k-kick">Leaderboards <i>Every game, every sport</i></span>
+        <h1>Top <em>runs</em></h1>
+        <p>The best runs on EBK, ranked. Pick a ranking, a sport and a game.</p>
+      </div>
     </section>
-    <div class="wrap" style="max-width:760px">
-      <div class="filters" style="display:flex;gap:var(--sp-sm);flex-wrap:wrap;margin-bottom:var(--sp-md)">
-        <span class="field">Ranking <select id="cat" class="search">
+
+    <div class="k-card deep lb-bar">
+      <label class="lb-f">
+        <span class="lb-l">Ranking</span>
+        <select id="cat" class="pg-sel">
           <option value="game">Best run · sport + game</option>
           <option value="sport">Sport total · all games</option>
           <option value="game-all">Game total · all sports</option>
           <option value="overall">Overall total · everything</option>
           <option value="plays">Most games played</option>
-        </select></span>
-        <span class="field" id="sport-field">Sport <select id="sport" class="search"></select></span>
-        <span class="field" id="game-field">Game <select id="game" class="search"></select></span>
+        </select>
+      </label>
+      <label class="lb-f" id="game-field">
+        <span class="lb-l">Game</span>
+        <select id="game" class="pg-sel"></select>
+      </label>
+      <div class="lb-f lb-sports" id="sport-field">
+        <span class="lb-l" id="sport-l">Sport</span>
+        <div class="k-chips" id="sport-chips" role="group" aria-labelledby="sport-l"></div>
+        <select id="sport" class="pg-sel" hidden aria-hidden="true" tabindex="-1"></select>
       </div>
-      <p class="count" id="status"></p>
-      <div class="table-wrap">
-        <table class="tbl"><thead><tr><th>#</th><th>Player</th><th id="metric">Best</th><th>Plays</th></tr></thead>
+    </div>
+
+    <div class="lb-res" id="lb-res">
+      <div class="lb-head">
+        <span class="k-kick lb-what" id="lb-what"></span>
+        <span class="lb-count" id="status" role="status" aria-live="polite"></span>
+      </div>
+      <ol class="lb-pod" id="podium" aria-label="Top three"></ol>
+      <div class="k-tbl-wrap lb-tw" id="lb-tw" hidden>
+        <table class="k-table lb-tbl"><thead><tr><th>#</th><th>Player</th><th id="metric">Best</th><th>Plays</th></tr></thead>
         <tbody id="board"></tbody></table>
       </div>
     </div>

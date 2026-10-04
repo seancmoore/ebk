@@ -38,6 +38,9 @@
 /* phones: two rows (brand + tag, then nav + mute) instead of three */
 @media (max-width: 560px) {
   .site-header .ebk-nav { width: auto; flex: 1 1 calc(100% - 56px); margin-left: -10px; }
+  /* no header tag: widen the brand's flex basis so the nav wraps to row 2 with
+     the mute button, instead of squeezing onto row 1 beside the wordmark */
+  .site-header:has(.ebk-nav):not(:has(.header-tag)) .brand { flex: 1 0 60%; }
   .ebk-nav a, .ebk-nav .ebk-out { padding: 0 10px; }
   .ebk-signin { padding: 0 14px; }
 }

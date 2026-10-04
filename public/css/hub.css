@@ -1,0 +1,207 @@
+/* EBK · sport hubs (/<sport>) and team directories (/<sport>/teams).
+   Built on the kit (ebk-kit.css); everything here is hub-* so it never
+   touches the home page. One accent per page: the sport colour (--accent),
+   plus the Head-to-Head indigo inside its own card. */
+
+.hub { padding-bottom: var(--sp-lg); }
+.hub-sec { margin-top: var(--sp-xl); }
+.hub-sec .k-shd { margin-top: 0; }
+
+/* ---------- hero: ball, kicker, heavy title, scoreboard ---------- */
+.hub-hero { gap: 28px; padding: clamp(2.2rem, 1rem + 4vw, 4.6rem) 0 var(--sp-lg); }
+.hub-ball { --s: 112px; align-self: center; }
+.hub-hero h1 { font-size: clamp(2.6rem, 1.6rem + 3vw, 3.7rem); margin-top: 10px; }
+@media (min-width: 901px) { .hub-hero h1 { white-space: nowrap; } }
+.hub-hero p { margin-top: 14px; max-width: 46ch; }
+.hub-hero .k-kick { font-size: .74rem; }
+/* dark league marks (NCAA, Premier League) read as white on the navy */
+[data-sport="cfb"] .hub-hero .k-kick .league-logo, [data-sport="soccer"] .hub-hero .k-kick .league-logo { filter: brightness(0) invert(1) drop-shadow(0 2px 6px rgba(0, 0, 0, .5)); }
+.hub-hero .k-kick .league-logo { width: 24px; height: 24px; vertical-align: 0; margin-right: 2px; filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .5)); }
+.hub-board .k-cell { min-width: 96px; padding: 12px 20px 14px; }
+.hub-board .k-led { font-size: 2.6rem; }
+.hub-of { align-self: flex-end; margin-left: .2em; font-family: var(--mono); font-size: .38em; font-weight: 800; color: var(--muted); }
+
+/* ---------- logo banner: a soft rounded strip with an accent glow ring ---------- */
+.hub .logo-strip, #sport-banner.hub-banner:empty {
+  height: 104px; margin-top: var(--sp-md);
+  border-radius: var(--r-lg);
+}
+.hub .logo-strip {
+  border: 1px solid var(--line-2);
+  box-shadow:
+    inset 110px 0 60px -70px rgba(7, 10, 22, .92),
+    inset -110px 0 60px -70px rgba(7, 10, 22, .92),
+    inset 0 0 28px rgba(0, 0, 0, .35),
+    0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent),
+    0 22px 44px -26px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+.hub .strip-logo { width: 58px; height: 58px; margin-right: 34px; background: radial-gradient(circle at 35% 30%, #2a3358, #0b0f20 72%); border: 2px solid rgba(255, 255, 255, .22); box-shadow: inset 0 -3px 8px rgba(0, 0, 0, .5), 0 6px 14px rgba(0, 0, 0, .45); }
+.hub .strip-logo img { width: 36px; height: 36px; }
+
+/* ---------- 01 Games ---------- */
+.hub-games { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.hub-g { display: flex; flex-direction: column; min-height: 232px; padding: 22px; border-radius: 22px; }
+.hub-g.glow { background: radial-gradient(70% 120% at 0% 0%, color-mix(in srgb, var(--c) 15%, transparent), transparent 65%), var(--card-bg); }
+.hub-g h3 { font-size: 1.5rem; }
+.hub-g p { max-width: 40ch; }
+.hub-g .k-foot { margin-top: auto; padding-top: 18px; }
+.hub-g-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 18px; }
+.hub-tags { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+.hub-ico { flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; color: var(--c); background: var(--led-bg); border: 2px solid var(--led-edge); box-shadow: 0 0 0 3px var(--led-ring); transition: transform var(--dur) var(--ease-spring); }
+.hub-ico svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 4px color-mix(in srgb, currentColor 65%, transparent)); }
+.hub-ico .f { fill: currentColor; }
+@media (hover: hover) { a.hub-g:hover .hub-ico { transform: translateY(-2px) rotate(-4deg); } }
+.hub-reset { font-size: .76rem; font-weight: 700; color: var(--muted); }
+.hub-reset b { font-family: var(--mono); font-weight: 800; color: var(--text); }
+.hub-dev { font-size: .66rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.hub-g .k-mled { font-size: .82rem; }
+
+/* coming soon (CFB grid): quiet, not broken */
+.hub-g.soon { background: rgba(255, 255, 255, .02); border-style: dashed; border-color: var(--line-2); }
+.hub-g.soon .hub-ico { color: var(--muted); }
+.hub-g.soon .hub-ico svg { filter: none; opacity: .6; }
+.hub-g.soon h3 { color: #c6cde6; }
+.hub-soon { background: rgba(255, 255, 255, .06); color: var(--muted); box-shadow: inset 0 0 0 1px var(--line-2); }
+
+/* featured card (the daily grid, or Higher/Lower for CFB): spans two columns */
+.hub-g.feat { grid-column: span 2; flex-direction: row; align-items: stretch; gap: 22px; }
+.hub-g-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.hub-mini { flex: none; display: grid; place-items: center; width: 40%; border-radius: 18px; background: radial-gradient(60% 70% at 50% 45%, color-mix(in srgb, var(--c) 14%, transparent), transparent 70%); }
+.hub-nine { display: grid; grid-template-columns: repeat(3, 46px); gap: 7px; padding: 12px; border-radius: var(--r-md); background: var(--led-bg); border: 2px solid var(--led-edge); box-shadow: 0 0 0 4px var(--led-ring), 0 14px 30px rgba(0, 0, 0, .6); }
+.hub-nine i { position: relative; display: block; aspect-ratio: 1; border-radius: 9px; background: rgba(255, 255, 255, .035); box-shadow: inset 0 0 0 1px var(--led-div); }
+.hub-nine i.c { display: grid; place-items: center; }
+.hub-nine i.c .k-ball { --s: 70%; position: relative; z-index: 1; }
+.hub-nine i.on { background: color-mix(in srgb, var(--c) 82%, #000); box-shadow: 0 0 14px color-mix(in srgb, var(--c) 55%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--c) 70%, #fff); }
+/* "play" moment: the squares light in sequence on hover / scroll-in (one shot) */
+.hub-nine i::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--c); opacity: 0; }
+@keyframes hub-sq { 0% { opacity: 0; transform: scale(.7); } 35% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(1); } }
+.hub-g.feat.play .hub-nine i::after { animation: hub-sq .7s var(--d, 0ms) var(--ease) both; }
+@media (hover: hover) { a.hub-g.feat:hover .hub-nine i::after { animation: hub-sq .7s var(--d, 0ms) var(--ease) both; } }
+.hub-mini .k-board .k-led { font-size: 2.4rem; }
+.hub-dim { opacity: .45; }
+
+/* ---------- 02 Head-to-Head: the home matchup, sport accent left, indigo right ---------- */
+.hub-h2h {
+  --c: var(--h2h);
+  position: relative; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: center; gap: 28px;
+  padding: 30px 32px; border-radius: var(--r-xl); border: 1px solid var(--line-2); overflow: hidden;
+  background:
+    radial-gradient(40% 70% at 57% -10%, rgba(255, 255, 255, .08), transparent 70%),
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 11%, transparent), transparent 38%, transparent 60%, rgba(125, 149, 255, .14)),
+    linear-gradient(180deg, #121a36, #0a0f22);
+  box-shadow: var(--elev-2);
+  color: var(--text); text-decoration: none;
+  transition: transform var(--dur) var(--ease-spring), border-color var(--dur) var(--ease);
+}
+.hub-h2h:focus-visible { outline: 2px solid var(--h2h); outline-offset: 3px; }
+.hub-h2h h3 { margin: 10px 0 0; font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.2rem); font-weight: 900; letter-spacing: -.02em; line-height: 1.05; }
+.hub-h2h h3 em { font-style: normal; color: var(--accent); }
+.hub-h2h p { margin: 10px 0 0; max-width: 44ch; color: var(--muted); font-size: var(--fs-sm); line-height: 1.55; }
+.hub-h2h-btn { --c: var(--h2h); margin-top: 20px; }
+.hub-mu { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; }
+.hub-side { display: grid; justify-items: center; gap: 8px; text-align: center; }
+.hub-side b { font-size: .85rem; font-weight: 900; }
+.hub-side .k-mled { --c: var(--accent); font-size: .8rem; }
+.hub-medal { position: relative; display: grid; place-items: center; width: 92px; height: 92px; border-radius: 50%; background: radial-gradient(circle at 35% 28%, #2b3354, #0b0f20 72%); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .12), inset 0 -6px 12px rgba(0, 0, 0, .6), 0 10px 20px rgba(0, 0, 0, .5); }
+.hub-medal::before { content: ""; position: absolute; inset: 7px; border-radius: 50%; border: 1.5px solid color-mix(in srgb, var(--accent) 60%, transparent); }
+.hub-medal.q { background: #0b0f20; }
+.hub-medal.q::before { display: none; }
+.hub-ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: hub-spin 8s linear infinite; }
+.hub-ring circle { fill: none; stroke: var(--h2h); stroke-width: 3; stroke-dasharray: 22 8; }
+@keyframes hub-spin { to { transform: rotate(360deg); } }
+.hub-qm { font-weight: 900; font-size: 2rem; color: #8ea2ff; }
+.hub-vs { position: relative; display: grid; justify-items: center; gap: 8px; min-width: 104px; }
+.hub-sw { position: absolute; top: -24px; width: 100px; height: 100px; background: url("/img/home/swords.webp") center/contain no-repeat; opacity: .22; transition: opacity .3s, transform .35s var(--ease-spring); }
+.hub-vsx { position: relative; font-weight: 900; font-style: italic; font-size: 2.2rem; line-height: 1; color: #fff; text-shadow: 0 0 18px rgba(125, 149, 255, .8); }
+.hub-sc { position: relative; font-size: 1.3rem; color: var(--clock); background: var(--led-bg); border: 2px solid var(--led-edge); border-radius: 8px; padding: 4px 8px; }
+.hub-h2h:focus-visible .hub-sw, .hub-h2h.play .hub-sw { opacity: .55; transform: scale(1.08) rotate(-6deg); }
+@media (hover: hover) {
+  .hub-h2h:hover { transform: translateY(-3px); border-color: rgba(125, 149, 255, .6); }
+  .hub-h2h:hover .hub-sw { opacity: .55; transform: scale(1.08) rotate(-6deg); }
+}
+@media (hover: none) { .hub-h2h:active { transform: scale(.99); border-color: rgba(125, 149, 255, .6); } }
+
+/* ---------- team directory ---------- */
+.hub-find { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 10px 0 16px; margin-bottom: 16px; border-radius: 14px; background: #070a15; border: 1px solid var(--line-2); cursor: text; transition: border-color var(--dur-fast), box-shadow var(--dur-fast); }
+.hub-find:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
+.hub-find svg { flex: none; width: 20px; height: 20px; color: var(--muted); }
+.hub-find input { flex: 1; min-width: 0; min-height: 50px; background: none; border: 0; outline: 0; color: var(--text); font: inherit; font-weight: 700; font-size: 1rem; }
+.hub-find input::placeholder { color: #7883a8; font-weight: 600; }
+.hub-find .k-mled { font-size: .82rem; }
+
+.hub-teams { display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 12px; }
+.hub-team { --c: var(--accent); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 12px; min-width: 0; padding: 20px 10px 18px; border-radius: 18px; border: 1px solid var(--line); background: var(--card-bg); color: var(--text); text-align: center; text-decoration: none; transition: transform var(--dur) var(--ease-spring), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+.hub-team:focus-visible { outline: 2px solid var(--c); outline-offset: 3px; }
+.hub-coin { flex: none; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #2a3358, #0b0f20 70%); border: 2px solid color-mix(in srgb, var(--c) 70%, transparent); box-shadow: inset 0 -3px 8px rgba(0, 0, 0, .5), 0 6px 14px rgba(0, 0, 0, .45); overflow: hidden; transition: transform .25s var(--ease-spring); }
+.hub-coin img { width: 44px; height: 44px; object-fit: contain; opacity: 0; transition: opacity .3s; }
+.hub-coin img.ld { opacity: 1; }
+.hub-coin b { font-size: .8rem; font-weight: 900; color: #fff; }
+.hub-team-n { font-size: .9rem; font-weight: 900; letter-spacing: -.01em; line-height: 1.2; overflow-wrap: anywhere; }
+@media (hover: hover) {
+  .hub-team:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--c) 70%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c) 30%, transparent), 0 18px 40px -20px color-mix(in srgb, var(--c) 55%, transparent); }
+  .hub-team:hover .hub-coin { transform: scale(1.06); }
+}
+@media (hover: none) { .hub-team:active { transform: scale(.97); border-color: color-mix(in srgb, var(--c) 70%, transparent); } }
+.hub-none { margin-top: 4px; }
+
+/* the site footer sits on the same airy ground */
+.hub-page footer.site-footer { margin-top: var(--sp-xl); border-top-color: rgba(255, 255, 255, .06); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .hub-games { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hub-g.feat { grid-column: 1 / -1; }
+  .hub-h2h { gap: 18px; padding: 26px; }
+}
+@media (max-width: 720px) {
+  .hub-h2h { grid-template-columns: 1fr; }
+  .hub-mu { order: -1; max-width: 420px; width: 100%; justify-self: center; }
+}
+@media (max-width: 560px) {
+  .hub-hero { gap: 14px 16px; padding-top: var(--sp-lg); }
+  .hub-hero .hub-ball { --s: 64px; }
+  .hub-hero h1 { font-size: clamp(2.2rem, 9.5vw, 2.8rem); margin-top: 6px; }
+  .hub-hero p { font-size: var(--fs-sm); margin-top: 10px; }
+  .hub-hero .k-hero-side { margin-top: 6px; }
+  .hub-board .k-cell { min-width: 0; padding: 10px 8px 12px; }
+  .hub-board .k-led { font-size: 2rem; }
+  .hub .logo-strip, #sport-banner.hub-banner:empty { height: 88px; }
+  .hub .strip-logo { width: 50px; height: 50px; margin-right: 26px; }
+  .hub .strip-logo img { width: 32px; height: 32px; }
+  .hub .logo-strip { box-shadow: inset 50px 0 36px -34px rgba(7, 10, 22, .92), inset -50px 0 36px -34px rgba(7, 10, 22, .92), inset 0 0 28px rgba(0, 0, 0, .35), 0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent), 0 18px 36px -24px color-mix(in srgb, var(--accent) 60%, transparent); }
+  .hub-games { grid-template-columns: 1fr; }
+  .hub-g { min-height: 0; padding: 18px; border-radius: 20px; }
+  .hub-g h3 { font-size: 1.3rem; }
+  .hub-g-top { margin-bottom: 14px; }
+  .hub-ico { width: 44px; height: 44px; border-radius: 12px; }
+  /* phone: the 3x3 board becomes the card icon, top right */
+  .hub-g.feat { display: block; position: relative; }
+  .hub-g.feat .hub-ico { display: none; }
+  .hub-g.feat .hub-g-top { justify-content: flex-start; align-items: flex-start; min-height: 96px; margin-bottom: 4px; padding-right: 112px; }
+  .hub-g.feat .hub-tags { justify-content: flex-start; }
+  .hub-g.feat:has(.k-board) .hub-g-top { min-height: 76px; padding-right: 150px; }
+  .hub-mini { position: absolute; top: 16px; right: 16px; width: auto; background: none; }
+  .hub-nine { grid-template-columns: repeat(3, 24px); gap: 4px; padding: 7px; border-radius: 12px; box-shadow: 0 0 0 3px var(--led-ring), 0 10px 22px rgba(0, 0, 0, .55); }
+  .hub-nine i { border-radius: 6px; }
+  .hub-mini .k-board .k-led { font-size: 1.5rem; }
+  .hub-mini .k-board .k-cell { padding: 6px 8px 8px; }
+  .hub-mini .k-board .k-lbl { font-size: .5rem; }
+  .hub-h2h { padding: 20px 18px; border-radius: 24px; }
+  .hub-medal { width: 72px; height: 72px; }
+  .hub-medal .k-ball { --s: 38px !important; }
+  .hub-vs { min-width: 80px; }
+  .hub-sw { width: 80px; height: 80px; top: -18px; }
+  .hub-vsx { font-size: 1.8rem; }
+  .hub-h2h-btn { display: flex; width: 100%; }
+  .hub-teams { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .hub-team { gap: 10px; padding: 16px 6px 14px; border-radius: 16px; min-height: 44px; }
+  .hub-coin { width: 56px; height: 56px; }
+  .hub-coin img { width: 38px; height: 38px; }
+  .hub-team-n { font-size: .8rem; }
+  .hub-find input::placeholder { font-size: .9rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hub-ring { animation: none; }
+  .hub-nine i::after { animation: none !important; }
+  .hub-team, .hub-h2h, .hub-ico, .hub-coin { transition: none; }
+}

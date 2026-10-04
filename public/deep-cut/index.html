@@ -35,14 +35,24 @@
   <div class="gpage">
     <header class="gtop">
       <a class="ghome" href="/">&larr; <b>EBK</b></a>
-      <p class="gtitle">Deep Cut <small id="dc-no"></small></p>
-      <div class="gscore">
-        <div class="chip"><span class="k">Streak</span><span class="v" id="dc-streak">0</span></div>
-        <div class="chip"><span class="k">Solved</span><span class="v" id="dc-solved">0</span></div>
-      </div>
+      <p class="gtitle">Deep Cut <small>· Daily</small></p>
     </header>
 
     <main class="gwrap dc-wrap">
+      <section class="k-hero dc-hero">
+        <div class="k-hero-t">
+          <span class="k-kick">Deep Cut <i>No.</i> <span class="dc-no" id="dc-no"></span></span>
+          <h1>Today's <em>cut</em></h1>
+          <p>One deep question, any sport. Three guesses.</p>
+        </div>
+        <div class="k-hero-side">
+          <div class="k-board dc-board">
+            <div class="k-cell"><span class="k-lbl">Streak</span><span class="k-led" id="dc-streak" data-seg="00" data-seg-label="0 day solve streak"></span></div>
+            <div class="k-cell"><span class="k-lbl">Solved</span><span class="k-led y" id="dc-solved" data-seg="00" data-seg-label="0 solved"></span></div>
+          </div>
+        </div>
+      </section>
+
       <p id="loading" class="muted center" role="status" aria-live="polite">Loading today's cut…</p>
       <p id="load-err" class="muted center" hidden>Couldn't load today's question. Refresh to try again.</p>
 
@@ -51,8 +61,11 @@
           <span class="dc-sport" id="dc-sport"></span>
           <span class="dc-level" id="dc-level" title="Difficulty"></span>
         </div>
-        <p class="dc-type" id="dc-type"></p>
-        <h1 class="dc-q" id="dc-q"></h1>
+        <div class="dc-vault">
+          <span class="dc-qm" aria-hidden="true">&ldquo;</span>
+          <p class="dc-type" id="dc-type"></p>
+          <h2 class="dc-q" id="dc-q"></h2>
+        </div>
 
         <ol class="dc-guesses" id="dc-guesses" aria-label="Your guesses"></ol>
         <div class="dc-hints" id="dc-hints"></div>
@@ -61,10 +74,10 @@
           <label class="sr-only" for="dc-input">Your answer</label>
           <input class="ac-input dc-input" id="dc-input" autocomplete="off" autocapitalize="off"
                  autocorrect="off" spellcheck="false" enterkeyhint="go" />
-          <button class="gbtn primary dc-go" id="dc-go" type="submit">Guess</button>
+          <button class="k-btn lg dc-go" id="dc-go" type="submit">Guess <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </form>
         <div class="dc-under">
-          <span class="dc-left" id="dc-left"></span>
+          <span class="dc-tl"><span class="dc-tries" id="dc-tries" aria-hidden="true"><i></i><i></i><i></i></span><span class="dc-left" id="dc-left"></span></span>
           <button type="button" class="dc-giveup" id="dc-giveup">Give up</button>
         </div>
         <p class="dc-msg" id="dc-msg" role="status"></p>
@@ -91,7 +104,7 @@
 
       <div id="dc-daily"></div>
 
-      <section class="dc-yday" id="dc-yday" hidden>
+      <section class="k-card dc-yday" id="dc-yday" hidden>
         <p class="dc-yday-k">Yesterday's Deep Cut</p>
         <p class="dc-yday-q" id="dc-yday-q"></p>
         <p class="dc-yday-a"><span>Answer:</span> <b id="dc-yday-a"></b></p>

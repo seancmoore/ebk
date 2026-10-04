@@ -28,31 +28,51 @@
   <link rel="stylesheet" href="/css/base.css" />
   <link rel="stylesheet" href="/css/ebk-kit.css" />
   <script src="/js/ebk-kit.js"></script>
-  <link rel="stylesheet" href="/css/game-common.css" />
+  <link rel="stylesheet" href="/css/home.css" />
   <link rel="stylesheet" href="/css/team.css" />
   <script src="/js/ebk-analytics.js" defer></script>
 </head>
 <body data-sport="nhl">
-  <div class="gpage">
-    <header class="gtop">
-      <a class="ghome" href="/nhl">&larr; <b>NHL</b></a>
-      <p class="gtitle">Team Study <small>· NHL</small></p>
-    </header>
-    <main class="gwrap" style="max-width: 1000px;">
-      <p id="loading" class="muted center" role="status" aria-live="polite">Loading…</p>
-      <div id="content" hidden>
-        <div class="team-head" id="team-head"></div>
-        <div class="filters"><div class="chip-row2" id="pos-chips"></div></div>
-        <div class="filters">
-          <span class="field">Seasons <select id="from"></select> – <select id="to"></select></span>
+  <header class="site-header">
+    <a class="brand" href="/">
+      <span class="wordmark" aria-label="EBK">E<span>B</span>K</span>
+      <span class="brand-sub">Elite Ball Knowledge</span>
+    </a>
+    <a class="k-back ts-back" href="/nhl/teams">&larr; <b>NHL</b> <span>teams</span></a>
+  </header>
+
+  <main class="k-wrap ts-main">
+    <p id="loading" class="ts-loading" role="status" aria-live="polite">Loading…</p>
+
+    <div id="content" hidden>
+      <section class="k-card panel ts-hero" id="team-head"></section>
+
+      <div class="k-card deep ts-bar">
+        <div class="ts-f ts-pos">
+          <span class="ts-l" id="pos-l">Position</span>
+          <div class="k-chips chip-row2" id="pos-chips" role="group" aria-labelledby="pos-l"></div>
+        </div>
+        <div class="ts-f ts-yrs">
+          <span class="ts-l">Seasons</span>
+          <span class="field"><select id="from" aria-label="From season"></select><i aria-hidden="true">to</i><select id="to" aria-label="To season"></select></span>
+        </div>
+        <label class="ts-f ts-q">
+          <span class="ts-l">Search</span>
           <input class="search" id="search" type="search" placeholder="Search player…"
                  autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </div>
-        <p class="count" id="count"></p>
-        <div class="table-wrap"><table class="tbl"><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+        </label>
       </div>
-    </main>
-  </div>
+
+      <div class="ts-head">
+        <span class="k-kick">Player-seasons <i>Tap a column to sort</i></span>
+        <p class="count" id="count" role="status"></p>
+      </div>
+      <div class="table-wrap k-tbl-wrap">
+        <table class="tbl k-table"><thead id="thead"></thead><tbody id="tbody"></tbody></table>
+      </div>
+    </div>
+  </main>
+
   <script src="/js/nhl-teams.js"></script>
   <script src="/js/team.js"></script>
   <script src="/js/ebk-sound.js"></script>

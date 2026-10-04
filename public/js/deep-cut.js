@@ -170,17 +170,24 @@
     // done, else from yesterday (an unplayed today does not break it yet)
     var n = 0, i = log[S.date] != null ? 0 : -1;
     for (; i > -400; i--) { var r = log[etDate(i)]; if (!(r > 0)) break; n++; }
-    $("#dc-streak").textContent = n;
-    $("#dc-solved").textContent = solved;
+    led($("#dc-streak"), n, n + " day solve streak");
+    led($("#dc-solved"), solved, solved + " solved");
   }
 
   /* ---- render --------------------------------------------------------- */
+
+  // LED readouts (EBKKit draws seven-segment digits; plain text if it is missing)
+  function led(el, n, label) {
+    if (!el) return;
+    var v = (n < 10 ? "0" : "") + n;
+    if (window.EBKKit) EBKKit.seg(el, v, label); else el.textContent = n;
+  }
 
   function render() {
     var d = S.day, a = S.a;
     var acc = sportAccent(d.s);
     if (acc) document.body.style.setProperty("--sport", acc);
-    $("#dc-no").textContent = "· #" + S.no;
+    led($("#dc-no"), S.no, "number " + S.no);
     $("#dc-sport").innerHTML = sportTag(d.s);
     $("#dc-level").innerHTML = [2, 3, 4].map(function (l) {
       return '<i class="' + (l <= d.lv ? "on" : "") + '"></i>';
@@ -217,6 +224,9 @@
     $("#dc-giveup").hidden = S.done;
     $("#dc-left").textContent = S.done ? "" : left + (left === 1 ? " guess left" : " guesses left");
     $("#dc-left").className = "dc-left" + (left === 1 ? " last" : "");
+    var dots = document.querySelectorAll("#dc-tries i");
+    for (var di = 0; di < dots.length; di++) dots[di].className = di < S.g.length ? "used" : "";
+    $("#dc-tries").hidden = S.done;
     if (S.done) showResult();
     chips();
   }

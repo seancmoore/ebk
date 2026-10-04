@@ -149,6 +149,13 @@
   const ENTRIES = 9;        // every guess — right, wrong or timed out — costs one
   const SHOT_MS = 20000;    // shot clock per entry
 
+  // ---- presentation: LED scoreboard digits (EBKKit, /js/ebk-kit.js) ----
+  const pad2 = (v) => (+v < 10 ? "0" : "") + v;
+  function led(el, v) {
+    if (!el) return;
+    if (window.EBKKit) EBKKit.seg(el, pad2(v), String(v)); else el.textContent = v;
+  }
+
   // ---- shot clock ----
   let rtTO = null, rtLowTO = null, rtEl = null;
   function rtBar() {
@@ -183,7 +190,7 @@
     if (S.over) return;
     if (S.active != null) closeModal();
     sfx("timeout");
-    flash("⏱ Shot clock! That entry is gone.", false);
+    flash("Shot clock! That entry is gone.", false);
     consumeEntry();
   }
 
@@ -191,7 +198,7 @@
     S.entries = n;
     const el = $("#entries");
     if (el) {
-      el.textContent = n;
+      led(el, n);
       el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop");
     }
   }
@@ -292,13 +299,13 @@
       }
       buildCriteria();
       S.best = getBest();
-      $("#best").textContent = S.best;
+      led($("#best"), S.best);
       // entries-left chip in the header
       const gs = document.querySelector(".gscore");
       if (gs && !$("#entries")) {
         const chip = document.createElement("div");
         chip.className = "chip";
-        chip.innerHTML = '<span class="k">Entries</span><span class="v" id="entries">9</span>';
+        chip.innerHTML = '<span class="k">Entries</span><span class="v w" id="entries">9</span>';
         gs.insertBefore(chip, gs.firstChild);
       }
       $("#loading").hidden = true;
@@ -319,7 +326,7 @@
     else {
       setEntries(ENTRIES);
       $("#status-line").textContent =
-        "Daily grid · " + S.date + " — everyone plays this exact board. One attempt: 9 entries, 20s shot clock.";
+        "Daily grid · " + S.date + ". Everyone plays this exact board. One attempt: 9 entries, 20s shot clock.";
     }
     render();
     if (!S.over) rtStart();
@@ -533,7 +540,7 @@
     S.cells = Array(9).fill(null);
     S.used = new Set();
     S.score = 0; S.over = false; S.lastIdx = null; S.pts = null; S.recPs = [];
-    $("#score").textContent = "0";
+    led($("#score"), 0);
     $("#banner").textContent = ""; $("#banner").className = "banner";
     $("#end-row").hidden = true; $("#end-row").innerHTML = "";
   }
@@ -547,10 +554,10 @@
       else if (c === "dead") S.cells[i] = "dead";
     }
     S.score = saved.score || 0;
-    $("#score").textContent = S.score;
+    led($("#score"), S.score);
     setEntries(saved.entries != null ? saved.entries : ENTRIES);
     $("#status-line").textContent =
-      "Daily grid · " + S.date + " — resumed. One attempt: " + S.entries + " entries left.";
+      "Daily grid · " + S.date + ", resumed. One attempt: " + S.entries + " entries left.";
     if (S.entries <= 0) { S.over = true; finish(); }
   }
 
@@ -567,7 +574,7 @@
     }
     S.score = saved.score || 0;
     setEntries(0);
-    $("#score").textContent = S.score;
+    led($("#score"), S.score);
     const total = saved.rarity != null ? saved.rarity : (S.pts ? S.pts.reduce((a, b) => a + (b || 0), 0) : 0);
     $("#status-line").innerHTML =
       "You've played today's " + SPORT.toUpperCase() + " grid: <b>" + S.score + "/9</b>" +
@@ -595,7 +602,7 @@
   function render() {
     const g = $("#grid");
     g.innerHTML = "";
-    g.appendChild(headerCell("corner", ""));
+    g.appendChild(headerCell("corner", '<span class="k-ball auto" aria-hidden="true"></span>'));
     S.cols.forEach((c) => g.appendChild(headerCell("", critLabel(c))));
     for (let r = 0; r < 3; r++) {
       g.appendChild(headerCell("", critLabel(S.rows[r])));
@@ -628,8 +635,12 @@
       d.classList.add("dead");
       d.innerHTML = `<div class="cell-plus">✕</div>`;
     } else {
-      d.innerHTML = `<div class="cell-plus">＋</div>`;
+      d.innerHTML = `<div class="cell-plus" aria-hidden="true">＋</div>`;
       d.addEventListener("click", () => { if (!S.over) openModal(idx); });
+      // keyboard + screen readers: an open square is a button
+      d.tabIndex = 0; d.setAttribute("role", "button");
+      d.setAttribute("aria-label", "Name a player for " + S.rows[(idx / 3) | 0].label + " and " + S.cols[idx % 3].label);
+      d.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); d.click(); } });
     }
     return d;
   }
@@ -681,7 +692,7 @@
 
   function submitGuess(p) {
     if (S.active == null || S.over) return;
-    if (S.used.has(p.id)) { $("#m-msg").textContent = `${p.name} is already on the grid — pick another.`; return; }
+    if (S.used.has(p.id)) { $("#m-msg").textContent = `${p.name} is already on the grid. Pick another.`; return; }
     const idx = S.active;
     const r = S.rows[(idx / 3) | 0], c = S.cols[idx % 3];
     const ok = fits(p, r, c);
@@ -694,9 +705,9 @@
         if (window.EBKF)
           S.recPs.push(EBKF.recordGridAnswer(SPORT, S.date, idx, p).catch(() => {}));
       } catch (e) {}
-      const sc = $("#score"); sc.textContent = S.score;
+      const sc = $("#score"); led(sc, S.score);
       sc.classList.remove("pop"); void sc.offsetWidth; sc.classList.add("pop");
-      if (S.score > S.best) { S.best = S.score; setBest(S.best); $("#best").textContent = S.best; }
+      if (S.score > S.best) { S.best = S.score; setBest(S.best); led($("#best"), S.best); }
     } else {
       S.cells[idx] = "dead";
     }
@@ -718,7 +729,7 @@
     sfx(S.score === 9 ? "best" : "over");
     ebkRecord(S.score);
     flash(S.score === 9 ? "Immaculate! 9/9 🎉" : `You filled ${S.score}/9.`, S.score >= 5);
-    $("#status-line").textContent = `Daily grid done — ${S.score}/9 filled. Scoring rarity…`;
+    $("#status-line").textContent = `Daily grid done: ${S.score}/9 filled. Scoring rarity…`;
     const row = $("#end-row"); row.hidden = false; row.innerHTML = "";
     addBtn(row, "Back to EBK", "primary", () => (location.href = "/" + SPORT));
     finishDaily();
@@ -807,7 +818,7 @@
     } catch (e) { if (e && e.name === "AbortError") return; }
     try {
       await navigator.clipboard.writeText(text);
-      flash("Result copied — paste it anywhere.", true);
+      flash("Result copied. Paste it anywhere.", true);
       return;
     } catch (e) {}
     try {
@@ -819,9 +830,9 @@
       ta.select();
       document.execCommand("copy");
       document.body.removeChild(ta);
-      flash("Result copied — paste it anywhere.", true);
+      flash("Result copied. Paste it anywhere.", true);
     } catch (e) {
-      flash("Couldn't copy — long-press to select your result.", false);
+      flash("Couldn't copy. Long-press to select your result.", false);
     }
   }
 

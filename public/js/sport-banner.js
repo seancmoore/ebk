@@ -61,7 +61,14 @@
   var sport = document.body && document.body.dataset.sport;
   if (el && sport && !el.childElementCount) {
     var items = teamItems(sport, 36);
-    if (items.length) build(el, items, THEME[sport] || "strip-arena");
-    else el.remove();
+    if (items.length) {
+      build(el, items, THEME[sport] || "strip-arena");
+      // the hub strip is decorative (aria-hidden; the teams page lists every
+      // team), so keep its links out of the tab order too
+      if (el.getAttribute("aria-hidden") === "true")
+        el.querySelectorAll("a").forEach(function (a) { a.tabIndex = -1; });
+      // the marquee only runs while the strip is on screen
+      if (window.EBKKit) EBKKit.calm(el);
+    } else el.remove();
   }
 })();

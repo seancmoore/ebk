@@ -1,34 +1,82 @@
-/* EBK · dashboard */
-.stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--sp-sm); margin-bottom: var(--sp-lg); }
-.stat-card {
-  background: var(--glass); border: 1px solid var(--line); border-radius: 16px;
-  padding: var(--sp-md); text-align: center;
-}
-.stat-card .v { font-size: clamp(1.6rem, 1.2rem + 2vw, 2.4rem); font-weight: 900; line-height: 1; color: var(--accent); }
-.stat-card .k { color: var(--muted); font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 6px; }
-.stat-card .sub { color: var(--muted); font-size: var(--fs-xs); margin-top: 2px; }
-.dash-h { font-size: var(--fs-lg); margin: var(--sp-lg) 0 var(--sp-sm); }
-.sportcard { display: flex; align-items: center; gap: 10px; justify-content: flex-start; text-align: left; }
-.sportcard .em { font-size: 1.6rem; }
-.sportcard .nm { font-weight: 800; }
-.sportcard .mt { color: var(--muted); font-size: var(--fs-xs); }
+/* EBK · dashboard (on top of the kit; pages.css holds the shared bits) */
 
-/* account management */
-.acct-box {
-  border: 1px solid var(--line); border-radius: 16px;
-  background: var(--glass); padding: var(--sp-md);
-  margin-bottom: var(--sp-xl);
-}
-.acct-row {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: var(--sp-md); padding: 12px 0; border-bottom: 1px solid var(--line);
-}
-.acct-row:last-of-type { border-bottom: none; }
-.acct-k { font-size: var(--fs-xs); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-.acct-v { font-weight: 700; }
+/* hero: avatar coin + the Rack streak board on the right */
+.db-coin b { font-size: 2.6rem; }
+.db-rack { display: grid; justify-items: end; gap: 10px; }
+.db-rack-k { font-size: .62rem; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.db-rack-k i { font-style: normal; letter-spacing: .04em; text-transform: none; font-weight: 700; opacity: .85; margin-left: 4px; }
+.db-rack .k-cell { min-width: 84px; }
+
+/* signed out: an intentional panel, not a lone button */
+.db-out { display: grid; grid-template-columns: minmax(0, 1.4fr) auto; align-items: center; gap: var(--sp-lg); padding: clamp(22px, 3vw, 36px); }
+.db-out h2 { margin: 8px 0 0; font-size: clamp(1.6rem, 2.6vw, 2.2rem); font-weight: 900; letter-spacing: -.02em; line-height: 1.05; }
+.db-out p { max-width: 46ch; margin: 10px 0 20px; font-size: var(--fs-md); }
+.db-out-b .k-cell { min-width: 96px; }
+.db-loading { padding: var(--sp-xl) 0; text-align: center; color: var(--muted); font-weight: 700; }
+
+/* top scoreboard row */
+.db-board { margin: 6px 0 0; }
+.db-board .k-cell { padding: 14px 14px 16px; }
+.db-board .k-led { font-size: 2.8rem; min-height: 1em; }
+.db-board .k-led .t { font-size: .62em; text-transform: uppercase; }
+.db-sub { display: block; margin-top: 10px; color: var(--muted); font-size: .72rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* 01 by sport */
+.db-sports { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.db-sport { display: flex; align-items: center; gap: 16px; padding: 18px 20px; }
+.db-sport-t { min-width: 0; }
+.db-sport h3 { font-size: 1.35rem; }
+.db-sport-m { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.db-sport .k-mled { font-size: .8rem; }
+.db-plays { color: var(--muted); font-size: .8rem; font-weight: 700; }
+
+/* 02 every game */
+.db-tbl td, .db-tbl th { padding: 11px 16px; }
+.db-tbl th:nth-child(2), .db-tbl td.db-gm { text-align: left; }
+.db-tbl td.db-gm { font-family: inherit; font-weight: 700; color: var(--text); }
+.db-tbl td.db-best { color: var(--pts); font-weight: 800; }
+.db-sp { display: inline-flex; align-items: center; gap: 10px; }
+.db-sp .k-ball { filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .5)); }
+
+/* 03 account */
+.acct-box { padding: 6px 22px; margin-bottom: var(--sp-xl); }
+.acct-row { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-md); padding: 16px 0; box-shadow: 0 1px 0 var(--line); }
+.acct-row:last-of-type { box-shadow: none; }
+.acct-k { font-size: .62rem; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.acct-v { margin-top: 4px; font-weight: 800; font-size: var(--fs-md); }
+.acct-v.muted { color: var(--muted); font-weight: 600; font-size: var(--fs-sm); }
 .acct-row.danger .acct-k { color: var(--lower); }
-.chip-btn.danger { border-color: rgba(255, 93, 108, 0.5); color: var(--lower); }
-.chip-btn.danger:hover { background: rgba(255, 93, 108, 0.15); border-color: var(--lower); }
-.acct-badge { font-size: var(--fs-xs); font-weight: 800; padding: 2px 8px; border-radius: 999px; margin-left: 8px; }
-.acct-badge.ok { background: rgba(61, 220, 151, 0.15); color: var(--accent); }
-.acct-badge.warn { background: rgba(255, 209, 102, 0.15); color: var(--gold); }
+.acct-box .k-btn.ghost { flex: none; }
+.acct-box .k-btn.danger { color: var(--lower); border-color: rgba(255, 93, 108, .45); }
+.acct-box .k-btn.danger:hover { border-color: var(--lower); background: rgba(255, 93, 108, .1); }
+.acct-msg { min-height: 1.2em; margin: 0 0 12px; color: var(--muted); font-size: var(--fs-sm); }
+.acct-msg:empty { margin: 0; min-height: 0; }
+.acct-badge { display: inline-flex; vertical-align: 2px; margin-left: 8px; font-size: .58rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; }
+.acct-badge.ok { background: rgba(61, 220, 151, .14); color: var(--higher); box-shadow: inset 0 0 0 1px rgba(61, 220, 151, .4); }
+.acct-badge.warn { background: rgba(255, 209, 102, .14); color: var(--pts); box-shadow: inset 0 0 0 1px rgba(255, 209, 102, .4); }
+
+@media (max-width: 860px) {
+  .db-sports { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .db-board { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .db-board .k-cell:nth-child(3) { border-left: 0; }
+  .db-board .k-cell:nth-child(n+3) { border-top: 2px solid var(--led-div); }
+}
+@media (max-width: 760px) {
+  .db-out { grid-template-columns: minmax(0, 1fr); }
+  .db-out-b { display: grid; grid-auto-columns: minmax(0, 1fr); width: 100%; }
+}
+@media (max-width: 560px) {
+  .db-rack { justify-items: stretch; }
+  .db-rack .k-cell { min-width: 0; }
+  .db-coin b { font-size: 1.9rem; }
+  .db-board .k-led { font-size: 2.1rem; }
+  .db-sports { gap: 10px; }
+  .db-sport { flex-direction: column; align-items: flex-start; gap: 10px; padding: 14px; }
+  .db-sport .k-ball { --s: 44px !important; }
+  .db-sport h3 { font-size: 1.15rem; }
+  .db-sport-m { flex-wrap: wrap; gap: 6px 8px; margin-top: 6px; }
+  .db-tbl td, .db-tbl th { padding: 10px 10px; }
+  .acct-box { padding: 4px 16px; }
+  .acct-row { flex-wrap: wrap; gap: 10px; }
+  .acct-row > div { flex: 1 1 100%; }
+}

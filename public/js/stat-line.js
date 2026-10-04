@@ -119,6 +119,28 @@
   const decOf = (k) => CFG.dec[k] || 0;
   const posName = (p) => CFG.posNames[p] || p;
 
+  // ---- presentation: LED scoreboard digits (EBKKit, /js/ebk-kit.js) ----
+  const pad2 = (v) => (+v < 10 ? "0" : "") + v;
+  function led(el, v) {
+    if (!el) return;
+    if (window.EBKKit) EBKKit.seg(el, pad2(v), String(v)); else el.textContent = v;
+  }
+  const segHTML = (str) => (window.EBKKit ? '<span class="k-seg" aria-hidden="true">' + EBKKit.seg7(str) + "</span>" : str);
+  function seasonBadge(exact) {
+    const el = $("#season-badge"), m = S.mystery;
+    if (exact) {
+      const y = CFG.seasonFmt(m.season);
+      el.className = "season-badge exact";
+      el.innerHTML = segHTML(y) + '<span class="k-sr">' + y + "</span>";
+    } else {
+      const a = CFG.seasonFmt(S.range[0]), b = CFG.seasonFmt(S.range[1]);
+      el.className = "season-badge";
+      el.innerHTML = segHTML(a) + '<span class="to" aria-hidden="true">to</span>' + segHTML(b) +
+        '<span class="k-sr">Sometime between ' + a + " and " + b + "</span>";
+    }
+  }
+  const teamLine = (m) => `<img class="tlogo" src="${LEAGUE.logo(m.team)}" alt="" /> ${LEAGUE.name(m.team)}`;
+
   const EXACT_REVEALS = 5;
   const ROUND_MS = 7000;                // per-round clock; timeout ends the run
 
@@ -164,7 +186,7 @@
     });
     $("#lifelines").hidden = true;
     const banner = $("#banner");
-    banner.textContent = "⏱ Time's up — run over!";
+    banner.textContent = "Time's up. Run over.";
     banner.className = "banner bad";
     showReveal(S.mystery);
     addBtn("New run", "primary", newRun);
@@ -213,7 +235,7 @@
       for (const b of S.byId.values()) (S.sideIndex[sideOf(b.grp)] = S.sideIndex[sideOf(b.grp)] || []).push(b);
       S.notable = S.players.filter(isNotable);
       S.best = getBest();
-      $("#best").textContent = S.best;
+      led($("#best"), S.best);
       $("#loading").hidden = true;
       $("#game").hidden = false;
       try { window.EBKA && EBKA.send("start"); } catch (e) {}
@@ -223,7 +245,7 @@
     }
   }
 
-  function newRun() { S.score = 0; S.exactLeft = EXACT_REVEALS; $("#score").textContent = "0"; nextRound(); }
+  function newRun() { S.score = 0; S.exactLeft = EXACT_REVEALS; led($("#score"), 0); nextRound(); }
 
   function seasonRange(season) {
     const W = 3;
@@ -264,23 +286,22 @@
   function render() {
     const m = S.mystery;
     $("#pos-line").textContent = posName(m.pos);
-    $("#team-line").innerHTML = `Team: <img class="tlogo" src="${LEAGUE.logo(m.team)}" alt="" /> ${LEAGUE.name(m.team)}`;
-    $("#season-badge").textContent = S.exactShown ? CFG.seasonFmt(m.season)
-      : `Sometime between ${CFG.seasonFmt(S.range[0])} and ${CFG.seasonFmt(S.range[1])}`;
+    $("#team-line").innerHTML = teamLine(m);
+    seasonBadge(S.exactShown);
 
     // CFB and soccer sources carry no games count (always 0): skip the row
-    const rows = m.games ? [`<div class="s-k">Games</div><div class="s-v">${m.games}</div>`] : [];
+    const rows = m.games ? [`<div class="s-cell g"><div class="s-k">Games</div><div class="s-v">${m.games}</div></div>`] : [];
     for (const [k, label] of CFG.display) {
       if (m.stats[k] == null) continue;
-      rows.push(`<div class="s-k">${label}</div><div class="s-v">${fmt(m.stats[k], decOf(k))}</div>`);
+      rows.push(`<div class="s-cell${+m.stats[k] ? "" : " z"}"><div class="s-k">${label}</div><div class="s-v">${fmt(m.stats[k], decOf(k))}</div></div>`);
     }
     $("#statline").innerHTML = rows.join("");
 
     $("#lifelines").hidden = false;
     const eb = $("#reveal-exact");
-    if (S.exactShown) { eb.disabled = true; eb.textContent = "🎯 exact season shown"; }
-    else if (S.exactLeft <= 0) { eb.disabled = true; eb.textContent = "🎯 no exact reveals left"; }
-    else { eb.disabled = false; eb.textContent = `🎯 Reveal exact season (${S.exactLeft})`; }
+    if (S.exactShown) { eb.disabled = true; eb.textContent = "Exact season shown"; }
+    else if (S.exactLeft <= 0) { eb.disabled = true; eb.textContent = "No exact reveals left"; }
+    else { eb.disabled = false; eb.innerHTML = `Reveal exact season <span class="k-mled y">${S.exactLeft}</span><span class="k-sr"> left</span>`; }
 
     const ol = $("#options");
     ol.innerHTML = "";
@@ -312,9 +333,9 @@
     const banner = $("#banner");
     if (correct) {
       S.score += 1;
-      const sc = $("#score"); sc.textContent = S.score;
+      const sc = $("#score"); led(sc, S.score);
       sc.classList.remove("pop"); void sc.offsetWidth; sc.classList.add("pop");
-      if (S.score > S.best) { S.best = S.score; setBest(S.best); $("#best").textContent = S.best; }
+      if (S.score > S.best) { S.best = S.score; setBest(S.best); led($("#best"), S.best); }
       banner.textContent = "Correct!"; banner.className = "banner good";
       showReveal(m); addBtn("Next player ›", "primary", nextRound);
     } else {
@@ -331,8 +352,8 @@
     r.innerHTML = `${img}<div class="pr-name">${m.name}</div>` +
       `<div class="pr-meta">${CFG.seasonFmt(m.season)} · ${LEAGUE.name(m.team)} · ${posName(m.pos)}</div>`;
     r.hidden = false;
-    $("#season-badge").textContent = CFG.seasonFmt(m.season);
-    $("#team-line").innerHTML = `Team: <img class="tlogo" src="${LEAGUE.logo(m.team)}" alt="" /> ${LEAGUE.name(m.team)}`;
+    seasonBadge(true);
+    $("#team-line").innerHTML = teamLine(m);
   }
 
   function addBtn(label, kind, fn) {

@@ -38,22 +38,44 @@
   <main id="app">
     <section id="screen-start" class="screen is-active" aria-label="Choose a stat">
       <div class="start-inner">
-        <a class="home-link" href="/nhl">&larr; <b>NHL</b> arcade</a>
-        <h1 class="title">Higher <span>/</span> Lower</h1>
-        <p class="subtitle">NHL · pick a stat</p>
-        <p class="tagline">Call whether the next player-season is higher or lower on your chosen stat. Get it right and the streak rolls on. NHL seasons 2000–2026.</p>
+        <nav class="hl-nav" aria-label="Breadcrumb">
+          <a class="gbrand" href="/" aria-label="EBK home"><span class="wordmark" aria-hidden="true">E<span>B</span>K</span></a>
+          <a class="home-link k-back" href="/nhl">&larr; <b>NHL</b></a>
+        </nav>
+        <header class="k-hero hl-hero">
+          <span class="k-ball auto lift float" style="--s:96px" aria-hidden="true"></span>
+          <div class="k-hero-t">
+            <span class="k-kick">NHL <i>Pick a stat</i></span>
+            <h1 class="title">Higher <em>/</em> Lower</h1>
+            <p class="tagline">Call whether the next player-season is higher or lower on your chosen stat. Get it right and the streak rolls on. NHL seasons 2000–2026.</p>
+          </div>
+          <div class="k-hero-side">
+            <div class="k-board" role="group" aria-label="Your record">
+              <div class="k-cell"><span class="k-lbl">Best</span><span class="k-led y" id="start-best" data-seg="00" data-seg-label="0">0</span></div>
+              <div class="k-cell"><span class="k-lbl">Clock</span><span class="k-led r" data-seg="0:07" data-seg-label="7 seconds per call"></span></div>
+            </div>
+          </div>
+        </header>
+        <div class="k-shd"><span class="k-shd-n" data-seg="01" aria-hidden="true"></span><h2 class="k-shd-t">Pick a stat</h2><span class="k-shd-rail" aria-hidden="true"></span><span class="k-shd-r" id="cat-count"></span></div>
         <p id="loading" class="loading" role="status" aria-live="polite">Loading player data…</p>
         <div id="category-grid" class="category-grid" hidden></div>
-        <p class="best-line">Best streak: <strong id="start-best">0</strong></p>
         <p class="credit">Data: NHL stats API · 2000–2026</p>
       </div>
     </section>
     <section id="screen-game" class="screen" aria-label="Game">
       <header class="hud">
         <button id="quit-btn" class="ghost-btn" aria-label="Back to stat select">&larr;</button>
-        <div class="hud-stat"><span class="hud-label">Streak</span><span id="streak" class="hud-value">0</span></div>
         <div class="hud-cat" id="hud-cat"></div>
-        <div class="hud-stat"><span class="hud-label">Best</span><span id="best" class="hud-value">0</span></div>
+        <div class="hud-board" role="group" aria-label="Scoreboard">
+          <div class="hud-stat">
+            <span class="hud-label">Streak</span>
+            <span id="streak" class="hud-value y" data-seg="00" data-seg-label="0">0</span>
+          </div>
+          <div class="hud-stat">
+            <span class="hud-label">Best</span>
+            <span id="best" class="hud-value" data-seg="00" data-seg-label="0">0</span>
+          </div>
+        </div>
       </header>
       <div class="panels">
         <article class="panel anchor" id="panel-anchor">
@@ -73,8 +95,8 @@
             <div class="challenger-ask" id="ask">
               <p class="ask-prompt">had <span class="hl-stat"></span></p>
               <div class="guess-btns">
-                <button class="guess-btn higher" data-dir="higher">▲ Higher</button>
-                <button class="guess-btn lower" data-dir="lower">▼ Lower</button>
+                <button class="guess-btn higher" data-dir="higher"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5l7 9H5z" fill="currentColor"/></svg>Higher</button>
+                <button class="guess-btn lower" data-dir="lower"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19l7-9H5z" fill="currentColor"/></svg>Lower</button>
               </div>
             </div>
             <p class="panel-stat reveal" id="challenger-reveal" aria-live="polite">
@@ -86,13 +108,21 @@
     </section>
     <section id="screen-over" class="screen" aria-label="Game over">
       <div class="over-inner">
-        <p id="new-best" class="new-best" hidden>🏆 New best!</p>
-        <h2 class="over-title">Streak ended</h2>
-        <p class="over-streak">You reached <strong id="final-streak">0</strong></p>
-        <p id="over-detail" class="over-detail"></p>
-        <div class="over-btns">
-          <button id="again-btn" class="primary-btn">Play again</button>
-          <button id="menu-btn" class="secondary-btn">Change stat</button>
+        <div class="over-card">
+          <div class="over-top">
+            <span class="k-kick" id="over-cat">NHL <i>Higher / Lower</i></span>
+            <p id="new-best" class="new-best" hidden><span class="k-tag gold">New best</span></p>
+          </div>
+          <h2 class="over-title">Streak ended</h2>
+          <div class="k-board full over-board" role="group" aria-label="Final score">
+            <div class="k-cell"><span class="k-lbl">Streak</span><span class="k-led lg y" id="final-streak" data-seg="00" data-seg-label="0">0</span></div>
+            <div class="k-cell"><span class="k-lbl">Best</span><span class="k-led lg" id="over-best" data-seg="00" data-seg-label="0">0</span></div>
+          </div>
+          <div id="over-detail" class="over-detail"></div>
+          <div class="over-btns">
+            <button id="again-btn" class="primary-btn">Play again</button>
+            <button id="menu-btn" class="secondary-btn">Change stat</button>
+          </div>
         </div>
       </div>
     </section>

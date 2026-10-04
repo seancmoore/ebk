@@ -34,26 +34,30 @@
 <body data-sport="cfb">
   <div class="gpage">
     <header class="gtop">
+      <a class="gbrand" href="/" aria-label="EBK home"><span class="wordmark" aria-hidden="true">E<span>B</span>K</span></a>
       <a class="ghome" href="/cfb">&larr; <b>CFB</b></a>
-      <p class="gtitle">Guess the Stat&nbsp;Line <small>· CFB</small></p>
-      <div class="gscore">
-        <div class="chip"><span class="k">Score</span><span class="v" id="score">0</span></div>
-        <div class="chip"><span class="k">Best</span><span class="v" id="best">0</span></div>
+      <div class="gname"><span class="k-kick">CFB <i>Name the player</i></span><h1 class="gtitle">Guess the Stat&nbsp;Line</h1></div>
+      <div class="gscore" role="group" aria-label="Scoreboard">
+        <div class="chip"><span class="k">Score</span><span class="v y" id="score" data-seg="00" data-seg-label="0">0</span></div>
+        <div class="chip"><span class="k">Best</span><span class="v" id="best" data-seg="00" data-seg-label="0">0</span></div>
       </div>
     </header>
     <main class="gwrap">
       <p class="muted center gonboard">Mystery season, real numbers. Read the stat line, then pick the player who posted it.</p>
       <p id="loading" class="muted center" role="status" aria-live="polite">Loading…</p>
       <div id="game" hidden>
-        <div class="gcard">
-          <div class="center">
-            <span class="muted" id="pos-line">Player</span>
-            <div class="center muted" id="team-line" style="margin-top:4px;font-weight:700">Team:</div>
-            <div style="margin-top:8px"><span class="season-badge" id="season-badge">????</span></div>
+        <div class="gcard sl-card">
+          <div class="sl-head">
+            <div class="sl-who">
+              <span class="k-kick">Mystery season <i>7s shot clock</i></span>
+              <h2 class="sl-pos" id="pos-line">Player</h2>
+              <div class="sl-team" id="team-line"></div>
+            </div>
+            <div class="sl-season"><span class="k-lbl">Season</span><span class="season-badge" id="season-badge">????</span></div>
           </div>
           <div class="statline" id="statline"></div>
-          <div class="row-btns" id="lifelines" style="margin-top:var(--sp-md)">
-            <button class="gbtn ghost" id="reveal-exact" style="min-height:44px">🎯 Reveal exact season (5)</button>
+          <div class="sl-tools" id="lifelines">
+            <button class="gbtn ghost" id="reveal-exact">Reveal exact season</button>
           </div>
         </div>
         <div class="opt-list" id="options"></div>

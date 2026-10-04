@@ -29,75 +29,107 @@
   <link rel="stylesheet" href="/css/ebk-kit.css" />
   <script src="/js/ebk-kit.js"></script>
   <link rel="stylesheet" href="/css/home.css" />
-  <link rel="stylesheet" href="/css/team.css" />
   <link rel="stylesheet" href="/css/dashboard.css" />
+  <link rel="stylesheet" href="/css/pages.css" />
   <script src="/js/ebk-analytics.js" defer></script>
 </head>
-<body>
+<body class="pg pg-db">
   <header class="site-header">
     <a class="brand" href="/">
       <span class="wordmark" aria-label="EBK">E<span>B</span>K</span>
       <span class="brand-sub">Elite Ball Knowledge</span>
     </a>
   </header>
-  <main>
-    <section class="hero wrap" style="padding-bottom: var(--sp-md)">
-      <h1 class="rise" id="hello">Your Dashboard</h1>
-      <p class="rise d1" id="subline">Your stats across every game and sport.</p>
-    </section>
-    <div class="wrap">
-      <div id="signedout" hidden class="center" style="padding:var(--sp-lg) 0">
-        <p class="muted">Sign in to track your games, streaks and best scores.</p>
-        <button class="hero-cta" id="signin-cta">Sign in / Sign up</button>
+  <main class="k-wrap">
+    <section class="k-hero db-hero">
+      <span class="pg-coin db-coin" id="db-coin" aria-hidden="true"><span class="k-ball football"></span></span>
+      <div class="k-hero-t">
+        <span class="k-kick">Dashboard <i>Your stats, every sport</i></span>
+        <h1 id="hello">Your <em>dashboard</em></h1>
+        <p id="subline">Your stats across every game and sport.</p>
       </div>
-      <div id="loading" class="muted center" style="padding:var(--sp-lg) 0">Loading…</div>
-      <div id="stats" hidden>
-        <div class="stat-cards" id="cards"></div>
-        <h2 class="dash-h">By sport</h2>
-        <div class="stat-cards" id="bysport"></div>
-        <h2 class="dash-h">Every game</h2>
-        <div class="table-wrap">
-          <table class="tbl"><thead><tr><th>Sport</th><th>Game</th><th>Best</th><th>Plays</th><th>Avg</th></tr></thead>
-          <tbody id="gametable"></tbody></table>
+      <div class="k-hero-side db-rack" id="db-rack" hidden>
+        <span class="db-rack-k">This week's Rack <i>on this device</i></span>
+        <div class="k-board">
+          <div class="k-cell"><span class="k-lbl">Days</span><span class="k-led" id="rk-days" data-seg="00"></span></div>
+          <div class="k-cell"><span class="k-lbl">Pts</span><span class="k-led y" id="rk-pts" data-seg="00"></span></div>
+          <div class="k-cell"><span class="k-lbl">Best</span><span class="k-led w" id="rk-best" data-seg="00"></span></div>
         </div>
-        <p id="empty" class="muted center" hidden style="padding:var(--sp-lg)">No games yet — go play and your stats will appear here.</p>
+      </div>
+    </section>
 
-        <h2 class="dash-h">Account</h2>
-        <div class="acct-box">
-          <div class="acct-row">
-            <div>
-              <div class="acct-k">Display name</div>
-              <div class="acct-v" id="acct-name"></div>
-            </div>
-            <button class="chip-btn" id="acct-rename">Change name</button>
-          </div>
-          <div class="acct-row">
-            <div>
-              <div class="acct-k">Email</div>
-              <div class="acct-v" id="acct-email"></div>
-            </div>
-            <button class="chip-btn" id="acct-verify" hidden>Resend verification</button>
-          </div>
-          <div class="acct-row">
-            <div>
-              <div class="acct-k">Session</div>
-              <div class="acct-v muted">Sign out of EBK on this device.</div>
-            </div>
-            <button class="chip-btn" id="acct-signout">Sign out</button>
-          </div>
-          <div class="acct-row danger">
-            <div>
-              <div class="acct-k">Delete account</div>
-              <div class="acct-v muted">Removes your account, scores and leaderboard entries. Permanent.</div>
-            </div>
-            <button class="chip-btn danger" id="acct-delete">Delete…</button>
-          </div>
-          <p class="muted" id="acct-msg" style="min-height:1.2em;font-size:var(--fs-sm)"></p>
+    <div id="signedout" hidden>
+      <div class="k-card panel db-out">
+        <div class="db-out-t">
+          <span class="k-kick">Your scoreboard <i>is waiting</i></span>
+          <h2>Sign in to keep score</h2>
+          <p>Every run you play while signed in lands here: games played, best runs, your top sport and every mode you have touched.</p>
+          <button class="k-btn lg pill" id="signin-cta">Sign in / Sign up <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </div>
+        <div class="k-board db-out-b" aria-hidden="true">
+          <div class="k-cell"><span class="k-lbl">Games</span><span class="k-led w k-seg off" data-seg="000"></span></div>
+          <div class="k-cell"><span class="k-lbl">Best run</span><span class="k-led y k-seg off" data-seg="00"></span></div>
+          <div class="k-cell"><span class="k-lbl">Sports</span><span class="k-led k-seg off" data-seg="0"></span></div>
+        </div>
+      </div>
+    </div>
+    <div id="loading" class="db-loading" role="status">Loading…</div>
+    <div id="stats" hidden>
+      <div id="db-has">
+      <div class="k-board full db-board" id="cards"></div>
+
+      <div class="k-shd"><span class="k-shd-n" data-seg="01" aria-hidden="true"></span><h2 class="k-shd-t">By sport</h2><span class="k-shd-rail" aria-hidden="true"></span><span class="k-shd-r" id="db-nsports"></span></div>
+      <div class="db-sports" id="bysport"></div>
+
+      <div class="k-shd"><span class="k-shd-n" data-seg="02" aria-hidden="true"></span><h2 class="k-shd-t">Every game</h2><span class="k-shd-rail" aria-hidden="true"></span><span class="k-shd-r">Sorted by best run</span></div>
+      <div class="k-tbl-wrap db-tw" id="db-tw">
+        <table class="k-table db-tbl"><thead><tr><th>Sport</th><th>Game</th><th>Best</th><th>Plays</th><th>Avg</th></tr></thead>
+        <tbody id="gametable"></tbody></table>
+      </div>
+      </div>
+      <div id="empty" class="k-empty" hidden>
+        <span class="k-ball football" aria-hidden="true"></span>
+        <b>No games yet</b>
+        <p>Play any game while signed in and your runs land here.</p>
+        <a class="k-btn" href="/">Find a game</a>
+      </div>
+
+      <div class="k-shd"><span class="k-shd-n" data-seg="03" aria-hidden="true"></span><h2 class="k-shd-t">Account</h2><span class="k-shd-rail" aria-hidden="true"></span></div>
+      <div class="k-card acct-box">
+        <div class="acct-row">
+          <div>
+            <div class="acct-k">Display name</div>
+            <div class="acct-v" id="acct-name"></div>
+          </div>
+          <button class="k-btn ghost pill" id="acct-rename">Change name</button>
+        </div>
+        <div class="acct-row">
+          <div>
+            <div class="acct-k">Email</div>
+            <div class="acct-v" id="acct-email"></div>
+          </div>
+          <button class="k-btn ghost pill" id="acct-verify" hidden>Resend verification</button>
+        </div>
+        <div class="acct-row">
+          <div>
+            <div class="acct-k">Session</div>
+            <div class="acct-v muted">Sign out of EBK on this device.</div>
+          </div>
+          <button class="k-btn ghost pill" id="acct-signout">Sign out</button>
+        </div>
+        <div class="acct-row danger">
+          <div>
+            <div class="acct-k">Delete account</div>
+            <div class="acct-v muted">Removes your account, scores and leaderboard entries. Permanent.</div>
+          </div>
+          <button class="k-btn ghost pill danger" id="acct-delete">Delete…</button>
+        </div>
+        <p class="acct-msg" id="acct-msg"></p>
       </div>
     </div>
   </main>
   <script src="/js/catalog.js"></script>
+  <script src="/js/ebk-daily.js"></script>
   <script src="/js/ebk-ui.js"></script>
   <script src="/js/dashboard.js"></script>
   <script src="/js/ebk-sound.js"></script>

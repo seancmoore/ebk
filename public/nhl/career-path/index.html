@@ -35,18 +35,19 @@
 <body data-sport="nhl">
   <div class="gpage">
     <header class="gtop">
+      <a class="gbrand" href="/" aria-label="EBK home"><span class="wordmark" aria-hidden="true">E<span>B</span>K</span></a>
       <a class="ghome" href="/nhl">&larr; <b>NHL</b></a>
-      <p class="gtitle">Career Path <small>· NHL</small></p>
-      <div class="gscore">
-        <div class="chip"><span class="k">Score</span><span class="v" id="score">0</span></div>
-        <div class="chip"><span class="k">Best</span><span class="v" id="best">0</span></div>
+      <div class="gname"><span class="k-kick">NHL <i>Trace the career</i></span><h1 class="gtitle">Career Path</h1></div>
+      <div class="gscore" role="group" aria-label="Scoreboard">
+        <div class="chip"><span class="k">Score</span><span class="v y" id="score" data-seg="00" data-seg-label="0">0</span></div>
+        <div class="chip"><span class="k">Best</span><span class="v" id="best" data-seg="00" data-seg-label="0">0</span></div>
       </div>
     </header>
     <main class="gwrap">
       <p id="loading" class="muted center" role="status" aria-live="polite">Loading…</p>
       <div id="game" hidden>
         <div class="gcard">
-          <p class="center muted" style="margin:0 0 var(--sp-sm)">Who is this player?</p>
+          <div class="cp-ask"><h2>Who is this player?</h2><span class="k-tag soft">12s shot clock</span></div>
           <div class="clues" id="facts"></div>
         </div>
         <div class="opt-list" id="options"></div>

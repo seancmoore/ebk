@@ -5,13 +5,13 @@
   <script src="/js/ebk-loader.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0e1c" />
-  <meta name="description" content="NFL games on EBK — Higher/Lower, Stat Line, Career Path, Player Grid, Team Study." />
+  <meta name="description" content="NFL games on EBK: Higher/Lower, Stat Line, Career Path, Player Grid and Team Study." />
   <title>NFL · EBK</title>
   <link rel="canonical" href="https://eliteballknowledge.web.app/nfl" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="EBK — Elite Ball Knowledge" />
   <meta property="og:title" content="NFL · EBK" />
-  <meta property="og:description" content="NFL games on EBK — Higher/Lower, Stat Line, Career Path, Player Grid, Team Study." />
+  <meta property="og:description" content="NFL games on EBK: Higher/Lower, Stat Line, Career Path, Player Grid and Team Study." />
   <meta property="og:url" content="https://eliteballknowledge.web.app/nfl" />
   <meta property="og:image" content="https://eliteballknowledge.web.app/img/og.png" />
   <meta property="og:image:width" content="1200" />
@@ -19,7 +19,7 @@
   <meta property="og:image:alt" content="EBK — Elite Ball Knowledge. Prove it." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="NFL · EBK" />
-  <meta name="twitter:description" content="NFL games on EBK — Higher/Lower, Stat Line, Career Path, Player Grid, Team Study." />
+  <meta name="twitter:description" content="NFL games on EBK: Higher/Lower, Stat Line, Career Path, Player Grid and Team Study." />
   <meta name="twitter:image" content="https://eliteballknowledge.web.app/img/og.png" />
   <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
   <link rel="preconnect" href="https://a.espncdn.com" crossorigin />
@@ -29,9 +29,10 @@
   <link rel="stylesheet" href="/css/ebk-kit.css" />
   <script src="/js/ebk-kit.js"></script>
   <link rel="stylesheet" href="/css/home.css" />
+  <link rel="stylesheet" href="/css/hub.css" />
   <script src="/js/ebk-analytics.js" defer></script>
 </head>
-<body data-sport="nfl">
+<body data-sport="nfl" class="hub-page">
   <header class="site-header">
     <a class="brand" href="/">
       <span class="wordmark" aria-label="EBK">E<span>B</span>K</span>
@@ -39,28 +40,58 @@
     </a>
     <a class="header-tag" href="/">← All sports</a>
   </header>
-
-  <main>
-    <section class="hero wrap" style="padding-bottom: var(--sp-md)">
-      <h1 class="rise" id="sport-title"></h1>
-      <p class="rise d1" id="sport-tag"></p>
+  <main class="hub k-wrap">
+    <section class="k-hero hub-hero" aria-labelledby="hub-h">
+      <span class="k-ball auto lift float hub-ball" aria-hidden="true"></span>
+      <div class="k-hero-t rise d1">
+        <span class="k-kick"><img class="league-logo" src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nfl.png&w=128" alt="" width="22" height="22" onerror="this.remove()" />NFL <i>Pro football, 1999 to 2025</i></span>
+        <h1 id="hub-h">Pick your <em>game</em></h1>
+        <p>Five ways to prove you know pro football. Every skill-position season since 1999 is in the pool.</p>
+      </div>
+      <div class="k-hero-side rise d2">
+        <div class="k-board hub-board" role="group" aria-label="NFL at a glance">
+          <div class="k-cell"><span class="k-lbl">Teams</span><span class="k-led g" data-seg="32" data-seg-label="32 teams"></span></div>
+          <div class="k-cell"><span class="k-lbl">Since</span><span class="k-led w" data-seg="1999" data-seg-label="Data since 1999"></span></div>
+          <div class="k-cell" id="hub-today"><span class="k-lbl">Today</span><span class="k-led off" data-seg="--" data-seg-label="Today's grid not played yet"></span></div>
+        </div>
+      </div>
     </section>
-    <div class="wrap"><div id="sport-banner" class="rise d2" aria-hidden="true"></div></div>
-    <div class="wrap">
-      <div class="game-grid" id="games"></div>
-    </div>
+
+    <div id="sport-banner" class="hub-banner" aria-hidden="true"></div>
+
+    <section class="hub-sec" aria-labelledby="games-h">
+      <div class="k-shd"><span class="k-shd-n" data-seg="01" aria-hidden="true"></span><h2 class="k-shd-t" id="games-h">Games</h2><span class="k-shd-rail" aria-hidden="true"></span><span class="k-shd-r">5 modes</span></div>
+      <div class="hub-games" id="games"></div>
+    </section>
+
+    <section class="hub-sec" aria-labelledby="h2h-h">
+      <div class="k-shd"><span class="k-shd-n" data-seg="02" aria-hidden="true"></span><h2 class="k-shd-t" id="h2h-h">Head-to-Head</h2><span class="k-shd-rail" aria-hidden="true"></span><span class="k-shd-r">Live vs a friend</span></div>
+      <a class="hub-h2h" id="hub-h2h" href="/h2h?sport=nfl">
+        <div class="hub-h2h-t">
+          <span class="k-kick">Head-to-Head <i>Ranked, private rooms</i></span>
+          <h3>Beat a friend at <em>NFL</em></h3>
+          <p>Same question, same clock. NFL Higher/Lower and Career Path, played live against a friend or a ranked stranger.</p>
+          <span class="k-btn hub-h2h-btn">Find a match <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <div class="hub-mu" aria-hidden="true">
+          <div class="hub-side"><span class="hub-medal"><span class="k-ball auto" style="--s:46px"></span></span><b>You</b><span class="k-mled">Ready</span></div>
+          <div class="hub-vs"><span class="hub-sw"></span><span class="hub-vsx">VS</span><span class="hub-sc" data-seg="0:0"></span></div>
+          <div class="hub-side"><span class="hub-medal q"><svg class="hub-ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46"/></svg><span class="hub-qm">?</span></span><b>Next opponent</b><span class="k-mled dim">Live</span></div>
+        </div>
+      </a>
+    </section>
   </main>
 
   <footer class="site-footer">
-    <p>EBK · NFL data from <a href="https://github.com/nflverse/nflverse-data">nflverse</a> (1999–2025)</p>
-  <p class="legal-links"><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · Not affiliated with any league.</p></footer>
-
+    <p>EBK · NFL data from <a href="https://github.com/nflverse/nflverse-data">nflverse</a>, 1999 to 2025</p>
+    <p class="legal-links"><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · Not affiliated with any league.</p>
+  </footer>
   <script src="/js/catalog.js"></script>
   <script src="/js/ebk-ui.js"></script>
   <script src="/js/teams.js"></script>
+  <script src="/js/ebk-daily.js"></script>
   <script src="/js/sport-page.js"></script>
   <script src="/js/sport-banner.js"></script>
-  <script src="/js/fx.js"></script>
   <script src="/js/ebk-sound.js"></script>
 </body>
 </html>

@@ -127,7 +127,14 @@
       if (!res.ok) throw new Error("HTTP " + res.status);
       const data = EBKD.inflate(await res.json());
       S.rows = data.players.filter((p) => LEAGUE.keyOf(p.team) === S.teamKey);
-      if (!S.rows.length) { $("#loading").textContent = "Unknown team."; return; }
+      if (!S.rows.length) {
+        const el = $("#loading");
+        el.className = "k-empty ts-unknown";
+        el.innerHTML = `<span class="k-ball auto" aria-hidden="true"></span><b>Unknown team.</b>` +
+          `<p>That team is not in the EBK pool. Pick one from the list.</p>` +
+          `<a class="k-btn pill" href="/${SPORT}/teams">All ${LEAGUE_LABEL[SPORT] || SPORT.toUpperCase()} teams</a>`;
+        return;
+      }
       const seasons = S.rows.map((r) => r.season);
       S.from = Math.min(...seasons); S.to = Math.max(...seasons);
       buildHead();
@@ -142,11 +149,24 @@
 
   // the 60px header logo needs more than the 128px list size on 3x phones
   const headLogo = (u) => u.replace("&w=128", "&w=192").replace(/(\/badges\/100\/t\d+)\.png$/, "$1@x2.png");
+  // hero: logo coin, name, and a Stat Lab style readout of this team's pool
+  const LEAGUE_LABEL = { nfl: "NFL", nba: "NBA", mlb: "MLB", nhl: "NHL", cfb: "College FB", soccer: "Premier League" };
   function buildHead() {
+    const seasons = new Set(S.rows.map((r) => r.season));
+    const players = new Set(S.rows.map((r) => r.name));
+    const lo = Math.min(...seasons), hi = Math.max(...seasons);
+    const cell = (v, k, cls = "") => `<div><span class="k-dv ${cls}">${v}</span><span class="k-dk">${k}</span></div>`;
     $("#team-head").innerHTML =
-      `<img src="${headLogo(LEAGUE.logo(S.teamKey))}" alt="" />` +
-      `<div><h1>${LEAGUE.name(S.teamKey)}</h1>` +
-      `<div class="sub">Every player-season in the EBK pool · ${CFG.seasons}</div></div>`;
+      `<div class="ts-id"><span class="ts-coin"><img src="${headLogo(LEAGUE.logo(S.teamKey))}" alt="" /></span>` +
+      `<div class="ts-t"><span class="k-kick">${LEAGUE_LABEL[SPORT] || SPORT.toUpperCase()} <i>Team Study</i></span>` +
+      `<h1>${LEAGUE.name(S.teamKey)}</h1>` +
+      `<p>Every player-season in the EBK pool. Filter it, sort it, study it.</p></div></div>` +
+      `<div class="k-dstrip ts-strip">` +
+      cell(fmt(S.rows.length), "player-seasons") +
+      cell(fmt(players.size), "players", "w") +
+      cell(seasons.size, "seasons", "y") +
+      cell(lo === hi ? lo : `${lo}–${String(hi).slice(-2)}`, "span", "b") +
+      `</div>`;
     document.title = LEAGUE.name(S.teamKey) + " · Team Study · EBK";
   }
 
@@ -155,12 +175,14 @@
     chips.innerHTML = "";
     CFG.groups.forEach((g) => {
       const b = document.createElement("button");
-      b.className = "chip-btn" + (g === S.group ? " active" : "");
+      b.type = "button";
+      b.className = "chip-btn k-chip" + (g === S.group ? " active" : "");
+      b.setAttribute("aria-pressed", String(g === S.group));
       b.textContent = g === "all" ? "All" : g;
       b.addEventListener("click", () => {
         S.group = g; S.sortKey = "season"; S.sortDir = -1;
-        [...chips.children].forEach((c) => c.classList.remove("active"));
-        b.classList.add("active");
+        [...chips.children].forEach((c) => { c.classList.remove("active"); c.setAttribute("aria-pressed", "false"); });
+        b.classList.add("active"); b.setAttribute("aria-pressed", "true");
         render();
       });
       chips.appendChild(b);
@@ -216,9 +238,15 @@
     const thead = $("#thead");
     thead.innerHTML = "<tr>" + cols.map((c) => {
       const cls = c.key === S.sortKey ? (S.sortDir > 0 ? "sort-asc" : "sort-desc") : "";
-      return `<th class="${cls}" data-k="${c.key}">${c.label}</th>`;
+      const aria = cls ? ` aria-sort="${S.sortDir > 0 ? "ascending" : "descending"}"` : "";
+      return `<th class="${cls}" data-k="${c.key}"${aria} tabindex="0">${c.label}</th>`;
     }).join("") + "</tr>";
     [...thead.querySelectorAll("th")].forEach((th) => {
+      th.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault(); const k = th.dataset.k; th.click();
+        const again = $(`#thead th[data-k="${k}"]`); if (again) again.focus();
+      });
       th.addEventListener("click", () => {
         const k = th.dataset.k;
         if (S.sortKey === k) S.sortDir = -S.sortDir;

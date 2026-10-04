@@ -16,6 +16,20 @@
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "career-path", score); } catch (e) {} };
   const sfx = (n) => { try { window.EBKS && EBKS.play(n); } catch (e) {} };
+  // ---- presentation: LED scoreboard digits + clue icons ----
+  const pad2 = (v) => (+v < 10 ? "0" : "") + v;
+  function led(el, v) {
+    if (!el) return;
+    if (window.EBKKit) EBKKit.seg(el, pad2(v), String(v)); else el.textContent = v;
+  }
+  const ico = (d) => '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + d + "</svg>";
+  const ICON = {
+    draft: ico('<path d="M4 7h16v3a2 2 0 0 0 0 4v3H4v-3a2 2 0 0 0 0-4z"/><path d="M14 8v2M14 14v2"/>'),
+    college: ico('<path d="M2 9.5 12 5l10 4.5L12 14z"/><path d="M6 11.5V16c3.5 2.2 8.5 2.2 12 0v-4.5"/>'),
+    career: ico('<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>'),
+    teampath: ico('<circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h6.5a3 3 0 0 0 0-6h-5a3 3 0 0 1 0-6H16"/>'),
+  };
+  const BALL = '<span class="k-ball auto" aria-hidden="true"></span>';
   const ROUND_MS = 12000;               // per-round clock; timeout ends the run
 
   // ---- round timer ----
@@ -57,7 +71,7 @@
     ebkRecord(S.score);
     render();                                  // disables options, highlights answer
     const banner = $("#banner");
-    banner.textContent = "⏱ Time's up — run over!";
+    banner.textContent = "Time's up. Run over.";
     banner.className = "banner bad";
     showReveal(S.mystery);
     addBtn("New run", "primary", newRun);
@@ -181,7 +195,7 @@
       }
 
       S.best = getBest();
-      $("#best").textContent = S.best;
+      led($("#best"), S.best);
       $("#loading").hidden = true;
       $("#game").hidden = false;
       try { window.EBKA && EBKA.send("start"); } catch (e) {}
@@ -212,11 +226,11 @@
       ? `${c.dy} · Round ${c.dr || "?"} · Pick ${c.dp || "?"}${c.dt ? " · " + teamTag(c.dt) : ""}`
       : "Undrafted";
     const all = {
-      position: { icon: CFG.icon, k: "Position", v: posName(c.pos) },
-      draft: { icon: "🎟️", k: "Draft", v: draft },
-      college: { icon: "🎓", k: "College", v: collegeTag(c.college) },
-      career: { icon: "📅", k: "Career", v: `${CFG.seasonFmt(c.min)}–${CFG.seasonFmt(c.max)} · ${c.count} season${c.count > 1 ? "s" : ""}` },
-      teampath: { icon: "🧭", k: "Team path", v: c.path.map(teamTag).join("  →  ") },
+      position: { icon: BALL, k: "Position", v: posName(c.pos) },
+      draft: { icon: ICON.draft, k: "Draft", v: draft },
+      college: { icon: ICON.college, k: "College", v: collegeTag(c.college) },
+      career: { icon: ICON.career, k: "Career", v: `${CFG.seasonFmt(c.min)}–${CFG.seasonFmt(c.max)} · ${c.count} season${c.count > 1 ? "s" : ""}` },
+      teampath: { icon: ICON.teampath, k: "Team path", v: c.path.map(teamTag).join('<span class="arr" aria-label="then">&rarr;</span>') },
     };
     return CFG.facts.map((key) => all[key]);
   }
@@ -240,7 +254,7 @@
     return shuffle(opts);
   }
 
-  function newRun() { S.score = 0; $("#score").textContent = "0"; nextRound(); }
+  function newRun() { S.score = 0; led($("#score"), 0); nextRound(); }
 
   function nextRound() {
     S.mystery = rand(S.pool);
@@ -296,9 +310,9 @@
     const banner = $("#banner");
     if (correct) {
       S.score += 1;
-      const sc = $("#score"); sc.textContent = S.score;
+      const sc = $("#score"); led(sc, S.score);
       sc.classList.remove("pop"); void sc.offsetWidth; sc.classList.add("pop");
-      if (S.score > S.best) { S.best = S.score; setBest(S.best); $("#best").textContent = S.best; }
+      if (S.score > S.best) { S.best = S.score; setBest(S.best); led($("#best"), S.best); }
       banner.textContent = "Correct!"; banner.className = "banner good";
       showReveal(c);
       addBtn("Next player ›", "primary", nextRound);

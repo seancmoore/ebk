@@ -28,20 +28,28 @@
   <link rel="stylesheet" href="/css/ebk-kit.css" />
   <script src="/js/ebk-kit.js"></script>
   <link rel="stylesheet" href="/css/home.css" />
+  <link rel="stylesheet" href="/css/pages.css" />
   <script src="/js/ebk-analytics.js" defer></script>
 </head>
-<body>
+<body class="pg pg-legal">
   <header class="site-header">
     <a class="brand" href="/">
       <span class="wordmark" aria-label="EBK">E<span>B</span>K</span>
       <span class="brand-sub">Elite Ball Knowledge</span>
     </a>
-    <a class="header-tag" href="/">← Home</a>
+    <a class="header-tag k-back" href="/">← <b>Home</b></a>
   </header>
   <main>
-    <div class="wrap legal-page">
-      <h1>Privacy Policy</h1>
-      <p class="muted updated">Last updated: July 18, 2026</p>
+    <div class="k-wrap lg-wrap">
+      <section class="k-hero lg-hero">
+        <span class="pg-coin" aria-hidden="true"><svg viewBox="0 0 64 64"><rect x="15" y="28" width="34" height="26" rx="7" fill="#3ddc97"/><path d="M22 28v-6a10 10 0 0 1 20 0v6" fill="none" stroke="#c9f5e2" stroke-width="5" stroke-linecap="round"/><circle cx="32" cy="39" r="4" fill="#07101f"/><path d="M32 41v6" stroke="#07101f" stroke-width="3.4" stroke-linecap="round"/></svg></span>
+        <div class="k-hero-t">
+          <span class="k-kick">Legal <i>What we collect, and why</i></span>
+          <h1>Privacy Policy</h1>
+          <p class="updated">Last updated: <span class="k-mled dim">July 18, 2026</span></p>
+        </div>
+      </section>
+    <article class="legal-page">
 
       <p class="lead">EBK ("Elite Ball Knowledge", "we", "us", "our") runs a free sports trivia
         arcade at eliteballknowledge.web.app (the "Service"). This policy explains, in plain
@@ -63,8 +71,9 @@
           <li><a href="#contact">Contact</a></li>
         </ol>
       </nav>
+      <span class="k-rail lg-rail" aria-hidden="true"></span>
 
-      <h2 id="collect">1. Data Collection</h2>
+      <h2 id="collect"><span class="lg-n">1.</span> Data Collection</h2>
       <p>We collect the following, and nothing more than we need:</p>
       <ul>
         <li><strong>Account information.</strong> When you create an account: your email address, a
@@ -91,7 +100,7 @@
           or marketing profiles.</li>
       </ul>
 
-      <h2 id="use">2. Data Usage</h2>
+      <h2 id="use"><span class="lg-n">2.</span> Data Usage</h2>
       <p>We use your information only to operate and improve the Service:</p>
       <ul>
         <li>Create and manage your account and keep you signed in.</li>
@@ -102,7 +111,7 @@
       </ul>
       <p>We do not sell your personal data, and we do not use it for third-party advertising.</p>
 
-      <h2 id="cookies">3. Cookies and Tracking</h2>
+      <h2 id="cookies"><span class="lg-n">3.</span> Cookies and Tracking</h2>
       <ul>
         <li>We do not use advertising cookies, analytics cookies, or third-party tracking pixels.
           Our only usage measurement is the cookieless, first-party counter described in
@@ -113,7 +122,7 @@
         <li>We do not track you across other websites or services.</li>
       </ul>
 
-      <h2 id="sharing">4. Third-Party Sharing</h2>
+      <h2 id="sharing"><span class="lg-n">4.</span> Third-Party Sharing</h2>
       <p>We do not sell or rent your personal data. We share data only in these limited cases:</p>
       <ul>
         <li><strong>Service providers.</strong> Google Firebase (Hosting, Authentication, and Cloud
@@ -128,7 +137,7 @@
           leaderboards. Your email address is never shown to other players.</li>
       </ul>
 
-      <h2 id="rights">5. Your Rights (GDPR / CCPA)</h2>
+      <h2 id="rights"><span class="lg-n">5.</span> Your Rights (GDPR / CCPA)</h2>
       <p>Wherever you live, we extend the following rights to you:</p>
       <ul>
         <li><strong>Access</strong> the personal data we hold about you.</li>
@@ -147,7 +156,7 @@
         dashboard or contact us (see Contact). We will not charge you or deny you service for making
         a request.</p>
 
-      <h2 id="retention">6. Data Retention</h2>
+      <h2 id="retention"><span class="lg-n">6.</span> Data Retention</h2>
       <ul>
         <li>We keep your account data for as long as your account is active.</li>
         <li>When you delete your account (from your dashboard), we remove your account, scores,
@@ -157,30 +166,31 @@
           is not used to identify you personally.</li>
       </ul>
 
-      <h2 id="children">7. Children's Privacy</h2>
+      <h2 id="children"><span class="lg-n">7.</span> Children's Privacy</h2>
       <p>The Service is not directed to children under 13, and you must be at least 13 years old to
         create an account. We do not knowingly collect personal information from children under 13.
         If you believe a child under 13 has created an account, contact us and we will delete it
         promptly.</p>
 
-      <h2 id="security">8. Security</h2>
+      <h2 id="security"><span class="lg-n">8.</span> Security</h2>
       <p>We keep the attack surface small: we never store plaintext passwords, your username-login
         email is encrypted with your password, traffic is served over HTTPS, database access is
         restricted by Firebase security rules, and score writes are validated and rate-limited. No
         method of transmission or storage is ever completely secure, so we cannot guarantee absolute
         security, but we work to protect your information.</p>
 
-      <h2 id="changes">9. Changes</h2>
+      <h2 id="changes"><span class="lg-n">9.</span> Changes</h2>
       <p>If we make material changes to this policy, we will update this page and the "Last updated"
         date above. Continued use of the Service after changes take effect means you accept the
         updated policy.</p>
 
-      <h2 id="contact">10. Contact</h2>
+      <h2 id="contact"><span class="lg-n">10.</span> Contact</h2>
       <p>Questions, or want to exercise a privacy right or delete your data? Open an issue at
         <a href="https://github.com/s3anzi3/ebk">github.com/s3anzi3/ebk</a> and we will respond
         promptly.</p>
 
       <p class="muted">See also our <a href="/terms">Terms of Service</a>.</p>
+    </article>
     </div>
   </main>
   <footer class="site-footer">

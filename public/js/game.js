@@ -49,6 +49,24 @@
     }));
     return nf.format(Number(value));
   }
+  // ---- presentation: LED scoreboard digits (EBKKit, /js/ebk-kit.js) ----
+  const pad2 = (v) => (+v < 10 ? "0" : "") + v;
+  function led(el, v) {
+    if (!el) return;
+    if (window.EBKKit) EBKKit.seg(el, pad2(v), String(v)); else el.textContent = v;
+  }
+  // a formatted stat ("1,532", "14.0", ".300") as seven-segment digits; commas
+  // stay as plain glyphs so big numbers keep their thousands separators
+  function setStat(el, str) {
+    if (!window.EBKKit) { el.textContent = str; return; }
+    if (el.__v === str) return;
+    el.__v = str;
+    el.innerHTML = '<span class="k-seg" aria-hidden="true">' +
+      str.split(",").map(EBKKit.seg7).join('<i class="cm">,</i>') + '</span><span class="k-sr">' + str + "</span>";
+  }
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const LEAGUE_NAME = { nfl: "NFL", nba: "NBA", mlb: "MLB", nhl: "NHL", cfb: "College FB", soccer: "Premier League" }[SPORT] || SPORT.toUpperCase();
+
   // panel-sized photo (raw headshots are up to 600px / several MB)
   const photo = (url) => (EBKD.img ? EBKD.img(url, 256) : url);
 
@@ -112,7 +130,7 @@
   // Count a number element from 0 -> value with anime.js, or set instantly.
   function countTo(el, value, decimals) {
     const anime = A();
-    if (!anime) { el.textContent = fmt(value, decimals); return; }
+    if (!anime) { setStat(el, fmt(value, decimals)); return; }
     const obj = { n: 0 };
     anime({
       targets: obj,
@@ -120,7 +138,7 @@
       round: decimals === 0 ? 1 : Math.pow(10, decimals),
       duration: 900,
       easing: "easeOutExpo",
-      update: () => { el.textContent = fmt(obj.n, decimals); },
+      update: () => { setStat(el, fmt(obj.n, decimals)); },
     });
   }
 
@@ -153,17 +171,22 @@
     state.data.categories.forEach((cat) => {
       const el = document.createElement("button");
       el.className = "cat-card";
+      const b = getBest(cat.key);
       el.innerHTML =
-        `<span class="cat-icon">${cat.icon}</span>` +
+        `<span class="cat-top"><span class="cat-icon" aria-hidden="true">${cat.icon}</span>` +
+        `<span class="k-mled${b ? " y" : " dim"}" aria-label="Best streak ${b}">${b ? "Best " + b : "Best 0"}</span></span>` +
         `<span class="cat-label">${cat.label}</span>` +
-        `<span class="cat-count">${eligibleCount(cat).toLocaleString()} seasons</span>`;
+        `<span class="cat-count"><b>${eligibleCount(cat).toLocaleString()}</b> seasons</span>` +
+        `<span class="cat-go" aria-hidden="true">Play <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
       el.addEventListener("click", () => startRun(cat));
       grid.appendChild(el);
     });
     $("#loading").hidden = true;
     grid.hidden = false;
-    $("#start-best").textContent = Math.max(
-      0, ...state.data.categories.map((c) => getBest(c.key)));
+    led($("#start-best"), Math.max(
+      0, ...state.data.categories.map((c) => getBest(c.key))));
+    const cc = $("#cat-count");
+    if (cc) cc.textContent = state.data.categories.length + " stats";
 
     // staggered entrance
     const anime = A();
@@ -191,9 +214,9 @@
     state.anchor = randItem(state.pool);
     state.challenger = pickChallenger(state.anchor);
 
-    $("#hud-cat").textContent = `${cat.icon} ${cat.label}`;
-    $("#streak").textContent = "0";
-    $("#best").textContent = state.best;
+    $("#hud-cat").innerHTML = `<span class="hc-k">${LEAGUE_NAME}</span><span class="hc-l"><span aria-hidden="true">${cat.icon}</span> ${esc(cat.label)}</span>`;
+    led($("#streak"), 0);
+    led($("#best"), state.best);
     // wait for both photos before the panels appear (timer starts after)
     Promise.all([preloadPlayer(state.anchor), preloadPlayer(state.challenger)]).then(() => {
       if (run !== state.run) return;              // quit while photos loaded
@@ -265,7 +288,7 @@
     if (!reduceMotion) panel.classList.add("shake");
     sfx("timeout");
     const verdict = $("#verdict");
-    verdict.textContent = "⏱ Time's up!";
+    verdict.textContent = "Time's up!";
     verdict.className = "verdict bad show";
     later(gameOver, REVEAL_PAUSE + 200);
   }
@@ -291,7 +314,7 @@
     bg.style.backgroundImage = src ? `url("${src}")` : "";
 
     if (revealed) {
-      $(".stat-value", panel).textContent = fmt(statValue(p), dec);
+      setStat($(".stat-value", panel), fmt(statValue(p), dec));
       $(".stat-label", panel).textContent = state.category.label;
     }
   }
@@ -307,7 +330,7 @@
     $("#ask").classList.remove("hide");
     const reveal = $("#challenger-reveal");
     reveal.classList.remove("show");
-    $(".stat-value", reveal).textContent = "0";
+    setStat($(".stat-value", reveal), "0");
     $(".stat-label", reveal).textContent = state.category.label;
 
     $("#verdict").className = "verdict";
@@ -373,12 +396,12 @@
 
   function bumpStreak() {
     const el = $("#streak");
-    el.textContent = state.streak;
+    led(el, state.streak);
     el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop");
     if (state.streak > state.best) {
       state.best = state.streak;
       setBest(state.category.key, state.best);
-      $("#best").textContent = state.best;
+      led($("#best"), state.best);
     }
   }
 
@@ -419,21 +442,25 @@
     ebkRecord(state.streak);
     const cat = state.category;
     const a = state.anchor, c = state.challenger;
-    $("#final-streak").textContent = state.streak;
+    led($("#final-streak"), state.streak);
+    led($("#over-best"), Math.max(state.best, getBest(cat.key)));
+    $("#over-cat").innerHTML = `${LEAGUE_NAME} <i>${esc(cat.label)}</i>`;
     const isNewBest = state.streak > 0 && state.streak === state.best &&
                       state.streak === getBest(cat.key);
     sfx(isNewBest ? "best" : "over");
     $("#new-best").hidden = !isNewBest;
+    const odRow = (p, cls) =>
+      `<div class="od-row ${cls}"><img src="${photo(p.headshot) || "/img/avatar.svg"}" alt="" onerror="this.onerror=null;this.src='/img/avatar.svg'" />` +
+      `<span class="od-n"><b>${esc(p.name)}</b><span>${p.seasonLabel || p.season}</span></span>` +
+      `<span class="od-v">${fmt(statValue(p), cat.decimals)}</span></div>`;
     $("#over-detail").innerHTML =
-      `<strong>${c.name}</strong> (${c.seasonLabel || c.season}) had ` +
-      `<strong>${fmt(statValue(c), cat.decimals)}</strong> ${cat.label.toLowerCase()} — ` +
-      `vs <strong>${a.name}</strong> (${a.seasonLabel || a.season}) with ` +
-      `<strong>${fmt(statValue(a), cat.decimals)}</strong>.`;
+      `<span class="od-k">The call that ended it <i>${esc(cat.label)}</i></span>` +
+      odRow(a, "a") + odRow(c, "c");
     showScreen("screen-over");
     const anime = A();
     if (anime && !document.hidden) {
       entrance({
-        targets: "#screen-over .over-inner > *",
+        targets: "#screen-over .over-card > *",
         opacity: [0, 1],
         translateY: [16, 0],
         delay: anime.stagger(60),
@@ -457,6 +484,9 @@
     if (e.key === "ArrowUp") { e.preventDefault(); guess("higher"); }
     if (e.key === "ArrowDown") { e.preventDefault(); guess("lower"); }
   });
+
+  // the hero ball bobs only while the start screen is on screen
+  try { window.EBKKit && EBKKit.calm(".hl-hero"); } catch (e) {}
 
   load();
 })();

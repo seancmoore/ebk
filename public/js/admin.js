@@ -12,13 +12,13 @@
     $("#reports").innerHTML = keys.map(function (k) {
       var g = groups[k];
       var reasons = g.reasons.filter(Boolean);
-      var rename = g.uid ? '<button class="hero-cta rename" data-uid="' + esc(g.uid) + '" data-name="' + esc(g.name || "") + '">Change name</button>' : "";
-      var wipe = g.uid ? '<button class="ebk-signin wipe" data-uid="' + esc(g.uid) + '" data-name="' + esc(g.name || "") + '">Wipe scores</button>' : "";
-      return '<div class="rep-card"><h3>' + esc(g.name || "(unknown)") +
-        ' <span class="cnt">' + g.count + " report" + (g.count > 1 ? "s" : "") + "</span></h3>" +
+      var rename = g.uid ? '<button class="k-btn pill rename" data-uid="' + esc(g.uid) + '" data-name="' + esc(g.name || "") + '">Change name</button>' : "";
+      var wipe = g.uid ? '<button class="k-btn ghost pill wipe" data-uid="' + esc(g.uid) + '" data-name="' + esc(g.name || "") + '">Wipe scores</button>' : "";
+      return '<div class="k-card rep-card"><h3>' + esc(g.name || "(unknown)") +
+        ' <span class="k-mled r cnt">' + g.count + " report" + (g.count > 1 ? "s" : "") + "</span></h3>" +
         (reasons.length ? '<div class="reasons">“' + reasons.map(esc).join("” · “") + "”</div>" : "") +
         '<div class="acts">' + rename + wipe +
-        '<button class="ebk-signin dismiss" data-uid="' + esc(g.uid) + '" data-name="' + esc(g.name || "") + '">Dismiss</button>' +
+        '<button class="k-btn ghost pill dismiss" data-uid="' + esc(g.uid) + '" data-name="' + esc(g.name || "") + '">Dismiss</button>' +
         "</div></div>";
     }).join("");
   }
@@ -96,12 +96,12 @@
       countHits([["s", "==", "ig"], ["e", "==", "start"], ["t", ">", week]]),
     ]).then(function (n) {
       el.innerHTML =
-        "<table style='border-collapse:collapse'>" +
-        "<tr><th style='text-align:left;padding:4px 14px 4px 0'></th><th style='text-align:right;padding:4px 14px'>Views</th><th style='text-align:right;padding:4px 14px'>Game starts</th></tr>" +
-        "<tr><td style='padding:4px 14px 4px 0'>Last 24h</td><td style='text-align:right;padding:4px 14px'>" + n[0] + "</td><td style='text-align:right;padding:4px 14px'>" + n[1] + "</td></tr>" +
-        "<tr><td style='padding:4px 14px 4px 0'>Last 7 days</td><td style='text-align:right;padding:4px 14px'>" + n[2] + "</td><td style='text-align:right;padding:4px 14px'>" + n[3] + "</td></tr>" +
-        "<tr><td style='padding:4px 14px 4px 0'>Instagram (7d)</td><td style='text-align:right;padding:4px 14px'>" + n[4] + "</td><td style='text-align:right;padding:4px 14px'>" + n[5] + "</td></tr>" +
-        "</table>";
+        "<div class='k-tbl-wrap'><table class='k-table'>" +
+        "<thead><tr><th>Window</th><th>Views</th><th>Game starts</th></tr></thead><tbody>" +
+        "<tr><td>Last 24h</td><td>" + n[0] + "</td><td>" + n[1] + "</td></tr>" +
+        "<tr><td>Last 7 days</td><td>" + n[2] + "</td><td>" + n[3] + "</td></tr>" +
+        "<tr><td>Instagram (7d)</td><td>" + n[4] + "</td><td>" + n[5] + "</td></tr>" +
+        "</tbody></table></div>";
     }).catch(function (e) {
       el.textContent = "Couldn't load traffic counts. " + (e && e.message || "") +
         " (If this mentions an index, deploy firestore.indexes.json and wait for it to build.)";

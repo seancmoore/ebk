@@ -66,6 +66,25 @@
   }
   const MODE_LABEL = { "higher-lower": "Higher / Lower", "career-path": "Career Path" };
 
+  // ---- presentation helpers (EBKKit LED digits, icons) ----
+  const ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const pad2 = (v) => (+v < 10 ? "0" : "") + v;
+  const seg = (s) => (window.EBKKit ? EBKKit.seg7(String(s)) : esc(String(s)));
+  // LED number with a screen-reader copy; commas stay plain glyphs
+  const ledNum = (str) => '<span class="k-seg" aria-hidden="true">' + String(str).split(",").map(seg).join('<i class="cm">,</i>') + '</span><span class="k-sr">' + esc(str) + "</span>";
+  const ico = (d) => '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + d + "</svg>";
+  const ICON = {
+    draft: ico('<path d="M4 7h16v3a2 2 0 0 0 0 4v3H4v-3a2 2 0 0 0 0-4z"/><path d="M14 8v2M14 14v2"/>'),
+    college: ico('<path d="M2 9.5 12 5l10 4.5L12 14z"/><path d="M6 11.5V16c3.5 2.2 8.5 2.2 12 0v-4.5"/>'),
+    career: ico('<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>'),
+    teampath: ico('<circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h6.5a3 3 0 0 0 0-6h-5a3 3 0 0 1 0-6H16"/>'),
+    lock: ico('<rect x="5" y="11" width="14" height="9" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'),
+  };
+  const BALL = { nfl: "football", cfb: "football", nba: "basketball", mlb: "baseball", nhl: "hockey", soccer: "soccer" };
+  const ballIcon = (sport) => '<span class="k-ball ' + (BALL[sport] || "football") + '" aria-hidden="true"></span>';
+  const UP = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5l7 9H5z" fill="currentColor"/></svg>';
+  const DOWN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19l7-9H5z" fill="currentColor"/></svg>';
+
   const M = {
     id: null, role: null, unsub: null, room: null,
     sport: null, mode: null, cat: null, league: null,
@@ -81,24 +100,35 @@
     const params = new URLSearchParams(location.search);
     const preSport = SPORTS.includes(params.get("sport")) ? params.get("sport") : "nfl";
     $("#lobby").innerHTML =
-      '<div class="h2h-intro"><h1>⚔️ Head-to-Head</h1>' +
-      '<p class="muted">Same questions for everyone. Highest streak wins. Jump into a ranked quick match, or make a private room and share the code with friends.</p></div>' +
-      '<div id="signgate" class="center" hidden><p class="muted">Sign in to play head-to-head.</p>' +
-      '<button class="gbtn primary" id="h2h-signin">Sign in</button></div>' +
+      '<header class="k-hero h2-hero"><div class="k-hero-t">' +
+      '<span class="k-kick">Head-to-Head <i>Ranked and private rooms</i></span>' +
+      '<h1>Same question. <em>Same clock.</em></h1>' +
+      '<p>Everyone gets the same questions and the highest streak wins. Jump into a ranked quick match, or make a private room and share the code with friends.</p></div></header>' +
+      '<div class="h2-mu" aria-hidden="true">' +
+      '<div class="h2-side"><span class="h2-medal"><span class="h2-mw">E<span>B</span>K</span></span><b>You</b><span class="k-mled" id="mu-elo">Unranked</span></div>' +
+      '<div class="h2-vs"><span class="h2-sw"></span><span class="h2-vsx">VS</span><span class="h2-sc k-seg">' + seg("0:0") + "</span></div>" +
+      '<div class="h2-side"><span class="h2-medal q"><svg class="h2-ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46"/></svg><span class="h2-qm">?</span></span><b>Next opponent</b><span class="k-mled dim">Live</span></div>' +
+      "</div>" +
+      '<div id="signgate" class="k-empty h2-gate" hidden><b>Sign in to play head-to-head</b>' +
+      "<p>Ranked matches track your Elo in every sport, and private rooms need a name on the board.</p>" +
+      '<button class="k-btn lg" id="h2h-signin">Sign in ' + ARROW + "</button></div>" +
       '<div id="setup" hidden>' +
-      '  <div class="h2h-panel ranked"><h2>⚡ Ranked Quick Match</h2>' +
-      '    <p class="muted h2h-note">Random mode &amp; category. Win to climb your per-sport Elo.</p>' +
-      '    <div class="h2h-field"><label>Sport</label><select id="rk-sport" class="search">' +
+      '  <div class="h2-grid">' +
+      '  <div class="h2h-panel ranked"><span class="k-kick">Ranked <i>Quick match</i></span><h2>Find a match</h2>' +
+      '    <p class="muted h2h-note">Random mode and category. Win to climb your per-sport Elo.</p>' +
+      '    <div class="h2h-field"><label for="rk-sport">Sport</label><select id="rk-sport" class="search">' +
       SPORTS.map((s) => `<option value="${s}"${s === preSport ? " selected" : ""}>${s.toUpperCase()}</option>`).join("") + "</select></div>" +
       '    <p class="h2h-elo" id="rk-elo"></p>' +
-      '    <button class="gbtn primary" id="btn-ranked">Find ranked match</button></div>' +
-      '  <div class="h2h-panel private"><h2>🔒 Private Room</h2>' +
-      '    <p class="muted h2h-note">Create a room, share the code, and the host picks the mode. Multiple players welcome.</p>' +
-      '    <button class="gbtn" id="btn-create">Create a room</button>' +
-      '    <div class="h2h-join"><input id="join-code" class="search" placeholder="Enter code" maxlength="6" autocapitalize="characters" />' +
-      '      <button class="gbtn" id="btn-join">Join</button></div></div>' +
+      '    <button class="k-btn lg block" id="btn-ranked">Find ranked match ' + ARROW + "</button></div>" +
+      '  <div class="h2h-panel private"><span class="k-kick">Private room <i>Unrated</i></span><h2>Play your friends</h2>' +
+      '    <p class="muted h2h-note">Create a room, share the code, and the host picks the mode. Up to eight players.</p>' +
+      '    <button class="k-btn ghost lg block" id="btn-create">Create a room</button>' +
+      '    <div class="h2h-join"><input id="join-code" class="search" placeholder="Code" aria-label="Room code" maxlength="6" autocapitalize="characters" />' +
+      '      <button class="k-btn ghost lg" id="btn-join">Join</button></div></div>' +
+      "  </div>" +
       '  <p class="h2h-msg" id="lobby-msg"></p>' +
       "</div>";
+    try { window.EBKKit && EBKKit.calm(".h2-mu"); } catch (e) {}
     $("#h2h-signin") && $("#h2h-signin").addEventListener("click", () => window.EBKopenAuth && EBKopenAuth());
     $("#btn-ranked").addEventListener("click", () => act("ranked"));
     $("#btn-create").addEventListener("click", () => act("create"));
@@ -108,7 +138,11 @@
   }
   async function showElo() {
     const el = $("#rk-elo"); if (!el || !window.EBKH) return;
-    try { const e = await EBKH.myEloFor($("#rk-sport").value); el.textContent = "Your " + $("#rk-sport").value.toUpperCase() + " Elo: " + e; }
+    try {
+      const e = await EBKH.myEloFor($("#rk-sport").value);
+      el.innerHTML = "Your " + $("#rk-sport").value.toUpperCase() + ' Elo <span class="k-mled">' + esc(e) + "</span>";
+      const mu = $("#mu-elo"); if (mu && uid()) mu.textContent = e;
+    }
     catch (e) { el.textContent = ""; }
   }
   function lobbyMsg(t, bad) { const el = $("#lobby-msg"); if (el) { el.textContent = t || ""; el.className = "h2h-msg" + (bad ? " bad" : ""); } }
@@ -147,9 +181,9 @@
   function enterRoom(id, role) { M.id = id; M.role = role; if (M.unsub) M.unsub(); M.unsub = EBKH.listen(id, onRoom, connLost); }
 
   function connLost() {
-    if (!$("#lobby").hidden) { lobbyMsg("Connection lost — check your internet and refresh.", true); return; }
+    if (!$("#lobby").hidden) { lobbyMsg("Connection lost. Check your internet and refresh.", true); return; }
     const sub = $("#h2h-sub");
-    if (sub) sub.textContent = "⚠ Connection lost — progress may not sync. Check your internet.";
+    if (sub) sub.textContent = "Connection lost. Progress may not sync, check your internet.";
   }
 
   function onRoom(room) {
@@ -171,10 +205,13 @@
   function renderRoomLobby(room) {
     const isHost = M.role === "host";
     const players = playerList(room);
-    let html = '<div class="h2h-intro"><h1>' + (room.rated ? "⚡ Ranked Match" : "🔒 Private Room") + "</h1></div>" +
-      '<div class="center"><p class="muted">Room code</p><div class="h2h-code">' + esc(room.code) + "</div></div>" +
-      '<div class="h2h-players"><h3>Players (' + players.length + ")</h3>" +
-      players.map((p) => `<div class="stand${p.uid === uid() ? " me" : ""}"><span class="st-name">${esc(p.name)}${p.uid === room.hostUid ? " 👑" : ""}</span></div>`).join("") + "</div>";
+    let html = '<header class="k-hero center h2-room"><div class="k-hero-t"><span class="k-kick">' +
+      (room.rated ? "Ranked <i>Quick match</i>" : "Private room <i>Unrated</i>") + "</span><h1>" +
+      (room.rated ? "Ranked <em>match</em>" : "Private <em>room</em>") + "</h1></div></header>" +
+      '<div class="h2-codecard"><span class="k-lbl">Room code</span><div class="h2h-code">' + esc(room.code) + "</div>" +
+      '<p class="muted">Friends join with this code from the Head-to-Head page.</p></div>' +
+      '<div class="h2h-players"><h3>Players <span class="k-mled">' + players.length + "</span></h3>" +
+      players.map((p) => `<div class="stand${p.uid === uid() ? " me" : ""}"><span class="st-name">${esc(p.name)}</span>${p.uid === room.hostUid ? '<span class="k-tag soft">Host</span>' : ""}</div>`).join("") + "</div>";
 
     if (room.rated) {
       html += '<p class="center muted">' + (players.length < 2 ? "Waiting for an opponent…" : "Starting…") + "</p>";
@@ -185,12 +222,12 @@
         '<div class="h2h-field"><label>Sport</label><select id="cfg-sport" class="search">' +
         SPORTS.map((s) => `<option value="${s}"${room.sport === s ? " selected" : ""}>${s.toUpperCase()}</option>`).join("") + "</select></div>" +
         '<div class="h2h-field" id="cfg-cat-field"' + (room.mode === "higher-lower" ? "" : ' style="display:none"') + '><label>Category</label><select id="cfg-cat" class="search"></select></div>' +
-        '<button class="gbtn primary" id="btn-start"' + (players.length < 2 ? " disabled" : "") + ">Start match</button>" +
+        '<button class="k-btn lg block" id="btn-start"' + (players.length < 2 ? " disabled" : "") + ">Start match " + ARROW + "</button>" +
         (players.length < 2 ? '<p class="muted center" style="margin-top:8px">Need at least one more player.</p>' : "") + "</div>";
     } else {
       html += '<p class="center muted">Mode: <b>' + MODE_LABEL[room.mode] + "</b>" + (room.catLabel ? " · " + esc(room.catLabel) : "") + " · " + room.sport.toUpperCase() + "<br>Waiting for the host to start…</p>";
     }
-    html += '<div class="center" style="margin-top:var(--sp-md)"><button class="gbtn ghost" id="btn-leave">Leave</button></div>';
+    html += '<div class="center" style="margin-top:var(--sp-md)"><button class="k-btn ghost" id="btn-leave">Leave room</button></div>';
     $("#lobby").innerHTML = html;
 
     $("#btn-leave").addEventListener("click", () => { if (M.unsub) M.unsub(); if (isHost) EBKH.cancel(M.id); location.href = "/h2h"; });
@@ -216,7 +253,7 @@
     try { window.EBKA && EBKA.send("start"); } catch (e) {}
     M.sport = room.sport; M.mode = room.mode; M.cat = room.cat;
     M.league = window[room.sport.toUpperCase()];
-    if (!M.league) throw new Error("Unknown sport \"" + room.sport + "\" — try refreshing.");
+    if (!M.league) throw new Error("Unknown sport \"" + room.sport + "\". Try refreshing.");
     M.data = await loadData(room.sport);
     if (room.mode === "career-path" && CP[room.sport].facts.includes("college")) await loadColleges();
     M.seq = room.mode === "higher-lower" ? genHL(room) : genCP(room);
@@ -237,7 +274,7 @@
     const arr = playerList(M.room).sort((a, b) => (b.streak || 0) - (a.streak || 0));
     el.innerHTML = arr.map((p) =>
       `<div class="stand${p.uid === uid() ? " me" : ""}${p.done ? " done" : ""}"><span class="st-name">${esc(p.name)}</span>` +
-      `<span class="st-streak">${p.streak || 0}</span>${p.done ? '<span class="st-flag">done</span>' : ""}</div>`).join("");
+      `<span class="st-streak">${ledNum(pad2(p.streak || 0))}</span>${p.done ? '<span class="st-flag">done</span>' : ""}</div>`).join("");
   }
 
   // ---- hardened timer (deadline-based: tabbing out can't pause it) ----
@@ -287,7 +324,7 @@
     sfx(completed ? "best" : "over");
     EBKH.progress(M.id, { streak: M.streak, done: true });
     const stage = $("#stage");
-    if (stage) stage.innerHTML = `<div class="h2h-bust">${completed ? "Cleared the board!" : "Streak ended"} — you reached <b>${M.streak}</b>.</div>`;
+    if (stage) stage.innerHTML = `<div class="h2h-bust"><span class="k-kick">${completed ? "Cleared the board" : "Streak ended"}</span><b>You reached</b><span class="h2-big">${ledNum(pad2(M.streak))}</span></div>`;
     maybeResult();
   }
 
@@ -302,7 +339,7 @@
     const allDone = arr.length >= 2 && arr.every((p) => p.done);
     if (!allDone) {
       r.hidden = false;
-      r.innerHTML = `<div class="h2h-wait">You scored <b>${M.streak}</b>. Waiting for the others to finish…</div>`;
+      r.innerHTML = `<div class="h2h-wait">You scored <span class="k-mled y">${M.streak}</span> Waiting for the others to finish…</div>`;
       return;
     }
     if (M.ended) return; M.ended = true;
@@ -311,7 +348,7 @@
     const mine = meEntry ? (meEntry.streak || 0) : M.streak;
     const winners = arr.filter((p) => (p.streak || 0) === top);
     let verdict, cls;
-    if (mine === top && winners.length === 1) { verdict = "You win! 🏆"; cls = "win"; sfx("best"); }
+    if (mine === top && winners.length === 1) { verdict = "You win!"; cls = "win"; sfx("best"); }
     else if (mine === top) { verdict = "Tie at the top."; cls = "tie"; }
     else { verdict = "You lost."; cls = "lose"; sfx("over"); }
 
@@ -322,7 +359,7 @@
       const myPre = (meEntry && meEntry.elo) || 1000, oppPre = (opp && opp.elo) || 1000;
       const result = mine > (opp ? opp.streak : 0) ? 1 : mine < (opp ? opp.streak : 0) ? 0 : 0.5;
       EBKH.applyElo(M.sport, myPre, oppPre, result).then((nw) => {
-        if (nw != null) { const d = nw - myPre; const e = $("#elo-line"); if (e) e.textContent = `${M.sport.toUpperCase()} Elo: ${nw} (${d >= 0 ? "+" : ""}${d})`; }
+        if (nw != null) { const d = nw - myPre; const e = $("#elo-line"); if (e) e.innerHTML = `${M.sport.toUpperCase()} Elo <span class="k-mled">${nw}</span> <span class="k-mled ${d >= 0 ? "" : "r"}">${d >= 0 ? "+" : ""}${d}</span>`; }
       }).catch(() => { const e = $("#elo-line"); if (e) e.textContent = "Elo update didn't sync."; });
       eloHtml = '<div class="h2h-elo" id="elo-line">Updating Elo…</div>';
     }
@@ -330,13 +367,15 @@
 
     r.hidden = false;
     r.innerHTML =
+      '<div class="h2-final">' +
+      `<span class="k-kick">Final <i>${M.sport.toUpperCase()} · ${MODE_LABEL[M.mode] || ""}</i></span>` +
       `<div class="h2h-verdict ${cls}">${verdict}</div>` +
       '<div class="h2h-board">' + arr.map((p, i) =>
-        `<div class="stand${p.uid === uid() ? " me" : ""}"><span class="st-rank">${["🥇", "🥈", "🥉"][i] || (i + 1)}</span><span class="st-name">${esc(p.name)}</span><span class="st-streak">${p.streak || 0}</span></div>`).join("") + "</div>" +
+        `<div class="stand${p.uid === uid() ? " me" : ""}"><span class="st-rank k-mled${i === 0 ? " y" : " dim"}">${i + 1}</span><span class="st-name">${esc(p.name)}</span><span class="st-streak">${ledNum(pad2(p.streak || 0))}</span></div>`).join("") + "</div>" +
       eloHtml +
       '<div class="row-btns" style="justify-content:center;margin-top:var(--sp-md)">' +
-      '<button class="gbtn primary" onclick="location.href=\'/h2h\'">Play again</button>' +
-      `<button class="gbtn ghost" onclick="location.href='/${M.sport}'">Back to ${M.sport.toUpperCase()}</button></div>`;
+      '<button class="k-btn lg" onclick="location.href=\'/h2h\'">Play again ' + ARROW + "</button>" +
+      `<button class="k-btn ghost lg" onclick="location.href='/${M.sport}'">Back to ${M.sport.toUpperCase()}</button></div></div>`;
   }
 
   // ===================== HIGHER / LOWER =====================
@@ -370,7 +409,7 @@
   function hlCard(p, revealedVal) {
     const L = M.league, cat = M._cat;
     const team = L ? `<img class="tlogo" src="${L.logo(p.team)}" alt="" onerror="this.remove()"> ${esc(L.name(p.team))}` : esc(p.team || "");
-    const val = revealedVal != null ? `<div class="hl2-stat">${fmtN(revealedVal, cat.decimals)} <span>${esc(cat.label)}</span></div>` : "";
+    const val = revealedVal != null ? `<div class="hl2-stat"><span class="hl2-num">${ledNum(fmtN(revealedVal, cat.decimals))}</span><span>${esc(cat.label)}</span></div>` : "";
     return `<img class="hl2-ph" src="${photo(p.headshot) || "/img/avatar.svg"}" alt="" onerror="this.src='/img/avatar.svg'">` +
       `<div class="hl2-name">${esc(p.name)}</div><div class="hl2-meta">${team}</div>${val}`;
   }
@@ -381,8 +420,8 @@
       '<div class="hl2-vs"><span>VS</span></div>' +
       `<div class="hl2-q">Did <b>${esc(c.name)}</b> have <b>higher</b> or <b>lower</b> ${esc(cat.label)}?</div>` +
       `<div class="hl2-card challenger" id="hl-ch">${hlCard(c, null)}` +
-      '<div class="hl2-btns"><button class="gbtn hl-up" data-dir="higher">▲ Higher</button>' +
-      '<button class="gbtn hl-down" data-dir="lower">▼ Lower</button></div></div></div>';
+      '<div class="hl2-btns"><button class="gbtn hl-up" data-dir="higher">' + UP + 'Higher</button>' +
+      '<button class="gbtn hl-down" data-dir="lower">' + DOWN + "Lower</button></div></div></div>";
     $$("#hl-ch .hl2-btns button").forEach((b) => b.addEventListener("click", () => onAnswer(b.dataset.dir)));
   }
   function checkHL(choice) {
@@ -393,7 +432,7 @@
   function revealAndAdvance() {
     if (M.mode === "higher-lower") {
       const c = M.seq[M.idx + 1], ch = $("#hl-ch");
-      if (ch) { const b = ch.querySelector(".hl2-btns"); if (b) b.remove(); ch.insertAdjacentHTML("beforeend", `<div class="hl2-stat reveal">${fmtN(c.stats[M._cat.key], M._cat.decimals)} <span>${esc(M._cat.label)}</span></div>`); }
+      if (ch) { const b = ch.querySelector(".hl2-btns"); if (b) b.remove(); ch.insertAdjacentHTML("beforeend", `<div class="hl2-stat reveal"><span class="hl2-num">${ledNum(fmtN(c.stats[M._cat.key], M._cat.decimals))}</span><span>${esc(M._cat.label)}</span></div>`); ch.classList.add("good"); }
     } else markCP(true);
     M.idx++;
     setTimeout(() => { if (!M.done) nextRound(); }, 900);
@@ -401,7 +440,7 @@
   function revealWrong() {
     if (M.mode === "higher-lower") {
       const c = M.seq[M.idx + 1], ch = $("#hl-ch");
-      if (ch) { const b = ch.querySelector(".hl2-btns"); if (b) b.remove(); ch.insertAdjacentHTML("beforeend", `<div class="hl2-stat reveal bad">${fmtN(c.stats[M._cat.key], M._cat.decimals)} <span>${esc(M._cat.label)}</span></div>`); }
+      if (ch) { const b = ch.querySelector(".hl2-btns"); if (b) b.remove(); ch.insertAdjacentHTML("beforeend", `<div class="hl2-stat reveal bad"><span class="hl2-num">${ledNum(fmtN(c.stats[M._cat.key], M._cat.decimals))}</span><span>${esc(M._cat.label)}</span></div>`); ch.classList.add("bad"); }
     } else markCP(false);
   }
 
@@ -464,17 +503,17 @@
     const cfg = CP[M.sport];
     const draft = c.dy ? `${c.dy} · Round ${c.dr || "?"} · Pick ${c.dp || "?"}${c.dt ? " · " + teamTag(c.dt) : ""}` : "Undrafted";
     const all = {
-      position: { icon: cfg.icon, k: "Position", v: cfg.posNames[c.pos] || c.pos },
-      draft: { icon: "🎟️", k: "Draft", v: draft },
-      college: { icon: "🎓", k: "College", v: collegeTag(c.college) },
-      career: { icon: "📅", k: "Career", v: `${cfg.fmt(c.min)}–${cfg.fmt(c.max)} · ${c.count} season${c.count > 1 ? "s" : ""}` },
-      teampath: { icon: "🧭", k: "Team path", v: c.path.map(teamTag).join("  →  ") },
+      position: { icon: ballIcon(M.sport), k: "Position", v: cfg.posNames[c.pos] || c.pos },
+      draft: { icon: ICON.draft, k: "Draft", v: draft },
+      college: { icon: ICON.college, k: "College", v: collegeTag(c.college) },
+      career: { icon: ICON.career, k: "Career", v: `${cfg.fmt(c.min)}–${cfg.fmt(c.max)} · ${c.count} season${c.count > 1 ? "s" : ""}` },
+      teampath: { icon: ICON.teampath, k: "Team path", v: c.path.map(teamTag).join('<span class="arr" aria-label="then">&rarr;</span>') },
     };
     return cfg.facts.map((key) => all[key]);
   }
   function renderCP() {
     const q = M.seq[M.idx], fs = cpFacts(q.m);
-    const clues = fs.map((f, i) => { const hid = i === q.hiddenIdx; return `<div class="clue${hid ? " locked" : ""}"><span class="c-icon">${hid ? "🔒" : f.icon}</span><div><div class="c-k">${f.k}</div><div class="c-v">${hid ? "hidden" : f.v}</div></div></div>`; }).join("");
+    const clues = fs.map((f, i) => { const hid = i === q.hiddenIdx; return `<div class="clue${hid ? " locked" : ""}"><span class="c-icon">${hid ? ICON.lock : f.icon}</span><div><div class="c-k">${f.k}</div><div class="c-v">${hid ? "hidden" : f.v}</div></div></div>`; }).join("");
     const opts = q.opts.map((o) => `<button class="opt" data-id="${o.id}">${esc(o.name)}</button>`).join("");
     $("#stage").innerHTML = `<div class="cp2"><div class="clues">${clues}</div><div class="opt-list">${opts}</div></div>`;
     $$("#stage .opt").forEach((b) => b.addEventListener("click", () => onAnswer(b.dataset.id)));

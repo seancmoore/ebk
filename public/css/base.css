@@ -187,64 +187,84 @@ body[data-sport="soccer"] .wordmark span {
    page and the player-grid end screen (both load base.css).
    ============================================================ */
 .daily-card {
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: linear-gradient(180deg, var(--glass-strong), var(--glass));
-  box-shadow: var(--elev-1);
-  padding: var(--sp-md);
+  --c: var(--accent);
+  position: relative;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-xl);
+  background:
+    radial-gradient(70% 90% at 0% 0%, color-mix(in srgb, var(--c) 12%, transparent), transparent 65%),
+    var(--panel-bg);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.025), 0 18px 40px rgba(0, 0, 0, 0.45);
+  padding: clamp(18px, 2.4vw, 24px);
   display: grid;
-  gap: var(--sp-sm);
+  gap: 16px;
 }
-.dc-head { display: flex; align-items: center; gap: var(--sp-sm); flex-wrap: wrap; }
-.dc-flame { font-size: 1.5rem; line-height: 1; }
+.dc-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+/* the emoji marker is replaced by the LED readout / a quiet LED dot */
+.dc-flame { display: none; }
+/* no streak yet: an unlit "00" readout, like the Rack before the first grid */
+.dc-head::before {
+  content: "00"; flex: none;
+  font-family: var(--mono); font-size: clamp(1.8rem, 1.4rem + 1.6vw, 2.4rem); font-weight: 800; line-height: 1;
+  color: #3a4366; background: var(--led-bg); border: 2px solid var(--led-edge); border-radius: 12px;
+  box-shadow: 0 0 0 3px var(--led-ring); padding: 8px 12px;
+}
+.daily-card:has(.dc-num) .dc-head::before { display: none; }
 .dc-num {
-  font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
-  font-weight: 900; line-height: 0.9; color: var(--accent);
-  font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
+  font-family: var(--mono);
+  font-size: clamp(1.8rem, 1.4rem + 1.6vw, 2.4rem);
+  font-weight: 800; line-height: 1; color: var(--pts);
+  font-variant-numeric: tabular-nums; letter-spacing: 0;
+  background: var(--led-bg); border: 2px solid var(--led-edge); border-radius: 12px;
+  box-shadow: 0 0 0 3px var(--led-ring);
+  padding: 8px 12px;
+  text-shadow: 0 0 0.3em color-mix(in srgb, var(--pts) 55%, transparent);
 }
-.dc-lab { display: grid; gap: 2px; min-width: 0; }
+.dc-lab { display: grid; gap: 4px; min-width: 0; flex: 1 1 220px; }
 .dc-lab-k {
-  font-size: var(--fs-xs); font-weight: 800; letter-spacing: 0.10em;
-  text-transform: uppercase; color: var(--text);
+  font-size: 0.7rem; font-weight: 900; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--c);
 }
-.dc-lab-v { font-size: var(--fs-xs); color: var(--muted); }
+.dc-lab-v { font-size: var(--fs-sm); color: var(--muted); line-height: 1.5; }
 .dc-risk {
   margin-left: auto; align-self: center;
   font-size: var(--fs-xs); font-weight: 800; letter-spacing: 0.08em;
-  color: var(--gold); border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
-  background: color-mix(in srgb, var(--gold) 12%, transparent);
-  border-radius: 999px; padding: 3px 9px; white-space: nowrap;
+  color: var(--pts); border: 1px solid color-mix(in srgb, var(--pts) 45%, transparent);
+  background: color-mix(in srgb, var(--pts) 12%, transparent);
+  border-radius: 999px; padding: 4px 10px; white-space: nowrap;
 }
-.dc-row { display: grid; gap: 6px; }
+.dc-row { display: grid; gap: 8px; }
 .dc-row-k {
-  font-size: var(--fs-xs); font-weight: 800; letter-spacing: 0.10em;
+  font-size: 0.62rem; font-weight: 900; letter-spacing: 0.22em;
   text-transform: uppercase; color: var(--muted);
 }
 .dc-chips {
-  display: grid; gap: 6px;
-  grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
+  display: grid; gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
 .dc-chip {
-  min-height: 46px;
-  display: grid; place-content: center; gap: 2px; text-align: center;
-  padding: 6px 10px; border-radius: 12px; text-decoration: none;
-  border: 1px solid var(--line); background: var(--glass);
-  color: var(--text); transition: border-color .15s ease, transform .15s ease;
+  min-height: 56px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 8px 16px; border-radius: var(--r-md); text-decoration: none;
+  border: 2px solid var(--led-edge); background: var(--led-bg);
+  box-shadow: 0 0 0 3px var(--led-ring);
+  color: var(--text); transition: border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
 }
 .dc-chip:hover, .dc-chip:focus-visible { border-color: var(--accent); transform: translateY(-1px); }
 .dc-chip-s {
-  font-size: var(--fs-xs); font-weight: 800; letter-spacing: 0.06em; color: var(--muted);
+  font-size: 0.7rem; font-weight: 900; letter-spacing: 0.16em; color: var(--accent);
 }
-.dc-chip-v { font-size: var(--fs-sm); font-weight: 900; font-variant-numeric: tabular-nums; }
-.dc-chip.is-done { border-color: color-mix(in srgb, var(--accent) 55%, transparent); }
-.dc-chip.is-done .dc-chip-s { color: var(--accent); }
-.dc-chip.is-partial { border-color: color-mix(in srgb, var(--gold) 55%, transparent); }
-.dc-chip.is-partial .dc-chip-v { color: var(--gold); }
-.dc-chip.is-none .dc-chip-v { color: var(--muted); }
+.dc-chip-v {
+  font-family: var(--mono); font-size: 1.4rem; font-weight: 800; font-variant-numeric: tabular-nums;
+  color: var(--pts); text-shadow: 0 0 0.3em color-mix(in srgb, var(--pts) 50%, transparent);
+}
+.dc-chip.is-done { border-color: color-mix(in srgb, var(--accent) 55%, var(--led-edge)); }
+.dc-chip.is-partial { border-color: color-mix(in srgb, var(--pts) 55%, var(--led-edge)); }
+.dc-chip.is-none .dc-chip-v { color: #5d6890; text-shadow: none; font-size: 0; }
+.dc-chip.is-none .dc-chip-v::after { content: "--/9"; font-size: 1.4rem; }
 .dc-foot {
-  margin: 0; font-size: var(--fs-xs); color: var(--muted);
-  display: flex; gap: 6px; flex-wrap: wrap;
+  margin: 0; font-size: var(--fs-xs); color: var(--muted); font-weight: 700;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
 }
 .dc-dot { opacity: 0.6; }
-/* end-screen variant sits inside the game shell */
 .grid-shell .daily-card { margin-top: var(--sp-md); text-align: left; }
