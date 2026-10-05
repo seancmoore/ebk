@@ -33,7 +33,8 @@
       var p = location.pathname.replace(/\/+$/, "") || "/";
       var valid =
         /^\/(nfl|nba|mlb|nhl|cfb|soccer)(\/(higher-lower|stat-line|career-path|player-grid|team|teams))?$/.test(p) ||
-        /^\/(h2h|leaderboard|dashboard|privacy|terms|admin)$/.test(p) || p === "/";
+        /^\/(h2h|leaderboard|dashboard|privacy|terms|admin|deep-cut)$/.test(p) ||
+        /^\/deep-bag(\/[a-z0-9-]+(\/report)?)?$/.test(p) || p === "/";
       if (!valid) return;
       var key = "ebk_404_retry:" + p;
       try {

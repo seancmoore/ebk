@@ -1,0 +1,1348 @@
+<title>The Cliff</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+:root{--bg:#0f1213;--surface:#161b1c;--line:#2a3335;--line-strong:#4a5658;--text:#ecefe9;--text-dim:#c3cac4;--muted:#939d98;--accent:#3fc39a;--accent-soft:#1f4a40;--warm:#e07a5f;
+--font-display:'Fraunces',Georgia,serif;--font-body:'Source Serif 4',Georgia,serif;--font-ui:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;color-scheme:dark}
+*{box-sizing:border-box}html{background:var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);margin:0;padding:0 20px 120px}
+::selection{background:var(--accent-soft);color:var(--text)}
+.wrap{max-width:680px;margin:0 auto}
+header.masthead{padding:64px 0 40px;text-align:center;border-bottom:1px solid var(--line)}
+.kicker{font-family:var(--font-ui);font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:22px}
+h1{font-family:var(--font-display);font-weight:900;font-size:clamp(52px,11vw,88px);line-height:.95;letter-spacing:-.02em;margin:0 0 22px}
+.dek{font-style:italic;font-size:20px;line-height:1.6;color:var(--text-dim);max-width:48ch;margin:0 auto;text-wrap:balance}
+.byline{font-family:var(--font-ui);font-size:12px;letter-spacing:.06em;color:var(--muted);margin-top:28px;text-transform:uppercase;line-height:1.7}
+section{padding:46px 0}section+section{border-top:1px solid var(--line)}
+h2{font-family:var(--font-display);font-weight:800;font-size:30px;letter-spacing:-.01em;margin:0 0 22px;text-wrap:balance;line-height:1.15}
+h2 .num{color:var(--accent);margin-right:6px}
+p{font-size:19px;line-height:1.75;margin:0 0 24px}p:last-child{margin-bottom:0}
+strong{font-weight:600}em{font-style:italic}
+section.opening p:first-of-type::first-letter{font-family:var(--font-display);font-weight:800;font-size:76px;line-height:.75;float:left;padding:8px 10px 0 0;color:var(--accent)}
+blockquote.pull{font-family:var(--font-display);font-weight:600;font-style:italic;font-size:28px;line-height:1.35;color:var(--accent);margin:40px -8px;padding:0 0 0 22px;border-left:3px solid var(--accent-soft);text-wrap:balance}
+p.rule{font-family:var(--font-ui);font-size:17px;line-height:1.6;background:var(--accent-soft);border-radius:10px;padding:16px 18px;color:var(--text)}
+p.rule b{color:#fff}
+figure.chart{margin:30px 0 26px;padding:18px 14px 12px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+figure.chart svg{width:100%;height:auto;display:block}
+.v-phone{display:none}
+figcaption{font-family:var(--font-ui);font-size:13px;line-height:1.55;color:var(--muted);margin-top:10px}
+.ledger{font-family:var(--font-ui);font-size:14px;background:var(--surface);border:1px solid var(--line);border-radius:10px 10px 0 0;padding:6px 0;margin:8px 0 0;overflow-x:auto}
+.ledger table{border-collapse:collapse;width:100%}
+.ledger th{font-weight:600;color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;text-align:right;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:bottom}
+.ledger th.span{text-align:center;border-bottom:1px solid var(--line-strong);padding-bottom:4px}
+.ledger th:first-child,.ledger td:first-child{text-align:left}
+.ledger td{white-space:nowrap;padding:9px 10px;text-align:right;color:var(--text-dim);border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.ledger tr:last-child td{border-bottom:none}.ledger td b{color:var(--text)}
+.ledger-cap{font-family:var(--font-ui);font-size:13px;line-height:1.55;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:10px 14px 12px;margin:0 0 26px}
+.clock{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--warm);border-radius:10px;padding:18px 18px 12px;margin:10px 0 28px;font-family:var(--font-ui)}
+.clock h4{font-family:var(--font-display);font-size:22px;margin:0 0 4px}
+.clock .sub{font-size:13px;color:var(--muted);margin:0 0 6px;line-height:1.5}
+.clock .grp{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin:18px 0 2px;font-weight:600}
+.clock .row{display:grid;grid-template-columns:1fr 44px 70px 66px;gap:8px;padding:7px 0;border-top:1px solid var(--line);font-size:14.5px;align-items:start}
+.clock .row.hdr{border-top:none;padding:0 0 3px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;align-items:end}
+.clock .nm{color:var(--text);font-weight:600}.clock .tm{color:var(--muted);font-weight:400;font-size:12.5px;margin-top:1px}
+.clock .num{font-variant-numeric:tabular-nums;color:var(--text-dim);text-align:right;white-space:nowrap}
+.clock .foot{font-size:12.5px;color:var(--muted);margin:12px 0 0;line-height:1.5}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:1px 7px;border-radius:99px;margin-left:4px;white-space:nowrap;vertical-align:1px}
+.tag.sell{background:#17385a;color:#a9d0f7}.tag.near{background:#3d3010;color:#f0c870}.tag.in{background:#4a2616;color:#f5b28e}
+.tag.past{background:#44191a;color:#f3a3a3}.tag.beyond{background:#2c3235;color:#c3cac4}
+.def{border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0 0 24px;font-family:var(--font-ui);font-size:15px;line-height:1.6;color:var(--text-dim);background:var(--surface)}
+.def b{color:var(--text)}
+footer.colophon{margin-top:20px;padding-top:36px;border-top:1px solid var(--line);font-family:var(--font-ui);font-size:12.5px;line-height:1.8;color:var(--muted)}
+@media (max-width:560px){body{padding:0 16px 90px}.v-desk{display:none}.v-phone{display:block}figure.chart{padding:12px 7px 10px;margin:24px 0 22px}
+p{font-size:17.5px}blockquote.pull{font-size:23px;margin:32px 0}.ledger{font-size:13px}.ledger th,.ledger td{padding:7px 5px}.ledger th{font-size:10.5px}
+h2{font-size:26px}.clock{padding:14px 12px 10px}.clock .row{grid-template-columns:1fr 30px 50px 44px;gap:6px;font-size:14px}.clock .row.hdr{font-size:10px}
+p.rule{font-size:16px}}
+</style>
+<div class="wrap">
+<header class="masthead">
+<div class="kicker">EBK Deep Bag</div>
+<h1>The Cliff</h1>
+<p class="dek">Running backs go over it at 29. Receivers and NBA players get a year or two more, hockey
+skaters three to five. We rebuilt the aging curves for 14 position groups in four leagues, correcting for every player
+who quietly washed out of the data.</p>
+<p class="byline">A Deep Bag investigation &middot; 78,055 player-seasons &middot; NFL, NBA, MLB, NHL<br>September 2026</p>
+</header>
+<article>
+<section class="opening">
+<p>In 2018, Todd Gurley was 24 years old and scoring 26.6 PPR fantasy points per game
+(fpts from here on), the kind of season that gets a running back paid. Two seasons later he was at 10.9. The
+season after that, at 27, he was out of the league. A degenerative knee did most of it, and that&rsquo;s the point:
+however a player falls off, the chart just stops counting him.</p>
+<p>Try to find Gurley in an &ldquo;average production by age&rdquo; chart. At 27 he had no stats, so as far as the chart knows, he never
+turned 27. The 27-year-old backs in that average are the ones who were still good enough to have a job. Meanwhile the far
+edge of the chart belongs to someone like Tom Brady, still scoring 22.0 fpts a game at 44, standing in for a
+whole draft class of quarterbacks who had been retired for a decade.</p>
+<p>That&rsquo;s survivorship bias, and it is baked into almost every aging chart you have seen. So we rebuilt the curves from
+scratch: every qualifying season in the NFL since 1999 (defense since 2013), the NBA since 2002, MLB since 1970 and the NHL
+since 2001. Here is when each position actually falls off, how sure we can be, and the season to sell your guy before he does.</p>
+</section>
+<section>
+<h2><span class="num">01</span> The average says running backs peak at 30</h2>
+<p>Average every NFL running back&rsquo;s fpts by age and the best age for a back comes out as 30. At 33 the average
+back is still at 78% of that peak. If that sounds wrong, count the players behind the average. The chart shows
+how many qualifying seasons (8 or more games) there are at each age.</p>
+<figure class="chart"><div class="v-desk"><svg viewBox="0 0 620 270" role="img" aria-label="Number of qualifying running back seasons by age">
+<text x="46.0" y="18.0" font-family="IBM Plex Sans, sans-serif" font-size="13.0" font-weight="600" fill="var(--text)" text-anchor="start">Qualifying NFL running back seasons, by age</text>
+<line x1="46" x2="608" y1="230.0" y2="230.0" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="234.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">0</text>
+<line x1="46" x2="608" y1="183.5" y2="183.5" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="187.5" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">100</text>
+<line x1="46" x2="608" y1="137.0" y2="137.0" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="141.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">200</text>
+<line x1="46" x2="608" y1="90.5" y2="90.5" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="94.5" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">300</text>
+<line x1="46" x2="608" y1="44.0" y2="44.0" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="48.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">400</text>
+<rect x="47.5" y="190.5" width="40.2" height="39.5" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 21: 85 qualifying seasons</title></rect>
+<text x="67.6" y="246.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">21</text>
+<rect x="90.7" y="118.4" width="40.2" height="111.6" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 22: 240 qualifying seasons</title></rect>
+<text x="110.8" y="246.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">22</text>
+<rect x="134.0" y="62.1" width="40.2" height="167.9" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 23: 361 qualifying seasons</title></rect>
+<text x="154.1" y="246.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">23</text>
+<rect x="177.2" y="46.8" width="40.2" height="183.2" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 24: 394 qualifying seasons</title></rect>
+<text x="197.3" y="246.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="197.3" y="41.8" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="middle">394</text>
+<rect x="220.4" y="71.0" width="40.2" height="159.0" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 25: 342 qualifying seasons</title></rect>
+<text x="240.5" y="246.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">25</text>
+<rect x="263.7" y="89.1" width="40.2" height="140.9" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 26: 303 qualifying seasons</title></rect>
+<text x="283.8" y="246.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">26</text>
+<rect x="306.9" y="109.6" width="40.2" height="120.4" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 27: 259 qualifying seasons</title></rect>
+<text x="327.0" y="246.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">27</text>
+<text x="327.0" y="104.6" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="middle">259</text>
+<rect x="350.1" y="136.1" width="40.2" height="93.9" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 28: 202 qualifying seasons</title></rect>
+<text x="370.2" y="246.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<rect x="393.3" y="166.3" width="40.2" height="63.7" rx="2" fill="#d03b3b" opacity="0.85"><title>Age 29: 137 qualifying seasons</title></rect>
+<text x="413.5" y="246.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">29</text>
+<text x="413.5" y="161.3" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="middle">137</text>
+<text x="413.5" y="146.3" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="#d03b3b" text-anchor="middle">cliff</text>
+<rect x="436.6" y="191.4" width="40.2" height="38.6" rx="2" fill="#d03b3b" opacity="0.85"><title>Age 30: 83 qualifying seasons</title></rect>
+<text x="456.7" y="246.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">30</text>
+<rect x="479.8" y="199.8" width="40.2" height="30.2" rx="2" fill="#d03b3b" opacity="0.85"><title>Age 31: 65 qualifying seasons</title></rect>
+<text x="499.9" y="246.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">31</text>
+<rect x="523.0" y="210.0" width="40.2" height="20.0" rx="2" fill="#d03b3b" opacity="0.85"><title>Age 32: 43 qualifying seasons</title></rect>
+<text x="543.2" y="246.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<rect x="566.3" y="218.8" width="40.2" height="11.2" rx="2" fill="#d03b3b" opacity="0.85"><title>Age 33: 24 qualifying seasons</title></rect>
+<text x="586.4" y="246.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">33</text>
+<text x="586.4" y="213.8" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="middle">24</text>
+<text x="327.0" y="264.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">Age (Sept 1)</text>
+</svg></div><div class="v-phone"><svg viewBox="0 0 340 250" role="img" aria-label="Number of qualifying running back seasons by age">
+<text x="38.0" y="18.0" font-family="IBM Plex Sans, sans-serif" font-size="13.0" font-weight="600" fill="var(--text)" text-anchor="start">Qualifying NFL running back seasons, by age</text>
+<line x1="38" x2="332" y1="210.0" y2="210.0" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="214.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">0</text>
+<line x1="38" x2="332" y1="168.5" y2="168.5" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="172.5" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">100</text>
+<line x1="38" x2="332" y1="127.0" y2="127.0" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="131.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">200</text>
+<line x1="38" x2="332" y1="85.5" y2="85.5" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="89.5" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">300</text>
+<line x1="38" x2="332" y1="44.0" y2="44.0" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="48.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">400</text>
+<rect x="39.5" y="174.7" width="19.6" height="35.3" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 21: 85 qualifying seasons</title></rect>
+<text x="49.3" y="226.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">21</text>
+<rect x="62.1" y="110.4" width="19.6" height="99.6" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 22: 240 qualifying seasons</title></rect>
+<rect x="84.7" y="60.2" width="19.6" height="149.8" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 23: 361 qualifying seasons</title></rect>
+<text x="94.5" y="226.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">23</text>
+<rect x="107.3" y="46.5" width="19.6" height="163.5" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 24: 394 qualifying seasons</title></rect>
+<text x="117.2" y="41.5" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="middle">394</text>
+<rect x="130.0" y="68.1" width="19.6" height="141.9" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 25: 342 qualifying seasons</title></rect>
+<text x="139.8" y="226.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">25</text>
+<rect x="152.6" y="84.3" width="19.6" height="125.7" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 26: 303 qualifying seasons</title></rect>
+<rect x="175.2" y="102.5" width="19.6" height="107.5" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 27: 259 qualifying seasons</title></rect>
+<text x="185.0" y="226.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">27</text>
+<text x="185.0" y="97.5" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="middle">259</text>
+<rect x="197.8" y="126.2" width="19.6" height="83.8" rx="2" fill="#6f7a78" opacity="0.9"><title>Age 28: 202 qualifying seasons</title></rect>
+<rect x="220.4" y="153.1" width="19.6" height="56.9" rx="2" fill="#d03b3b" opacity="0.85"><title>Age 29: 137 qualifying seasons</title></rect>
+<text x="230.2" y="226.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">29</text>
+<text x="230.2" y="148.1" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="middle">137</text>
+<text x="230.2" y="133.1" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="#d03b3b" text-anchor="middle">cliff</text>
+<rect x="243.0" y="175.6" width="19.6" height="34.4" rx="2" fill="#d03b3b" opacity="0.85"><title>Age 30: 83 qualifying seasons</title></rect>
+<rect x="265.7" y="183.0" width="19.6" height="27.0" rx="2" fill="#d03b3b" opacity="0.85"><title>Age 31: 65 qualifying seasons</title></rect>
+<text x="275.5" y="226.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">31</text>
+<rect x="288.3" y="192.2" width="19.6" height="17.8" rx="2" fill="#d03b3b" opacity="0.85"><title>Age 32: 43 qualifying seasons</title></rect>
+<rect x="310.9" y="200.0" width="19.6" height="10.0" rx="2" fill="#d03b3b" opacity="0.85"><title>Age 33: 24 qualifying seasons</title></rect>
+<text x="320.7" y="226.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">33</text>
+<text x="320.7" y="195.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="middle">24</text>
+<text x="185.0" y="244.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">Age (Sept 1)</text>
+</svg></div>
+<figcaption>NFL running backs with 8+ games, 1999&ndash;2025. Each bar is one age; red bars are the cliff age (29) and older.</figcaption></figure>
+<p>There are 394 qualifying seasons at age 24. At 33 there are 24. The backs still carrying the ball at 30 are the ones who never
+slowed down, so the average at 30 is an average of exceptions.</p>
+<p>Analysts caught this years ago. Their standard fix is the delta method: compare each player only with himself, season to
+season, and chain the year-over-year changes together. It sounds airtight. It isn&rsquo;t quite. A player only gets a next season if
+a team kept him, and teams keep players partly on last year&rsquo;s numbers, which include luck. So the delta method mostly measures
+players coming off lucky years, and when they fall back to earth, it books the fall as aging.</p>
+<p>The other method, which we call the career model, grades every season against that player&rsquo;s own career average, so one
+lucky year is one input among many. It has a blind spot of its own, explained in the next section. Here are all three answers
+for running backs, on a proportional scale (a back who loses 20% of his production is at 80%, whatever his level).</p>
+<figure class="chart"><div class="v-desk"><svg viewBox="0 0 620 400" role="img" aria-label="Running back share of peak production by age under three methods">
+<text x="8.0" y="18.0" font-family="IBM Plex Sans, sans-serif" font-size="13.0" font-weight="600" fill="var(--text)" text-anchor="start">Running backs: share of peak production, by age</text>
+<text x="8.0" y="36.0" font-family="IBM Plex Sans, sans-serif" font-size="12.0" font-weight="400" fill="var(--muted)" text-anchor="start">Shaded: the range between the two corrected methods</text>
+<line x1="48" x2="498" y1="358.0" y2="358.0" stroke="var(--line)" stroke-width="1"/>
+<text x="42.0" y="362.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">0%</text>
+<line x1="48" x2="498" y1="302.4" y2="302.4" stroke="var(--line)" stroke-width="1"/>
+<text x="42.0" y="306.4" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">20%</text>
+<line x1="48" x2="498" y1="246.7" y2="246.7" stroke="var(--line)" stroke-width="1"/>
+<text x="42.0" y="250.7" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">40%</text>
+<line x1="48" x2="498" y1="191.1" y2="191.1" stroke="var(--line)" stroke-width="1"/>
+<text x="42.0" y="195.1" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">60%</text>
+<line x1="48" x2="498" y1="135.5" y2="135.5" stroke="var(--line)" stroke-width="1"/>
+<text x="42.0" y="139.5" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">80%</text>
+<line x1="48" x2="498" y1="79.8" y2="79.8" stroke="var(--line)" stroke-width="1"/>
+<text x="42.0" y="83.8" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">100%</text>
+<text x="48.0" y="375.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">21</text>
+<text x="123.0" y="375.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">23</text>
+<text x="198.0" y="375.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">25</text>
+<text x="273.0" y="375.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">27</text>
+<text x="348.0" y="375.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">29</text>
+<text x="423.0" y="375.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">31</text>
+<text x="498.0" y="375.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">33</text>
+<text x="273.0" y="394.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">Age</text>
+<polygon points="48.0,109.0 85.5,101.3 123.0,82.7 160.5,79.8 198.0,88.0 235.5,92.6 273.0,104.8 310.5,126.7 348.0,145.0 385.5,152.7 423.0,162.8 460.5,190.7 498.0,215.0 498.0,288.3 460.5,265.8 423.0,232.6 385.5,205.3 348.0,177.8 310.5,149.9 273.0,125.0 235.5,107.3 198.0,97.3 160.5,82.8 123.0,79.8 85.5,109.0 48.0,133.5" fill="#199e70" opacity="0.14"/>
+<line x1="385.5" x2="385.5" y1="57.6" y2="358.0" stroke="var(--line-strong)" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="385.5" y="53.6" font-family="IBM Plex Sans, sans-serif" font-size="12.0" font-weight="600" fill="var(--muted)" text-anchor="middle">30</text>
+<line x1="48.0" y1="83.5" x2="85.5" y2="98.3" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="85.5" y1="98.3" x2="123.0" y2="108.7" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="123.0" y1="108.7" x2="160.5" y2="110.0" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="160.5" y1="110.0" x2="198.0" y2="105.0" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="198.0" y1="105.0" x2="235.5" y2="96.7" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="235.5" y1="96.7" x2="273.0" y2="93.5" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="273.0" y1="93.5" x2="310.5" y2="92.4" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="310.5" y1="92.4" x2="348.0" y2="86.2" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="348.0" y1="86.2" x2="385.5" y2="79.8" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="385.5" y1="79.8" x2="423.0" y2="93.3" stroke="#8f8a80" stroke-width="2.6" stroke-dasharray="5,4"/>
+<line x1="423.0" y1="93.3" x2="460.5" y2="123.2" stroke="#8f8a80" stroke-width="2.6" stroke-dasharray="5,4"/>
+<line x1="460.5" y1="123.2" x2="498.0" y2="140.5" stroke="#8f8a80" stroke-width="2.6" stroke-dasharray="5,4"/>
+<circle cx="48.0" cy="83.5" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 21: 99% of peak</title></circle>
+<circle cx="85.5" cy="98.3" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 22: 93% of peak</title></circle>
+<circle cx="123.0" cy="108.7" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 23: 90% of peak</title></circle>
+<circle cx="160.5" cy="110.0" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 24: 89% of peak</title></circle>
+<circle cx="198.0" cy="105.0" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 25: 91% of peak</title></circle>
+<circle cx="235.5" cy="96.7" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 26: 94% of peak</title></circle>
+<circle cx="273.0" cy="93.5" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 27: 95% of peak</title></circle>
+<circle cx="310.5" cy="92.4" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 28: 95% of peak</title></circle>
+<circle cx="348.0" cy="86.2" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 29: 98% of peak</title></circle>
+<circle cx="385.5" cy="79.8" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 30: 100% of peak</title></circle>
+<circle cx="423.0" cy="93.3" r="3.4" fill="var(--surface)" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 31: 95% of peak</title></circle>
+<circle cx="460.5" cy="123.2" r="3.4" fill="var(--surface)" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 32: 84% of peak</title></circle>
+<circle cx="498.0" cy="140.5" r="3.4" fill="var(--surface)" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 33: 78% of peak</title></circle>
+<line x1="48.0" y1="133.5" x2="85.5" y2="109.0" stroke="#c98500" stroke-width="2.6"/>
+<line x1="85.5" y1="109.0" x2="123.0" y2="79.8" stroke="#c98500" stroke-width="2.6"/>
+<line x1="123.0" y1="79.8" x2="160.5" y2="82.8" stroke="#c98500" stroke-width="2.6"/>
+<line x1="160.5" y1="82.8" x2="198.0" y2="97.3" stroke="#c98500" stroke-width="2.6"/>
+<line x1="198.0" y1="97.3" x2="235.5" y2="107.3" stroke="#c98500" stroke-width="2.6"/>
+<line x1="235.5" y1="107.3" x2="273.0" y2="125.0" stroke="#c98500" stroke-width="2.6"/>
+<line x1="273.0" y1="125.0" x2="310.5" y2="149.9" stroke="#c98500" stroke-width="2.6"/>
+<line x1="310.5" y1="149.9" x2="348.0" y2="177.8" stroke="#c98500" stroke-width="2.6"/>
+<line x1="348.0" y1="177.8" x2="385.5" y2="205.3" stroke="#c98500" stroke-width="2.6"/>
+<line x1="385.5" y1="205.3" x2="423.0" y2="232.6" stroke="#c98500" stroke-width="2.6" stroke-dasharray="5,4"/>
+<line x1="423.0" y1="232.6" x2="460.5" y2="265.8" stroke="#c98500" stroke-width="2.6" stroke-dasharray="5,4"/>
+<line x1="460.5" y1="265.8" x2="498.0" y2="288.3" stroke="#c98500" stroke-width="2.6" stroke-dasharray="5,4"/>
+<circle cx="48.0" cy="133.5" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 21: 81% of peak</title></circle>
+<circle cx="85.5" cy="109.0" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 22: 90% of peak</title></circle>
+<circle cx="123.0" cy="79.8" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 23: 100% of peak</title></circle>
+<circle cx="160.5" cy="82.8" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 24: 99% of peak</title></circle>
+<circle cx="198.0" cy="97.3" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 25: 94% of peak</title></circle>
+<circle cx="235.5" cy="107.3" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 26: 90% of peak</title></circle>
+<circle cx="273.0" cy="125.0" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 27: 84% of peak</title></circle>
+<circle cx="310.5" cy="149.9" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 28: 75% of peak</title></circle>
+<circle cx="348.0" cy="177.8" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 29: 65% of peak</title></circle>
+<circle cx="385.5" cy="205.3" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 30: 55% of peak</title></circle>
+<circle cx="423.0" cy="232.6" r="3.4" fill="var(--surface)" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 31: 45% of peak</title></circle>
+<circle cx="460.5" cy="265.8" r="3.4" fill="var(--surface)" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 32: 33% of peak</title></circle>
+<circle cx="498.0" cy="288.3" r="3.4" fill="var(--surface)" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 33: 25% of peak</title></circle>
+<line x1="48.0" y1="109.0" x2="85.5" y2="101.3" stroke="#199e70" stroke-width="2.6"/>
+<line x1="85.5" y1="101.3" x2="123.0" y2="82.7" stroke="#199e70" stroke-width="2.6"/>
+<line x1="123.0" y1="82.7" x2="160.5" y2="79.8" stroke="#199e70" stroke-width="2.6"/>
+<line x1="160.5" y1="79.8" x2="198.0" y2="88.0" stroke="#199e70" stroke-width="2.6"/>
+<line x1="198.0" y1="88.0" x2="235.5" y2="92.6" stroke="#199e70" stroke-width="2.6"/>
+<line x1="235.5" y1="92.6" x2="273.0" y2="104.8" stroke="#199e70" stroke-width="2.6"/>
+<line x1="273.0" y1="104.8" x2="310.5" y2="126.7" stroke="#199e70" stroke-width="2.6"/>
+<line x1="310.5" y1="126.7" x2="348.0" y2="145.0" stroke="#199e70" stroke-width="2.6"/>
+<line x1="348.0" y1="145.0" x2="385.5" y2="152.7" stroke="#199e70" stroke-width="2.6"/>
+<line x1="385.5" y1="152.7" x2="423.0" y2="162.8" stroke="#199e70" stroke-width="2.6" stroke-dasharray="5,4"/>
+<line x1="423.0" y1="162.8" x2="460.5" y2="190.7" stroke="#199e70" stroke-width="2.6" stroke-dasharray="5,4"/>
+<line x1="460.5" y1="190.7" x2="498.0" y2="215.0" stroke="#199e70" stroke-width="2.6" stroke-dasharray="5,4"/>
+<circle cx="48.0" cy="109.0" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 21: 89% of peak</title></circle>
+<circle cx="85.5" cy="101.3" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 22: 92% of peak</title></circle>
+<circle cx="123.0" cy="82.7" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 23: 99% of peak</title></circle>
+<circle cx="160.5" cy="79.8" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 24: 100% of peak</title></circle>
+<circle cx="198.0" cy="88.0" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 25: 97% of peak</title></circle>
+<circle cx="235.5" cy="92.6" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 26: 95% of peak</title></circle>
+<circle cx="273.0" cy="104.8" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 27: 91% of peak</title></circle>
+<circle cx="310.5" cy="126.7" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 28: 83% of peak</title></circle>
+<circle cx="348.0" cy="145.0" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 29: 77% of peak</title></circle>
+<circle cx="385.5" cy="152.7" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 30: 74% of peak</title></circle>
+<circle cx="423.0" cy="162.8" r="3.4" fill="var(--surface)" stroke="#199e70" stroke-width="1.6"><title>Career model, age 31: 70% of peak</title></circle>
+<circle cx="460.5" cy="190.7" r="3.4" fill="var(--surface)" stroke="#199e70" stroke-width="1.6"><title>Career model, age 32: 60% of peak</title></circle>
+<circle cx="498.0" cy="215.0" r="3.4" fill="var(--surface)" stroke="#199e70" stroke-width="1.6"><title>Career model, age 33: 51% of peak</title></circle>
+<text x="391.5" y="145.7" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="#199e70" text-anchor="start">74%</text>
+<text x="391.5" y="198.3" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="#c98500" text-anchor="start">55%</text>
+<text x="505.0" y="144.5" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="start">Naive average 78%</text>
+<text x="505.0" y="219.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="start">Career model 51%</text>
+<text x="505.0" y="292.3" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="start">Delta method 25%</text>
+</svg></div><div class="v-phone"><svg viewBox="0 0 340 340" role="img" aria-label="Running back share of peak production by age under three methods">
+<text x="8.0" y="18.0" font-family="IBM Plex Sans, sans-serif" font-size="13.0" font-weight="600" fill="var(--text)" text-anchor="start">Running backs: share of peak production, by age</text>
+<text x="8.0" y="36.0" font-family="IBM Plex Sans, sans-serif" font-size="12.0" font-weight="400" fill="var(--muted)" text-anchor="start">Shaded: the range between the</text>
+<text x="8.0" y="51.0" font-family="IBM Plex Sans, sans-serif" font-size="12.0" font-weight="400" fill="var(--muted)" text-anchor="start">two corrected methods</text>
+<line x1="40" x2="264" y1="300.0" y2="300.0" stroke="var(--line)" stroke-width="1"/>
+<text x="34.0" y="304.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">0%</text>
+<line x1="40" x2="264" y1="256.4" y2="256.4" stroke="var(--line)" stroke-width="1"/>
+<text x="34.0" y="260.4" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">20%</text>
+<line x1="40" x2="264" y1="212.7" y2="212.7" stroke="var(--line)" stroke-width="1"/>
+<text x="34.0" y="216.7" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">40%</text>
+<line x1="40" x2="264" y1="169.1" y2="169.1" stroke="var(--line)" stroke-width="1"/>
+<text x="34.0" y="173.1" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">60%</text>
+<line x1="40" x2="264" y1="125.5" y2="125.5" stroke="var(--line)" stroke-width="1"/>
+<text x="34.0" y="129.5" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">80%</text>
+<line x1="40" x2="264" y1="81.8" y2="81.8" stroke="var(--line)" stroke-width="1"/>
+<text x="34.0" y="85.8" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="end">100%</text>
+<text x="40.0" y="317.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">21</text>
+<text x="96.0" y="317.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="152.0" y="317.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">27</text>
+<text x="208.0" y="317.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">30</text>
+<text x="264.0" y="317.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">33</text>
+<text x="152.0" y="334.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--muted)" text-anchor="middle">Age</text>
+<polygon points="40.0,104.7 58.7,98.7 77.3,84.0 96.0,81.8 114.7,88.2 133.3,91.9 152.0,101.4 170.7,118.6 189.3,133.0 208.0,139.0 226.7,146.9 245.3,168.8 264.0,187.8 264.0,245.3 245.3,227.7 226.7,201.6 208.0,180.2 189.3,158.6 170.7,136.8 152.0,117.3 133.3,103.4 114.7,95.6 96.0,84.2 77.3,81.8 58.7,104.7 40.0,124.0" fill="#199e70" opacity="0.14"/>
+<line x1="208.0" x2="208.0" y1="64.4" y2="300.0" stroke="var(--line-strong)" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="208.0" y="60.4" font-family="IBM Plex Sans, sans-serif" font-size="12.0" font-weight="600" fill="var(--muted)" text-anchor="middle">30</text>
+<line x1="40.0" y1="84.7" x2="58.7" y2="96.3" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="58.7" y1="96.3" x2="77.3" y2="104.5" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="77.3" y1="104.5" x2="96.0" y2="105.5" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="96.0" y1="105.5" x2="114.7" y2="101.6" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="114.7" y1="101.6" x2="133.3" y2="95.0" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="133.3" y1="95.0" x2="152.0" y2="92.5" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="152.0" y1="92.5" x2="170.7" y2="91.7" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="170.7" y1="91.7" x2="189.3" y2="86.8" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="189.3" y1="86.8" x2="208.0" y2="81.8" stroke="#8f8a80" stroke-width="2.6"/>
+<line x1="208.0" y1="81.8" x2="226.7" y2="92.4" stroke="#8f8a80" stroke-width="2.6" stroke-dasharray="5,4"/>
+<line x1="226.7" y1="92.4" x2="245.3" y2="115.9" stroke="#8f8a80" stroke-width="2.6" stroke-dasharray="5,4"/>
+<line x1="245.3" y1="115.9" x2="264.0" y2="129.4" stroke="#8f8a80" stroke-width="2.6" stroke-dasharray="5,4"/>
+<circle cx="40.0" cy="84.7" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 21: 99% of peak</title></circle>
+<circle cx="58.7" cy="96.3" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 22: 93% of peak</title></circle>
+<circle cx="77.3" cy="104.5" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 23: 90% of peak</title></circle>
+<circle cx="96.0" cy="105.5" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 24: 89% of peak</title></circle>
+<circle cx="114.7" cy="101.6" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 25: 91% of peak</title></circle>
+<circle cx="133.3" cy="95.0" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 26: 94% of peak</title></circle>
+<circle cx="152.0" cy="92.5" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 27: 95% of peak</title></circle>
+<circle cx="170.7" cy="91.7" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 28: 95% of peak</title></circle>
+<circle cx="189.3" cy="86.8" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 29: 98% of peak</title></circle>
+<circle cx="208.0" cy="81.8" r="3.4" fill="#8f8a80" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 30: 100% of peak</title></circle>
+<circle cx="226.7" cy="92.4" r="3.4" fill="var(--surface)" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 31: 95% of peak</title></circle>
+<circle cx="245.3" cy="115.9" r="3.4" fill="var(--surface)" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 32: 84% of peak</title></circle>
+<circle cx="264.0" cy="129.4" r="3.4" fill="var(--surface)" stroke="#8f8a80" stroke-width="1.6"><title>Naive average, age 33: 78% of peak</title></circle>
+<line x1="40.0" y1="124.0" x2="58.7" y2="104.7" stroke="#c98500" stroke-width="2.6"/>
+<line x1="58.7" y1="104.7" x2="77.3" y2="81.8" stroke="#c98500" stroke-width="2.6"/>
+<line x1="77.3" y1="81.8" x2="96.0" y2="84.2" stroke="#c98500" stroke-width="2.6"/>
+<line x1="96.0" y1="84.2" x2="114.7" y2="95.6" stroke="#c98500" stroke-width="2.6"/>
+<line x1="114.7" y1="95.6" x2="133.3" y2="103.4" stroke="#c98500" stroke-width="2.6"/>
+<line x1="133.3" y1="103.4" x2="152.0" y2="117.3" stroke="#c98500" stroke-width="2.6"/>
+<line x1="152.0" y1="117.3" x2="170.7" y2="136.8" stroke="#c98500" stroke-width="2.6"/>
+<line x1="170.7" y1="136.8" x2="189.3" y2="158.6" stroke="#c98500" stroke-width="2.6"/>
+<line x1="189.3" y1="158.6" x2="208.0" y2="180.2" stroke="#c98500" stroke-width="2.6"/>
+<line x1="208.0" y1="180.2" x2="226.7" y2="201.6" stroke="#c98500" stroke-width="2.6" stroke-dasharray="5,4"/>
+<line x1="226.7" y1="201.6" x2="245.3" y2="227.7" stroke="#c98500" stroke-width="2.6" stroke-dasharray="5,4"/>
+<line x1="245.3" y1="227.7" x2="264.0" y2="245.3" stroke="#c98500" stroke-width="2.6" stroke-dasharray="5,4"/>
+<circle cx="40.0" cy="124.0" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 21: 81% of peak</title></circle>
+<circle cx="58.7" cy="104.7" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 22: 90% of peak</title></circle>
+<circle cx="77.3" cy="81.8" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 23: 100% of peak</title></circle>
+<circle cx="96.0" cy="84.2" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 24: 99% of peak</title></circle>
+<circle cx="114.7" cy="95.6" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 25: 94% of peak</title></circle>
+<circle cx="133.3" cy="103.4" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 26: 90% of peak</title></circle>
+<circle cx="152.0" cy="117.3" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 27: 84% of peak</title></circle>
+<circle cx="170.7" cy="136.8" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 28: 75% of peak</title></circle>
+<circle cx="189.3" cy="158.6" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 29: 65% of peak</title></circle>
+<circle cx="208.0" cy="180.2" r="3.4" fill="#c98500" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 30: 55% of peak</title></circle>
+<circle cx="226.7" cy="201.6" r="3.4" fill="var(--surface)" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 31: 45% of peak</title></circle>
+<circle cx="245.3" cy="227.7" r="3.4" fill="var(--surface)" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 32: 33% of peak</title></circle>
+<circle cx="264.0" cy="245.3" r="3.4" fill="var(--surface)" stroke="#c98500" stroke-width="1.6"><title>Delta method, age 33: 25% of peak</title></circle>
+<line x1="40.0" y1="104.7" x2="58.7" y2="98.7" stroke="#199e70" stroke-width="2.6"/>
+<line x1="58.7" y1="98.7" x2="77.3" y2="84.0" stroke="#199e70" stroke-width="2.6"/>
+<line x1="77.3" y1="84.0" x2="96.0" y2="81.8" stroke="#199e70" stroke-width="2.6"/>
+<line x1="96.0" y1="81.8" x2="114.7" y2="88.2" stroke="#199e70" stroke-width="2.6"/>
+<line x1="114.7" y1="88.2" x2="133.3" y2="91.9" stroke="#199e70" stroke-width="2.6"/>
+<line x1="133.3" y1="91.9" x2="152.0" y2="101.4" stroke="#199e70" stroke-width="2.6"/>
+<line x1="152.0" y1="101.4" x2="170.7" y2="118.6" stroke="#199e70" stroke-width="2.6"/>
+<line x1="170.7" y1="118.6" x2="189.3" y2="133.0" stroke="#199e70" stroke-width="2.6"/>
+<line x1="189.3" y1="133.0" x2="208.0" y2="139.0" stroke="#199e70" stroke-width="2.6"/>
+<line x1="208.0" y1="139.0" x2="226.7" y2="146.9" stroke="#199e70" stroke-width="2.6" stroke-dasharray="5,4"/>
+<line x1="226.7" y1="146.9" x2="245.3" y2="168.8" stroke="#199e70" stroke-width="2.6" stroke-dasharray="5,4"/>
+<line x1="245.3" y1="168.8" x2="264.0" y2="187.8" stroke="#199e70" stroke-width="2.6" stroke-dasharray="5,4"/>
+<circle cx="40.0" cy="104.7" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 21: 89% of peak</title></circle>
+<circle cx="58.7" cy="98.7" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 22: 92% of peak</title></circle>
+<circle cx="77.3" cy="84.0" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 23: 99% of peak</title></circle>
+<circle cx="96.0" cy="81.8" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 24: 100% of peak</title></circle>
+<circle cx="114.7" cy="88.2" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 25: 97% of peak</title></circle>
+<circle cx="133.3" cy="91.9" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 26: 95% of peak</title></circle>
+<circle cx="152.0" cy="101.4" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 27: 91% of peak</title></circle>
+<circle cx="170.7" cy="118.6" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 28: 83% of peak</title></circle>
+<circle cx="189.3" cy="133.0" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 29: 77% of peak</title></circle>
+<circle cx="208.0" cy="139.0" r="3.4" fill="#199e70" stroke="#199e70" stroke-width="1.6"><title>Career model, age 30: 74% of peak</title></circle>
+<circle cx="226.7" cy="146.9" r="3.4" fill="var(--surface)" stroke="#199e70" stroke-width="1.6"><title>Career model, age 31: 70% of peak</title></circle>
+<circle cx="245.3" cy="168.8" r="3.4" fill="var(--surface)" stroke="#199e70" stroke-width="1.6"><title>Career model, age 32: 60% of peak</title></circle>
+<circle cx="264.0" cy="187.8" r="3.4" fill="var(--surface)" stroke="#199e70" stroke-width="1.6"><title>Career model, age 33: 51% of peak</title></circle>
+<text x="214.0" y="132.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="#199e70" text-anchor="start">74%</text>
+<text x="214.0" y="173.2" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="#c98500" text-anchor="start">55%</text>
+<text x="271.0" y="127.4" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="start">Naive</text>
+<text x="271.0" y="142.4" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--text-dim)" text-anchor="start">78% at 33</text>
+<text x="271.0" y="185.8" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="start">Career</text>
+<text x="271.0" y="200.8" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--text-dim)" text-anchor="start">51% at 33</text>
+<text x="271.0" y="243.3" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="start">Delta</text>
+<text x="271.0" y="258.3" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="400" fill="var(--text-dim)" text-anchor="start">25% at 33</text>
+</svg></div>
+<figcaption>NFL running backs, fpts per game as a share of peak, 1999&ndash;2025. Proportional versions of the delta method and the
+career model. Dashed, hollow points: fewer than 40 qualifying seasons or pairs at that age. Both methods describe the backs who
+kept playing; counting everyone who entered the league, the real drop at older ages may be larger than either.</figcaption></figure>
+<p>At 30, the two methods say the typical back has kept between 55% and 74% of his peak; by 33,
+between 25% and 51%. The naive average says he has lost nothing at all by 30.</p>
+</section>
+<section>
+<h2><span class="num">02</span> How we know which line to trust</h2>
+<p>With real players there is no answer key, so we built one: thousands of fake careers with an aging curve we chose, and fake
+front offices that cut, bench and re-sign players the way real teams do. Then we asked each method to find the curve we had
+hidden. When every player ages on the same schedule, the career model nails it and the delta method runs about a year early.
+But real players don&rsquo;t share a schedule. In our data, how fast players decline after 27 varies about as much as the decline
+itself: from 0.7 times the average for receivers to more than 3 times for quarterbacks. Build that in, and the
+career model can run up to a year slow, because the players still around at 33 are the ones aging slowest, and it reads their
+slope as everyone&rsquo;s.</p>
+<p>So neither method is the ruler. What held up is the pair: in every one of 11 simulated scenarios (12 leagues each),
+the true cliff age landed between the delta method and the career model. Think of them as two clocks, one known to run fast and
+one known to run slow. In every test league, the real time was somewhere between them. A later stress test with 12 more
+setups (decline rates that differ far more between players, flatter and steeper curves) found the same, with two limits: in leagues as
+noisy as a goalie&rsquo;s or reliever&rsquo;s season, the range missed about one league in four, and
+the trick works for an early line like ours, not for much deeper drops.</p>
+<p>That is how we report it below: a range, with the early end from the delta method and the late end from the career model.
+When the two agree, you get one number.</p>
+<blockquote class="pull">Naive averages make athletes look ageless. The two honest methods disagree, and the truth lives in the gap.</blockquote>
+</section>
+<section>
+<h2><span class="num">03</span> Where the cliff actually is</h2>
+<div class="def"><b>What we mean by the cliff.</b> Take a player who is better than 7 of every 10 established players at his
+position. The cliff is the age at which getting older, by itself, has cost the typical player enough to make that guy average.
+For a running back that is about 2.2 fpts a game, roughly the gap between the RB12 and the
+RB21 in a normal season. For a hitter it is about 9 points of OPS+, and for a hockey forward
+about 11 points over a full season. Because the yardstick is how far down his position&rsquo;s pecking order a player
+slides, a goalie, a quarterback and a first baseman can be measured the same way. (For the stat people: half a standard
+deviation of true talent among players with two or more qualifying seasons. The report has the math.)</div>
+<p>Here is every group on that yardstick, from the prime (green) through the slide (amber) to the cliff (red). The hatched
+stretch is the range between the two methods.</p>
+<figure class="chart"><div class="v-desk"><svg viewBox="0 0 620 510" role="img" aria-label="The Cliff: prime, slide and cliff ages for 14 position groups">
+<defs><pattern id="hatchd" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#c98500"/><line x1="0" y1="0" x2="0" y2="6" stroke="#d03b3b" stroke-width="3.4"/></pattern></defs>
+<text x="6.0" y="22.0" font-family="IBM Plex Sans, sans-serif" font-size="17" font-weight="700" fill="var(--text)" text-anchor="start">THE CLIFF</text>
+<text x="614.0" y="22.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--accent)" text-anchor="end">EBK Deep Bag</text>
+<rect x="6" y="30" width="12" height="12" rx="2" fill="#199e70"/><text x="23.0" y="40.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text-dim)" text-anchor="start">Prime</text>
+<rect x="74" y="30" width="12" height="12" rx="2" fill="#c98500"/><text x="91.0" y="40.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text-dim)" text-anchor="start">Slide</text>
+<rect x="142" y="30" width="12" height="12" rx="2" fill="url(#hatchd)"/><text x="159.0" y="40.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text-dim)" text-anchor="start">Cliff range</text>
+<rect x="252" y="30" width="12" height="12" rx="2" fill="#d03b3b"/><text x="269.0" y="40.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text-dim)" text-anchor="start">Past the cliff</text>
+<line x1="139.4" x2="139.4" y1="60" y2="456" stroke="var(--line)" stroke-width="1"/>
+<text x="139.4" y="472.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">20</text>
+<line x1="174.1" x2="174.1" y1="60" y2="456" stroke="var(--line)" stroke-width="1"/>
+<text x="174.1" y="472.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">22</text>
+<line x1="208.8" x2="208.8" y1="60" y2="456" stroke="var(--line)" stroke-width="1"/>
+<text x="208.8" y="472.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<line x1="243.5" x2="243.5" y1="60" y2="456" stroke="var(--line)" stroke-width="1"/>
+<text x="243.5" y="472.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">26</text>
+<line x1="278.2" x2="278.2" y1="60" y2="456" stroke="var(--line)" stroke-width="1"/>
+<text x="278.2" y="472.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<line x1="313.0" x2="313.0" y1="60" y2="456" stroke="var(--line)" stroke-width="1"/>
+<text x="313.0" y="472.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">30</text>
+<line x1="347.7" x2="347.7" y1="60" y2="456" stroke="var(--line)" stroke-width="1"/>
+<text x="347.7" y="472.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<line x1="382.4" x2="382.4" y1="60" y2="456" stroke="var(--line)" stroke-width="1"/>
+<text x="382.4" y="472.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">34</text>
+<line x1="417.1" x2="417.1" y1="60" y2="456" stroke="var(--line)" stroke-width="1"/>
+<text x="417.1" y="472.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">36</text>
+<line x1="451.8" x2="451.8" y1="60" y2="456" stroke="var(--line)" stroke-width="1"/>
+<text x="451.8" y="472.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">38</text>
+<line x1="486.6" x2="486.6" y1="60" y2="456" stroke="var(--line)" stroke-width="1"/>
+<text x="486.6" y="472.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">40</text>
+<line x1="521.3" x2="521.3" y1="60" y2="456" stroke="var(--line)" stroke-width="1"/>
+<text x="521.3" y="472.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">42</text>
+<text x="339.0" y="488.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">Age</text>
+<text x="616.0" y="56.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--muted)" text-anchor="end">Cliff</text>
+<text x="114.0" y="79.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NFL RB</text>
+<rect x="156.7" y="66.0" width="120.0" height="17" rx="3" fill="#199e70"><title>NFL RB: Prime, ages 21 to 27</title></rect>
+<rect x="278.2" y="66.0" width="15.9" height="17" rx="3" fill="#c98500"><title>NFL RB: Slide, age 28</title></rect>
+<rect x="295.6" y="66.0" width="85.3" height="17" rx="3" fill="#d03b3b"><title>NFL RB: Past the cliff (cliff at 29), ages 29 to 33</title></rect>
+<text x="616.0" y="79.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">29</text>
+<text x="114.0" y="105.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NFL DB</text>
+<rect x="156.7" y="92.0" width="137.4" height="17" rx="3" fill="#199e70"><title>NFL DB: Prime, ages 21 to 28</title></rect>
+<rect x="295.6" y="92.0" width="15.9" height="17" rx="3" fill="#c98500"><title>NFL DB: Slide, age 29</title></rect>
+<rect x="313.0" y="92.0" width="67.9" height="17" rx="3" fill="#d03b3b"><title>NFL DB: Past the cliff (cliff at 30), ages 30 to 33</title></rect>
+<text x="616.0" y="105.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">30</text>
+<text x="114.0" y="131.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NFL WR</text>
+<rect x="156.7" y="118.0" width="137.4" height="17" rx="3" fill="#199e70"><title>NFL WR: Prime, ages 21 to 28</title></rect>
+<rect x="295.6" y="118.0" width="15.9" height="17" rx="3" fill="#c98500"><title>NFL WR: Slide, age 29</title></rect>
+<rect x="313.0" y="118.0" width="33.2" height="17" rx="3" fill="url(#hatchd)"><title>NFL WR: Cliff range, ages 30 to 31</title></rect>
+<rect x="347.7" y="118.0" width="67.9" height="17" rx="3" fill="#d03b3b"><title>NFL WR: Past the cliff, ages 32 to 35</title></rect>
+<text x="616.0" y="131.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">30&ndash;31</text>
+<text x="114.0" y="157.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NFL TE</text>
+<rect x="156.7" y="144.0" width="137.4" height="17" rx="3" fill="#199e70"><title>NFL TE: Prime, ages 21 to 28</title></rect>
+<rect x="295.6" y="144.0" width="15.9" height="17" rx="3" fill="#c98500"><title>NFL TE: Slide, age 29</title></rect>
+<rect x="313.0" y="144.0" width="33.2" height="17" rx="3" fill="url(#hatchd)"><title>NFL TE: Cliff range, ages 30 to 31</title></rect>
+<rect x="347.7" y="144.0" width="33.2" height="17" rx="3" fill="#d03b3b"><title>NFL TE: Past the cliff, ages 32 to 33</title></rect>
+<text x="616.0" y="157.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">30&ndash;31</text>
+<text x="114.0" y="183.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NFL LB</text>
+<rect x="156.7" y="170.0" width="137.4" height="17" rx="3" fill="#199e70"><title>NFL LB: Prime, ages 21 to 28</title></rect>
+<rect x="295.6" y="170.0" width="15.9" height="17" rx="3" fill="#c98500"><title>NFL LB: Slide, age 29</title></rect>
+<rect x="313.0" y="170.0" width="33.2" height="17" rx="3" fill="url(#hatchd)"><title>NFL LB: Cliff range, ages 30 to 31</title></rect>
+<rect x="347.7" y="170.0" width="33.2" height="17" rx="3" fill="#d03b3b"><title>NFL LB: Past the cliff, ages 32 to 33</title></rect>
+<text x="616.0" y="183.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">30&ndash;31</text>
+<text x="114.0" y="209.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NBA</text>
+<rect x="122.0" y="196.0" width="172.1" height="17" rx="3" fill="#199e70"><title>NBA: Prime, ages 19 to 28</title></rect>
+<rect x="295.6" y="196.0" width="15.9" height="17" rx="3" fill="#c98500"><title>NBA: Slide, age 29</title></rect>
+<rect x="313.0" y="196.0" width="33.2" height="17" rx="3" fill="url(#hatchd)"><title>NBA: Cliff range, ages 30 to 31</title></rect>
+<rect x="347.7" y="196.0" width="120.0" height="17" rx="3" fill="#d03b3b"><title>NBA: Past the cliff, ages 32 to 38</title></rect>
+<text x="616.0" y="209.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">30&ndash;31</text>
+<text x="114.0" y="235.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NFL DL</text>
+<rect x="156.7" y="222.0" width="154.7" height="17" rx="3" fill="#199e70"><title>NFL DL: Prime, ages 21 to 29</title></rect>
+<rect x="313.0" y="222.0" width="15.9" height="17" rx="3" fill="#c98500"><title>NFL DL: Slide, age 30</title></rect>
+<rect x="330.3" y="222.0" width="67.9" height="17" rx="3" fill="#d03b3b"><title>NFL DL: Past the cliff (cliff at 31), ages 31 to 34</title></rect>
+<text x="616.0" y="235.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">31</text>
+<text x="114.0" y="261.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NFL QB</text>
+<rect x="174.1" y="248.0" width="154.7" height="17" rx="3" fill="#199e70"><title>NFL QB: Prime, ages 22 to 30</title></rect>
+<rect x="330.3" y="248.0" width="15.9" height="17" rx="3" fill="#c98500"><title>NFL QB: Slide, age 31</title></rect>
+<rect x="347.7" y="248.0" width="33.2" height="17" rx="3" fill="url(#hatchd)"><title>NFL QB: Cliff range, ages 32 to 33</title></rect>
+<rect x="382.4" y="248.0" width="15.9" height="17" rx="3" fill="#d03b3b"><title>NFL QB: Past the cliff, age 34</title></rect>
+<text x="616.0" y="261.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">32&ndash;33</text>
+<text x="114.0" y="287.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NHL forwards</text>
+<rect x="122.0" y="274.0" width="189.5" height="17" rx="3" fill="#199e70"><title>NHL forwards: Prime, ages 19 to 29</title></rect>
+<rect x="313.0" y="274.0" width="33.2" height="17" rx="3" fill="#c98500"><title>NHL forwards: Slide, ages 30 to 31</title></rect>
+<rect x="347.7" y="274.0" width="33.2" height="17" rx="3" fill="url(#hatchd)"><title>NHL forwards: Cliff range, ages 32 to 33</title></rect>
+<rect x="382.4" y="274.0" width="120.0" height="17" rx="3" fill="#d03b3b"><title>NHL forwards: Past the cliff, ages 34 to 40</title></rect>
+<text x="616.0" y="287.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">32&ndash;33</text>
+<text x="114.0" y="313.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NHL D-men</text>
+<rect x="122.0" y="300.0" width="206.8" height="17" rx="3" fill="#199e70"><title>NHL D-men: Prime, ages 19 to 30</title></rect>
+<rect x="330.3" y="300.0" width="15.9" height="17" rx="3" fill="#c98500"><title>NHL D-men: Slide, age 31</title></rect>
+<rect x="347.7" y="300.0" width="50.6" height="17" rx="3" fill="url(#hatchd)"><title>NHL D-men: Cliff range, ages 32 to 34</title></rect>
+<rect x="399.8" y="300.0" width="85.3" height="17" rx="3" fill="#d03b3b"><title>NHL D-men: Past the cliff, ages 35 to 39</title></rect>
+<text x="616.0" y="313.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">32&ndash;34</text>
+<line x1="6" x2="616" y1="332.0" y2="332.0" stroke="var(--line-strong)" stroke-width="1"/>
+<text x="6.0" y="348.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--muted)" text-anchor="start">Noisy stats: wide ranges. Tick = the likelier end</text>
+<text x="114.0" y="369.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">MLB hitters</text>
+<rect x="139.4" y="356.0" width="172.1" height="17" rx="3" fill="#199e70"><title>MLB hitters: Prime, ages 20 to 29</title></rect>
+<rect x="313.0" y="356.0" width="85.3" height="17" rx="3" fill="url(#hatchd)"><title>MLB hitters: Cliff range, ages 30 to 34</title></rect>
+<rect x="399.8" y="356.0" width="120.0" height="17" rx="3" fill="#d03b3b"><title>MLB hitters: Past the cliff, ages 35 to 41</title></rect>
+<text x="616.0" y="369.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">30&ndash;34</text>
+<text x="114.0" y="395.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">MLB starters</text>
+<rect x="139.4" y="382.0" width="120.0" height="17" rx="3" fill="#199e70"><title>MLB starters: Prime, ages 20 to 26</title></rect>
+<rect x="260.9" y="382.0" width="85.3" height="17" rx="3" fill="url(#hatchd)"><title>MLB starters: Cliff range, ages 27 to 31</title></rect>
+<rect x="347.7" y="382.0" width="189.5" height="17" rx="3" fill="#d03b3b"><title>MLB starters: Past the cliff, ages 32 to 42</title></rect>
+<rect x="343.7" y="379.0" width="3" height="23" rx="1" fill="var(--text)"><title>MLB starters: the simulation favours the late end, 31</title></rect>
+<text x="616.0" y="395.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">27&ndash;31</text>
+<text x="114.0" y="421.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">MLB relievers</text>
+<rect x="156.7" y="408.0" width="120.0" height="17" rx="3" fill="#199e70"><title>MLB relievers: Prime, ages 21 to 27</title></rect>
+<rect x="278.2" y="408.0" width="102.7" height="17" rx="3" fill="url(#hatchd)"><title>MLB relievers: Cliff range, ages 28 to 33</title></rect>
+<rect x="382.4" y="408.0" width="137.4" height="17" rx="3" fill="#d03b3b"><title>MLB relievers: Past the cliff, ages 34 to 41</title></rect>
+<rect x="378.4" y="405.0" width="3" height="23" rx="1" fill="var(--text)"><title>MLB relievers: the simulation favours the late end, 33</title></rect>
+<text x="616.0" y="421.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">28&ndash;33</text>
+<text x="114.0" y="447.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NHL goalies</text>
+<rect x="174.1" y="434.0" width="67.9" height="17" rx="3" fill="#199e70"><title>NHL goalies: Prime, ages 22 to 25</title></rect>
+<rect x="243.5" y="434.0" width="85.3" height="17" rx="3" fill="url(#hatchd)"><title>NHL goalies: Cliff range, ages 26 to 30</title></rect>
+<rect x="330.3" y="434.0" width="120.0" height="17" rx="3" fill="#d03b3b"><title>NHL goalies: Past the cliff, ages 31 to 37</title></rect>
+<rect x="326.3" y="431.0" width="3" height="23" rx="1" fill="var(--text)"><title>NHL goalies: the simulation favours the late end, 30</title></rect>
+<text x="616.0" y="447.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">26&ndash;30</text>
+</svg></div><div class="v-phone"><svg viewBox="0 0 340 494" role="img" aria-label="The Cliff: prime, slide and cliff ages for 14 position groups">
+<defs><pattern id="hatchp" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#c98500"/><line x1="0" y1="0" x2="0" y2="6" stroke="#d03b3b" stroke-width="3.4"/></pattern></defs>
+<text x="6.0" y="22.0" font-family="IBM Plex Sans, sans-serif" font-size="16" font-weight="700" fill="var(--text)" text-anchor="start">THE CLIFF</text>
+<text x="334.0" y="22.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--accent)" text-anchor="end">EBK Deep Bag</text>
+<rect x="6" y="30" width="12" height="12" rx="2" fill="#199e70"/><text x="23.0" y="40.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text-dim)" text-anchor="start">Prime</text>
+<rect x="72.0" y="30" width="12" height="12" rx="2" fill="#c98500"/><text x="89.0" y="40.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text-dim)" text-anchor="start">Slide</text>
+<rect x="6" y="48" width="12" height="12" rx="2" fill="url(#hatchp)"/><text x="23.0" y="58.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text-dim)" text-anchor="start">Cliff range</text>
+<rect x="111.6" y="48" width="12" height="12" rx="2" fill="#d03b3b"/><text x="128.6" y="58.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text-dim)" text-anchor="start">Past the cliff</text>
+<line x1="92.2" x2="92.2" y1="78" y2="446" stroke="var(--line)" stroke-width="1"/>
+<text x="92.2" y="462.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">20</text>
+<line x1="125.2" x2="125.2" y1="78" y2="446" stroke="var(--line)" stroke-width="1"/>
+<text x="125.2" y="462.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<line x1="158.2" x2="158.2" y1="78" y2="446" stroke="var(--line)" stroke-width="1"/>
+<text x="158.2" y="462.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<line x1="191.1" x2="191.1" y1="78" y2="446" stroke="var(--line)" stroke-width="1"/>
+<text x="191.1" y="462.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<line x1="224.1" x2="224.1" y1="78" y2="446" stroke="var(--line)" stroke-width="1"/>
+<text x="224.1" y="462.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">36</text>
+<line x1="257.0" x2="257.0" y1="78" y2="446" stroke="var(--line)" stroke-width="1"/>
+<text x="257.0" y="462.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">40</text>
+<text x="187.0" y="478.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">Age</text>
+<text x="336.0" y="74.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--muted)" text-anchor="end">Cliff</text>
+<text x="76.0" y="96.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NFL RB</text>
+<rect x="100.5" y="84.0" width="56.2" height="15" rx="3" fill="#199e70"><title>NFL RB: Prime, ages 21 to 27</title></rect>
+<rect x="158.2" y="84.0" width="6.7" height="15" rx="3" fill="#c98500"><title>NFL RB: Slide, age 28</title></rect>
+<rect x="166.4" y="84.0" width="39.7" height="15" rx="3" fill="#d03b3b"><title>NFL RB: Past the cliff (cliff at 29), ages 29 to 33</title></rect>
+<text x="336.0" y="96.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">29</text>
+<text x="76.0" y="120.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NFL DB</text>
+<rect x="100.5" y="108.0" width="64.4" height="15" rx="3" fill="#199e70"><title>NFL DB: Prime, ages 21 to 28</title></rect>
+<rect x="166.4" y="108.0" width="6.7" height="15" rx="3" fill="#c98500"><title>NFL DB: Slide, age 29</title></rect>
+<rect x="174.6" y="108.0" width="31.5" height="15" rx="3" fill="#d03b3b"><title>NFL DB: Past the cliff (cliff at 30), ages 30 to 33</title></rect>
+<text x="336.0" y="120.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">30</text>
+<text x="76.0" y="144.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NFL WR</text>
+<rect x="100.5" y="132.0" width="64.4" height="15" rx="3" fill="#199e70"><title>NFL WR: Prime, ages 21 to 28</title></rect>
+<rect x="166.4" y="132.0" width="6.7" height="15" rx="3" fill="#c98500"><title>NFL WR: Slide, age 29</title></rect>
+<rect x="174.6" y="132.0" width="15.0" height="15" rx="3" fill="url(#hatchp)"><title>NFL WR: Cliff range, ages 30 to 31</title></rect>
+<rect x="191.1" y="132.0" width="31.5" height="15" rx="3" fill="#d03b3b"><title>NFL WR: Past the cliff, ages 32 to 35</title></rect>
+<text x="336.0" y="144.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">30&ndash;31</text>
+<text x="76.0" y="168.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NFL TE</text>
+<rect x="100.5" y="156.0" width="64.4" height="15" rx="3" fill="#199e70"><title>NFL TE: Prime, ages 21 to 28</title></rect>
+<rect x="166.4" y="156.0" width="6.7" height="15" rx="3" fill="#c98500"><title>NFL TE: Slide, age 29</title></rect>
+<rect x="174.6" y="156.0" width="15.0" height="15" rx="3" fill="url(#hatchp)"><title>NFL TE: Cliff range, ages 30 to 31</title></rect>
+<rect x="191.1" y="156.0" width="15.0" height="15" rx="3" fill="#d03b3b"><title>NFL TE: Past the cliff, ages 32 to 33</title></rect>
+<text x="336.0" y="168.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">30&ndash;31</text>
+<text x="76.0" y="192.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NFL LB</text>
+<rect x="100.5" y="180.0" width="64.4" height="15" rx="3" fill="#199e70"><title>NFL LB: Prime, ages 21 to 28</title></rect>
+<rect x="166.4" y="180.0" width="6.7" height="15" rx="3" fill="#c98500"><title>NFL LB: Slide, age 29</title></rect>
+<rect x="174.6" y="180.0" width="15.0" height="15" rx="3" fill="url(#hatchp)"><title>NFL LB: Cliff range, ages 30 to 31</title></rect>
+<rect x="191.1" y="180.0" width="15.0" height="15" rx="3" fill="#d03b3b"><title>NFL LB: Past the cliff, ages 32 to 33</title></rect>
+<text x="336.0" y="192.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">30&ndash;31</text>
+<text x="76.0" y="216.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NBA</text>
+<rect x="84.0" y="204.0" width="80.9" height="15" rx="3" fill="#199e70"><title>NBA: Prime, ages 19 to 28</title></rect>
+<rect x="166.4" y="204.0" width="6.7" height="15" rx="3" fill="#c98500"><title>NBA: Slide, age 29</title></rect>
+<rect x="174.6" y="204.0" width="15.0" height="15" rx="3" fill="url(#hatchp)"><title>NBA: Cliff range, ages 30 to 31</title></rect>
+<rect x="191.1" y="204.0" width="56.2" height="15" rx="3" fill="#d03b3b"><title>NBA: Past the cliff, ages 32 to 38</title></rect>
+<text x="336.0" y="216.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">30&ndash;31</text>
+<text x="76.0" y="240.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NFL DL</text>
+<rect x="100.5" y="228.0" width="72.7" height="15" rx="3" fill="#199e70"><title>NFL DL: Prime, ages 21 to 29</title></rect>
+<rect x="174.6" y="228.0" width="6.7" height="15" rx="3" fill="#c98500"><title>NFL DL: Slide, age 30</title></rect>
+<rect x="182.9" y="228.0" width="31.5" height="15" rx="3" fill="#d03b3b"><title>NFL DL: Past the cliff (cliff at 31), ages 31 to 34</title></rect>
+<text x="336.0" y="240.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">31</text>
+<text x="76.0" y="264.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NFL QB</text>
+<rect x="108.7" y="252.0" width="72.7" height="15" rx="3" fill="#199e70"><title>NFL QB: Prime, ages 22 to 30</title></rect>
+<rect x="182.9" y="252.0" width="6.7" height="15" rx="3" fill="#c98500"><title>NFL QB: Slide, age 31</title></rect>
+<rect x="191.1" y="252.0" width="15.0" height="15" rx="3" fill="url(#hatchp)"><title>NFL QB: Cliff range, ages 32 to 33</title></rect>
+<rect x="207.6" y="252.0" width="6.7" height="15" rx="3" fill="#d03b3b"><title>NFL QB: Past the cliff, age 34</title></rect>
+<text x="336.0" y="264.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">32&ndash;33</text>
+<text x="76.0" y="288.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NHL forwards</text>
+<rect x="84.0" y="276.0" width="89.1" height="15" rx="3" fill="#199e70"><title>NHL forwards: Prime, ages 19 to 29</title></rect>
+<rect x="174.6" y="276.0" width="15.0" height="15" rx="3" fill="#c98500"><title>NHL forwards: Slide, ages 30 to 31</title></rect>
+<rect x="191.1" y="276.0" width="15.0" height="15" rx="3" fill="url(#hatchp)"><title>NHL forwards: Cliff range, ages 32 to 33</title></rect>
+<rect x="207.6" y="276.0" width="56.2" height="15" rx="3" fill="#d03b3b"><title>NHL forwards: Past the cliff, ages 34 to 40</title></rect>
+<text x="336.0" y="288.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">32&ndash;33</text>
+<text x="76.0" y="312.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NHL D-men</text>
+<rect x="84.0" y="300.0" width="97.4" height="15" rx="3" fill="#199e70"><title>NHL D-men: Prime, ages 19 to 30</title></rect>
+<rect x="182.9" y="300.0" width="6.7" height="15" rx="3" fill="#c98500"><title>NHL D-men: Slide, age 31</title></rect>
+<rect x="191.1" y="300.0" width="23.2" height="15" rx="3" fill="url(#hatchp)"><title>NHL D-men: Cliff range, ages 32 to 34</title></rect>
+<rect x="215.8" y="300.0" width="39.7" height="15" rx="3" fill="#d03b3b"><title>NHL D-men: Past the cliff, ages 35 to 39</title></rect>
+<text x="336.0" y="312.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">32&ndash;34</text>
+<line x1="6" x2="336" y1="330.0" y2="330.0" stroke="var(--line-strong)" stroke-width="1"/>
+<text x="6.0" y="346.0" font-family="IBM Plex Sans, sans-serif" font-size="11.5" font-weight="600" fill="var(--muted)" text-anchor="start">Noisy stats: wide ranges. Tick = the likelier end</text>
+<text x="76.0" y="366.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">MLB hitters</text>
+<rect x="92.2" y="354.0" width="80.9" height="15" rx="3" fill="#199e70"><title>MLB hitters: Prime, ages 20 to 29</title></rect>
+<rect x="174.6" y="354.0" width="39.7" height="15" rx="3" fill="url(#hatchp)"><title>MLB hitters: Cliff range, ages 30 to 34</title></rect>
+<rect x="215.8" y="354.0" width="56.2" height="15" rx="3" fill="#d03b3b"><title>MLB hitters: Past the cliff, ages 35 to 41</title></rect>
+<text x="336.0" y="366.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">30&ndash;34</text>
+<text x="76.0" y="390.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">MLB starters</text>
+<rect x="92.2" y="378.0" width="56.2" height="15" rx="3" fill="#199e70"><title>MLB starters: Prime, ages 20 to 26</title></rect>
+<rect x="149.9" y="378.0" width="39.7" height="15" rx="3" fill="url(#hatchp)"><title>MLB starters: Cliff range, ages 27 to 31</title></rect>
+<rect x="191.1" y="378.0" width="89.1" height="15" rx="3" fill="#d03b3b"><title>MLB starters: Past the cliff, ages 32 to 42</title></rect>
+<rect x="187.1" y="375.0" width="3" height="21" rx="1" fill="var(--text)"><title>MLB starters: the simulation favours the late end, 31</title></rect>
+<text x="336.0" y="390.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">27&ndash;31</text>
+<text x="76.0" y="414.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">MLB relievers</text>
+<rect x="100.5" y="402.0" width="56.2" height="15" rx="3" fill="#199e70"><title>MLB relievers: Prime, ages 21 to 27</title></rect>
+<rect x="158.2" y="402.0" width="47.9" height="15" rx="3" fill="url(#hatchp)"><title>MLB relievers: Cliff range, ages 28 to 33</title></rect>
+<rect x="207.6" y="402.0" width="64.4" height="15" rx="3" fill="#d03b3b"><title>MLB relievers: Past the cliff, ages 34 to 41</title></rect>
+<rect x="203.6" y="399.0" width="3" height="21" rx="1" fill="var(--text)"><title>MLB relievers: the simulation favours the late end, 33</title></rect>
+<text x="336.0" y="414.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">28&ndash;33</text>
+<text x="76.0" y="438.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="end">NHL goalies</text>
+<rect x="108.7" y="426.0" width="31.5" height="15" rx="3" fill="#199e70"><title>NHL goalies: Prime, ages 22 to 25</title></rect>
+<rect x="141.7" y="426.0" width="39.7" height="15" rx="3" fill="url(#hatchp)"><title>NHL goalies: Cliff range, ages 26 to 30</title></rect>
+<rect x="182.9" y="426.0" width="56.2" height="15" rx="3" fill="#d03b3b"><title>NHL goalies: Past the cliff, ages 31 to 37</title></rect>
+<rect x="178.9" y="423.0" width="3" height="21" rx="1" fill="var(--text)"><title>NHL goalies: the simulation favours the late end, 30</title></rect>
+<text x="336.0" y="438.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="var(--text)" text-anchor="end">26&ndash;30</text>
+</svg></div>
+<figcaption>Career model and delta method, all qualifying seasons (NFL 1999&ndash;2025, defense 2013&ndash;2025; NBA 2002&ndash;2023; MLB
+1970&ndash;2021; NHL 2001&ndash;2026). Each block is one age, starting at its gridline. Prime: within a fifth of a talent-SD of the peak on
+the career model, cut off where the cliff range starts. Bars end at the oldest age with enough players to measure.</figcaption></figure>
+<p>Running backs are alone at the front: both methods put their cliff at 29, the only group where they agree on
+an age that early. Defensive backs follow at 30. Receivers, tight ends and linebackers go over at 30&ndash;31,
+defensive linemen at 31, and the NBA runs on the same clock as NFL receivers: 30&ndash;31. Quarterbacks and
+hockey skaters last longest: 32&ndash;33 for quarterbacks and forwards, 32&ndash;34 for defensemen. The
+quarterback number is the shakiest of those: with a 12-game bar instead of 8, or without the era adjustment, no quarterback
+cliff shows up by 33 or 34.</p>
+<p>Is it really a cliff? For the typical player, no: it&rsquo;s a hill that gets steeper. A running back loses about half a point a
+game between 26 and 27. From 28 on it is 0.7 to 1.1 points a year on the career model and
+1.1 to 1.9 on the delta method. The cliffs you remember, Gurley&rsquo;s and Bell&rsquo;s, are that slope plus the
+injury or the benching that ends a career, which is exactly the part an average-by-age chart never sees.</p>
+<p>The wide ranges belong to baseball and goalies, and they are not all alike. A goalie&rsquo;s or a reliever&rsquo;s season is noisy: the
+luck in a single season is about 1.8 times (goalies) and 1.6 times (relievers) the spread in
+talent between players. In simulated leagues that noisy, the delta method ran 2.8 years early and the career model stayed within a fraction of a
+year, so for those two the late end is the better bet: goalies around 30, relievers around
+33. Starting pitchers (1.4) lean the same way, more weakly: around
+31. Hitters are different. A season of OPS+ is about as noisy as a quarterback&rsquo;s season
+(1.1), and at that level our simulation can&rsquo;t say which end of 30&ndash;34 is right; the middle,
+31 to 33, is the safest reading.</p>
+<p>Baseball players do not get a pass, either. OPS+ makes hitters look ageless, because losing 20 points of an index sounds
+small and is a big fall. On the talent yardstick, hitters age later than football players, but they age.</p>
+</section>
+<section>
+<h2><span class="num">04</span> The fantasy answer: when to get off the bus</h2>
+<p>Every top fantasy finisher tends to give some back the next year, at every age, because part of last season was luck. So
+the useful question is how much <em>more</em> an older starter gives back. This is what actually happened to fantasy
+starters (top-24 running backs and receivers, top-12 quarterbacks and tight ends by season total) the following season,
+among those who played again.</p>
+<figure class="chart"><div class="v-desk"><svg viewBox="0 0 620 330" role="img" aria-label="Change in fantasy points per game next season for fantasy starters, by age">
+<text x="6.0" y="18.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="start">Fantasy starters: change in fpts a game next season</text>
+<circle cx="11" cy="36" r="5" fill="#3987e5"/><text x="20.0" y="40.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="start">QB</text>
+<circle cx="55" cy="36" r="5" fill="#d95926"/><text x="64.0" y="40.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="start">RB</text>
+<circle cx="99" cy="36" r="5" fill="#9085e9"/><text x="108.0" y="40.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="start">WR</text>
+<circle cx="143" cy="36" r="5" fill="#d55181"/><text x="152.0" y="40.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="start">TE</text>
+<text x="184.0" y="40.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="start">line = 95% range; hollow = fewer than 40 starters</text>
+<line x1="46" x2="608" y1="284.0" y2="284.0" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="288.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">&minus;6</text>
+<line x1="46" x2="608" y1="249.2" y2="249.2" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="253.2" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">&minus;5</text>
+<line x1="46" x2="608" y1="214.5" y2="214.5" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="218.5" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">&minus;4</text>
+<line x1="46" x2="608" y1="179.7" y2="179.7" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="183.7" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">&minus;3</text>
+<line x1="46" x2="608" y1="144.9" y2="144.9" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="148.9" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">&minus;2</text>
+<line x1="46" x2="608" y1="110.2" y2="110.2" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="114.2" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">&minus;1</text>
+<line x1="46" x2="608" y1="75.4" y2="75.4" stroke="var(--line-strong)" stroke-width="1"/>
+<text x="40.0" y="79.4" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">0</text>
+<text x="102.2" y="302.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">&#8804;24</text>
+<line x1="78.2" x2="78.2" y1="156.9" y2="98.7" stroke="#3987e5" stroke-width="2"/>
+<circle cx="78.2" cy="127.0" r="4.4" fill="#3987e5" stroke="#3987e5" stroke-width="1.8"><title>QB, 24 and under: &minus;1.5 fpts/gm (95% &minus;2.3 to &minus;0.7), 64 starters</title></circle>
+<line x1="94.2" x2="94.2" y1="138.8" y2="104.6" stroke="#d95926" stroke-width="2"/>
+<circle cx="94.2" cy="121.7" r="4.4" fill="#d95926" stroke="#d95926" stroke-width="1.8"><title>RB, 24 and under: &minus;1.3 fpts/gm (95% &minus;1.8 to &minus;0.8), 248 starters</title></circle>
+<line x1="110.2" x2="110.2" y1="138.9" y2="104.5" stroke="#9085e9" stroke-width="2"/>
+<circle cx="110.2" cy="121.1" r="4.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.8"><title>WR, 24 and under: &minus;1.3 fpts/gm (95% &minus;1.8 to &minus;0.8), 184 starters</title></circle>
+<line x1="126.2" x2="126.2" y1="116.1" y2="75.4" stroke="#d55181" stroke-width="2"/>
+<circle cx="126.2" cy="95.2" r="4.4" fill="#d55181" stroke="#d55181" stroke-width="1.8"><title>TE, 24 and under: &minus;0.6 fpts/gm (95% &minus;1.2 to 0.0), 84 starters</title></circle>
+<text x="214.6" y="302.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">25&ndash;26</text>
+<line x1="190.6" x2="190.6" y1="159.4" y2="83.7" stroke="#3987e5" stroke-width="2"/>
+<circle cx="190.6" cy="119.8" r="4.4" fill="#3987e5" stroke="#3987e5" stroke-width="1.8"><title>QB, 25&ndash;26: &minus;1.3 fpts/gm (95% &minus;2.4 to &minus;0.2), 54 starters</title></circle>
+<line x1="206.6" x2="206.6" y1="167.8" y2="129.5" stroke="#d95926" stroke-width="2"/>
+<circle cx="206.6" cy="148.3" r="4.4" fill="#d95926" stroke="#d95926" stroke-width="1.8"><title>RB, 25&ndash;26: &minus;2.1 fpts/gm (95% &minus;2.7 to &minus;1.6), 165 starters</title></circle>
+<line x1="222.6" x2="222.6" y1="155.9" y2="116.5" stroke="#9085e9" stroke-width="2"/>
+<circle cx="222.6" cy="135.2" r="4.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.8"><title>WR, 25&ndash;26: &minus;1.7 fpts/gm (95% &minus;2.3 to &minus;1.2), 141 starters</title></circle>
+<line x1="238.6" x2="238.6" y1="152.8" y2="109.2" stroke="#d55181" stroke-width="2"/>
+<circle cx="238.6" cy="130.8" r="4.4" fill="#d55181" stroke="#d55181" stroke-width="1.8"><title>TE, 25&ndash;26: &minus;1.6 fpts/gm (95% &minus;2.2 to &minus;1.0), 78 starters</title></circle>
+<text x="327.0" y="302.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">27&ndash;28</text>
+<line x1="303.0" x2="303.0" y1="151.3" y2="95.7" stroke="#3987e5" stroke-width="2"/>
+<circle cx="303.0" cy="120.8" r="4.4" fill="#3987e5" stroke="#3987e5" stroke-width="1.8"><title>QB, 27&ndash;28: &minus;1.3 fpts/gm (95% &minus;2.2 to &minus;0.6), 54 starters</title></circle>
+<line x1="319.0" x2="319.0" y1="211.2" y2="162.3" stroke="#d95926" stroke-width="2"/>
+<circle cx="319.0" cy="185.6" r="4.4" fill="#d95926" stroke="#d95926" stroke-width="1.8"><title>RB, 27&ndash;28: &minus;3.2 fpts/gm (95% &minus;3.9 to &minus;2.5), 119 starters</title></circle>
+<line x1="335.0" x2="335.0" y1="169.4" y2="129.8" stroke="#9085e9" stroke-width="2"/>
+<circle cx="335.0" cy="148.9" r="4.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.8"><title>WR, 27&ndash;28: &minus;2.1 fpts/gm (95% &minus;2.7 to &minus;1.6), 129 starters</title></circle>
+<line x1="351.0" x2="351.0" y1="159.7" y2="112.1" stroke="#d55181" stroke-width="2"/>
+<circle cx="351.0" cy="136.0" r="4.4" fill="#d55181" stroke="#d55181" stroke-width="1.8"><title>TE, 27&ndash;28: &minus;1.7 fpts/gm (95% &minus;2.4 to &minus;1.1), 58 starters</title></circle>
+<text x="439.4" y="302.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">29&ndash;30</text>
+<line x1="415.4" x2="415.4" y1="190.4" y2="122.9" stroke="#3987e5" stroke-width="2"/>
+<circle cx="415.4" cy="155.1" r="4.4" fill="#3987e5" stroke="#3987e5" stroke-width="1.8"><title>QB, 29&ndash;30: &minus;2.3 fpts/gm (95% &minus;3.3 to &minus;1.4), 45 starters</title></circle>
+<line x1="431.4" x2="431.4" y1="222.5" y2="151.4" stroke="#d95926" stroke-width="2"/>
+<circle cx="431.4" cy="186.4" r="4.4" fill="#d95926" stroke="#d95926" stroke-width="1.8"><title>RB, 29&ndash;30: &minus;3.2 fpts/gm (95% &minus;4.2 to &minus;2.2), 64 starters</title></circle>
+<line x1="447.4" x2="447.4" y1="186.2" y2="134.4" stroke="#9085e9" stroke-width="2"/>
+<circle cx="447.4" cy="158.8" r="4.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.8"><title>WR, 29&ndash;30: &minus;2.4 fpts/gm (95% &minus;3.2 to &minus;1.7), 83 starters</title></circle>
+<line x1="463.4" x2="463.4" y1="154.7" y2="89.3" stroke="#d55181" stroke-width="2"/>
+<circle cx="463.4" cy="119.2" r="4.4" fill="#d55181" stroke="#d55181" stroke-width="1.8"><title>TE, 29&ndash;30: &minus;1.3 fpts/gm (95% &minus;2.3 to &minus;0.4), 47 starters</title></circle>
+<text x="551.8" y="302.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">31+</text>
+<line x1="527.8" x2="527.8" y1="173.0" y2="119.6" stroke="#3987e5" stroke-width="2"/>
+<circle cx="527.8" cy="143.8" r="4.4" fill="#3987e5" stroke="#3987e5" stroke-width="1.8"><title>QB, 31+: &minus;2.0 fpts/gm (95% &minus;2.8 to &minus;1.3), 91 starters</title></circle>
+<line x1="543.8" x2="543.8" y1="278.4" y2="167.0" stroke="#d95926" stroke-width="2"/>
+<circle cx="543.8" cy="215.4" r="4.4" fill="var(--surface)" stroke="#d95926" stroke-width="1.8"><title>RB, 31+: &minus;4.0 fpts/gm (95% &minus;5.8 to &minus;2.6), 28 starters</title></circle>
+<line x1="559.8" x2="559.8" y1="201.7" y2="154.8" stroke="#9085e9" stroke-width="2"/>
+<circle cx="559.8" cy="176.9" r="4.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.8"><title>WR, 31+: &minus;2.9 fpts/gm (95% &minus;3.6 to &minus;2.3), 86 starters</title></circle>
+<line x1="575.8" x2="575.8" y1="140.2" y2="86.8" stroke="#d55181" stroke-width="2"/>
+<circle cx="575.8" cy="112.8" r="4.4" fill="#d55181" stroke="#d55181" stroke-width="1.8"><title>TE, 31+: &minus;1.1 fpts/gm (95% &minus;1.9 to &minus;0.3), 44 starters</title></circle>
+<text x="327.0" y="324.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">Age of the fantasy starter this season</text>
+</svg></div><div class="v-phone"><svg viewBox="0 0 340 336" role="img" aria-label="Change in fantasy points per game next season for fantasy starters, by age">
+<text x="6.0" y="18.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="start">Fantasy starters: change in fpts a game next season</text>
+<circle cx="11" cy="36" r="5" fill="#3987e5"/><text x="20.0" y="40.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="start">QB</text>
+<circle cx="55" cy="36" r="5" fill="#d95926"/><text x="64.0" y="40.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="start">RB</text>
+<circle cx="99" cy="36" r="5" fill="#9085e9"/><text x="108.0" y="40.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="start">WR</text>
+<circle cx="143" cy="36" r="5" fill="#d55181"/><text x="152.0" y="40.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--text)" text-anchor="start">TE</text>
+<text x="6.0" y="58.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="start">line = 95% range; hollow = fewer than 40</text>
+<line x1="38" x2="334" y1="288.0" y2="288.0" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="292.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">&minus;6</text>
+<line x1="38" x2="334" y1="254.8" y2="254.8" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="258.8" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">&minus;5</text>
+<line x1="38" x2="334" y1="221.5" y2="221.5" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="225.5" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">&minus;4</text>
+<line x1="38" x2="334" y1="188.3" y2="188.3" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="192.3" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">&minus;3</text>
+<line x1="38" x2="334" y1="155.1" y2="155.1" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="159.1" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">&minus;2</text>
+<line x1="38" x2="334" y1="121.8" y2="121.8" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="125.8" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">&minus;1</text>
+<line x1="38" x2="334" y1="88.6" y2="88.6" stroke="var(--line-strong)" stroke-width="1"/>
+<text x="32.0" y="92.6" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">0</text>
+<text x="67.6" y="306.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">&#8804;24</text>
+<line x1="51.1" x2="51.1" y1="166.5" y2="110.9" stroke="#3987e5" stroke-width="2"/>
+<circle cx="51.1" cy="137.9" r="4.4" fill="#3987e5" stroke="#3987e5" stroke-width="1.8"><title>QB, 24 and under: &minus;1.5 fpts/gm (95% &minus;2.3 to &minus;0.7), 64 starters</title></circle>
+<line x1="62.1" x2="62.1" y1="149.2" y2="116.5" stroke="#d95926" stroke-width="2"/>
+<circle cx="62.1" cy="132.8" r="4.4" fill="#d95926" stroke="#d95926" stroke-width="1.8"><title>RB, 24 and under: &minus;1.3 fpts/gm (95% &minus;1.8 to &minus;0.8), 248 starters</title></circle>
+<line x1="73.1" x2="73.1" y1="149.4" y2="116.5" stroke="#9085e9" stroke-width="2"/>
+<circle cx="73.1" cy="132.4" r="4.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.8"><title>WR, 24 and under: &minus;1.3 fpts/gm (95% &minus;1.8 to &minus;0.8), 184 starters</title></circle>
+<line x1="84.1" x2="84.1" y1="127.5" y2="88.6" stroke="#d55181" stroke-width="2"/>
+<circle cx="84.1" cy="107.5" r="4.4" fill="#d55181" stroke="#d55181" stroke-width="1.8"><title>TE, 24 and under: &minus;0.6 fpts/gm (95% &minus;1.2 to 0.0), 84 starters</title></circle>
+<text x="126.8" y="306.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">25&ndash;26</text>
+<line x1="110.3" x2="110.3" y1="168.9" y2="96.6" stroke="#3987e5" stroke-width="2"/>
+<circle cx="110.3" cy="131.0" r="4.4" fill="#3987e5" stroke="#3987e5" stroke-width="1.8"><title>QB, 25&ndash;26: &minus;1.3 fpts/gm (95% &minus;2.4 to &minus;0.2), 54 starters</title></circle>
+<line x1="121.3" x2="121.3" y1="176.9" y2="140.3" stroke="#d95926" stroke-width="2"/>
+<circle cx="121.3" cy="158.3" r="4.4" fill="#d95926" stroke="#d95926" stroke-width="1.8"><title>RB, 25&ndash;26: &minus;2.1 fpts/gm (95% &minus;2.7 to &minus;1.6), 165 starters</title></circle>
+<line x1="132.3" x2="132.3" y1="165.6" y2="127.9" stroke="#9085e9" stroke-width="2"/>
+<circle cx="132.3" cy="145.8" r="4.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.8"><title>WR, 25&ndash;26: &minus;1.7 fpts/gm (95% &minus;2.3 to &minus;1.2), 141 starters</title></circle>
+<line x1="143.3" x2="143.3" y1="162.6" y2="121.0" stroke="#d55181" stroke-width="2"/>
+<circle cx="143.3" cy="141.6" r="4.4" fill="#d55181" stroke="#d55181" stroke-width="1.8"><title>TE, 25&ndash;26: &minus;1.6 fpts/gm (95% &minus;2.2 to &minus;1.0), 78 starters</title></circle>
+<text x="186.0" y="306.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">27&ndash;28</text>
+<line x1="169.5" x2="169.5" y1="161.2" y2="108.0" stroke="#3987e5" stroke-width="2"/>
+<circle cx="169.5" cy="132.0" r="4.4" fill="#3987e5" stroke="#3987e5" stroke-width="1.8"><title>QB, 27&ndash;28: &minus;1.3 fpts/gm (95% &minus;2.2 to &minus;0.6), 54 starters</title></circle>
+<line x1="180.5" x2="180.5" y1="218.4" y2="171.6" stroke="#d95926" stroke-width="2"/>
+<circle cx="180.5" cy="193.9" r="4.4" fill="#d95926" stroke="#d95926" stroke-width="1.8"><title>RB, 27&ndash;28: &minus;3.2 fpts/gm (95% &minus;3.9 to &minus;2.5), 119 starters</title></circle>
+<line x1="191.5" x2="191.5" y1="178.5" y2="140.6" stroke="#9085e9" stroke-width="2"/>
+<circle cx="191.5" cy="158.9" r="4.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.8"><title>WR, 27&ndash;28: &minus;2.1 fpts/gm (95% &minus;2.7 to &minus;1.6), 129 starters</title></circle>
+<line x1="202.5" x2="202.5" y1="169.2" y2="123.7" stroke="#d55181" stroke-width="2"/>
+<circle cx="202.5" cy="146.6" r="4.4" fill="#d55181" stroke="#d55181" stroke-width="1.8"><title>TE, 27&ndash;28: &minus;1.7 fpts/gm (95% &minus;2.4 to &minus;1.1), 58 starters</title></circle>
+<text x="245.2" y="306.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">29&ndash;30</text>
+<line x1="228.7" x2="228.7" y1="198.6" y2="134.0" stroke="#3987e5" stroke-width="2"/>
+<circle cx="228.7" cy="164.8" r="4.4" fill="#3987e5" stroke="#3987e5" stroke-width="1.8"><title>QB, 29&ndash;30: &minus;2.3 fpts/gm (95% &minus;3.3 to &minus;1.4), 45 starters</title></circle>
+<line x1="239.7" x2="239.7" y1="229.3" y2="161.3" stroke="#d95926" stroke-width="2"/>
+<circle cx="239.7" cy="194.7" r="4.4" fill="#d95926" stroke="#d95926" stroke-width="1.8"><title>RB, 29&ndash;30: &minus;3.2 fpts/gm (95% &minus;4.2 to &minus;2.2), 64 starters</title></circle>
+<line x1="250.7" x2="250.7" y1="194.5" y2="145.0" stroke="#9085e9" stroke-width="2"/>
+<circle cx="250.7" cy="168.4" r="4.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.8"><title>WR, 29&ndash;30: &minus;2.4 fpts/gm (95% &minus;3.2 to &minus;1.7), 83 starters</title></circle>
+<line x1="261.7" x2="261.7" y1="164.4" y2="101.9" stroke="#d55181" stroke-width="2"/>
+<circle cx="261.7" cy="130.5" r="4.4" fill="#d55181" stroke="#d55181" stroke-width="1.8"><title>TE, 29&ndash;30: &minus;1.3 fpts/gm (95% &minus;2.3 to &minus;0.4), 47 starters</title></circle>
+<text x="304.4" y="306.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">31+</text>
+<line x1="287.9" x2="287.9" y1="181.9" y2="130.9" stroke="#3987e5" stroke-width="2"/>
+<circle cx="287.9" cy="154.0" r="4.4" fill="#3987e5" stroke="#3987e5" stroke-width="1.8"><title>QB, 31+: &minus;2.0 fpts/gm (95% &minus;2.8 to &minus;1.3), 91 starters</title></circle>
+<line x1="298.9" x2="298.9" y1="282.6" y2="176.2" stroke="#d95926" stroke-width="2"/>
+<circle cx="298.9" cy="222.4" r="4.4" fill="var(--surface)" stroke="#d95926" stroke-width="1.8"><title>RB, 31+: &minus;4.0 fpts/gm (95% &minus;5.8 to &minus;2.6), 28 starters</title></circle>
+<line x1="309.9" x2="309.9" y1="209.4" y2="164.6" stroke="#9085e9" stroke-width="2"/>
+<circle cx="309.9" cy="185.7" r="4.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.8"><title>WR, 31+: &minus;2.9 fpts/gm (95% &minus;3.6 to &minus;2.3), 86 starters</title></circle>
+<line x1="320.9" x2="320.9" y1="150.6" y2="99.5" stroke="#d55181" stroke-width="2"/>
+<circle cx="320.9" cy="124.4" r="4.4" fill="#d55181" stroke="#d55181" stroke-width="1.8"><title>TE, 31+: &minus;1.1 fpts/gm (95% &minus;1.9 to &minus;0.3), 44 starters</title></circle>
+<text x="186.0" y="330.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">Age of the fantasy starter this season</text>
+</svg></div>
+<figcaption>NFL 1999&ndash;2025. Vertical lines are 95% ranges from resampling players.</figcaption></figure>
+<p>Starters 24 and under give back between 0.6 and 1.5 fpts a game, depending on position. Running backs
+break from that pace at 27: starting backs aged 27 or 28 give back 3.2 fpts a game the next
+season, and past 30, 4.0. The cheat sheet strips out the part every starter loses, keeps only the extra drop that
+comes with age, and counts a season lost entirely as zero, because that is what you get from a player who doesn&rsquo;t play.</p>
+<div class="ledger"><table><thead>
+<tr><th rowspan="2">Pos</th><th rowspan="2">Cliff</th><th rowspan="2">Sell before age</th><th class="span" colspan="3">Extra drop next season, by age</th><th rowspan="2">Share of peak at 30</th></tr>
+<tr><th>27&ndash;28</th><th>29&ndash;30</th><th>31+</th></tr></thead><tbody><tr><td><b>RB</b></td><td><b>29</b></td><td><b>28</b></td><td>&minus;1.2</td><td>&minus;1.5</td><td>&minus;2.6</td><td>55&ndash;74%</td></tr><tr><td><b>WR</b></td><td><b>30&ndash;31</b></td><td><b>30</b></td><td>&minus;0.5</td><td>&minus;1.2</td><td>&minus;1.6</td><td>63&ndash;78%</td></tr><tr><td><b>TE</b></td><td><b>30&ndash;31</b></td><td><b>none</b></td><td>&minus;0.5</td><td>&minus;0.2</td><td>&minus;1.3</td><td>71&ndash;82%</td></tr><tr><td><b>QB</b></td><td><b>32&ndash;33</b></td><td><b>none</b></td><td>+0.2</td><td>&minus;0.4</td><td>&minus;0.4</td><td>91&ndash;93%</td></tr></tbody></table></div>
+<div class="ledger-cap">Extra drop: change in fpts a game the next season beyond what starters aged 23 to 26 lose at the same
+position, with a season missed entirely counted as zero. Counting only starters who played again, the three columns read
+RB &minus;1.2, &minus;1.2, &minus;2.0; WR &minus;0.5, &minus;0.8, &minus;1.3; TE &minus;0.5, &minus;0.1, +0.1; QB 0.0, &minus;1.0, &minus;0.6: the difference is lost seasons. Sell before: the first age at which the extra drop reaches a full point. Share of peak
+at 30: the range between the two methods.</div>
+<p><strong>Running backs.</strong> Pay full price through a back&rsquo;s age-27 season: the career model still has the typical
+back in his prime at 27. Then sell. Starting backs aged 27 or 28 give back an extra 1.2 fpts a game
+the following season, and 29 is the cliff. One caution for 2026: in the 2012&ndash;2025 half of the data alone the cliff comes at 28&ndash;29, against 30 in 1999&ndash;2011. Each half is thin at the older ages (the modern curve ends at 30), so treat it as a lean toward selling early, not a finding. Stars are not exempt. They have more to lose: backs who were top-quarter
+producers at 23 to 25 lost 5.2 fpts a game between 26 and 30, and everyone else lost 1.8. As a
+share, the two groups end up closer (60% and 69% of what they had at 26). Age takes a
+cut, not a flat fee.</p>
+<p><strong>Receivers.</strong> A slower version of the same story. The extra drop is small at 27 or 28 (&minus;0.5),
+grows at 29 or 30 (&minus;1.2) and is &minus;1.6 past 30, where a starter gives back about
+3 fpts a game the following season. Sell before his age-30 season.</p>
+<p><strong>Tight ends.</strong> The cliff comes at 30&ndash;31, like receivers, but the tight ends still starting past 30 are a
+hardy group: the ones who played again held their production (+0.1 against young starters).
+Just 18 players account for those 44 seasons, led by Tony Gonzalez, Jason Witten, Shannon Sharpe. The risk is the zero:
+14% of them played no games the next year, which is why the table reads &minus;1.3. If yours is still
+starting, age alone is not the problem; staying on the field is.</p>
+<p><strong>Quarterbacks.</strong> They do age: the cliff lands at 32&ndash;33, but the slope into it is gentle. Counting missed
+seasons, starters past 28 give back less than half a point a game more than young ones. Past 34 we don&rsquo;t have
+enough of them to say.</p>
+<p class="rule"><b>The one-line version: sell running backs before their age-28 season and receivers before their
+age-30 season. A tight end still starting past 30 has already beaten the curve; the risk with him is a lost season, not a
+slide. And don&rsquo;t let a quarterback&rsquo;s birthday scare you before 32.</b></p>
+<p>The other way to lose is a player who doesn&rsquo;t play at all. Among all backs with a qualifying season, the share with no
+games the next year rises from 16% at 26 to 25% at 30 (fantasy starters are
+safer: 6% of starting backs aged 29 or 30), and the chart shows tight ends climbing right with them.</p>
+<figure class="chart"><div class="v-desk"><svg viewBox="0 0 620 300" role="img" aria-label="Share of players with no games the next season by age">
+<text x="6.0" y="18.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="start">No games at all the next season (all players, 8+ games)</text>
+<text x="6.0" y="35.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="start">Hollow: fewer than 40 players at that age</text>
+<line x1="46" x2="530" y1="258.0" y2="258.0" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="262.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">0%</text>
+<line x1="46" x2="530" y1="218.0" y2="218.0" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="222.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">10%</text>
+<line x1="46" x2="530" y1="178.0" y2="178.0" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="182.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">20%</text>
+<line x1="46" x2="530" y1="138.0" y2="138.0" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="142.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">30%</text>
+<line x1="46" x2="530" y1="98.0" y2="98.0" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="102.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">40%</text>
+<line x1="46" x2="530" y1="58.0" y2="58.0" stroke="var(--line)" stroke-width="1"/>
+<text x="40.0" y="62.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">50%</text>
+<text x="46.0" y="275.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">22</text>
+<text x="90.0" y="275.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">23</text>
+<text x="134.0" y="275.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="178.0" y="275.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">25</text>
+<text x="222.0" y="275.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">26</text>
+<text x="266.0" y="275.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">27</text>
+<text x="310.0" y="275.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<text x="354.0" y="275.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">29</text>
+<text x="398.0" y="275.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">30</text>
+<text x="442.0" y="275.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">31</text>
+<text x="486.0" y="275.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<text x="530.0" y="275.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">33</text>
+<text x="288.0" y="294.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">Age this season</text>
+<polyline points="46.0,217.0 90.0,222.4 134.0,210.5 178.0,210.1 222.0,195.1 266.0,195.8 310.0,181.2 354.0,158.0 398.0,158.0 442.0,156.4 486.0,105.6 530.0,84.1" fill="none" stroke="#d95926" stroke-width="2.2"/>
+<circle cx="46.0" cy="217.0" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 22: 10% (n=234)</title></circle>
+<circle cx="90.0" cy="222.4" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 23: 9% (n=348)</title></circle>
+<circle cx="134.0" cy="210.5" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 24: 12% (n=379)</title></circle>
+<circle cx="178.0" cy="210.1" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 25: 12% (n=326)</title></circle>
+<circle cx="222.0" cy="195.1" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 26: 16% (n=286)</title></circle>
+<circle cx="266.0" cy="195.8" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 27: 16% (n=251)</title></circle>
+<circle cx="310.0" cy="181.2" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 28: 19% (n=198)</title></circle>
+<circle cx="354.0" cy="158.0" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 29: 25% (n=132)</title></circle>
+<circle cx="398.0" cy="158.0" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 30: 25% (n=80)</title></circle>
+<circle cx="442.0" cy="156.4" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 31: 25% (n=63)</title></circle>
+<circle cx="486.0" cy="105.6" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 32: 38% (n=42)</title></circle>
+<circle cx="530.0" cy="84.1" r="3.4" fill="var(--surface)" stroke="#d95926" stroke-width="1.6"><title>RB 33: 43% (n=23)</title></circle>
+<polyline points="46.0,229.3 90.0,216.1 134.0,207.0 178.0,209.6 222.0,208.5 266.0,196.6 310.0,206.1 354.0,181.8 398.0,168.6 442.0,169.9 486.0,168.6 530.0,135.4" fill="none" stroke="#9085e9" stroke-width="2.2"/>
+<circle cx="46.0" cy="229.3" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 22: 7% (n=335)</title></circle>
+<circle cx="90.0" cy="216.1" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 23: 10% (n=496)</title></circle>
+<circle cx="134.0" cy="207.0" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 24: 13% (n=510)</title></circle>
+<circle cx="178.0" cy="209.6" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 25: 12% (n=455)</title></circle>
+<circle cx="222.0" cy="208.5" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 26: 12% (n=396)</title></circle>
+<circle cx="266.0" cy="196.6" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 27: 15% (n=345)</title></circle>
+<circle cx="310.0" cy="206.1" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 28: 13% (n=270)</title></circle>
+<circle cx="354.0" cy="181.8" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 29: 19% (n=231)</title></circle>
+<circle cx="398.0" cy="168.6" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 30: 22% (n=179)</title></circle>
+<circle cx="442.0" cy="169.9" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 31: 22% (n=118)</title></circle>
+<circle cx="486.0" cy="168.6" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 32: 22% (n=85)</title></circle>
+<circle cx="530.0" cy="135.4" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 33: 31% (n=62)</title></circle>
+<polyline points="46.0,233.3 90.0,241.4 134.0,211.2 178.0,218.7 222.0,207.3 266.0,220.5 310.0,219.9 354.0,191.3 398.0,155.2 442.0,148.4 486.0,143.7 530.0,167.7" fill="none" stroke="#d55181" stroke-width="2.2"/>
+<circle cx="46.0" cy="233.3" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 22: 6% (n=97)</title></circle>
+<circle cx="90.0" cy="241.4" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 23: 4% (n=193)</title></circle>
+<circle cx="134.0" cy="211.2" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 24: 12% (n=248)</title></circle>
+<circle cx="178.0" cy="218.7" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 25: 10% (n=244)</title></circle>
+<circle cx="222.0" cy="207.3" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 26: 13% (n=213)</title></circle>
+<circle cx="266.0" cy="220.5" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 27: 9% (n=192)</title></circle>
+<circle cx="310.0" cy="219.9" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 28: 10% (n=168)</title></circle>
+<circle cx="354.0" cy="191.3" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 29: 17% (n=138)</title></circle>
+<circle cx="398.0" cy="155.2" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 30: 26% (n=109)</title></circle>
+<circle cx="442.0" cy="148.4" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 31: 27% (n=73)</title></circle>
+<circle cx="486.0" cy="143.7" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 32: 29% (n=49)</title></circle>
+<circle cx="530.0" cy="167.7" r="3.4" fill="var(--surface)" stroke="#d55181" stroke-width="1.6"><title>TE 33: 23% (n=31)</title></circle>
+<polyline points="46.0,223.2 90.0,236.4 134.0,231.9 178.0,225.4 222.0,215.9 266.0,241.8 310.0,217.0 354.0,258.0 398.0,251.0 442.0,221.6 486.0,219.0 530.0,208.0" fill="none" stroke="#3987e5" stroke-width="1.6" stroke-dasharray="5,4"/>
+<circle cx="46.0" cy="223.2" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 22: 9% (n=46)</title></circle>
+<circle cx="90.0" cy="236.4" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 23: 5% (n=74)</title></circle>
+<circle cx="134.0" cy="231.9" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 24: 7% (n=92)</title></circle>
+<circle cx="178.0" cy="225.4" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 25: 8% (n=86)</title></circle>
+<circle cx="222.0" cy="215.9" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 26: 11% (n=76)</title></circle>
+<circle cx="266.0" cy="241.8" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 27: 4% (n=74)</title></circle>
+<circle cx="310.0" cy="217.0" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 28: 10% (n=78)</title></circle>
+<circle cx="354.0" cy="258.0" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 29: 0% (n=60)</title></circle>
+<circle cx="398.0" cy="251.0" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 30: 2% (n=57)</title></circle>
+<circle cx="442.0" cy="221.6" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 31: 9% (n=55)</title></circle>
+<circle cx="486.0" cy="219.0" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 32: 10% (n=41)</title></circle>
+<circle cx="530.0" cy="208.0" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 33: 12% (n=40)</title></circle>
+<text x="537.0" y="88.1" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">RB</text>
+<text x="537.0" y="139.4" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">WR</text>
+<text x="537.0" y="171.7" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">TE</text>
+<text x="537.0" y="212.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">QB (noisy)</text>
+</svg></div><div class="v-phone"><svg viewBox="0 0 340 292" role="img" aria-label="Share of players with no games the next season by age">
+<text x="6.0" y="18.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="var(--text)" text-anchor="start">No games at all the next season</text>
+<text x="6.0" y="35.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="start">Hollow: fewer than 40 players at that age</text>
+<line x1="38" x2="276" y1="250.0" y2="250.0" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="254.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">0%</text>
+<line x1="38" x2="276" y1="212.4" y2="212.4" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="216.4" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">10%</text>
+<line x1="38" x2="276" y1="174.8" y2="174.8" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="178.8" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">20%</text>
+<line x1="38" x2="276" y1="137.2" y2="137.2" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="141.2" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">30%</text>
+<line x1="38" x2="276" y1="99.6" y2="99.6" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="103.6" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">40%</text>
+<line x1="38" x2="276" y1="62.0" y2="62.0" stroke="var(--line)" stroke-width="1"/>
+<text x="32.0" y="66.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="end">50%</text>
+<text x="38.0" y="267.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">22</text>
+<text x="81.3" y="267.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="124.5" y="267.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">26</text>
+<text x="167.8" y="267.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<text x="211.1" y="267.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">30</text>
+<text x="254.4" y="267.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<text x="157.0" y="286.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="400" fill="var(--muted)" text-anchor="middle">Age this season</text>
+<polyline points="38.0,211.4 59.6,216.5 81.3,205.4 102.9,205.0 124.5,190.8 146.2,191.6 167.8,177.8 189.5,156.0 211.1,156.0 232.7,154.5 254.4,106.8 276.0,86.5" fill="none" stroke="#d95926" stroke-width="2.2"/>
+<circle cx="38.0" cy="211.4" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 22: 10% (n=234)</title></circle>
+<circle cx="59.6" cy="216.5" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 23: 9% (n=348)</title></circle>
+<circle cx="81.3" cy="205.4" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 24: 12% (n=379)</title></circle>
+<circle cx="102.9" cy="205.0" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 25: 12% (n=326)</title></circle>
+<circle cx="124.5" cy="190.8" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 26: 16% (n=286)</title></circle>
+<circle cx="146.2" cy="191.6" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 27: 16% (n=251)</title></circle>
+<circle cx="167.8" cy="177.8" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 28: 19% (n=198)</title></circle>
+<circle cx="189.5" cy="156.0" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 29: 25% (n=132)</title></circle>
+<circle cx="211.1" cy="156.0" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 30: 25% (n=80)</title></circle>
+<circle cx="232.7" cy="154.5" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 31: 25% (n=63)</title></circle>
+<circle cx="254.4" cy="106.8" r="3.4" fill="#d95926" stroke="#d95926" stroke-width="1.6"><title>RB 32: 38% (n=42)</title></circle>
+<circle cx="276.0" cy="86.5" r="3.4" fill="var(--surface)" stroke="#d95926" stroke-width="1.6"><title>RB 33: 43% (n=23)</title></circle>
+<polyline points="38.0,223.1 59.6,210.6 81.3,202.1 102.9,204.5 124.5,203.5 146.2,192.2 167.8,201.3 189.5,178.4 211.1,166.0 232.7,167.2 254.4,166.0 276.0,134.8" fill="none" stroke="#9085e9" stroke-width="2.2"/>
+<circle cx="38.0" cy="223.1" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 22: 7% (n=335)</title></circle>
+<circle cx="59.6" cy="210.6" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 23: 10% (n=496)</title></circle>
+<circle cx="81.3" cy="202.1" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 24: 13% (n=510)</title></circle>
+<circle cx="102.9" cy="204.5" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 25: 12% (n=455)</title></circle>
+<circle cx="124.5" cy="203.5" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 26: 12% (n=396)</title></circle>
+<circle cx="146.2" cy="192.2" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 27: 15% (n=345)</title></circle>
+<circle cx="167.8" cy="201.3" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 28: 13% (n=270)</title></circle>
+<circle cx="189.5" cy="178.4" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 29: 19% (n=231)</title></circle>
+<circle cx="211.1" cy="166.0" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 30: 22% (n=179)</title></circle>
+<circle cx="232.7" cy="167.2" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 31: 22% (n=118)</title></circle>
+<circle cx="254.4" cy="166.0" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 32: 22% (n=85)</title></circle>
+<circle cx="276.0" cy="134.8" r="3.4" fill="#9085e9" stroke="#9085e9" stroke-width="1.6"><title>WR 33: 31% (n=62)</title></circle>
+<polyline points="38.0,226.7 59.6,234.4 81.3,206.0 102.9,213.0 124.5,202.3 146.2,214.8 167.8,214.2 189.5,187.3 211.1,153.4 232.7,147.0 254.4,142.6 276.0,165.1" fill="none" stroke="#d55181" stroke-width="2.2"/>
+<circle cx="38.0" cy="226.7" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 22: 6% (n=97)</title></circle>
+<circle cx="59.6" cy="234.4" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 23: 4% (n=193)</title></circle>
+<circle cx="81.3" cy="206.0" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 24: 12% (n=248)</title></circle>
+<circle cx="102.9" cy="213.0" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 25: 10% (n=244)</title></circle>
+<circle cx="124.5" cy="202.3" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 26: 13% (n=213)</title></circle>
+<circle cx="146.2" cy="214.8" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 27: 9% (n=192)</title></circle>
+<circle cx="167.8" cy="214.2" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 28: 10% (n=168)</title></circle>
+<circle cx="189.5" cy="187.3" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 29: 17% (n=138)</title></circle>
+<circle cx="211.1" cy="153.4" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 30: 26% (n=109)</title></circle>
+<circle cx="232.7" cy="147.0" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 31: 27% (n=73)</title></circle>
+<circle cx="254.4" cy="142.6" r="3.4" fill="#d55181" stroke="#d55181" stroke-width="1.6"><title>TE 32: 29% (n=49)</title></circle>
+<circle cx="276.0" cy="165.1" r="3.4" fill="var(--surface)" stroke="#d55181" stroke-width="1.6"><title>TE 33: 23% (n=31)</title></circle>
+<polyline points="38.0,217.3 59.6,229.7 81.3,225.5 102.9,219.4 124.5,210.4 146.2,234.8 167.8,211.4 189.5,250.0 211.1,243.4 232.7,215.8 254.4,213.3 276.0,203.0" fill="none" stroke="#3987e5" stroke-width="1.6" stroke-dasharray="5,4"/>
+<circle cx="38.0" cy="217.3" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 22: 9% (n=46)</title></circle>
+<circle cx="59.6" cy="229.7" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 23: 5% (n=74)</title></circle>
+<circle cx="81.3" cy="225.5" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 24: 7% (n=92)</title></circle>
+<circle cx="102.9" cy="219.4" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 25: 8% (n=86)</title></circle>
+<circle cx="124.5" cy="210.4" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 26: 11% (n=76)</title></circle>
+<circle cx="146.2" cy="234.8" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 27: 4% (n=74)</title></circle>
+<circle cx="167.8" cy="211.4" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 28: 10% (n=78)</title></circle>
+<circle cx="189.5" cy="250.0" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 29: 0% (n=60)</title></circle>
+<circle cx="211.1" cy="243.4" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 30: 2% (n=57)</title></circle>
+<circle cx="232.7" cy="215.8" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 31: 9% (n=55)</title></circle>
+<circle cx="254.4" cy="213.3" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 32: 10% (n=41)</title></circle>
+<circle cx="276.0" cy="203.0" r="2.8" fill="#3987e5" stroke="#3987e5" stroke-width="1.6"><title>QB 33: 12% (n=40)</title></circle>
+<text x="283.0" y="90.5" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">RB</text>
+<text x="283.0" y="138.8" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">WR</text>
+<text x="283.0" y="169.1" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">TE</text>
+<text x="283.0" y="207.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">QB (noisy)</text>
+</svg></div>
+<figcaption>Share of NFL players with a qualifying season (8+ games) who played no games at all the following season, by age,
+1999&ndash;2025. Single-age quarterback values rest on 40 to 92 players and move around.</figcaption></figure>
+<p>Which brings us to this season. The box applies the rule to every 2025 fantasy starter who is in his sell window, near his
+position&rsquo;s cliff or past it.</p>
+<div class="clock"><h4>On the clock in 2026</h4>
+<p class="sub">Every 2025 fantasy starter (top-24 RB and WR, top-12 QB and TE by season total) who is in his position&rsquo;s sell window
+(his last season before the sell-by age), within a year of its cliff, or past it. Age on September 1, 2026; 2025 fpts a game; 2025 as a share of his best
+season with 8+ games. An age is not a verdict: the cliff is where the typical player is, and a starter has already beaten the
+typical player. McCaffrey is past the cliff at 30 and was still at 83% of his best; Stafford, at
+38, was at 95%.</p>
+<div class="grp">Sell window: sell this winter, before the extra drop</div><div class="row hdr"><div></div><div class="num">Age</div><div class="num">2025<br>fpts/gm</div><div class="num">% of<br>best</div></div><div class="row"><div class="who"><span class="nm">Jonathan Taylor</span> <span class="tag sell">sell this winter</span><div class="tm">Indianapolis Colts &middot; RB4 in 2025</div></div><div class="num">27</div><div class="num">21.3</div><div class="num">97%</div></div><div class="row"><div class="who"><span class="nm">Travis Etienne</span> <span class="tag sell">sell this winter</span><div class="tm">New Orleans Saints &middot; RB10 in 2025</div></div><div class="num">27</div><div class="num">14.9</div><div class="num">90%</div></div><div class="row"><div class="who"><span class="nm">D&rsquo;Andre Swift</span> <span class="tag sell">sell this winter</span><div class="tm">Chicago Bears &middot; RB15 in 2025</div></div><div class="num">27</div><div class="num">14.3</div><div class="num">89%</div></div><div class="row"><div class="who"><span class="nm">Jaylen Warren</span> <span class="tag sell">sell this winter</span><div class="tm">Pittsburgh Steelers &middot; RB17 in 2025</div></div><div class="num">27</div><div class="num">13.6</div><div class="num">100%</div></div><div class="row"><div class="who"><span class="nm">Kenneth Gainwell</span> <span class="tag sell">sell this winter</span><div class="tm">Tampa Bay Buccaneers &middot; RB16 in 2025</div></div><div class="num">27</div><div class="num">13.0</div><div class="num">100%</div></div><div class="grp">Running backs &middot; cliff 29 &middot; data end at 33</div><div class="row hdr"><div></div><div class="num">Age</div><div class="num">2025<br>fpts/gm</div><div class="num">% of<br>best</div></div><div class="row"><div class="who"><span class="nm">Derrick Henry</span> <span class="tag past">past the cliff</span><div class="tm">Baltimore Ravens &middot; RB8 in 2025</div></div><div class="num">32</div><div class="num">16.4</div><div class="num">68%</div></div><div class="row"><div class="who"><span class="nm">Christian McCaffrey</span> <span class="tag past">past the cliff</span><div class="tm">San Francisco 49ers &middot; RB1 in 2025</div></div><div class="num">30</div><div class="num">24.5</div><div class="num">83%</div></div><div class="row"><div class="who"><span class="nm">Saquon Barkley</span> <span class="tag in">at the cliff</span><div class="tm">Philadelphia Eagles &middot; RB14 in 2025</div></div><div class="num">29</div><div class="num">14.5</div><div class="num">60%</div></div><div class="row"><div class="who"><span class="nm">Tony Pollard</span> <span class="tag in">at the cliff</span><div class="tm">Tennessee Titans &middot; RB23 in 2025</div></div><div class="num">29</div><div class="num">10.9</div><div class="num">70%</div></div><div class="row"><div class="who"><span class="nm">Rico Dowdle</span> <span class="tag near">1 yr from cliff</span><div class="tm">Pittsburgh Steelers &middot; RB18 in 2025</div></div><div class="num">28</div><div class="num">12.7</div><div class="num">100%</div></div><div class="grp">Receivers &middot; cliff 30&ndash;31 &middot; data end at 35</div><div class="row hdr"><div></div><div class="num">Age</div><div class="num">2025<br>fpts/gm</div><div class="num">% of<br>best</div></div><div class="row"><div class="who"><span class="nm">Davante Adams</span> <span class="tag past">past the cliff</span><div class="tm">Los Angeles Rams &middot; WR9 in 2025</div></div><div class="num">33</div><div class="num">15.9</div><div class="num">62%</div></div><div class="row"><div class="who"><span class="nm">Stefon Diggs</span> <span class="tag past">past the cliff</span><div class="tm">Washington Commanders &middot; WR17 in 2025</div></div><div class="num">32</div><div class="num">12.4</div><div class="num">60%</div></div><div class="row"><div class="who"><span class="nm">Courtland Sutton</span> <span class="tag in">cliff range</span><div class="tm">Denver Broncos &middot; WR13 in 2025</div></div><div class="num">30</div><div class="num">12.9</div><div class="num">86%</div></div><div class="grp">Tight ends &middot; cliff 30&ndash;31 &middot; data end at 33</div><div class="row hdr"><div></div><div class="num">Age</div><div class="num">2025<br>fpts/gm</div><div class="num">% of<br>best</div></div><div class="row"><div class="who"><span class="nm">Travis Kelce</span> <span class="tag beyond">beyond our data</span><div class="tm">Kansas City Chiefs &middot; TE3 in 2025</div></div><div class="num">36</div><div class="num">11.4</div><div class="num">55%</div></div><div class="row"><div class="who"><span class="nm">Hunter Henry</span> <span class="tag in">cliff range</span><div class="tm">New England Patriots &middot; TE9 in 2025</div></div><div class="num">31</div><div class="num">10.5</div><div class="num">84%</div></div><div class="row"><div class="who"><span class="nm">Dallas Goedert</span> <span class="tag in">cliff range</span><div class="tm">Philadelphia Eagles &middot; TE7 in 2025</div></div><div class="num">31</div><div class="num">12.3</div><div class="num">100%</div></div><div class="row"><div class="who"><span class="nm">Dalton Schultz</span> <span class="tag in">cliff range</span><div class="tm">Houston Texans &middot; TE10 in 2025</div></div><div class="num">30</div><div class="num">10.5</div><div class="num">85%</div></div><div class="row"><div class="who"><span class="nm">Juwan Johnson</span> <span class="tag near">1 yr from cliff</span><div class="tm">New Orleans Saints &middot; TE8 in 2025</div></div><div class="num">29</div><div class="num">10.6</div><div class="num">100%</div></div><div class="grp">Quarterbacks &middot; cliff 32&ndash;33 &middot; data end at 34</div><div class="row hdr"><div></div><div class="num">Age</div><div class="num">2025<br>fpts/gm</div><div class="num">% of<br>best</div></div><div class="row"><div class="who"><span class="nm">Matthew Stafford</span> <span class="tag beyond">beyond our data</span><div class="tm">Los Angeles Rams &middot; QB3 in 2025</div></div><div class="num">38</div><div class="num">20.6</div><div class="num">95%</div></div><div class="row"><div class="who"><span class="nm">Dak Prescott</span> <span class="tag in">cliff range</span><div class="tm">Dallas Cowboys &middot; QB6 in 2025</div></div><div class="num">33</div><div class="num">18.5</div><div class="num">87%</div></div><div class="row"><div class="who"><span class="nm">Jared Goff</span> <span class="tag near">1 yr from cliff</span><div class="tm">Detroit Lions &middot; QB9 in 2025</div></div><div class="num">31</div><div class="num">17.5</div><div class="num">90%</div></div><div class="row"><div class="who"><span class="nm">Baker Mayfield</span> <span class="tag near">1 yr from cliff</span><div class="tm">Tampa Bay Buccaneers &middot; QB12 in 2025</div></div><div class="num">31</div><div class="num">16.0</div><div class="num">74%</div></div>
+<p class="foot">Left out because they are not on an active roster today: Josh Jacobs (commissioner exempt list), A.J. Brown (injured reserve). Rosters checked against Wikipedia on
+September 23, 2026; recheck before you trade.</p></div>
+</section>
+<section>
+<h2><span class="num">05</span> &ldquo;But what about Derrick Henry?&rdquo;</h2>
+<p>The cliff is an average, and the players we remember are the ones who beat it. Henry put up 19.8 fpts a game
+at 30 and 16.4 at 31. Frank Gore was still at 13.4 at 33. The chart puts three backs who beat the
+curve next to three who fell off it. Each back is drawn against the typical curve started from his own best season at 24 to 26.</p>
+<figure class="chart"><div class="v-desk"><svg viewBox="0 0 620 442" role="img" aria-label="Six running backs against the typical curve started from their own best season">
+<text x="612.0" y="23.0" font-family="IBM Plex Sans, sans-serif" font-size="11.5" font-weight="400" fill="var(--muted)" text-anchor="end">Gray band: the typical back, from his own best at 24&ndash;26</text>
+<text x="10.0" y="23.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="#199e70" text-anchor="start">Beat the curve</text>
+<text x="10.0" y="45.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">Henry: 19.8 at 30</text>
+<line x1="32.0" x2="200.7" y1="182.0" y2="182.0" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="186.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">0</text>
+<line x1="32.0" x2="200.7" y1="142.0" y2="142.0" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="146.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">10</text>
+<line x1="32.0" x2="200.7" y1="102.0" y2="102.0" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="106.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">20</text>
+<line x1="32.0" x2="200.7" y1="62.0" y2="62.0" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="66.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">30</text>
+<text x="58.4" y="197.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="100.5" y="197.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<text x="142.7" y="197.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<text x="184.9" y="197.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">36</text>
+<polygon points="79.4,98.7 90.0,102.6 100.5,109.4 111.1,115.2 121.6,117.6 132.1,120.7 142.7,129.5 153.2,137.1 153.2,158.8 142.7,151.4 132.1,140.3 121.6,131.3 111.1,122.1 100.5,112.9 90.0,104.6 79.4,98.7" fill="var(--text)" opacity="0.22"><title>Typical back from Henry&#39;s 20.8 at 26: 5.8 to 11.2 by 33</title></polygon>
+<polyline points="37.3,151.8 47.8,148.2 58.4,131.7 68.9,103.4 79.4,98.7 90.0,85.3 100.5,106.3 111.1,124.0 121.6,102.8 132.1,116.2" fill="none" stroke="#199e70" stroke-width="2"/>
+<circle cx="37.3" cy="151.8" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2016 (age 22): 7.5 fpts/gm</title></circle>
+<circle cx="47.8" cy="148.2" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2017 (age 23): 8.4 fpts/gm</title></circle>
+<circle cx="58.4" cy="131.7" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2018 (age 24): 12.6 fpts/gm</title></circle>
+<circle cx="68.9" cy="103.4" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2019 (age 25): 19.6 fpts/gm</title></circle>
+<circle cx="79.4" cy="98.7" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2020 (age 26): 20.8 fpts/gm</title></circle>
+<circle cx="90.0" cy="85.3" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2021 (age 27): 24.2 fpts/gm</title></circle>
+<circle cx="100.5" cy="106.3" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2022 (age 28): 18.9 fpts/gm</title></circle>
+<circle cx="111.1" cy="124.0" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2023 (age 29): 14.5 fpts/gm</title></circle>
+<circle cx="121.6" cy="102.8" r="4.2" fill="#199e70" stroke="var(--text)" stroke-width="1.4"><title>Derrick Henry, 2024 (age 30): 19.8 fpts/gm</title></circle>
+<circle cx="132.1" cy="116.2" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2025 (age 31): 16.4 fpts/gm</title></circle>
+<text x="212.7" y="45.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">Gore: 13.4 at 33</text>
+<line x1="234.7" x2="403.3" y1="182.0" y2="182.0" stroke="var(--line)" stroke-width="1"/>
+<line x1="234.7" x2="403.3" y1="142.0" y2="142.0" stroke="var(--line)" stroke-width="1"/>
+<line x1="234.7" x2="403.3" y1="102.0" y2="102.0" stroke="var(--line)" stroke-width="1"/>
+<line x1="234.7" x2="403.3" y1="62.0" y2="62.0" stroke="var(--line)" stroke-width="1"/>
+<text x="261.0" y="197.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="303.2" y="197.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<text x="345.4" y="197.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<text x="387.5" y="197.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">36</text>
+<polygon points="282.1,102.4 292.6,106.1 303.2,112.6 313.7,118.1 324.3,120.4 334.8,123.4 345.4,131.8 355.9,139.1 355.9,159.9 345.4,152.7 334.8,142.2 324.3,133.5 313.7,124.8 303.2,115.9 292.6,108.0 282.1,102.4" fill="var(--text)" opacity="0.22"><title>Typical back from Gore&#39;s 19.9 at 26: 5.5 to 10.7 by 33</title></polygon>
+<polyline points="239.9,152.6 250.5,101.8 261.0,118.9 271.6,116.9 282.1,102.4 292.6,108.4 303.2,133.6 313.7,125.8 324.3,134.3 334.8,142.3 345.4,133.7 355.9,128.4 366.4,138.6 377.0,152.7 387.5,156.7 398.1,155.3" fill="none" stroke="#199e70" stroke-width="2"/>
+<circle cx="239.9" cy="152.6" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2005 (age 22): 7.3 fpts/gm</title></circle>
+<circle cx="250.5" cy="101.8" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2006 (age 23): 20.1 fpts/gm</title></circle>
+<circle cx="261.0" cy="118.9" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2007 (age 24): 15.8 fpts/gm</title></circle>
+<circle cx="271.6" cy="116.9" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2008 (age 25): 16.3 fpts/gm</title></circle>
+<circle cx="282.1" cy="102.4" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2009 (age 26): 19.9 fpts/gm</title></circle>
+<circle cx="292.6" cy="108.4" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2010 (age 27): 18.4 fpts/gm</title></circle>
+<circle cx="303.2" cy="133.6" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2011 (age 28): 12.1 fpts/gm</title></circle>
+<circle cx="313.7" cy="125.8" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2012 (age 29): 14.1 fpts/gm</title></circle>
+<circle cx="324.3" cy="134.3" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2013 (age 30): 11.9 fpts/gm</title></circle>
+<circle cx="334.8" cy="142.3" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2014 (age 31): 9.9 fpts/gm</title></circle>
+<circle cx="345.4" cy="133.7" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2015 (age 32): 12.1 fpts/gm</title></circle>
+<circle cx="355.9" cy="128.4" r="4.2" fill="#199e70" stroke="var(--text)" stroke-width="1.4"><title>Frank Gore, 2016 (age 33): 13.4 fpts/gm</title></circle>
+<circle cx="366.4" cy="138.6" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2017 (age 34): 10.8 fpts/gm</title></circle>
+<circle cx="377.0" cy="152.7" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2018 (age 35): 7.3 fpts/gm</title></circle>
+<circle cx="387.5" cy="156.7" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2019 (age 36): 6.3 fpts/gm</title></circle>
+<circle cx="398.1" cy="155.3" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2020 (age 37): 6.7 fpts/gm</title></circle>
+<text x="415.3" y="45.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">Peterson: 16.3 at 30</text>
+<line x1="437.3" x2="606.0" y1="182.0" y2="182.0" stroke="var(--line)" stroke-width="1"/>
+<line x1="437.3" x2="606.0" y1="142.0" y2="142.0" stroke="var(--line)" stroke-width="1"/>
+<line x1="437.3" x2="606.0" y1="102.0" y2="102.0" stroke="var(--line)" stroke-width="1"/>
+<line x1="437.3" x2="606.0" y1="62.0" y2="62.0" stroke="var(--line)" stroke-width="1"/>
+<text x="463.7" y="197.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="505.9" y="197.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<text x="548.0" y="197.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<text x="590.2" y="197.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">36</text>
+<polygon points="463.7,101.6 474.2,104.0 484.8,105.3 495.3,108.9 505.9,115.2 516.4,120.5 526.9,122.7 537.5,125.6 548.0,133.7 558.6,140.7 558.6,161.6 548.0,155.1 537.5,145.4 526.9,137.4 516.4,129.4 505.9,121.2 495.3,114.0 484.8,108.8 474.2,105.9 463.7,101.6" fill="var(--text)" opacity="0.22"><title>Typical back from Peterson&#39;s 20.1 at 24: 5.1 to 10.3 by 33</title></polygon>
+<polyline points="442.6,110.0 453.1,116.7 463.7,101.6 474.2,108.4 484.8,113.0 495.3,95.2 505.9,115.5" fill="none" stroke="#199e70" stroke-width="2"/>
+<polyline points="548.0,150.4 558.6,134.8 569.1,142.8 579.6,150.9" fill="none" stroke="#199e70" stroke-width="2"/>
+<circle cx="442.6" cy="110.0" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2007 (age 22): 18.0 fpts/gm</title></circle>
+<circle cx="453.1" cy="116.7" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2008 (age 23): 16.3 fpts/gm</title></circle>
+<circle cx="463.7" cy="101.6" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2009 (age 24): 20.1 fpts/gm</title></circle>
+<circle cx="474.2" cy="108.4" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2010 (age 25): 18.4 fpts/gm</title></circle>
+<circle cx="484.8" cy="113.0" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2011 (age 26): 17.2 fpts/gm</title></circle>
+<circle cx="495.3" cy="95.2" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2012 (age 27): 21.7 fpts/gm</title></circle>
+<circle cx="505.9" cy="115.5" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2013 (age 28): 16.6 fpts/gm</title></circle>
+<circle cx="526.9" cy="116.8" r="4.2" fill="#199e70" stroke="var(--text)" stroke-width="1.4"><title>Adrian Peterson, 2015 (age 30): 16.3 fpts/gm</title></circle>
+<circle cx="548.0" cy="150.4" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2017 (age 32): 7.9 fpts/gm</title></circle>
+<circle cx="558.6" cy="134.8" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2018 (age 33): 11.8 fpts/gm</title></circle>
+<circle cx="569.1" cy="142.8" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2019 (age 34): 9.8 fpts/gm</title></circle>
+<circle cx="579.6" cy="150.9" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2020 (age 35): 7.8 fpts/gm</title></circle>
+<text x="10.0" y="223.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="700" fill="#d95926" text-anchor="start">Fell off early</text>
+<text x="10.0" y="245.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">Gurley: 10.9 at 26</text>
+<line x1="32.0" x2="200.7" y1="382.0" y2="382.0" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="386.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">0</text>
+<line x1="32.0" x2="200.7" y1="342.0" y2="342.0" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="346.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">10</text>
+<line x1="32.0" x2="200.7" y1="302.0" y2="302.0" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="306.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">20</text>
+<line x1="32.0" x2="200.7" y1="262.0" y2="262.0" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="266.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">30</text>
+<text x="58.4" y="397.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="100.5" y="397.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<text x="142.7" y="397.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<text x="184.9" y="397.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">36</text>
+<polygon points="58.4,275.7 68.9,278.8 79.4,280.6 90.0,285.2 100.5,293.6 111.1,300.6 121.6,303.5 132.1,307.4 142.7,318.1 153.2,327.3 153.2,355.1 142.7,346.4 132.1,333.5 121.6,323.0 111.1,312.4 100.5,301.6 90.0,292.0 79.4,285.2 68.9,281.3 58.4,275.7" fill="var(--text)" opacity="0.22"><title>Typical back from Gurley&#39;s 26.6 at 24: 6.7 to 13.7 by 33</title></polygon>
+<polyline points="37.3,332.4 47.8,279.8 58.4,275.7 68.9,323.5 79.4,338.5" fill="none" stroke="#d95926" stroke-width="2"/>
+<circle cx="37.3" cy="332.4" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Todd Gurley, 2016 (age 22): 12.4 fpts/gm</title></circle>
+<circle cx="47.8" cy="279.8" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Todd Gurley, 2017 (age 23): 25.6 fpts/gm</title></circle>
+<circle cx="58.4" cy="275.7" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Todd Gurley, 2018 (age 24): 26.6 fpts/gm</title></circle>
+<circle cx="68.9" cy="323.5" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Todd Gurley, 2019 (age 25): 14.6 fpts/gm</title></circle>
+<circle cx="79.4" cy="338.5" r="4.2" fill="#d95926" stroke="var(--text)" stroke-width="1.4"><title>Todd Gurley, 2020 (age 26): 10.9 fpts/gm</title></circle>
+<text x="212.7" y="245.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">Bell: 6.8 at 28</text>
+<line x1="234.7" x2="403.3" y1="382.0" y2="382.0" stroke="var(--line)" stroke-width="1"/>
+<line x1="234.7" x2="403.3" y1="342.0" y2="342.0" stroke="var(--line)" stroke-width="1"/>
+<line x1="234.7" x2="403.3" y1="302.0" y2="302.0" stroke="var(--line)" stroke-width="1"/>
+<line x1="234.7" x2="403.3" y1="262.0" y2="262.0" stroke="var(--line)" stroke-width="1"/>
+<text x="261.0" y="397.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="303.2" y="397.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<text x="345.4" y="397.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<text x="387.5" y="397.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">36</text>
+<polygon points="261.0,276.2 271.6,279.3 282.1,281.1 292.6,285.7 303.2,294.0 313.7,301.0 324.3,303.9 334.8,307.7 345.4,318.4 355.9,327.6 355.9,355.2 345.4,346.6 334.8,333.8 324.3,323.3 313.7,312.7 303.2,302.0 292.6,292.4 282.1,285.6 271.6,281.8 261.0,276.2" fill="var(--text)" opacity="0.22"><title>Typical back from Bell&#39;s 26.4 at 24: 6.7 to 13.6 by 33</title></polygon>
+<polyline points="261.0,276.2 271.6,290.4" fill="none" stroke="#d95926" stroke-width="2"/>
+<polyline points="292.6,324.7 303.2,354.9 313.7,362.9" fill="none" stroke="#d95926" stroke-width="2"/>
+<circle cx="239.9" cy="289.4" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Le&rsquo;Veon Bell, 2014 (age 22): 23.2 fpts/gm</title></circle>
+<circle cx="261.0" cy="276.2" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Le&rsquo;Veon Bell, 2016 (age 24): 26.4 fpts/gm</title></circle>
+<circle cx="271.6" cy="290.4" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Le&rsquo;Veon Bell, 2017 (age 25): 22.9 fpts/gm</title></circle>
+<circle cx="292.6" cy="324.7" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Le&rsquo;Veon Bell, 2019 (age 27): 14.3 fpts/gm</title></circle>
+<circle cx="303.2" cy="354.9" r="4.2" fill="#d95926" stroke="var(--text)" stroke-width="1.4"><title>Le&rsquo;Veon Bell, 2020 (age 28): 6.8 fpts/gm</title></circle>
+<circle cx="313.7" cy="362.9" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Le&rsquo;Veon Bell, 2021 (age 29): 4.8 fpts/gm</title></circle>
+<text x="415.3" y="245.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">Alexander: 9.5 at 30</text>
+<line x1="437.3" x2="606.0" y1="382.0" y2="382.0" stroke="var(--line)" stroke-width="1"/>
+<line x1="437.3" x2="606.0" y1="342.0" y2="342.0" stroke="var(--line)" stroke-width="1"/>
+<line x1="437.3" x2="606.0" y1="302.0" y2="302.0" stroke="var(--line)" stroke-width="1"/>
+<line x1="437.3" x2="606.0" y1="262.0" y2="262.0" stroke="var(--line)" stroke-width="1"/>
+<text x="463.7" y="397.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="505.9" y="397.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<text x="548.0" y="397.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<text x="590.2" y="397.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">36</text>
+<polygon points="474.2,299.9 484.8,301.3 495.3,305.0 505.9,311.7 516.4,317.2 526.9,319.5 537.5,322.6 548.0,331.1 558.6,338.5 558.6,360.0 548.0,353.0 537.5,342.5 526.9,333.9 516.4,325.2 505.9,316.4 495.3,308.6 484.8,303.0 474.2,299.9" fill="var(--text)" opacity="0.22"><title>Typical back from Alexander&#39;s 20.5 at 25: 5.5 to 10.9 by 33</title></polygon>
+<polyline points="453.1,369.9 463.7,307.5 474.2,299.9 484.8,305.8 495.3,301.3 505.9,287.8 516.4,325.0 526.9,344.1" fill="none" stroke="#d95926" stroke-width="2"/>
+<circle cx="453.1" cy="369.9" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Shaun Alexander, 2000 (age 23): 3.0 fpts/gm</title></circle>
+<circle cx="463.7" cy="307.5" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Shaun Alexander, 2001 (age 24): 18.6 fpts/gm</title></circle>
+<circle cx="474.2" cy="299.9" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Shaun Alexander, 2002 (age 25): 20.5 fpts/gm</title></circle>
+<circle cx="484.8" cy="305.8" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Shaun Alexander, 2003 (age 26): 19.1 fpts/gm</title></circle>
+<circle cx="495.3" cy="301.3" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Shaun Alexander, 2004 (age 27): 20.2 fpts/gm</title></circle>
+<circle cx="505.9" cy="287.8" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Shaun Alexander, 2005 (age 28): 23.6 fpts/gm</title></circle>
+<circle cx="516.4" cy="325.0" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Shaun Alexander, 2006 (age 29): 14.2 fpts/gm</title></circle>
+<circle cx="526.9" cy="344.1" r="4.2" fill="#d95926" stroke="var(--text)" stroke-width="1.4"><title>Shaun Alexander, 2007 (age 30): 9.5 fpts/gm</title></circle>
+</svg></div><div class="v-phone"><svg viewBox="0 0 340 596" role="img" aria-label="Six running backs against the typical curve started from their own best season">
+<text x="6.0" y="20.0" font-family="IBM Plex Sans, sans-serif" font-size="11.5" font-weight="400" fill="var(--muted)" text-anchor="start">Gray band: the typical back, from his own</text>
+<text x="6.0" y="35.0" font-family="IBM Plex Sans, sans-serif" font-size="11.5" font-weight="400" fill="var(--muted)" text-anchor="start">best season at 24&ndash;26</text>
+<text x="10.0" y="58.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="700" fill="#199e70" text-anchor="start">Beat the curve</text>
+<text x="174.0" y="58.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="700" fill="#d95926" text-anchor="start">Fell off early</text>
+<text x="10.0" y="83.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">Henry: 19.8 at 30</text>
+<line x1="32.0" x2="162.0" y1="216.0" y2="216.0" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="220.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">0</text>
+<line x1="32.0" x2="162.0" y1="177.3" y2="177.3" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="181.3" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">10</text>
+<line x1="32.0" x2="162.0" y1="138.7" y2="138.7" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="142.7" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">20</text>
+<line x1="32.0" x2="162.0" y1="100.0" y2="100.0" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="104.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">30</text>
+<text x="52.3" y="231.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="84.8" y="231.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<text x="117.3" y="231.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<text x="149.8" y="231.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">36</text>
+<polygon points="68.6,135.5 76.7,139.2 84.8,145.9 92.9,151.4 101.1,153.7 109.2,156.8 117.3,165.3 125.4,172.6 125.4,193.6 117.3,186.4 109.2,175.7 101.1,167.0 92.9,158.1 84.8,149.2 76.7,141.2 68.6,135.5" fill="var(--text)" opacity="0.22"><title>Typical back from Henry&#39;s 20.8 at 26: 5.8 to 11.2 by 33</title></polygon>
+<polyline points="36.1,186.8 44.2,183.4 52.3,167.3 60.4,140.1 68.6,135.5 76.7,122.6 84.8,142.8 92.9,159.9 101.1,139.5 109.2,152.4" fill="none" stroke="#199e70" stroke-width="2"/>
+<circle cx="36.1" cy="186.8" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2016 (age 22): 7.5 fpts/gm</title></circle>
+<circle cx="44.2" cy="183.4" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2017 (age 23): 8.4 fpts/gm</title></circle>
+<circle cx="52.3" cy="167.3" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2018 (age 24): 12.6 fpts/gm</title></circle>
+<circle cx="60.4" cy="140.1" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2019 (age 25): 19.6 fpts/gm</title></circle>
+<circle cx="68.6" cy="135.5" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2020 (age 26): 20.8 fpts/gm</title></circle>
+<circle cx="76.7" cy="122.6" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2021 (age 27): 24.2 fpts/gm</title></circle>
+<circle cx="84.8" cy="142.8" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2022 (age 28): 18.9 fpts/gm</title></circle>
+<circle cx="92.9" cy="159.9" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2023 (age 29): 14.5 fpts/gm</title></circle>
+<circle cx="101.1" cy="139.5" r="4.2" fill="#199e70" stroke="var(--text)" stroke-width="1.4"><title>Derrick Henry, 2024 (age 30): 19.8 fpts/gm</title></circle>
+<circle cx="109.2" cy="152.4" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Derrick Henry, 2025 (age 31): 16.4 fpts/gm</title></circle>
+<text x="174.0" y="83.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">Gurley: 10.9 at 26</text>
+<line x1="196.0" x2="326.0" y1="216.0" y2="216.0" stroke="var(--line)" stroke-width="1"/>
+<line x1="196.0" x2="326.0" y1="177.3" y2="177.3" stroke="var(--line)" stroke-width="1"/>
+<line x1="196.0" x2="326.0" y1="138.7" y2="138.7" stroke="var(--line)" stroke-width="1"/>
+<line x1="196.0" x2="326.0" y1="100.0" y2="100.0" stroke="var(--line)" stroke-width="1"/>
+<text x="216.3" y="231.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="248.8" y="231.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<text x="281.3" y="231.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<text x="313.8" y="231.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">36</text>
+<polygon points="216.3,113.2 224.4,116.3 232.6,118.0 240.7,122.5 248.8,130.6 256.9,137.3 265.1,140.1 273.2,143.9 281.3,154.2 289.4,163.2 289.4,190.0 281.3,181.6 273.2,169.2 265.1,159.0 256.9,148.7 248.8,138.3 240.7,129.0 232.6,122.4 224.4,118.7 216.3,113.2" fill="var(--text)" opacity="0.22"><title>Typical back from Gurley&#39;s 26.6 at 24: 6.7 to 13.7 by 33</title></polygon>
+<polyline points="200.1,168.1 208.2,117.2 216.3,113.2 224.4,159.4 232.6,173.9" fill="none" stroke="#d95926" stroke-width="2"/>
+<circle cx="200.1" cy="168.1" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Todd Gurley, 2016 (age 22): 12.4 fpts/gm</title></circle>
+<circle cx="208.2" cy="117.2" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Todd Gurley, 2017 (age 23): 25.6 fpts/gm</title></circle>
+<circle cx="216.3" cy="113.2" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Todd Gurley, 2018 (age 24): 26.6 fpts/gm</title></circle>
+<circle cx="224.4" cy="159.4" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Todd Gurley, 2019 (age 25): 14.6 fpts/gm</title></circle>
+<circle cx="232.6" cy="173.9" r="4.2" fill="#d95926" stroke="var(--text)" stroke-width="1.4"><title>Todd Gurley, 2020 (age 26): 10.9 fpts/gm</title></circle>
+<text x="10.0" y="255.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">Gore: 13.4 at 33</text>
+<line x1="32.0" x2="162.0" y1="388.0" y2="388.0" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="392.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">0</text>
+<line x1="32.0" x2="162.0" y1="349.3" y2="349.3" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="353.3" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">10</text>
+<line x1="32.0" x2="162.0" y1="310.7" y2="310.7" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="314.7" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">20</text>
+<line x1="32.0" x2="162.0" y1="272.0" y2="272.0" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="276.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">30</text>
+<text x="52.3" y="403.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="84.8" y="403.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<text x="117.3" y="403.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<text x="149.8" y="403.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">36</text>
+<polygon points="68.6,311.1 76.7,314.6 84.8,320.9 92.9,326.3 101.1,328.5 109.2,331.4 117.3,339.5 125.4,346.5 125.4,366.6 117.3,359.7 109.2,349.5 101.1,341.1 92.9,332.7 84.8,324.1 76.7,316.5 68.6,311.1" fill="var(--text)" opacity="0.22"><title>Typical back from Gore&#39;s 19.9 at 26: 5.5 to 10.7 by 33</title></polygon>
+<polyline points="36.1,359.6 44.2,310.4 52.3,327.0 60.4,325.1 68.6,311.1 76.7,316.8 84.8,341.2 92.9,333.7 101.1,341.9 109.2,349.6 117.3,341.3 125.4,336.2 133.6,346.0 141.7,359.7 149.8,363.5 157.9,362.2" fill="none" stroke="#199e70" stroke-width="2"/>
+<circle cx="36.1" cy="359.6" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2005 (age 22): 7.3 fpts/gm</title></circle>
+<circle cx="44.2" cy="310.4" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2006 (age 23): 20.1 fpts/gm</title></circle>
+<circle cx="52.3" cy="327.0" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2007 (age 24): 15.8 fpts/gm</title></circle>
+<circle cx="60.4" cy="325.1" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2008 (age 25): 16.3 fpts/gm</title></circle>
+<circle cx="68.6" cy="311.1" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2009 (age 26): 19.9 fpts/gm</title></circle>
+<circle cx="76.7" cy="316.8" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2010 (age 27): 18.4 fpts/gm</title></circle>
+<circle cx="84.8" cy="341.2" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2011 (age 28): 12.1 fpts/gm</title></circle>
+<circle cx="92.9" cy="333.7" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2012 (age 29): 14.1 fpts/gm</title></circle>
+<circle cx="101.1" cy="341.9" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2013 (age 30): 11.9 fpts/gm</title></circle>
+<circle cx="109.2" cy="349.6" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2014 (age 31): 9.9 fpts/gm</title></circle>
+<circle cx="117.3" cy="341.3" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2015 (age 32): 12.1 fpts/gm</title></circle>
+<circle cx="125.4" cy="336.2" r="4.2" fill="#199e70" stroke="var(--text)" stroke-width="1.4"><title>Frank Gore, 2016 (age 33): 13.4 fpts/gm</title></circle>
+<circle cx="133.6" cy="346.0" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2017 (age 34): 10.8 fpts/gm</title></circle>
+<circle cx="141.7" cy="359.7" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2018 (age 35): 7.3 fpts/gm</title></circle>
+<circle cx="149.8" cy="363.5" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2019 (age 36): 6.3 fpts/gm</title></circle>
+<circle cx="157.9" cy="362.2" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Frank Gore, 2020 (age 37): 6.7 fpts/gm</title></circle>
+<text x="174.0" y="255.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">Bell: 6.8 at 28</text>
+<line x1="196.0" x2="326.0" y1="388.0" y2="388.0" stroke="var(--line)" stroke-width="1"/>
+<line x1="196.0" x2="326.0" y1="349.3" y2="349.3" stroke="var(--line)" stroke-width="1"/>
+<line x1="196.0" x2="326.0" y1="310.7" y2="310.7" stroke="var(--line)" stroke-width="1"/>
+<line x1="196.0" x2="326.0" y1="272.0" y2="272.0" stroke="var(--line)" stroke-width="1"/>
+<text x="216.3" y="403.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="248.8" y="403.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<text x="281.3" y="403.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<text x="313.8" y="403.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">36</text>
+<polygon points="216.3,285.7 224.4,288.7 232.6,290.4 240.7,294.9 248.8,303.0 256.9,309.7 265.1,312.5 273.2,316.2 281.3,326.5 289.4,335.4 289.4,362.1 281.3,353.7 273.2,341.4 265.1,331.2 256.9,321.0 248.8,310.6 240.7,301.4 232.6,294.8 224.4,291.1 216.3,285.7" fill="var(--text)" opacity="0.22"><title>Typical back from Bell&#39;s 26.4 at 24: 6.7 to 13.6 by 33</title></polygon>
+<polyline points="216.3,285.7 224.4,299.5" fill="none" stroke="#d95926" stroke-width="2"/>
+<polyline points="240.7,332.6 248.8,361.8 256.9,369.6" fill="none" stroke="#d95926" stroke-width="2"/>
+<circle cx="200.1" cy="298.5" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Le&rsquo;Veon Bell, 2014 (age 22): 23.2 fpts/gm</title></circle>
+<circle cx="216.3" cy="285.7" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Le&rsquo;Veon Bell, 2016 (age 24): 26.4 fpts/gm</title></circle>
+<circle cx="224.4" cy="299.5" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Le&rsquo;Veon Bell, 2017 (age 25): 22.9 fpts/gm</title></circle>
+<circle cx="240.7" cy="332.6" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Le&rsquo;Veon Bell, 2019 (age 27): 14.3 fpts/gm</title></circle>
+<circle cx="248.8" cy="361.8" r="4.2" fill="#d95926" stroke="var(--text)" stroke-width="1.4"><title>Le&rsquo;Veon Bell, 2020 (age 28): 6.8 fpts/gm</title></circle>
+<circle cx="256.9" cy="369.6" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Le&rsquo;Veon Bell, 2021 (age 29): 4.8 fpts/gm</title></circle>
+<text x="10.0" y="427.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">Peterson: 16.3 at 30</text>
+<line x1="32.0" x2="162.0" y1="560.0" y2="560.0" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="564.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">0</text>
+<line x1="32.0" x2="162.0" y1="521.3" y2="521.3" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="525.3" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">10</text>
+<line x1="32.0" x2="162.0" y1="482.7" y2="482.7" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="486.7" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">20</text>
+<line x1="32.0" x2="162.0" y1="444.0" y2="444.0" stroke="var(--line)" stroke-width="1"/>
+<text x="28.0" y="448.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="end">30</text>
+<text x="52.3" y="575.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="84.8" y="575.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<text x="117.3" y="575.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<text x="149.8" y="575.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">36</text>
+<polygon points="52.3,482.3 60.4,484.6 68.6,485.9 76.7,489.3 84.8,495.4 92.9,500.5 101.1,502.7 109.2,505.5 117.3,513.3 125.4,520.1 125.4,540.3 117.3,534.0 109.2,524.6 101.1,516.9 92.9,509.1 84.8,501.2 76.7,494.2 68.6,489.2 60.4,486.4 52.3,482.3" fill="var(--text)" opacity="0.22"><title>Typical back from Peterson&#39;s 20.1 at 24: 5.1 to 10.3 by 33</title></polygon>
+<polyline points="36.1,490.4 44.2,496.9 52.3,482.3 60.4,488.9 68.6,493.3 76.7,476.0 84.8,495.7" fill="none" stroke="#199e70" stroke-width="2"/>
+<polyline points="117.3,529.5 125.4,514.3 133.6,522.1 141.7,529.9" fill="none" stroke="#199e70" stroke-width="2"/>
+<circle cx="36.1" cy="490.4" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2007 (age 22): 18.0 fpts/gm</title></circle>
+<circle cx="44.2" cy="496.9" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2008 (age 23): 16.3 fpts/gm</title></circle>
+<circle cx="52.3" cy="482.3" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2009 (age 24): 20.1 fpts/gm</title></circle>
+<circle cx="60.4" cy="488.9" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2010 (age 25): 18.4 fpts/gm</title></circle>
+<circle cx="68.6" cy="493.3" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2011 (age 26): 17.2 fpts/gm</title></circle>
+<circle cx="76.7" cy="476.0" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2012 (age 27): 21.7 fpts/gm</title></circle>
+<circle cx="84.8" cy="495.7" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2013 (age 28): 16.6 fpts/gm</title></circle>
+<circle cx="101.1" cy="497.0" r="4.2" fill="#199e70" stroke="var(--text)" stroke-width="1.4"><title>Adrian Peterson, 2015 (age 30): 16.3 fpts/gm</title></circle>
+<circle cx="117.3" cy="529.5" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2017 (age 32): 7.9 fpts/gm</title></circle>
+<circle cx="125.4" cy="514.3" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2018 (age 33): 11.8 fpts/gm</title></circle>
+<circle cx="133.6" cy="522.1" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2019 (age 34): 9.8 fpts/gm</title></circle>
+<circle cx="141.7" cy="529.9" r="2.4" fill="#199e70" stroke="#199e70" stroke-width="0"><title>Adrian Peterson, 2020 (age 35): 7.8 fpts/gm</title></circle>
+<text x="174.0" y="427.0" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="var(--text)" text-anchor="start">Alexander: 9.5 at 30</text>
+<line x1="196.0" x2="326.0" y1="560.0" y2="560.0" stroke="var(--line)" stroke-width="1"/>
+<line x1="196.0" x2="326.0" y1="521.3" y2="521.3" stroke="var(--line)" stroke-width="1"/>
+<line x1="196.0" x2="326.0" y1="482.7" y2="482.7" stroke="var(--line)" stroke-width="1"/>
+<line x1="196.0" x2="326.0" y1="444.0" y2="444.0" stroke="var(--line)" stroke-width="1"/>
+<text x="216.3" y="575.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">24</text>
+<text x="248.8" y="575.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">28</text>
+<text x="281.3" y="575.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">32</text>
+<text x="313.8" y="575.0" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="400" fill="var(--muted)" text-anchor="middle">36</text>
+<polygon points="224.4,480.6 232.6,482.0 240.7,485.6 248.8,492.0 256.9,497.4 265.1,499.6 273.2,502.6 281.3,510.8 289.4,517.9 289.4,538.8 281.3,531.9 273.2,521.8 265.1,513.5 256.9,505.1 248.8,496.6 240.7,489.0 232.6,483.7 224.4,480.6" fill="var(--text)" opacity="0.22"><title>Typical back from Alexander&#39;s 20.5 at 25: 5.5 to 10.9 by 33</title></polygon>
+<polyline points="208.2,548.3 216.3,488.0 224.4,480.6 232.6,486.3 240.7,482.0 248.8,468.9 256.9,504.9 265.1,523.4" fill="none" stroke="#d95926" stroke-width="2"/>
+<circle cx="208.2" cy="548.3" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Shaun Alexander, 2000 (age 23): 3.0 fpts/gm</title></circle>
+<circle cx="216.3" cy="488.0" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Shaun Alexander, 2001 (age 24): 18.6 fpts/gm</title></circle>
+<circle cx="224.4" cy="480.6" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Shaun Alexander, 2002 (age 25): 20.5 fpts/gm</title></circle>
+<circle cx="232.6" cy="486.3" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Shaun Alexander, 2003 (age 26): 19.1 fpts/gm</title></circle>
+<circle cx="240.7" cy="482.0" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Shaun Alexander, 2004 (age 27): 20.2 fpts/gm</title></circle>
+<circle cx="248.8" cy="468.9" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Shaun Alexander, 2005 (age 28): 23.6 fpts/gm</title></circle>
+<circle cx="256.9" cy="504.9" r="2.4" fill="#d95926" stroke="#d95926" stroke-width="0"><title>Shaun Alexander, 2006 (age 29): 14.2 fpts/gm</title></circle>
+<circle cx="265.1" cy="523.4" r="4.2" fill="#d95926" stroke="var(--text)" stroke-width="1.4"><title>Shaun Alexander, 2007 (age 30): 9.5 fpts/gm</title></circle>
+</svg></div>
+<figcaption>Seasons with 8+ games, raw fpts per game (not era-adjusted); gaps are seasons with fewer than 8 games. Gray band:
+where the typical back would be, starting from that player&rsquo;s best season at 24 to 26 and following the two methods&rsquo;
+proportional curves for running backs, through 33. Large dot: the season in the panel title.</figcaption></figure>
+<p>Tony Gonzalez posted 13.7 at 37, Jerry Rice 15.9 at 39, and Peyton Manning had the best fantasy
+season of his career in our data at 37. LeBron James averaged a Game Score of 22.5 at
+38. Barry Bonds posted an OPS+ of 264 at 39 (our version, without a park adjustment;
+Baseball-Reference lists 263), a season baseball still argues about.</p>
+<p>The other list is longer and quieter. Le&rsquo;Veon Bell went from 22.9 fpts a game at 25, sat out a year,
+and was at 6.8 by 28. Ezekiel Elliott went from 21.9 at 23 to
+10.3 at 28. Shaun Alexander was at 23.6 at 28, above his own curve, and
+9.5 two years later. Nobody makes a highlight reel of those seasons, which is exactly the problem: the survivors are
+loud, the departures are silent, and our intuition averages the loud ones.</p>
+</section>
+<section>
+<h2><span class="num">06</span> What this can&rsquo;t tell you</h2>
+<p>These are curves for the typical player, not predictions for your player. They measure production, which mixes skill with
+how much a coach chooses to use someone. That is the right thing for fantasy but not a pure measure of the body. The oldest
+ages rest on a handful of players. And the honest answer to &ldquo;when&rdquo; is a range, not a number: the two methods that survive our
+simulation disagree by up to 5 years for the noisiest stats, and no amount of data from the players who
+stayed can fully reveal how the ones who left would have aged.</p>
+<p>The short version is still clear. Running backs fall first and fastest: sell them before their age-28 season.
+Receivers and NBA players get a year or two more. Hockey skaters get a few more than that. Hitters age later, not never. And
+Todd Gurley isn&rsquo;t on the average-by-age chart. That&rsquo;s the reason not to trust it.</p>
+</section>
+</article>
+<footer class="colophon"><b>Method.</b> Aging curves on 78,055 qualifying player-seasons, estimated with the naive average
+by age, the standard delta method, and a player fixed-effects &ldquo;career model&rdquo; (every season compared with the same player&rsquo;s
+career level), plus proportional (log) versions of the last two. Eight estimators were tested on simulated leagues with a
+known answer, in 11 scenarios, including ones where players age at different rates, plus a 12-case stress test. The
+cliff is the first age after the peak at which the typical player is half a talent-SD below it (talent-SD = spread of the
+persistent player effect among players with 2+ qualifying seasons, net of season-to-season noise), reported as the range between
+the delta method and the career model. Error bars in the charts are 95% intervals from resampling players 500 times; the cliff
+ranges are the gap between the two methods, which is usually wider. fpts = nflverse PPR points, 2-point conversions included.
+Age on Sept 1 (NFL), Feb 1 (NBA, NHL) or June 30 (MLB). Full math, sample counts, the simulation, robustness checks and a worked
+example are in the technical report (report_v03). Data: nflverse, hoopR/ESPN, Lahman Baseball Database, NHL stats API; 2026
+roster status from Wikipedia, September 23, 2026.
+<br>EBK Deep Bag &middot; September 2026</footer>
+</div>

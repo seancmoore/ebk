@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="/css/base.css" />
   <link rel="stylesheet" href="/css/home.css" />
   <link rel="stylesheet" href="/css/deep-bag.css" />
+  <link rel="alternate" type="application/rss+xml" title="EBK Deep Bag" href="/deep-bag/feed.xml" />
   <script src="/js/ebk-analytics.js" defer></script>
 </head>
 <body>
@@ -42,15 +43,15 @@
   </header>
 
   <main>
-    <section class="hero wrap" style="padding-bottom: var(--sp-md)">
+    <section class="hero wrap db-hero">
       <h1 class="rise">🎒 Deep Bag</h1>
-      <p class="rise d1">Sports research, deep dives and hot takes.</p>
+      <p class="rise d1">Sports research on real data. Every study ships with its technical report.</p>
     </section>
     <div class="wrap">
       <a class="db-cut" href="/deep-cut"><span>🗝️ Today's Deep Cut</span><b>One question. Three guesses. Play &rarr;</b></a>
       <div class="db-filters" id="filters" hidden></div>
       <div id="loading" class="muted center" style="padding:var(--sp-lg) 0">Loading…</div>
-      <p id="empty" hidden class="muted center" style="padding:var(--sp-lg) 0">Nothing posted yet — check back soon.</p>
+      <p id="empty" hidden class="muted center" style="padding:var(--sp-lg) 0">Nothing published yet. Check back soon.</p>
       <div class="db-grid" id="grid"></div>
     </div>
   </main>

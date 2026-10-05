@@ -1,0 +1,33 @@
+{
+  "slug": "the-cliff",
+  "status": "draft",
+  "date": "",
+  "tags": [
+    "aging",
+    "fantasy"
+  ],
+  "sports": [
+    "nfl",
+    "nba",
+    "mlb",
+    "nhl"
+  ],
+  "source": {
+    "article": "C:\\Users\\panky\\Desktop\\ebk-age-cliff\\reports\\article_v03.html",
+    "report": "C:\\Users\\panky\\Desktop\\ebk-age-cliff\\reports\\report_v03.html"
+  },
+  "imported": "2026-09-23",
+  "assets": {
+    "../outputs/figures/fig05_curves_nfl_def_nba_desk.png": "fig05_curves_nfl_def_nba_desk.png",
+    "../outputs/figures/fig04_curves_nfl_off_desk.png": "fig04_curves_nfl_off_desk.png",
+    "../outputs/figures/fig03_gurley_desk.png": "fig03_gurley_desk.png",
+    "../outputs/figures/fig06_curves_mlb_desk.png": "fig06_curves_mlb_desk.png",
+    "../outputs/figures/fig02_sim_curves_desk.png": "fig02_sim_curves_desk.png",
+    "../outputs/figures/fig10_fantasy_desk.png": "fig10_fantasy_desk.png",
+    "../outputs/figures/fig07_curves_nhl_desk.png": "fig07_curves_nhl_desk.png",
+    "../outputs/figures/fig11_robustness_desk.png": "fig11_robustness_desk.png",
+    "../outputs/figures/fig01_sim_bias_desk.png": "fig01_sim_bias_desk.png",
+    "../outputs/figures/fig08_cliff_brackets_desk.png": "fig08_cliff_brackets_desk.png",
+    "../outputs/figures/fig09_dropout_desk.png": "fig09_dropout_desk.png"
+  }
+}

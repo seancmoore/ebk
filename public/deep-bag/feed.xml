@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>EBK Deep Bag</title>
+  <link>https://eliteballknowledge.web.app/deep-bag</link>
+  <atom:link href="https://eliteballknowledge.web.app/deep-bag/feed.xml" rel="self" type="application/rss+xml" />
+  <description>Sports research from Elite Ball Knowledge: real data, matched comparisons, and the myths that don't survive them.</description>
+  <language>en-us</language>
+</channel>
+</rss>

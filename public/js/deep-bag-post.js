@@ -1,4 +1,6 @@
-/* EBK Deep Bag · single post reader. ?s=<slug> */
+/* EBK Deep Bag · single post reader for Firestore posts. Reached as
+   /deep-bag/<slug> (firebase.json rewrites unknown /deep-bag/* paths here;
+   static studies are real files and win) or /deep-bag/post/?s=<slug>. */
 (function () {
   "use strict";
   var $ = function (s) { return document.querySelector(s); };
@@ -8,7 +10,16 @@
     catch (e) { return ""; }
   }
 
-  var slug = new URLSearchParams(location.search).get("s") || "";
+  var pathSlug = (location.pathname.match(/^\/deep-bag\/([a-z0-9-]+)\/?$/) || [])[1];
+  var slug = new URLSearchParams(location.search).get("s") || (pathSlug !== "post" && pathSlug) || "";
+
+  // The shell is indexable so real posts can be; a miss must not be.
+  function notFound() {
+    $("#loading").hidden = true; $("#notfound").hidden = false;
+    var m = document.createElement("meta");
+    m.name = "robots"; m.content = "noindex";
+    document.head.appendChild(m);
+  }
 
   function setMeta(p) {
     var title = p.title + " · EBK Deep Bag";
@@ -19,7 +30,7 @@
     if (p.coverImage) $("#og-image").setAttribute("content", p.coverImage);
     var canon = document.createElement("link");
     canon.rel = "canonical";
-    canon.href = "https://eliteballknowledge.web.app/deep-bag/post/?s=" + encodeURIComponent(slug);
+    canon.href = "https://eliteballknowledge.web.app/deep-bag/" + encodeURIComponent(slug);
     document.head.appendChild(canon);
   }
 
@@ -43,16 +54,12 @@
   }
 
   function load() {
-    if (!slug) { $("#loading").hidden = true; $("#notfound").hidden = false; return; }
+    if (!slug) return notFound();
     EBKF.getPost(slug).then(function (p) {
-      if (!p) { $("#loading").hidden = true; $("#notfound").hidden = false; return; }
-      if (p.status !== "published" && !(EBKF.isAuthor && EBKF.isAuthor())) {
-        $("#loading").hidden = true; $("#notfound").hidden = false; return;
-      }
+      if (!p) return notFound();
+      if (p.status !== "published" && !(EBKF.isAuthor && EBKF.isAuthor())) return notFound();
       render(p);
-    }).catch(function () {
-      $("#loading").hidden = true; $("#notfound").hidden = false;
-    });
+    }).catch(notFound);
   }
 
   function whenReady(cb) {

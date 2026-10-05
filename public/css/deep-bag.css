@@ -15,7 +15,13 @@
   padding: var(--sp-md); text-decoration: none; color: var(--text);
   transition: transform 0.15s ease, border-color 0.15s ease;
 }
-.db-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+.db-card { --card-accent: var(--accent); border-top: 3px solid var(--card-accent); }
+.db-card:hover { transform: translateY(-3px); border-color: var(--card-accent); }
+.db-card .db-kicker { font-size: var(--fs-xs); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--card-accent); }
+.db-card .db-draft { background: rgba(255, 209, 102, 0.15); color: var(--gold); padding: 1px 8px; border-radius: 999px; margin-right: 4px; }
+.db-card.db-lead { grid-column: 1 / -1; padding: var(--sp-lg); }
+.db-card.db-lead h3 { font-size: var(--fs-xl); max-width: 22ch; }
+.db-card.db-lead .db-excerpt { font-size: var(--fs-md); max-width: 60ch; flex: none; }
 .db-card .db-cover { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; background: #141b33; }
 .db-card h3 { margin: 0; font-size: var(--fs-lg); line-height: 1.25; }
 .db-card .db-excerpt { color: var(--muted); font-size: var(--fs-sm); line-height: 1.5; flex: 1; }
@@ -76,3 +82,8 @@
 }
 .db-cut b { color: #d9a8ff; }
 .db-cut:hover { transform: translateY(-2px); border-color: #c77dff; }
+
+/* The shared .hero is the homepage's full-height 3D stage; Deep Bag pages
+   want a compact stacked header so the stories sit above the fold. */
+.hero.db-hero { min-height: 0; flex-direction: column; padding: var(--sp-xl) var(--sp-md) var(--sp-md); }
+.hero.db-hero p { margin-bottom: 0; }

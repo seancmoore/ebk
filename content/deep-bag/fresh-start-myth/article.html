@@ -1,0 +1,221 @@
+<title>The Fresh-Start Myth</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600..900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Source+Serif+4:ital,wght@1,400&family=IBM+Plex+Sans:wght@500;600&display=swap');
+  :root { --bg:#14100c; --surface:#1b1611; --line:#362c22; --text:#f1e9d8; --text-dim:#cabfa9; --muted:#8f8271; --accent:#c96a35; --accent-soft:#6e3a1f; --plan:#d9bf95;
+    --font-display:'Fraunces',Georgia,serif; --font-body:'Source Serif 4',Georgia,serif; --font-ui:'IBM Plex Sans',-apple-system,sans-serif; }
+  * { box-sizing:border-box; } html { background:var(--bg); }
+  body { background:var(--bg); color:var(--text); font-family:var(--font-body); margin:0; padding:0 24px 120px; }
+  ::selection { background:var(--accent-soft); color:var(--text); }
+  .wrap { max-width:660px; margin:0 auto; }
+  header.masthead { padding:64px 0 40px; text-align:center; border-bottom:1px solid var(--line); }
+  .kicker { font-family:var(--font-ui); font-size:12.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:22px; }
+  h1 { font-family:var(--font-display); font-weight:900; font-size:clamp(42px,8vw,72px); line-height:.98; letter-spacing:-.02em; margin:0 0 22px; text-wrap:balance; }
+  .dek { font-style:italic; font-size:20px; line-height:1.6; color:var(--text-dim); max-width:46ch; margin:0 auto; text-wrap:balance; }
+  .byline { font-family:var(--font-ui); font-size:12px; letter-spacing:.06em; color:var(--muted); margin-top:28px; text-transform:uppercase; }
+  section { padding:46px 0; } section + section { border-top:1px solid var(--line); }
+  h2 { font-family:var(--font-display); font-weight:800; font-size:30px; letter-spacing:-.01em; margin:0 0 22px; text-wrap:balance; }
+  h2 .num { color:var(--accent); margin-right:2px; }
+  p { font-size:19px; line-height:1.75; margin:0 0 24px; } p:last-child { margin-bottom:0; }
+  em { font-style:italic; } strong { font-weight:600; }
+  section.opening p:first-of-type::first-letter { font-family:var(--font-display); font-weight:800; font-size:76px; line-height:.75; float:left; padding:8px 10px 0 0; color:var(--accent); }
+  blockquote.pull { font-family:var(--font-display); font-weight:600; font-style:italic; font-size:28px; line-height:1.35; color:var(--accent); margin:40px -8px; padding:0 0 0 22px; border-left:3px solid var(--accent-soft); text-wrap:balance; }
+  figure { margin:30px 0 26px; }
+  figure.chart { margin:32px 0 8px; padding:22px 18px 16px; background:var(--surface); border:1px solid var(--line); border-radius:10px; }
+  figure.chart svg { width:100%; height:auto; display:block; }
+  .legend { display:flex; flex-wrap:wrap; gap:6px 18px; font-family:var(--font-ui); font-size:12.5px; color:var(--text-dim); margin:0 0 12px; }
+  .legend span { display:inline-flex; align-items:center; gap:7px; }
+  .legend svg { width:14px !important; height:14px !important; flex:none; }
+  .legend-key { display:flex; flex-direction:column; gap:9px; font-family:var(--font-ui); margin:0 0 16px; padding:12px 14px; background:var(--bg); border:1px solid var(--line); border-radius:8px; }
+  .legend-row { display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; }
+  .legend-row-label { font-size:10.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); flex:0 0 84px; }
+  .legend-chip { display:inline-flex; align-items:center; gap:8px; font-size:13px; line-height:1.35; color:var(--text-dim); }
+  .legend-chip svg { width:15px !important; height:15px !important; flex:none; }
+  @media (max-width:480px) { .legend-row-label { flex-basis:100%; } }
+  figcaption { font-family:var(--font-ui); font-size:13px; line-height:1.55; color:var(--muted); margin-top:10px; }
+  .ledger { display:grid; grid-template-columns:auto 1fr; gap:6px 16px; font-family:var(--font-ui); font-size:14px; color:var(--text-dim); background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:16px 20px; margin:8px 0 26px; }
+  .ledger b { color:var(--text); font-weight:600; white-space:nowrap; }
+  .ledger span.n { font-family:var(--font-ui); color:var(--accent); font-weight:600; }
+  .divider { display:flex; align-items:center; justify-content:center; gap:10px; margin:6px 0 40px; color:var(--muted); }
+  .divider::before, .divider::after { content:""; height:1px; width:50px; background:var(--line); }
+  .divider span { font-family:var(--font-ui); font-size:11px; letter-spacing:.2em; }
+  footer.colophon { margin-top:20px; padding-top:36px; border-top:1px solid var(--line); font-family:var(--font-ui); font-size:12.5px; line-height:1.8; color:var(--muted); }
+  .aside-note { display:block; font-family:var(--font-ui); font-size:15px; line-height:1.6; color:var(--text-dim); background:var(--bg); border-left:3px solid var(--line); padding:8px 14px; margin:14px 0; border-radius:0 6px 6px 0; }
+  .open-flag { display:block; font-family:var(--font-ui); font-size:15.5px; line-height:1.6; color:var(--text-dim); background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent); padding:12px 16px; margin:16px 0 24px; border-radius:6px; }
+</style>
+
+<div class="wrap">
+<header class="masthead">
+  <div class="kicker">EBK Deep Bag</div>
+  <h1>The&nbsp;Fresh-Start<br>Myth</h1>
+  <p class="dek">We checked every NFL trade since 2002 to see whether a change of scenery is associated with a different player. It mostly isn't. What predicts the outcome is the job waiting on the other end.</p>
+  <p class="byline">A Deep Bag investigation &middot; 243 trades analyzed, of 1,222 reviewed &middot; 2002&ndash;2025</p>
+</header>
+
+<article>
+
+<section class="opening">
+  <p>On March 14, 2010, the Denver Broncos traded a backup running back named Peyton Hillis to Cleveland for Brady Quinn, a change-of-scenery deal nobody outside Ohio noticed. Hillis had opened the previous season third on Denver's depth chart. Cleveland listed him second, and by October he was the only back they had. Nine months after the trade he had 1,177 rushing yards, an AFC North defense's worst nightmare, and enough name recognition to beat Michael Vick in a nationwide vote for the cover of <em>Madden NFL 12</em>.</p>
+  <p>Two years later, almost to the day, the Broncos made another trade that was supposed to write the same story. Tim Tebow, a national phenomenon who had just won Denver a playoff game with one perfect throw, was shipped to the Jets after the team signed Peyton Manning. New York's Week 1 depth chart listed him as the No. 2 quarterback. On paper, a fresh start. In practice he threw 8 passes all season, because the Jets were never going to bench Mark Sanchez for him and everyone in the building knew it.</p>
+  <p>Same team of origin. Same &ldquo;fresh start&rdquo; press release. One is a folk legend and one is a punchline, and the usual explanation (Hillis wanted it more, Tebow couldn't throw) is the kind of thing you say when you haven't checked.</p>
+  <p>So we checked. We took every skill-position trade since 2002 that we could verify as a real, dated, front-office transaction, not &ldquo;he changed teams,&rdquo; which would sweep in free agency. Then we compared each traded player against five near-identical players who <em>weren't</em> traded, what we'll call his matched peers throughout this piece: players who look statistically identical to him going into the trade, same position, same season, within two years of age, same recent production, except they weren't traded. We measured that production in PPR fantasy points per game, or fpts (standard points-per-reception scoring), our stand-in for overall offensive output.</p>
+  <p>The only question worth asking is not &ldquo;did he get better?&rdquo; but &ldquo;did he do better than he would have anyway?&rdquo; We ran that comparison three different ways, on offense and defense, with real depth charts, real snap counts and real contracts.</p>
+  <p>One thing to be clear about before any of the findings: this is a study of who actually got which job after a trade, not a controlled experiment. No one randomly assigned some players to get traded and others to stay put, so everything below is a pattern the data predicts, not a lever we watched anyone pull. We'll use words like &ldquo;predicts&rdquo; and &ldquo;is associated with&rdquo; on purpose, and you should read the piece the same way.</p>
+</section>
+
+<section>
+  <h2><span class="num">01</span> Teams sell after the dip, not before it</h2>
+  <p>The first thing the data says has nothing to do with what happens after a trade. It's about who gets traded. Two seasons before the deal, the players in our sample were outperforming their matched peers by a clear margin: about 1.2 fpts a game. The season right before the deal, they were underperforming them by almost as much: about 1.1 fpts a game the other way. Up, then down, then traded.</p>
+  <p>The chart below plots those two pre-trade windows on one shared scale, each measured against the same kind of matched peers, with the trade itself marked at the right. The small p-values under each point are a statistical way of saying how likely it is that a gap this size is just random noise; the lower the number, the more confidence we have that it isn't.</p>
+  <figure class="chart">
+<svg viewBox="0 0 620 310" role="img" aria-label="Production relative to matched peers across two placebo windows before the trade: +1.20 fpts per game two seasons before, -1.07 the season before">
+  <!-- one shared scale: zero at y=155, 55 px per fpt. Text sizes bumped ~2x and layout re-spaced (v2) so labels stay legible at ~336px mobile render width -->
+  <text x="20" y="24" font-family="IBM Plex Sans" font-size="21" fill="var(--muted)">fpts per game vs. matched peers</text>
+  <line x1="46" y1="100" x2="600" y2="100" stroke="var(--line)" stroke-width="1" stroke-dasharray="3,4"/>
+  <line x1="46" y1="210" x2="600" y2="210" stroke="var(--line)" stroke-width="1" stroke-dasharray="3,4"/>
+  <line x1="46" y1="155" x2="600" y2="155" stroke="var(--muted)" stroke-width="1" stroke-opacity="0.6"/>
+  <text x="20" y="104" font-family="IBM Plex Sans" font-size="22" fill="var(--muted)">+1</text>
+  <text x="20" y="159" font-family="IBM Plex Sans" font-size="22" fill="var(--muted)">0</text>
+  <text x="20" y="214" font-family="IBM Plex Sans" font-size="22" fill="var(--muted)">&#8722;1</text>
+  <line x1="580" y1="65" x2="580" y2="225" stroke="var(--text-dim)" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <text x="580" y="59" text-anchor="middle" font-family="IBM Plex Sans" font-size="22" fill="var(--text-dim)">Trade</text>
+  <line x1="175" y1="155" x2="175" y2="89" stroke="var(--accent)" stroke-width="2"/>
+  <line x1="440" y1="155" x2="440" y2="213.85" stroke="var(--accent)" stroke-width="2"/>
+  <line x1="175" y1="89" x2="440" y2="213.85" stroke="var(--accent)" stroke-width="2" stroke-opacity="0.55"/>
+  <circle cx="175" cy="89" r="5" fill="var(--accent)"/>
+  <circle cx="440" cy="213.85" r="5" fill="var(--accent)"/>
+  <text x="175" y="72" text-anchor="middle" font-family="IBM Plex Sans" font-size="30" font-weight="600" fill="var(--text)">+1.20</text>
+  <text x="175" y="199" text-anchor="middle" font-family="IBM Plex Sans" font-size="22" fill="var(--text-dim)">Two seasons before</text>
+  <text x="175" y="227" text-anchor="middle" font-family="IBM Plex Sans" font-size="21" fill="var(--muted)">n=205, p&lt;0.0001</text>
+  <text x="440" y="239" text-anchor="middle" font-family="IBM Plex Sans" font-size="30" font-weight="600" fill="var(--text)">&#8722;1.07</text>
+  <text x="440" y="265" text-anchor="middle" font-family="IBM Plex Sans" font-size="22" fill="var(--text-dim)">Season before the trade</text>
+  <text x="440" y="289" text-anchor="middle" font-family="IBM Plex Sans" font-size="21" fill="var(--muted)">n=207, p=0.0001</text>
+</svg>
+<figcaption>Production relative to matched peers, in fpts per game, in one-year windows. The two left points are &ldquo;placebo&rdquo; windows in which no trade happened, our way of testing the method on cases with no trade to explain. Future trade pieces rose, then fell, then got moved. (Lower p means more confidence the gap isn't random.)</figcaption>
+</figure>
+  <p>That is not a story about trades. It's a story about front offices: they don't sell the player they've soured on at the top of his value, they sell him the year after a disappointment. Which means the naive way to study this, comparing last season to this season, is rigged from the start, because a player coming off an unusually bad year will look like he &ldquo;bounced back&rdquo; whether he was traded or not. Everything below uses two seasons before the trade as the baseline instead, and we report the version of the numbers that moves least when you change the method.</p>
+</section>
+
+<section>
+  <h2><span class="num">02</span> It was never the trade. It was the job.</h2>
+  <p>Here is the one result that survived every version of the analysis we could throw at it. We looked at the acquiring team's <em>first regular-season depth chart</em>, the club's own published plan for the player, set before a single snap was played, and compared it to where he'd been listed on his old team the year before. Some players were acquired into a bigger job. Some into the same one. Some into a smaller one.</p>
+  <p>The chart below shows how each of those three groups did against its matched peers, sorted two ways: once by the plan on the depth chart, and once by who actually got the touches. There's a lot going on in it at once, so here's what to look for: two bars per group, one for the plan and one for what actually happened, and any bar with diagonal hatching and a dashed edge means that number can't be told apart from zero, which is a different thing from it being small.</p>
+  <figure class="chart">
+<div class="legend-key" aria-hidden="true">
+  <div class="legend-row">
+    <span class="legend-row-label">Which number</span>
+    <span class="legend-chip"><svg viewBox="0 0 14 14"><rect x="0" y="0" width="14" height="14" fill="var(--accent)"/></svg>Outcome: who actually got the touches</span>
+    <span class="legend-chip"><svg viewBox="0 0 14 14"><rect x="0" y="0" width="14" height="14" fill="var(--plan)"/></svg>Plan: Week&nbsp;1 depth chart</span>
+  </div>
+  <div class="legend-row">
+    <span class="legend-row-label">How sure</span>
+    <span class="legend-chip"><svg viewBox="0 0 14 14"><rect x="0" y="0" width="14" height="14" fill="var(--text-dim)"/></svg>Solid = reliably different from zero</span>
+    <span class="legend-chip"><svg viewBox="0 0 14 14"><defs><pattern id="lg-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="var(--text-dim)" stroke-width="1.5"/></pattern></defs><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="url(#lg-hatch)" fill-opacity="0.8" stroke="var(--text-dim)" stroke-width="1.5" stroke-dasharray="2.5,1.5"/></svg>Hatched + dashed edge = can&rsquo;t tell from zero</span>
+  </div>
+</div>
+<svg viewBox="0 0 630 320" role="img" aria-label="Production relative to matched peers by role change. Promoted: +0.20 outcome, +0.08 plan, both not distinguishable from zero. Same role: -0.67 outcome, -0.41 plan, both not distinguishable from zero. Demoted: -3.54 outcome, -3.61 plan, both p below 0.0001.">
+  <defs>
+    <pattern id="hatch-real" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="var(--accent)" fill-opacity="0.15"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="var(--accent)" stroke-width="2"/>
+    </pattern>
+    <pattern id="hatch-plan" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="var(--plan)" fill-opacity="0.15"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="var(--plan)" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <!-- one shared scale: zero at y=140, 26 px per fpt. Text sizes bumped ~2x, transform-group flattened to absolute coords, labels pushed outward from bar pairs and canvas widened/heightened (v2) so nothing collides at ~336px mobile render width -->
+  <text x="20" y="18" font-family="IBM Plex Sans" font-size="21" fill="var(--muted)">fpts per game vs. matched peers</text>
+  <line x1="40" y1="140" x2="600" y2="140" stroke="var(--muted)" stroke-width="1" stroke-opacity="0.6"/>
+  <text x="20" y="144" font-family="IBM Plex Sans" font-size="22" fill="var(--muted)">0</text>
+
+  <text x="130" y="50" text-anchor="middle" font-family="IBM Plex Sans" font-size="25" font-weight="600" fill="var(--text)">Promoted</text>
+  <rect x="88" y="134.696" width="34" height="5.304" fill="url(#hatch-real)" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3,2"/>
+  <rect x="138" y="137.842" width="34" height="2.158" fill="url(#hatch-plan)" stroke="var(--plan)" stroke-width="1.2" stroke-dasharray="3,2"/>
+  <text x="90" y="118" text-anchor="middle" font-family="IBM Plex Sans" font-size="22" fill="var(--text-dim)">+0.20</text>
+  <text x="170" y="118" text-anchor="middle" font-family="IBM Plex Sans" font-size="22" fill="var(--text-dim)">+0.08</text>
+
+  <text x="310" y="50" text-anchor="middle" font-family="IBM Plex Sans" font-size="25" font-weight="600" fill="var(--text)">Same role</text>
+  <rect x="268" y="140" width="34" height="17.368" fill="url(#hatch-real)" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3,2"/>
+  <rect x="318" y="140" width="34" height="10.634" fill="url(#hatch-plan)" stroke="var(--plan)" stroke-width="1.2" stroke-dasharray="3,2"/>
+  <text x="270" y="185" text-anchor="middle" font-family="IBM Plex Sans" font-size="22" fill="var(--text-dim)">&#8722;0.67</text>
+  <text x="350" y="185" text-anchor="middle" font-family="IBM Plex Sans" font-size="22" fill="var(--text-dim)">&#8722;0.41</text>
+
+  <text x="490" y="50" text-anchor="middle" font-family="IBM Plex Sans" font-size="25" font-weight="600" fill="var(--text)">Demoted</text>
+  <rect x="448" y="140" width="34" height="91.962" fill="var(--accent)"/>
+  <rect x="498" y="140" width="34" height="93.782" fill="var(--plan)"/>
+  <text x="430" y="265" text-anchor="middle" font-family="IBM Plex Sans" font-size="27" font-weight="600" fill="var(--text)">&#8722;3.54</text>
+  <text x="550" y="265" text-anchor="middle" font-family="IBM Plex Sans" font-size="27" font-weight="600" fill="var(--text)">&#8722;3.61</text>
+  <text x="480" y="295" text-anchor="middle" font-family="IBM Plex Sans" font-size="20" fill="var(--muted)">p&lt;0.0001 on both measures</text>
+</svg>
+<figcaption>Production relative to matched peers, in fpts per game, by how the player's role changed. The Outcome bars sort players by who actually got the touches; the Plan bars sort them by the acquiring team's Week 1 depth chart. The two measures put a player in the same group only 52% of the time (33% would be chance), so plans and outcomes often diverge. On demotion they agree: both land at about &#8722;3.5 to &#8722;3.6, far from zero. Every other bar is hatched with a dashed edge because it can't be told apart from zero (see the p-value note above), which is why only the demotion effect is treated as certain anywhere in this piece.</figcaption>
+</figure>
+  <p>Players acquired into a <strong>smaller role</strong> finished the season about <strong>3.5 fpts per game behind</strong> comparable players who stayed put. That gap runs from about 2.9 to 3.5 depending on the specification, the exact statistical setup used to run the comparison. We reran it as a robustness check too, a second pass using a different setup to see if the answer survives, and it did: never smaller, never gone. That is a large effect, roughly the gap between a fantasy starter and a bench player, and of everything in this study, it's the number that moved least no matter how we sliced the data or which of three statistical specifications (setups) we used. It shows up clearly for the larger-sample positions and splits, offense and defense alike, for early-career and prime-age players, whether the new offense was better or worse than the old one, and in midseason deals as well as offseason ones. It is not established, one way or the other, for the smallest position-level slices, such as running backs and tight ends taken alone, where the sample (n=8&ndash;10) is too thin for the pattern to clear our statistical bar even though the direction points the same way. Most other position- and stage-level splits move by a similar amount across the three specifications, on the order of 0.5 to 1.3 fpts a game.</p>
+  <p>Players acquired into a <strong>bigger role</strong> did, on average, roughly what their matched peers did. Not worse. Not dramatically better. When the promotion was real, when the depth chart said &ldquo;starter&rdquo; and the touches followed, they beat their peers by nearly three fpts a game, a finer cut of the data than the chart above, which averages real and false promotions together. When it wasn't, when the depth chart promised a job that never came, they fell behind.</p>
+  <p>That gap between the plan and what actually happened is worth sitting with, because it's some of the best evidence in the whole study. When we cross-check the two measures against each other, a planned promotion that actually materializes averages nearly three fpts a game ahead of peers, but a planned promotion that quietly doesn't (the depth chart said bigger role, the touches never came) averages behind them instead. A planned demotion that materializes is the worst outcome on the board; even a demotion the depth chart predicted but that didn't fully play out still leaves the player behind his peers. In other words, the paperwork and the touch sheet mostly agree, and when they don't, the touch sheet is what the player's season tracks.</p>
+  <p>Four trades from the edges of the sample show how wide that range runs.</p>
+  <div class="ledger">
+    <b>Percy Harvin, 2013</b><span>Minnesota's WR1 &rarr; third on Seattle's opening depth chart, hurt most of the year. <span class="n">&minus;19.1</span> fpts per game vs. peers, the worst outcome in the sample.</span>
+    <b>Darron Lee, 2019</b><span>Former first-round Jets linebacker, traded to Kansas City for a sixth. Went from 97% of the Jets' defensive snaps to 13% of the Chiefs'. 161 snaps all year.</span>
+    <b>Peyton Hillis, 2010</b><span>Third back in Denver &rarr; second in Cleveland &rarr; the starter. <span class="n">+8.7</span> fpts per game vs. peers.</span>
+    <b>Denzel Perryman, 2021</b><span>Signed by Carolina, dealt to the Raiders two months later for a sixth. Snap share went from 40% to 83%; 154 tackles and a Pro Bowl.</span>
+  </div>
+  <p>These four are the tails of the distribution, not the middle of it: picked to show the range, not the typical case. The typical demoted player lands closer to -3.6 than to Harvin's -19.1; the typical promoted one is closer to flat than to Hillis's +8.7. Keep that in mind for everything below.</p>
+  <p>Run the two Broncos trades back through this. Hillis: a promotion the team meant and delivered. Tebow: a promotion on paper (QB3 in Denver's opening 2011 chart, QB2 in New York's) that the Jets had no intention of honoring. The depth chart is the plan, and it predicts the outcome about as well as anything in this study predicts anything: once you know what job the player was acquired to do, none of the surrounding scenery adds much on top of it.</p>
+  <blockquote class="pull">A trade doesn't decide what a player can do. What decides it is the job waiting for him on the other side.</blockquote>
+</section>
+
+<section>
+  <p>That job-over-city claim is the load-bearing finding of this piece, and it deserves the same scrutiny we just aimed at everything else, so two things are worth naming plainly before we go further, because both shape how to read everything above and below. First, the overall &ldquo;trades hurt&rdquo; number is real but soft: it moves from about 0.4 to 1.3 fpts a game depending on exactly how you handle the fact that teams trade players who are already trending down, which is the pattern we found in section 01. <span class="aside-note">That's a different number from the 0.5-to-1.3 range you'll see attached to individual groups elsewhere in this piece: this one is how far the single overall estimate can move; the other is how far each group's own estimate moves when you change the method on that group specifically.</span> That range isn't just us picking different methods to see what sticks. It's a structural limit of the design: our matching can't fully undo that pre-trade dip, because stayers who dipped exactly as hard as the traded players are rare (teams tend to keep the players they still believe in), so the best available non-traded comparisons dipped a little less. No amount of re-slicing the data removes that; it's baked into what a matched comparison can and can't do.</p>
+  <p>Second, an earlier pass at this analysis turned up a result we liked and then watched fall apart under a more careful re-check. We killed it rather than keep it, and we walk through what happened in section 06, because it's the reason to trust the finding that replaced it.</p>
+  <p>Third, there are a few things we have not checked and are not claiming to have ruled out; more on those below, in &ldquo;How sure are we.&rdquo; Here's what held up.</p>
+</section>
+
+<section>
+  <h2><span class="num">03</span> Defense confirms the opportunity story, not the production story</h2>
+  <p>Defensive players are harder to measure (there's no equivalent of &ldquo;targets&rdquo;), so we used the one thing that is unambiguous: snap share, meaning the percentage of the defense's plays a player is actually on the field for. Across 114 defensive trades since 2012, the pattern is the offensive one with the noise stripped out. Players acquired into a smaller role lost about <strong>21 percentage points of snap share</strong> relative to peers. Players acquired into a bigger role gained about 12, though that estimate rests on only 10 trades and is noisier.</p>
+  <p>The Darron Lee trade from section 02's ledger is worth revisiting here, because the defensive numbers are what explain it. A first-round linebacker who'd been a near-every-down player in New York was, on paper, still a linebacker in Kansas City. The snap chart says otherwise: his role collapsed by more than 80 percentage points the moment he changed teams. Nothing about his tackling ability was tested by that trade. His job was.</p>
+  <p>Here is the cleanest test we have of whether a new team &ldquo;unlocks&rdquo; a player: <strong>production per snap did not move.</strong> Not for the demoted, not for the promoted, not at any position. That part is unambiguous. The overall change in raw production per game is noisier on defense than on offense, and for two of three position groups (DB, LB) it isn&rsquo;t statistically significant by itself. A defender simply doesn&rsquo;t rack up individual stats the way a receiver racks up targets, so game-to-game production is a blunter instrument here. What's not noisy is the mechanism: a traded defender makes the same number of plays per snap he always did. The team just decides how many snaps he gets, and that decision is what the numbers track cleanly, the same story as Lee's 97% turning into 13% with no change in what he could do on the field.</p>
+</section>
+
+<section>
+  <h2><span class="num">04</span> Follow the money, because the team already did</h2>
+  <p>If the acquiring team's plan is what matters, you'd expect the acquiring team's <em>money</em> to tell you the plan. It does. We joined every trade to the player's contract at the time. The negative average effect of a trade lives almost entirely in the cheap ones: players on expiring deals (about 1.4 fpts per game behind peers), players with tiny cap numbers (a small slice of the team's total salary budget tied up in that one player, a sign the team wasn't banking on him), and above all players whose new team <strong>didn't sign them to anything</strong> on arrival. Those players, 190 of the 243 in our main sample, finished 1.5 fpts per game behind peers. The 53 who were extended by the acquiring team in the trade year finished statistically even with theirs (about 0.45 fpts per game behind, well inside the noise).</p>
+  <p>Here's what that looked like for three players on the extremes of the sample.</p>
+  <div class="ledger">
+    <b>Wes Welker, 2007</b><span>Miami tendered him at $1.35M. New England traded a second- and seventh-round pick for him and signed him to five years and $18.1M the same week. 112 catches. <span class="n">+9.2</span> fpts per game vs. peers.</span>
+    <b>Randy Moss, 2007</b><span>Oakland wanted out; New England paid a fourth-rounder and restructured his deal on arrival. 23 touchdowns, still the record. <span class="n">+12.8</span> fpts per game vs. peers.</span>
+    <b>Matt Schaub, 2014</b><span>Benched in Houston, traded to Oakland for a sixth, no new deal. Ten pass attempts all season, released in March.</span>
+  </div>
+  <p>Welker and Moss are the ceiling of the &ldquo;extended&rdquo; group, not its average. Across the whole group, players extended on arrival finish roughly <em>even</em> with their peers, not nine or twelve fpts ahead. None of this means an extension makes a player better, either. It means the extension is the team telling you, in a language that's harder to spin than a press release, what job it acquired him for.</p>
+</section>
+
+<section>
+  <h2><span class="num">05</span> The young get hurt worst, and quarterbacks most of all</h2>
+  <p>Split the sample by age and the damage concentrates on players traded before or during their prime: about 1.75 fpts per game behind peers for early-career players and about 1.4 for prime-age ones, versus essentially nothing for players traded on the far side of it. That's the same story again, seen from a different angle. A young player who gets traded is disproportionately a player his team has given up on, and the acquiring team usually agrees: 27% of traded first-round picks ended up in a smaller role, and first-rounders as a group fared worse after a trade than any other draft tier.</p>
+  <p>Quarterbacks look like the position trades ruin, and it's almost entirely this effect. Early-career QBs traded away finished 2.4 fpts per game behind peers. Prime-age QBs traded away were statistically indistinguishable from theirs. It is not that a new system breaks a quarterback. It's that &ldquo;traded young quarterback&rdquo; is, most of the time, a polite term for a benching that crossed state lines: Sam Howell, Washington's starter at 23, dealt to Seattle in a deal that everyone involved described, out loud, as making him Geno Smith's backup.</p>
+</section>
+
+<section>
+  <h2><span class="num">06</span> What we got wrong the first time</h2>
+  <p>An earlier draft of this piece had a finding we loved: traded wide receivers see fewer targets but do more damage with each one, a &ldquo;fit over volume&rdquo; story with DeSean Jackson's 2019 return to Philadelphia as the centerpiece. It was true in the first version of our numbers. It is not true in the careful version. Once the comparison players were matched on two prior seasons instead of one, the per-target efficiency gain shrank to nothing. Jackson's season was real; the pattern wasn't. We'd rather tell you that than leave it in.</p>
+  <p>The same goes for the running-back version of the fresh-start myth. Traded backs as a group did no better than their peers. Traded backs who were handed a real starting job did: Hillis, or a forgotten Rams bust named Trung Canidate who got Washington's starting job in 2003, ran for 600 yards, and was replaced by Clinton Portis the next spring. Position didn't decide his season. The depth chart did.</p>
+  <p>We're telling you this because it's the difference between a stat you can trust and one you can't. The DeSean Jackson version of this story was more fun and more shareable, and it's exactly the kind of claim that would have kept getting repeated on a broadcast or in a fantasy column if nobody had gone back and checked it against a second season of data. If you take one thing away from this section, take this: a finding that survives only the first, easiest version of a check is not a finding yet, and the role effect in section 02 is worth trusting precisely because it's the one that didn't fall apart when we tried harder to break it.</p>
+</section>
+
+<section>
+  <h2>How sure are we</h2>
+  <p>Reasonably, with real caveats we'd rather name than bury. This used an actual trade ledger, real birth dates, real depth charts and snap counts, real contracts, and a matched-comparison design (players who look statistically identical except they weren't traded) that we ran three ways and tested against years in which no trade happened. The role result is the one that didn't move no matter how we ran it, including two additional checks past what's shown above: adding a minimum-games floor to rule out small-sample noise, and adding the player's draft round to the matching so pedigree can't be quietly driving the result. Both held: demotion still cost a player between roughly 2.9 and 3.5 fpts a game against his matched peers, on both sides of the ball and for the positions and splits with enough trades to test properly. It's not established the same way for the smallest slices, like running backs or tight ends taken on their own (8 to 10 trades each): the direction points the same way, but the sample is too thin to call it certain.</p>
+  <p>The overall &ldquo;trades hurt&rdquo; number is real too, but softer: peers ahead by somewhere between 0.4 and 1.3 fpts a game depending on exactly how the pre-trade dip is handled, the same structural limit named in section 02. We also re-checked our confidence intervals a stricter way: resampling by group (position and season) instead of by individual player, in plain terms redoing the math in blocks that share the same pool of comparison players, instead of pretending each traded player's comparison is independent of the others', since the comparison players for different traded players in the same position and season overlap with each other. That stricter check widens the confidence interval by about 22%, but only for the demotion-only estimate; it applies to that stratum specifically, not to the overall trade effect, which only widens by about 3% under the same check. Either way, the effect still doesn't come close to crossing zero. We can't fully separate the average effect from the dip continuing on its own, which is why the role finding, not the average, is the one to hang your hat on. And none of this is proof in the randomized-experiment sense: no one ran an experiment where teams were assigned to demote players at random. It's the best a real trade ledger and real depth charts can tell you, and the role effect is the part of it that predicted the outcome most consistently across every version of the analysis.</p>
+  <p>The biggest caveat is who's missing. Of the 1,222 trades in the ledger, only 243 had enough surrounding data (two seasons of stats before the trade, a season after, and enough similar players to match against) to be usable in this analysis; that's the sample the numbers above describe. The obvious worry is that the dropped trades are the ones that flopped. We went and looked, and the reassuring part is that most of them never had a career to flop from: of the 864 trades that fell out at the first cut, 766 involve players who had never recorded an NFL stat season <em>before</em> the trade: draft-day swaps, camp bodies, practice-squad churn. Only 85 are players who had a real prior season and then no season after the trade: established before the trade, then simply absent afterward, with no way yet to tell how much of that is retirement, injury, a roster cut, or just a data window that ends too soon.</p>
+  <p class="open-flag">Until that's sorted out, treat those 85 as an open question, not as evidence either for or against what's above.</p>
+  <p>Three more things belong on this list, named plainly rather than checked off: we have not accounted for how the scoring rules that produce &ldquo;fpts&rdquo; changed across a 24-season window, we don't know a player's injury status at the moment of the trade (a demotion could just as easily be a team benching a player it already knew was hurt, which would flip the story we're telling), and we haven't separated out contract-year incentives, since a player entering a walk year has his own reasons, unrelated to how well he fits his new team, to play through pain or to be benched. These are open, not resolved; we are not claiming to have ruled any of them out.</p>
+  <div class="divider"><span>&sect;</span></div>
+  <p>So: not a blessing in disguise. Not a curse. The trade is the delivery mechanism. What arrives is a job, and the team that made the deal already knows how big it is: it's on the depth chart and it's in the contract. Most of this study is some version of that sentence, though not all of it. Plenty of trades in our sample landed as a wash, a player who got roughly the role he had before and produced roughly what he would have anyway; the job only moves the needle when the job itself moves. Hillis and Tebow left the same building two years apart, and that's the version that's easy to check: the city, the fresh air, the new locker aren't what the numbers track. The job is.</p>
+  <blockquote class="pull">One was handed the ball. The other was handed a clipboard with a nicer press release.</blockquote>
+</section>
+
+<footer class="colophon">
+  Data: nflverse (stats, players, depth charts, snap counts, injuries), nflverse/nfldata (trade ledger, game results, draft picks), OverTheCap contracts via nflverse. Method: real trades only, matched against non-traded peers of the same position, season, age (&plusmn;2) and prior production, controlling for change in team offensive efficiency; two-season pre-trade baseline; placebo-tested. Full technical report, code, tables and notebook: EBK Deep Bag research archive.
+</footer>
+</article>
+</div>

@@ -27,7 +27,46 @@
     }, 250);
   });
 
+  // Autosave: the form is mirrored to localStorage so a closed tab or a
+  // crashed browser doesn't eat an unsaved draft. Cleared on a real save.
+  var AUTOSAVE = "ebk_db_autosave";
+  var FIELDS = ["f-slug-orig", "f-title", "f-slug", "f-cover", "f-tags", "f-excerpt", "f-body"];
+  var autosaveTO = null;
+  function autosave() {
+    clearTimeout(autosaveTO);
+    autosaveTO = setTimeout(function () {
+      var o = { t: Date.now() };
+      FIELDS.forEach(function (id) { o[id] = $("#" + id).value; });
+      try { localStorage.setItem(AUTOSAVE, JSON.stringify(o)); } catch (e) {}
+    }, 500);
+  }
+  function clearAutosave() {
+    clearTimeout(autosaveTO);
+    try { localStorage.removeItem(AUTOSAVE); } catch (e) {}
+  }
+  function restoreAutosave() {
+    var o = null;
+    try { o = JSON.parse(localStorage.getItem(AUTOSAVE) || "null"); } catch (e) {}
+    if (!o || !(o["f-title"] || o["f-body"])) return;
+    FIELDS.forEach(function (id) { $("#" + id).value = o[id] || ""; });
+    slugTouched = true;
+    $("#btn-new").hidden = false;
+    $("#save-msg").textContent = "Restored unsaved work from " +
+      new Date(o.t).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) + ".";
+    EBKRender.toHtml(o["f-body"]).then(function (html) { $("#f-preview").innerHTML = html; });
+  }
+  FIELDS.slice(1).forEach(function (id) { $("#" + id).addEventListener("input", autosave); });
+
+  // Static studies (tools/build_deep_bag.py) own their /deep-bag/<slug> URL.
+  function studySlugs() {
+    return fetch("/data/deep-bag.json", { cache: "no-cache" })
+      .then(function (r) { return r.ok ? r.json() : { articles: [] }; })
+      .then(function (j) { return j.articles || []; })
+      .catch(function () { return []; });
+  }
+
   function resetForm() {
+    clearAutosave();
     $("#f-slug-orig").value = "";
     $("#f-title").value = ""; $("#f-slug").value = ""; $("#f-cover").value = "";
     $("#f-tags").value = ""; $("#f-excerpt").value = ""; $("#f-body").value = "";
@@ -72,6 +111,11 @@
     if (!data.slug) { $("#save-msg").textContent = "Needs a URL slug."; return; }
     if (!data.body.trim()) { $("#save-msg").textContent = "Needs some body text."; return; }
     var origSlug = $("#f-slug-orig").value;
+    var clash = (await studySlugs()).filter(function (a) { return a.slug === data.slug; })[0];
+    if (clash) {
+      $("#save-msg").textContent = 'The URL "' + data.slug + '" belongs to the study "' + clash.title + '". Pick another slug.';
+      return;
+    }
 
     if (data.slug !== origSlug) {
       var existing = await EBKF.getPost(data.slug).catch(function () { return null; });
@@ -86,6 +130,7 @@
       if (origSlug && origSlug !== data.slug) await EBKF.deletePost(origSlug).catch(function () {});
       $("#f-slug-orig").value = data.slug;
       $("#btn-new").hidden = false;
+      clearAutosave();
       $("#save-msg").textContent = status === "published" ? "Published!" : "Draft saved.";
       loadMyPosts();
     } catch (e) {
@@ -101,7 +146,7 @@
       '<span class="status ' + p.status + '">' + p.status + "</span></span>" +
       '<span class="acts">' +
       '<button class="ebk-signin edit">Edit</button>' +
-      (p.status === "published" ? '<a class="ebk-signin" href="/deep-bag/post/?s=' + encodeURIComponent(p.slug) + '">View</a>' : "") +
+      (p.status === "published" ? '<a class="ebk-signin" href="/deep-bag/' + encodeURIComponent(p.slug) + '">View</a>' : "") +
       '<button class="ebk-signin del">Delete</button>' +
       "</span></div>";
   }
@@ -129,11 +174,13 @@
   function show(id) {
     ["denied", "loading", "editor"].forEach(function (x) { $("#" + x).hidden = x !== id; });
   }
+  var restored = false;
   function start() {
     if (!(window.EBKF && EBKF.onChange)) return setTimeout(start, 60);
     EBKF.onChange(function () {
       if (!(EBKF.isAuthor && EBKF.isAuthor())) { show("denied"); $("#my-posts").hidden = true; return; }
       show("editor");
+      if (!restored) { restored = true; restoreAutosave(); }
       loadMyPosts();
     });
   }

@@ -13,3 +13,6 @@ Thumbs.db
 # firebase (added later)
 .firebase/
 firebase-debug.log
+
+# Deep Bag draft previews (tools/build_deep_bag.py); never deployed
+public/deep-bag/.drafts/
