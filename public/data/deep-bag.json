@@ -2,6 +2,27 @@
  "generated": "2026-10-05",
  "articles": [
   {
+   "slug": "fresh-start-myth",
+   "title": "The Fresh-Start Myth",
+   "dek": "We tracked two decades of NFL trades against players who stayed put. A change of scenery mostly isn't associated with a different player. What predicts the outcome is the job waiting on the other end.",
+   "kicker": "EBK Deep Bag",
+   "byline": "A Deep Bag investigation · 243 trades analyzed, of 1,222 reviewed · 2002–2025",
+   "date": "2026-10-05",
+   "tags": [
+    "trades",
+    "depth-charts",
+    "fantasy"
+   ],
+   "sports": [
+    "nfl"
+   ],
+   "readMins": 18,
+   "accent": "#c96a35",
+   "bg": "#14100c",
+   "report": true,
+   "image": "/deep-bag/fresh-start-myth/share.png"
+  },
+  {
    "slug": "champagne-no-hangover",
    "title": "Champagne, No Hangover",
    "dek": "We followed every champion in four leagues into the season after the parade. They come back to earth. In the NBA and NHL, and probably the NFL, they don’t fall as far as anybody else that good.",
@@ -23,27 +44,6 @@
    "bg": "#13110e",
    "report": true,
    "image": "/deep-bag/champagne-no-hangover/share.png"
-  },
-  {
-   "slug": "fresh-start-myth",
-   "title": "The Fresh-Start Myth",
-   "dek": "We tracked two decades of NFL trades against players who stayed put. A change of scenery mostly isn't associated with a different player. What predicts the outcome is the job waiting on the other end.",
-   "kicker": "EBK Deep Bag",
-   "byline": "A Deep Bag investigation · 243 trades analyzed, of 1,222 reviewed · 2002–2025",
-   "date": "2026-10-04",
-   "tags": [
-    "trades",
-    "depth-charts",
-    "fantasy"
-   ],
-   "sports": [
-    "nfl"
-   ],
-   "readMins": 18,
-   "accent": "#c96a35",
-   "bg": "#14100c",
-   "report": true,
-   "image": "/deep-bag/fresh-start-myth/share.png"
   },
   {
    "slug": "revenge-game",
