@@ -3,7 +3,7 @@
  *  02 More Ways to Play — Head-to-Head shows the signed-in player's best Elo;
  *     Deep Cut shows today's number, question (ending blurred until the blade
  *     cuts) and guesses left, from /data/deep-cuts.json + localStorage.
- *  03 The Stat Lab — headline counts, the latest three Deep Bag posts (each
+ *  03 The Stat Lab — headline counts, the latest three Deep Bag studies and posts (each
  *     post shuffles its own paper out of the backpack on hover), rolling team
  *     logos, and a team + player search that opens profile pop-ups.
  *     Search data: /data/stat-lab/index.json (names), loaded on first focus;
@@ -113,17 +113,45 @@
   function deepBag() {
     var card = $(".bagcard"), el = card && $(".bagopen", card), list = card && $("[data-bag-list]", card);
     if (!card) return;
+    /* two sources, newest first, top 3: published static studies from
+       /data/deep-bag.json (tools/build_deep_bag.py, live at /deep-bag/<slug>)
+       and Firestore posts. Each source re-renders the list as it lands, so a
+       slow or blocked Firestore never hides the studies. */
+    var src = { studies: null, posts: null }, got = {}, waited = false;
+    function show() {
+      var taken = {}, items = [];
+      (src.studies || []).forEach(function (a) {
+        if (!a || !a.slug || taken[a.slug]) return;
+        taken[a.slug] = true;
+        items.push({ title: a.title, date: a.date || "", href: "/deep-bag/" + encodeURIComponent(a.slug) });
+      });
+      (src.posts || []).forEach(function (p) {
+        if (!p || !p.slug || taken[p.slug]) return; // a static study owns its URL
+        var iso = ""; try { iso = p.publishedAt.toDate().toISOString(); } catch (e) {}
+        items.push({ title: p.title, date: iso, href: "/deep-bag/post/?s=" + encodeURIComponent(p.slug) });
+      });
+      items.sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
+      items = items.slice(0, 3);
+      if (!items.length) {
+        if (!got.studies || !(got.posts || waited)) return; // a source may still bring something
+        list.innerHTML = src.studies === false && src.posts === false
+          ? '<li class="bc-empty">The Bag is closed right now. <a href="/deep-bag">Open it</a>.</li>'
+          : '<li class="bc-empty">New research drops soon.</li>';
+        return;
+      }
+      list.innerHTML = items.map(function (it, i) {
+        return '<li><a class="art" data-p="' + (i % 3) + '" href="' + esc(it.href) + '"><span class="bc-n">' + pad(i + 1) + '</span><span class="art-t">' + esc(it.title) + "</span>" + ARROW.replace("<svg", '<svg class="art-go"') + "</a></li>";
+      }).join("");
+      wireArts();
+    }
+    function done(key, val) { if (got[key]) return; got[key] = true; src[key] = val; show(); }
+    getJSON("/data/deep-bag.json").then(function (d) { done("studies", (d && d.articles) || []); }, function () { done("studies", false); });
     whenFirebase(function () {
-      if (!EBKF.listPublishedPosts) return;
-      EBKF.listPublishedPosts().then(function (posts) {
-        posts = (posts || []).slice(0, 3);
-        if (!posts.length) { list.innerHTML = '<li class="bc-empty">New research drops soon.</li>'; return; }
-        list.innerHTML = posts.map(function (p, i) {
-          return '<li><a class="art" data-p="' + (i % 3) + '" href="/deep-bag/post/?s=' + encodeURIComponent(p.slug) + '"><span class="bc-n">' + pad(i + 1) + '</span><span class="art-t">' + esc(p.title) + "</span>" + ARROW.replace("<svg", '<svg class="art-go"') + "</a></li>";
-        }).join("");
-        wireArts();
-      }).catch(function () { list.innerHTML = '<li class="bc-empty">The Bag is closed right now. <a href="/deep-bag">Open it</a>.</li>'; });
+      if (!EBKF.listPublishedPosts) { done("posts", []); return; }
+      EBKF.listPublishedPosts().then(function (posts) { done("posts", posts || []); }, function () { done("posts", false); });
     });
+    // Firebase slow or blocked: settle the empty state anyway (late posts still render)
+    setTimeout(function () { waited = true; show(); }, 8000);
     near(card, function () { STRIPS.forEach(function (u) { var im = new Image(); im.src = u; }); });
 
     /* frame-stepped so only one bag is ever on screen; swapping posts tucks

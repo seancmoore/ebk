@@ -1,10 +1,8 @@
 {
   "slug": "revenge-game",
-  "status": "draft",
-  "date": "",
+  "status": "published",
+  "date": "2026-10-04",
   "tags": [
-    "nfl",
-    "nba",
     "revenge-games"
   ],
   "sports": [
@@ -12,8 +10,9 @@
     "nba"
   ],
   "source": {
-    "article": "C:\\Users\\panky\\Desktop\\ebk-revenge-game\\reports\\article_v04.html",
+    "article": "C:\\Users\\panky\\Desktop\\ebk-revenge-game\\reports\\article_v05.html",
     "report": "C:\\Users\\panky\\Desktop\\ebk-revenge-game\\reports\\report_v04.html"
   },
-  "imported": "2026-09-23"
+  "imported": "2026-10-05",
+  "assets": {}
 }

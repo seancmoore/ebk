@@ -119,6 +119,110 @@ def parse_study(src):
     }
 
 
+# ------------------------------------------------------------ css scoping --
+#
+# A study's stylesheet was written for a page of its own: it styles :root,
+# html, body and bare p/h2/section/footer/a. On EBK the study sits inside the
+# site's header and footer, so every selector is prefixed with the wrapper
+# (SCOPE) and the page-level selectors become the wrapper itself. The study
+# then renders exactly as it does standalone, and none of it leaks into the
+# site chrome. @media/@supports bodies are scoped recursively; @keyframes and
+# @font-face pass through untouched.
+
+SCOPE = ".dbx-study"
+_PAGE_SEL = re.compile(r"^(?::root|html|body)(?![\w-])")
+
+
+def _split_top(s, sep):
+    """Split on sep outside (), [] and quotes."""
+    out, depth, q, cur = [], 0, "", []
+    for ch in s:
+        if q:
+            cur.append(ch)
+            if ch == q:
+                q = ""
+            continue
+        if ch in "\"'":
+            q = ch
+        elif ch in "([":
+            depth += 1
+        elif ch in ")]":
+            depth -= 1
+        elif ch == sep and depth == 0:
+            out.append("".join(cur))
+            cur = []
+            continue
+        cur.append(ch)
+    out.append("".join(cur))
+    return out
+
+
+def _scope_selector(sel, scope):
+    sel = sel.strip()
+    if not sel:
+        return sel
+    if _PAGE_SEL.match(sel):
+        rest = _PAGE_SEL.sub("", sel, count=1)
+        # "html body x" / "html > body": the second page token is the wrapper too
+        rest = re.sub(r"^\s*>?\s*body(?![\w-])", "", rest)
+        return scope + rest
+    return scope + " " + sel
+
+
+def _block_end(css, i):
+    """Index just past the } matching the { at css[i]."""
+    depth, q, n = 0, "", len(css)
+    while i < n:
+        ch = css[i]
+        if q:
+            if ch == "\\":
+                i += 2
+                continue
+            if ch == q:
+                q = ""
+        elif ch in "\"'":
+            q = ch
+        elif ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0:
+                return i + 1
+        i += 1
+    return n
+
+
+def scope_css(css, scope=SCOPE):
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    out, i, n = [], 0, len(css)
+    while i < n:
+        j = css.find("{", i)
+        k = css.find(";", i)
+        if j < 0:
+            tail = css[i:].strip()
+            if tail:
+                out.append(tail)
+            break
+        if 0 <= k < j and css[i:k].strip().startswith("@"):   # @charset/@import/@layer a, b;
+            out.append(css[i:k + 1].strip())
+            i = k + 1
+            continue
+        prelude = css[i:j].strip()
+        end = _block_end(css, j)
+        inner = css[j + 1:end - 1]
+        if prelude.startswith("@"):
+            name = prelude.split(None, 1)[0].lower()
+            if name in ("@media", "@supports", "@container", "@layer", "@scope", "@document"):
+                out.append(prelude + "{" + scope_css(inner, scope) + "}")
+            else:                                             # @keyframes, @font-face, @page ...
+                out.append(prelude + "{" + inner + "}")
+        else:
+            sels = ",".join(_scope_selector(x, scope) for x in _split_top(prelude, ","))
+            out.append(sels + "{" + inner.strip() + "}")
+        i = end
+    return "\n".join(out)
+
+
 # ----------------------------------------------------------------- content --
 
 def load_meta(slug):
@@ -271,35 +375,100 @@ def lint(slug, info):
 
 FONT_LINKS = ('<link rel="preconnect" href="https://fonts.googleapis.com" />\n'
               '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />\n')
+ARROW = ('<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" '
+         'stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+# The page around a study is the site's (base tokens, kit pieces, wordmark);
+# the study itself keeps its own palette and type inside .dbx-study.
+SITE_CSS = ('<link rel="stylesheet" href="/css/base.css" />\n'
+            '<link rel="stylesheet" href="/css/ebk-kit.css" />\n')
 
 
-def head_common(title, desc, url, image, bg, noindex):
+def head_common(title, desc, url, image, noindex, alt):
+    robots = '<meta name="robots" content="noindex" />\n' if noindex else ""
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="theme-color" content="{esc(bg)}" />
+<meta name="theme-color" content="#0a0e1c" />
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}" />
 <link rel="canonical" href="{esc(url)}" />
-{'<meta name="robots" content="noindex" />' if noindex else ''}
-<meta property="og:site_name" content="EBK Deep Bag" />
+{robots}<meta property="og:site_name" content="EBK Deep Bag" />
 <meta property="og:title" content="{esc(title)}" />
 <meta property="og:description" content="{esc(desc)}" />
 <meta property="og:url" content="{esc(url)}" />
 <meta property="og:image" content="{esc(image)}" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="{esc(alt)}" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="{esc(title)}" />
 <meta name="twitter:description" content="{esc(desc)}" />
 <meta name="twitter:image" content="{esc(image)}" />
+<meta name="twitter:image:alt" content="{esc(alt)}" />
 <link rel="alternate" type="application/rss+xml" title="EBK Deep Bag" href="/deep-bag/feed.xml" />
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
 <link rel="icon" type="image/svg+xml" href="/img/icon.svg" />
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
 """
+
+
+def study_styles(info):
+    """Site CSS, the study's fonts, its scoped stylesheet, then the chrome."""
+    fonts = ""
+    if info["fonts"]:
+        fonts = FONT_LINKS + "".join(f'<link rel="stylesheet" href="{esc(f)}" />\n' for f in info["fonts"])
+    return (SITE_CSS + fonts
+            + f"<style>\n{scope_css(info['css'])}\n</style>\n"
+            + '<link rel="stylesheet" href="/css/deep-bag-article.css" />\n'
+            + '<script src="/js/ebk-kit.js" defer></script>\n'
+            + '<script src="/js/ebk-analytics.js" defer></script>\n'
+            + '<script src="/js/deep-bag-article.js" defer></script>\n'
+            + "</head>\n")
+
+
+def top_bar(back_href, back_label, right):
+    return ('<div class="dbx-progress" aria-hidden="true"></div>\n'
+            '<header class="dbx-top"><div class="dbx-top-in">'
+            '<a class="dbx-brand" href="/" aria-label="EBK home"><span class="wordmark" aria-hidden="true">E<span>B</span>K</span>'
+            '<span class="dbx-brand-sub">Elite Ball Knowledge</span></a>'
+            f'<a class="k-back dbx-back" href="{back_href}">&larr; {back_label}</a>'
+            f'<div class="dbx-top-r">{right}</div>'
+            '</div></header>\n')
+
+
+def study_main(body):
+    tag = "div" if re.search(r"<main\b", body, re.I) else "main"
+    return f'<{tag} class="dbx-study" id="story">\n{body}\n</{tag}>\n'
+
+
+SITE_FOOTER = ('<footer class="dbx-foot">'
+               '<p><a href="/">EBK · Elite Ball Knowledge</a> &nbsp;·&nbsp; '
+               '<a href="/deep-bag">Deep Bag</a> &nbsp;·&nbsp; <a href="/deep-bag/feed.xml">RSS</a></p>'
+               '<p><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · '
+               'Not affiliated with any league. Logos and trademarks belong to their owners.</p>'
+               '</footer>\n')
+
+
+def shd(n, title):
+    return (f'<div class="k-shd"><span class="k-shd-n" data-seg="{n:02d}" aria-hidden="true"></span>'
+            f'<h2 class="k-shd-t">{esc(title)}</h2><span class="k-shd-rail" aria-hidden="true"></span></div>')
+
+
+def more_card(o, href):
+    img = (f'<img class="dbx-more-img" src="{esc(o["image"])}" width="1200" height="630" loading="lazy" alt="" />'
+           if o.get("image") else "")
+    kick = " · ".join(s.upper() for s in o.get("sports") or []) or "Study"
+    return (f'<a class="k-card dbx-more-card" href="{href}">{img}'
+            f'<span class="k-kick">{esc(kick)} <i>{o["readMins"]} min</i></span>'
+            f'<h3>{esc(o["title"])}</h3><p>{esc(o["dek"])}</p>'
+            f'<span class="k-cta">Read the study {ARROW}</span></a>')
+
+
+def ctas():
+    return ('<div class="dbx-ctas"><a class="k-btn pill" href="/">Play EBK ' + ARROW + '</a>'
+            '<a class="k-btn ghost pill" href="/deep-bag">All Deep Bag studies</a></div>')
 
 
 def fmt_date(iso):
@@ -324,52 +493,52 @@ def render_article(meta, info, base, others):
     ld = {
         "@context": "https://schema.org", "@type": "Article",
         "headline": title, "description": desc, "image": image, "url": url,
+        "mainEntityOfPage": url,
         "author": {"@type": "Organization", "name": "EBK Deep Bag"},
         "publisher": {"@type": "Organization", "name": "EBK: Elite Ball Knowledge", "url": SITE},
     }
     if meta.get("date"):
         ld["datePublished"] = meta["date"]
 
-    more = "".join(
-        f'<a class="dbx-more-item" href="{base if o["status"] != "published" else "/deep-bag"}/{esc(o["slug"])}">'
-        f'<span class="dbx-more-t">{esc(o["title"])}</span>'
-        f'<span class="dbx-more-d">{esc(o["dek"])}</span></a>'
-        for o in others[:3]
-    )
-    report_card = (f'<a class="dbx-report" href="{report_path}"><span class="dbx-report-k">For the nerds</span>'
-                   f'<span class="dbx-report-t">Read the full technical report</span>'
-                   f'<span class="dbx-report-d">Methods, every table, robustness checks and caveats.</span></a>'
-                   if report_path else "")
-    date_line = fmt_date(meta.get("date")) if not draft else "Draft preview"
+    date_line = fmt_date(meta.get("date")) if not draft else ""
+    right = (('<span class="k-tag gold dbx-draft">Draft preview</span>' if draft else "")
+             + '<span class="dbx-meta">' + (esc(date_line) + " · " if date_line else "")
+             + f'{info["readMins"]} min read</span>'
+             + (f'<a class="dbx-nerd" href="{report_path}">Nerd version {ARROW}</a>' if report_path else ""))
 
-    return (head_common(f"{title} · EBK Deep Bag", desc, url, image, info["bg"], draft)
-            + f'<meta property="og:type" content="article" />\n'
+    n = 1
+    end = '<section class="dbx-end" aria-label="After the story"><div class="dbx-end-in">' + shd(n, "Keep digging")
+    if report_path:
+        end += (f'<a class="k-card glow dbx-report" href="{report_path}">'
+                '<span class="k-kick">For the nerds <i>Technical report</i></span>'
+                '<h3>Read the nerd version</h3>'
+                '<p>Methods, every table, robustness checks and caveats behind this story.</p>'
+                f'<span class="k-cta">Open the report {ARROW}</span></a>')
+    end += ('<div class="dbx-share"><span class="dbx-label">Share this study</span><div class="k-chips">'
+            '<button type="button" class="k-chip" data-share="copy">Copy link</button>'
+            '<button type="button" class="k-chip" data-share="native" hidden>Share</button>'
+            f'<a class="k-chip" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text={quote(title)}&amp;url={quote(url, safe="")}">Post on X</a>'
+            f'<a class="k-chip" target="_blank" rel="noopener" href="https://www.reddit.com/submit?url={quote(url, safe="")}&amp;title={quote(title)}">Reddit</a>'
+            '</div></div>')
+    if others:
+        n += 1
+        end += shd(n, "More from the Bag")
+        end += '<div class="dbx-more">' + "".join(more_card(o, f'/deep-bag/{esc(o["slug"])}') for o in others[:3]) + "</div>"
+    end += ctas() + "</div></section>\n"
+
+    return (head_common(f"{title} · EBK Deep Bag", desc, url, image, draft, f"{title}: an EBK Deep Bag study")
+            + '<meta property="og:type" content="article" />\n'
             + (f'<meta property="article:published_time" content="{esc(meta["date"])}" />\n' if meta.get("date") else "")
+            + "".join(f'<meta property="article:tag" content="{esc(t)}" />\n' for t in meta.get("tags", []))
             + '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False).replace("</", "<\\/") + "</script>\n"
-            + (FONT_LINKS + "".join(f'<link rel="stylesheet" href="{esc(f)}" />\n' for f in info["fonts"]) if info["fonts"] else "")
-            + f"<style>\n{info['css']}\n</style>\n"
-            + '<link rel="stylesheet" href="/css/deep-bag-article.css" />\n'
-            + '<script src="/js/ebk-analytics.js" defer></script>\n'
-            + '<script src="/js/deep-bag-article.js" defer></script>\n'
-            + "</head>\n<body>\n"
-            + '<div class="dbx-progress" aria-hidden="true"></div>\n'
-            + '<nav class="dbx-bar" aria-label="Deep Bag">'
-            + '<a class="dbx-brand" href="/">E<b>B</b>K</a><span class="dbx-sep">/</span>'
-            + '<a class="dbx-sec" href="/deep-bag">Deep Bag</a>'
-            + f'<span class="dbx-meta">{esc(date_line)} · {info["readMins"]} min read</span></nav>\n'
-            + body + "\n"
-            + '<aside class="dbx-end">'
-            + report_card
-            + '<div class="dbx-share"><span class="dbx-share-k">Share this study</span>'
-            + '<button type="button" class="dbx-btn" data-share="copy">Copy link</button>'
-            + '<button type="button" class="dbx-btn" data-share="native" hidden>Share</button>'
-            + f'<a class="dbx-btn" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text={quote(title)}&amp;url={quote(url, safe='')}">Post on X</a>'
-            + f'<a class="dbx-btn" target="_blank" rel="noopener" href="https://www.reddit.com/submit?url={quote(url, safe='')}&amp;title={quote(title)}">Reddit</a>'
-            + "</div>"
-            + (f'<div class="dbx-more"><span class="dbx-share-k">More from the Deep Bag</span>{more}</div>' if more else "")
-            + '<a class="dbx-all" href="/deep-bag">All Deep Bag stories &rarr;</a>'
-            + '<a class="dbx-all" href="/">Play EBK: prove your ball knowledge &rarr;</a>'
-            + "</aside>\n</body>\n</html>\n")
+            + study_styles(info)
+            + '<body class="dbx dbx-art">\n'
+            + '<a class="dbx-skip" href="#story">Skip to the story</a>\n'
+            + top_bar("/deep-bag", "<b>Deep Bag</b>", right)
+            + study_main(body)
+            + end
+            + SITE_FOOTER
+            + "</body>\n</html>\n")
 
 
 def render_report(meta, src, base, art_info):
@@ -382,20 +551,26 @@ def render_report(meta, src, base, art_info):
     desc = f"The full methods, tables and robustness checks behind \"{art_info['title']}\"."
     image = SITE + f"/deep-bag/{slug}/share.png" if (CONTENT / slug / "share.png").exists() else SITE + "/img/og.png"
     body = rewrite_links(info["body"], art_path, f"{art_path}/report", meta.get("assets"))
-    return (head_common(f"{title} · EBK Deep Bag", desc, url, image, info["bg"], draft)
+    right = (('<span class="k-tag gold dbx-draft">Draft preview</span>' if draft else "")
+             + '<span class="dbx-meta">Technical report</span>'
+             + f'<a class="dbx-nerd" href="{art_path}">Read the story {ARROW}</a>')
+    end = ('<section class="dbx-end" aria-label="After the report"><div class="dbx-end-in">'
+           + shd(1, "Back to the story")
+           + f'<a class="k-card glow dbx-report" href="{art_path}">'
+           + f'<span class="k-kick">The story <i>{art_info["readMins"]} min read</i></span>'
+           + f'<h3>{esc(art_info["title"])}</h3><p>{esc(art_info["dek"])}</p>'
+           + f'<span class="k-cta">Read the story {ARROW}</span></a>'
+           + ctas() + "</div></section>\n")
+    return (head_common(f"{title} · EBK Deep Bag", desc, url, image, draft, f"{art_info['title']}: an EBK Deep Bag study")
             + '<meta property="og:type" content="article" />\n'
-            + (FONT_LINKS + "".join(f'<link rel="stylesheet" href="{esc(f)}" />\n' for f in info["fonts"]) if info["fonts"] else "")
-            + f"<style>\n{info['css']}\n</style>\n"
-            + '<link rel="stylesheet" href="/css/deep-bag-article.css" />\n'
-            + '<script src="/js/ebk-analytics.js" defer></script>\n'
-            + '<script src="/js/deep-bag-article.js" defer></script>\n'
-            + "</head>\n<body>\n"
-            + '<div class="dbx-progress" aria-hidden="true"></div>\n'
-            + '<nav class="dbx-bar" aria-label="Deep Bag">'
-            + '<a class="dbx-brand" href="/">E<b>B</b>K</a><span class="dbx-sep">/</span>'
-            + '<a class="dbx-sec" href="/deep-bag">Deep Bag</a>'
-            + f'<a class="dbx-meta" href="{art_path}">&larr; Back to the story</a></nav>\n'
-            + body + "\n</body>\n</html>\n")
+            + study_styles(info)
+            + '<body class="dbx dbx-rep">\n'
+            + '<a class="dbx-skip" href="#story">Skip to the report</a>\n'
+            + top_bar(art_path, "<b>The story</b>", right)
+            + study_main(body)
+            + end
+            + SITE_FOOTER
+            + "</body>\n</html>\n")
 
 
 def write(path, text):
@@ -456,9 +631,9 @@ def build():
         s.pop("status")
     write(MANIFEST, json.dumps({"generated": date.today().isoformat(), "articles": published},
                                indent=1, ensure_ascii=False) + "\n")
-    if drafts:
-        # Local preview only; the index page merges this in on localhost.
-        write(DRAFTS / "index.json", json.dumps({"articles": drafts}, indent=1, ensure_ascii=False) + "\n")
+    # Local preview only; the index page merges this in on localhost. Written
+    # even when empty so the localhost fetch doesn't 404 (never deployed).
+    write(DRAFTS / "index.json", json.dumps({"articles": drafts}, indent=1, ensure_ascii=False) + "\n")
     write(FEED, render_feed(published))
 
     # keep the sitemap in step with the pages we just wrote

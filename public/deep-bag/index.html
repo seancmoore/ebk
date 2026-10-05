@@ -5,13 +5,13 @@
   <script src="/js/ebk-loader.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0e1c" />
-  <meta name="description" content="EBK Deep Bag — sports research, deep dives and hot takes." />
+  <meta name="description" content="EBK Deep Bag: sports research on real data. Every study ships with its nerd version, the full technical report." />
   <title>Deep Bag · EBK</title>
   <link rel="canonical" href="https://eliteballknowledge.web.app/deep-bag" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="EBK — Elite Ball Knowledge" />
   <meta property="og:title" content="Deep Bag · EBK" />
-  <meta property="og:description" content="EBK Deep Bag — sports research, deep dives and hot takes." />
+  <meta property="og:description" content="Sports research on real data. Every study ships with its nerd version, the full technical report." />
   <meta property="og:url" content="https://eliteballknowledge.web.app/deep-bag" />
   <meta property="og:image" content="https://eliteballknowledge.web.app/img/og.png" />
   <meta property="og:image:width" content="1200" />
@@ -19,42 +19,78 @@
   <meta property="og:image:alt" content="EBK — Elite Ball Knowledge. Prove it." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Deep Bag · EBK" />
-  <meta name="twitter:description" content="EBK Deep Bag — sports research, deep dives and hot takes." />
+  <meta name="twitter:description" content="Sports research on real data. Every study ships with its nerd version, the full technical report." />
   <meta name="twitter:image" content="https://eliteballknowledge.web.app/img/og.png" />
   <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
   <link rel="icon" type="image/svg+xml" href="/img/icon.svg" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
   <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/ebk-kit.css" />
+  <script src="/js/ebk-kit.js"></script>
   <link rel="stylesheet" href="/css/home.css" />
+  <link rel="stylesheet" href="/css/pages.css" />
   <link rel="stylesheet" href="/css/deep-bag.css" />
   <link rel="alternate" type="application/rss+xml" title="EBK Deep Bag" href="/deep-bag/feed.xml" />
   <script src="/js/ebk-analytics.js" defer></script>
 </head>
-<body>
+<body class="pg pg-bag">
   <header class="site-header">
     <a class="brand" href="/">
       <span class="wordmark" aria-label="EBK">E<span>B</span>K</span>
       <span class="brand-sub">Elite Ball Knowledge</span>
     </a>
-    <div style="display:flex;align-items:center;gap:14px">
-      <a class="header-tag" href="/deep-bag/write" id="write-link" hidden>✎ Write</a>
-      <a class="header-tag" href="/">← Home</a>
-    </div>
+    <a class="header-tag k-back" href="/">&larr; <b>Home</b></a>
+    <a class="header-tag k-back dbl-write" href="/deep-bag/write" id="write-link" hidden>Write</a>
   </header>
 
-  <main>
-    <section class="hero wrap db-hero">
-      <h1 class="rise">🎒 Deep Bag</h1>
-      <p class="rise d1">Sports research on real data. Every study ships with its technical report.</p>
+  <main class="k-wrap">
+    <section class="k-hero dbl-hero">
+      <span class="dbl-bag" aria-hidden="true"></span>
+      <div class="k-hero-t">
+        <span class="k-kick">Deep Bag <i>Research on real data</i></span>
+        <h1>The Deep <em>Bag</em></h1>
+        <p>Sports myths, tested on every season we could find. Each study ships with its nerd version: the full technical report, every table and caveat.</p>
+      </div>
+      <div class="k-hero-side">
+        <div class="k-board dbl-board">
+          <div class="k-cell"><span class="k-lbl">Studies</span><span class="k-led" id="n-studies" data-seg="--" data-seg-label="loading"></span></div>
+          <div class="k-cell"><span class="k-lbl">Leagues</span><span class="k-led w" id="n-leagues" data-seg="--" data-seg-label="loading"></span></div>
+        </div>
+      </div>
     </section>
-    <div class="wrap">
-      <a class="db-cut" href="/deep-cut"><span>🗝️ Today's Deep Cut</span><b>One question. Three guesses. Play &rarr;</b></a>
-      <div class="db-filters" id="filters" hidden></div>
-      <div id="loading" class="muted center" style="padding:var(--sp-lg) 0">Loading…</div>
-      <p id="empty" hidden class="muted center" style="padding:var(--sp-lg) 0">Nothing published yet. Check back soon.</p>
-      <div class="db-grid" id="grid"></div>
+
+    <a class="dbl-cut" href="/deep-cut"><span class="k-kick">Deep Cut <i>Daily</i></span><b>One question. Three guesses.</b><span class="k-cta">Play <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+
+    <div id="loading" class="dbl-skel" role="status" aria-live="polite">
+      <span class="k-sr">Loading studies</span>
+      <div class="dbl-sk dbl-sk-lead"></div>
+      <div class="dbl-sk"></div><div class="dbl-sk"></div><div class="dbl-sk"></div>
+    </div>
+
+    <div id="content" hidden>
+      <section id="lead-sec" hidden>
+        <div class="k-shd"><span class="k-shd-n" data-seg="01" aria-hidden="true"></span><h2 class="k-shd-t">Latest</h2><span class="k-shd-rail" aria-hidden="true"></span><span class="k-shd-r" id="lead-note"></span></div>
+        <div id="lead"></div>
+      </section>
+      <section id="all-sec" hidden>
+        <div class="k-shd"><span class="k-shd-n" data-seg="02" aria-hidden="true" id="all-n"></span><h2 class="k-shd-t">All studies</h2><span class="k-shd-rail" aria-hidden="true"></span><span class="k-shd-r" id="all-note"></span></div>
+        <div class="k-chips dbl-filters" id="filters" role="group" aria-label="Filter by tag" hidden></div>
+        <div class="dbl-grid" id="grid"></div>
+      </section>
+    </div>
+
+    <div id="empty" class="k-empty dbl-empty" hidden>
+      <span class="dbl-bag sm" aria-hidden="true"></span>
+      <b id="empty-t">The Bag is still packing.</b>
+      <p id="empty-p">The first studies are being checked line by line. While you wait, try today's Deep Cut.</p>
+      <a class="k-btn pill dbl-empty-btn" href="/deep-cut" id="empty-btn">Play the Deep Cut</a>
     </div>
   </main>
+
+  <footer class="site-footer">
+    <p>EBK · Elite Ball Knowledge &nbsp;·&nbsp; <a href="/deep-bag/feed.xml">Deep Bag RSS</a></p>
+    <p class="legal-links"><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · Not affiliated with any league. Logos and trademarks belong to their owners.</p>
+  </footer>
 
   <script src="/js/catalog.js"></script>
   <script src="/js/ebk-ui.js"></script>
