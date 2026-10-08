@@ -11,9 +11,13 @@
     "nfl"
   ],
   "source": {
-    "article": "C:\\Users\\panky\\Desktop\\ebk-trade-study\\reports\\article_v12.html",
-    "report": "C:\\Users\\panky\\Desktop\\ebk-trade-study\\reports\\report_v12.html"
+    "article": "C:\\Users\\panky\\Desktop\\ebk-trade-study\\reports\\article_v14.html",
+    "report": "C:\\Users\\panky\\Desktop\\ebk-trade-study\\reports\\report_v13.html"
   },
-  "imported": "2026-10-05",
-  "assets": {}
+  "imported": "2026-10-08",
+  "assets": {
+    "../outputs/video/fresh-start-myth_16x9.webm": "fresh-start-myth_16x9.webm",
+    "../outputs/video/fresh-start-myth_16x9.mp4": "fresh-start-myth_16x9.mp4",
+    "../outputs/video/fresh-start-myth_16x9_poster.jpg": "fresh-start-myth_16x9_poster.jpg"
+  }
 }

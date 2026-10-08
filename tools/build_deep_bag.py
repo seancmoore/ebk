@@ -20,19 +20,25 @@
 # public/deep-bag/.drafts/<slug>/ for local preview only: that folder is
 # gitignored and excluded from Firebase Hosting, so a draft cannot ship.
 #
+# Deep Bag v2 (docs/deep-bag-v2.md): a study whose <head> carries
+# <meta name="deep-bag-version" content="2"> is rendered with the v2 chrome
+# (public/css/deep-bag-v2.css + public/js/deep-bag-v2.js: editorial type,
+# 3D hero scene, interactive 3D/2D charts from inline JSON, the looping clip).
+# Older studies keep the original template until they are migrated.
+#
 # Outputs: public/deep-bag/<slug>/index.html (+ report/index.html, share.png),
 # public/data/deep-bag.json (the index page's list), public/deep-bag/feed.xml,
 # and a sitemap refresh. Python stdlib only, like the rest of tools/.
 import argparse
 import html
 import json
-import math
 import re
 import runpy
 import shutil
 import sys
 from urllib.parse import quote
 from datetime import date, datetime, timezone
+from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -66,6 +72,84 @@ def text_of(fragment):
 
 # ---------------------------------------------------------------- parsing --
 
+# Read time counts running prose only (docs/deep-bag-v2.md, "Read time"): the
+# words a reader moves through top to bottom. Figures, captions, tables (data
+# fallbacks and study tables), chart source lines and keys, scripts, SVG, the
+# hero's static fallback, pull quotes (lifted from the body), the colophon and
+# long margin notes are skipped.
+WPM = 238
+ASIDE_MAX_WORDS = 80          # a margin note longer than this is reference, not reading
+PROSE_SKIP_TAGS = {"figure", "figcaption", "table", "script", "style", "svg", "noscript", "template",
+                   "video", "audio", "button", "nav", "select", "textarea"}
+PROSE_SKIP_CLASSES = {"v2-src", "v2-data-wrap", "v2-data", "v2-key", "v2-fig-card", "v2-colophon",
+                      "v2-hero-fallback", "v2-views", "v2-cue", "v2-chart-stage", "v2-film", "v2-pull"}
+_VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+
+
+class _ProseCounter(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.stack = []          # (tag, skips, is_aside)
+        self.skip = 0
+        self.asides = []         # word counters of open asides
+        self.words = 0
+
+    def handle_starttag(self, tag, attrs):
+        if tag in _VOID:
+            return
+        cls = set((dict(attrs).get("class") or "").split())
+        skips = tag in PROSE_SKIP_TAGS or bool(cls & PROSE_SKIP_CLASSES)
+        is_aside = tag == "aside" and not skips and not self.skip
+        self.stack.append((tag, skips, is_aside))
+        self.skip += skips
+        if is_aside:
+            self.asides.append(0)
+
+    def handle_endtag(self, tag):
+        for i in range(len(self.stack) - 1, -1, -1):
+            if self.stack[i][0] == tag:
+                for t, skips, is_aside in reversed(self.stack[i:]):
+                    self.skip -= skips
+                    if is_aside:
+                        n = self.asides.pop()
+                        if n <= ASIDE_MAX_WORDS:
+                            self.words += n
+                del self.stack[i:]
+                return
+
+    def handle_data(self, data):
+        if self.skip:
+            return
+        n = len(data.split())
+        if self.asides:
+            self.asides[-1] += n
+        else:
+            self.words += n
+
+
+def prose_words(body):
+    c = _ProseCounter()
+    c.feed(body)
+    c.close()
+    while c.asides:                       # unclosed aside at the end
+        n = c.asides.pop()
+        c.words += n if n <= ASIDE_MAX_WORDS else 0
+    return c.words
+
+
+# Study-scoped modules from the first v2 migrations whose work the shared system
+# now does (scenes in public/js/deep-bag-v2-scenes/, charts in deep-bag-v2-xcharts.js).
+# Their <script> tags are dropped at publish time and the files are not shipped,
+# so the shared runtime draws the same markup. Delete an entry to let a study's
+# own module run again.
+SUPERSEDED_MODULES = {"revenge-bowl.js", "champagne-scene.js", "the-cliff-v2.js"}
+_SUPERSEDED_TAG = re.compile(r'\s*<script\b[^>]*\bsrc="[^"]*?([\w.-]+\.js)"[^>]*>\s*</script>', re.I)
+
+
+def drop_superseded(body):
+    return _SUPERSEDED_TAG.sub(lambda m: "" if m.group(1) in SUPERSEDED_MODULES else m.group(0), body)
+
+
 def split_doc(src):
     """(head, body) of a study HTML file, which may or may not have
     <html>/<head>/<body> wrappers. The body starts at <body> or at the first
@@ -84,6 +168,7 @@ def split_doc(src):
 
 def parse_study(src):
     head, body = split_doc(src)
+    body = drop_superseded(body)
     css = "\n".join(re.findall(r"<style[^>]*>(.*?)</style>", head, re.S | re.I))
     fonts = re.findall(r"@import\s+url\(\s*['\"]?([^'\")]+)['\"]?\s*\)\s*;?", css)
     css = re.sub(r"@import\s+url\([^)]*\)\s*;?", "", css).strip()
@@ -100,22 +185,21 @@ def parse_study(src):
         m = re.search(r"--" + name + r"\s*:\s*(#[0-9a-fA-F]{3,8})", css)
         return m.group(1) if m else ""
 
-    # Word count over the running text only: chart labels live inside <svg>.
-    prose = re.sub(r"<svg\b.*?</svg>", " ", body, flags=re.S | re.I)
-    words = len(text_of(prose).split())
+    words = prose_words(body)
     return {
         "css": css,
         "fonts": fonts,
         "body": body,
         "title": first(r"<h1[^>]*>(.*?)</h1>") or first(r"<title>(.*?)</title>", head),
         "kicker": first(r'<div class="kicker">(.*?)</div>'),
-        "dek": first(r'<p class="dek">(.*?)</p>'),
+        "dek": first(r'<p class="dek">(.*?)</p>') or first(r'<p class="v2-standfirst">(.*?)</p>'),
         "byline": first(r'<p class="byline">(.*?)</p>'),
         "description": meta("og:description") or meta("description"),
         "bg": var("bg") or "#0a0e1c",
         "accent": var("accent") or "#3ddc97",
         "words": words,
-        "readMins": max(1, math.ceil(words / 230)),
+        "readMins": max(1, round(words / WPM)),
+        "v2": meta("deep-bag-version").strip() == "2",
     }
 
 
@@ -247,7 +331,7 @@ def split_list(s):
     return [t.strip().lower() for t in (s or "").split(",") if t.strip()]
 
 
-LOCAL_REF = re.compile(r'(?:href|src)="(?!https?:|mailto:|data:|#|/)([^"]+)"', re.I)
+LOCAL_REF = re.compile(r'(?:href|src|poster|data-scene-src)="(?!https?:|mailto:|data:|#|/)([^"]+)"', re.I)
 
 
 def collect_assets(d, sources):
@@ -260,7 +344,7 @@ def collect_assets(d, sources):
         if not src or not src.is_file():
             continue
         for ref in set(LOCAL_REF.findall(src.read_text(encoding="utf-8"))):
-            if ref.lower().endswith(".html"):
+            if ref.lower().endswith(".html") or Path(ref).name in SUPERSEDED_MODULES:
                 continue
             f = (src.parent / ref).resolve()
             if f.is_file():
@@ -309,7 +393,7 @@ def cmd_import(a):
     save_meta(meta)
     info = parse_study((d / "article.html").read_text(encoding="utf-8"))
     print(f"{'updated' if existing else 'imported'} {slug}: \"{info['title']}\" "
-          f"({info['words']} words, {info['readMins']} min) status={meta['status']}")
+          f"({info['words']} words of running prose, {info['readMins']} min) status={meta['status']}")
     build()
 
 
@@ -363,14 +447,27 @@ def rewrite_links(body, art_url, report_url, assets=None):
     return re.sub(r"<a\b([^>]*)>(.*?)</a>", fix, body, flags=re.S | re.I)
 
 
-def lint(slug, info):
+# Phrases the Deep Bag house rules ban from study prose (docs/deep-bag-v2.md).
+BANNED = [r"\bit'?s not (?:just )?\w+(?: \w+)?, it'?s\b", r"\bnot just\b.{0,40}\bbut\b", r"here'?s the thing",
+          r"let'?s dive in", r"the answer might surprise you", r"\bin other words\b", r"\bultimately\b",
+          r"\bcrucially\b", r"\bdelve", r"\btapestry\b", r"\blandscape\b", r"\bnavigat(?:e|es|ing)\b",
+          r"a testament to", r"so what does this mean"]
+
+
+def lint(slug, info, assets=None):
     """House rules that are cheap to check mechanically."""
-    t = text_of(info["body"])
-    n = t.count("—")
+    body = re.sub(r"<(script|style)\b.*?</\1>", " ", info["body"], flags=re.S | re.I)
+    t = text_of(body)
+    n = t.count("\u2014")
     if n:
         print(f"  warning: {slug} has {n} em dash(es) in its text")
+    if info.get("v2"):
+        for pat in BANNED:
+            for m in re.finditer(pat, t, re.I):
+                print(f"  warning: {slug} uses a banned pattern: ...{t[max(0, m.start() - 30):m.end() + 30]}...")
     for m in re.finditer(r'\bsrc="(?!data:|https?:|/)([^"]+)"', info["body"]):
-        print(f"  warning: {slug} references local file {m.group(1)!r}, which won't be published")
+        if m.group(1) not in (assets or {}):
+            print(f"  warning: {slug} references local file {m.group(1)!r}, which won't be published")
 
 
 FONT_LINKS = ('<link rel="preconnect" href="https://fonts.googleapis.com" />\n'
@@ -428,6 +525,70 @@ def study_styles(info):
             + "</head>\n")
 
 
+V2_FONTS = ("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800"
+            "&family=Martian+Mono:wdth,wght@75..100,400..650"
+            "&family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..600&display=swap")
+V2_VERSION = "2"   # bump to bust caches of the v2 css/js (deep-bag-v2.js passes it on to every module it loads)
+
+
+def study_styles_v2(info):
+    """v2: site tokens, v2 fonts, the study's own (scoped) overrides, the v2
+    system, then scripts. The inline class flip lets the CSS hide below-the-fold
+    pieces for the scroll reveal before first paint (no flash)."""
+    return (SITE_CSS + FONT_LINKS
+            + '<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />\n'
+            + f'<link rel="stylesheet" href="{esc(V2_FONTS)}" />\n'
+            + (f"<style>\n{scope_css(info['css'])}\n</style>\n" if info["css"].strip() else "")
+            + '<link rel="stylesheet" href="/css/deep-bag-article.css" />\n'
+            + f'<link rel="stylesheet" href="/css/deep-bag-v2.css?v={V2_VERSION}" />\n'
+            + "<script>document.documentElement.classList.add('v2-js')</script>\n"
+            + '<script src="/js/ebk-analytics.js" defer></script>\n'
+            + '<script src="/js/deep-bag-article.js" defer></script>\n'
+            + f'<script src="/js/deep-bag-v2.js?v={V2_VERSION}" defer></script>\n'
+            + "</head>\n")
+
+
+def top_bar_v2(right, static=False):
+    return ('<div class="dbx-progress" aria-hidden="true"></div>\n'
+            f'<header class="v2-top{" is-static" if static else ""}"><div class="v2-top-in">'
+            '<a class="v2-brand" href="/" aria-label="EBK home"><span class="wordmark" aria-hidden="true">E<span>B</span>K</span>'
+            '<span class="v2-brand-sub">Deep Bag</span></a>'
+            f'<div class="v2-top-r">{right}</div>'
+            '</div></header>\n')
+
+
+def share_v2(title, url):
+    u = quote(url, safe="")
+    return ('<div class="v2-share"><span class="v2-label">Share</span>'
+            '<button type="button" class="v2-chip" data-share="copy">Copy link</button>'
+            '<button type="button" class="v2-chip" data-share="native" hidden>Share</button>'
+            f'<a class="v2-chip" target="_blank" rel="noopener" href="https://www.linkedin.com/sharing/share-offsite/?url={u}">LinkedIn</a>'
+            f'<a class="v2-chip" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text={quote(title)}&amp;url={u}">X</a>'
+            f'<a class="v2-chip" target="_blank" rel="noopener" href="https://www.reddit.com/submit?url={u}&amp;title={quote(title)}">Reddit</a>'
+            '</div>')
+
+
+def ctas_v2():
+    return ('<div class="v2-ctas"><a class="v2-btn" href="/">Play EBK ' + ARROW + '</a>'
+            '<a class="v2-btn ghost" href="/deep-bag">All Deep Bag studies</a></div>')
+
+
+def more_v2(others):
+    if not others:
+        return ""
+    items = "".join(
+        f'<li><a href="/deep-bag/{esc(o["slug"])}">'
+        + (f'<img src="{esc(o["image"])}" width="1200" height="630" loading="lazy" alt="" />' if o.get("image") else "<span></span>")
+        + f'<div><h3>{esc(o["title"])}</h3><p>{esc(o["dek"])}</p></div></a></li>'
+        for o in others[:3])
+    return '<h2 class="v2-label">More from the Deep Bag</h2><ul class="v2-more">' + items + "</ul>"
+
+
+def body_open_v2(cls, info):
+    accent = info.get("accent") or "#3ddc97"
+    return f'<body class="dbx dbv2 {cls}" style="--v2-accent: {esc(accent)}">\n'
+
+
 def top_bar(back_href, back_label, right):
     return ('<div class="dbx-progress" aria-hidden="true"></div>\n'
             '<header class="dbx-top"><div class="dbx-top-in">'
@@ -451,9 +612,11 @@ SITE_FOOTER = ('<footer class="dbx-foot">'
                '</footer>\n')
 
 
-def shd(n, title):
-    return (f'<div class="k-shd"><span class="k-shd-n" data-seg="{n:02d}" aria-hidden="true"></span>'
-            f'<h2 class="k-shd-t">{esc(title)}</h2><span class="k-shd-rail" aria-hidden="true"></span></div>')
+def shd(_n, title):
+    # Deep Bag house rule: no numbered section badges anywhere (the "01/02" LED
+    # segment read as template). The argument is kept so old call sites work.
+    return (f'<div class="k-shd"><h2 class="k-shd-t">{esc(title)}</h2>'
+            '<span class="k-shd-rail" aria-hidden="true"></span></div>')
 
 
 def more_card(o, href):
@@ -501,6 +664,28 @@ def render_article(meta, info, base, others):
         ld["datePublished"] = meta["date"]
 
     date_line = fmt_date(meta.get("date")) if not draft else ""
+    if info.get("v2"):
+        right = (('<span class="k-tag gold dbx-draft">Draft preview</span>' if draft else "")
+                 + '<span class="v2-pill v2-meta">' + (esc(date_line) + " · " if date_line else "")
+                 + f'{info["readMins"]} min read</span>'
+                 + (f'<a class="v2-pill is-accent" href="{report_path}">Nerd version {ARROW}</a>' if report_path else ""))
+        end = '<section class="v2-end" aria-label="After the story"><div class="v2-end-in">'
+        if report_path:
+            end += (f'<a class="v2-report" href="{report_path}"><div><h2>The nerd version</h2>'
+                    '<p>Methods, every table, the robustness checks and the caveats behind this story.</p></div>'
+                    f'<span class="v2-arrow" aria-hidden="true">{ARROW}</span></a>')
+        end += share_v2(title, url) + more_v2(others) + ctas_v2() + "</div></section>\n"
+        return (head_common(f"{title} · EBK Deep Bag", desc, url, image, draft, f"{title}: an EBK Deep Bag study")
+                + '<meta property="og:type" content="article" />\n'
+                + (f'<meta property="article:published_time" content="{esc(meta["date"])}" />\n' if meta.get("date") else "")
+                + "".join(f'<meta property="article:tag" content="{esc(t)}" />\n' for t in meta.get("tags", []))
+                + '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False).replace("</", "<\\/") + "</script>\n"
+                + study_styles_v2(info)
+                + body_open_v2("dbv2-art", info)
+                + '<a class="dbx-skip" href="#story">Skip to the story</a>\n'
+                + top_bar_v2(right)
+                + study_main(body)
+                + end + SITE_FOOTER + "</body>\n</html>\n")
     right = (('<span class="k-tag gold dbx-draft">Draft preview</span>' if draft else "")
              + '<span class="dbx-meta">' + (esc(date_line) + " · " if date_line else "")
              + f'{info["readMins"]} min read</span>'
@@ -551,6 +736,23 @@ def render_report(meta, src, base, art_info):
     desc = f"The full methods, tables and robustness checks behind \"{art_info['title']}\"."
     image = SITE + f"/deep-bag/{slug}/share.png" if (CONTENT / slug / "share.png").exists() else SITE + "/img/og.png"
     body = rewrite_links(info["body"], art_path, f"{art_path}/report", meta.get("assets"))
+    if info.get("v2"):
+        info["accent"] = art_info.get("accent") or info.get("accent")
+        right = (('<span class="k-tag gold dbx-draft">Draft preview</span>' if draft else "")
+                 + '<span class="v2-pill v2-meta">Technical report</span>'
+                 + f'<a class="v2-pill is-accent" href="{art_path}">Read the story {ARROW}</a>')
+        end = ('<section class="v2-end" aria-label="After the report"><div class="v2-end-in">'
+               + f'<a class="v2-report" href="{art_path}"><div><h2>{esc(art_info["title"])}</h2>'
+               + f'<p>{esc(art_info["dek"])}</p></div><span class="v2-arrow" aria-hidden="true">{ARROW}</span></a>'
+               + ctas_v2() + "</div></section>\n")
+        return (head_common(f"{title} · EBK Deep Bag", desc, url, image, draft, f"{art_info['title']}: an EBK Deep Bag study")
+                + '<meta property="og:type" content="article" />\n'
+                + study_styles_v2(info)
+                + body_open_v2("dbv2-rep", info)
+                + '<a class="dbx-skip" href="#story">Skip to the report</a>\n'
+                + top_bar_v2(right, static=True)
+                + study_main(body)
+                + end + SITE_FOOTER + "</body>\n</html>\n")
     right = (('<span class="k-tag gold dbx-draft">Draft preview</span>' if draft else "")
              + '<span class="dbx-meta">Technical report</span>'
              + f'<a class="dbx-nerd" href="{art_path}">Read the story {ARROW}</a>')
@@ -593,7 +795,7 @@ def build():
     entries = []
     for m in metas:
         info = parse_study((CONTENT / m["slug"] / "article.html").read_text(encoding="utf-8"))
-        lint(m["slug"], info)
+        lint(m["slug"], info, m.get("assets"))
         entries.append((m, info))
 
     def summary(m, info):
@@ -622,7 +824,7 @@ def build():
             write(dest / "report" / "index.html", render_report(m, rp.read_text(encoding="utf-8"), base, info))
         ad = CONTENT / m["slug"] / "assets"
         if ad.is_dir():
-            shutil.copytree(ad, dest / "assets")
+            shutil.copytree(ad, dest / "assets", ignore=lambda _d, names: [n for n in names if n in SUPERSEDED_MODULES])
         sp = CONTENT / m["slug"] / "share.png"
         if sp.exists():
             shutil.copyfile(sp, dest / "share.png")

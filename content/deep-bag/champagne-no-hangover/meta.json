@@ -13,9 +13,14 @@
     "nhl"
   ],
   "source": {
-    "article": "C:\\Users\\panky\\Desktop\\ebk-champions-hangover\\reports\\article_v05.html",
-    "report": "C:\\Users\\panky\\Desktop\\ebk-champions-hangover\\reports\\report_v04.html"
+    "article": "C:\\Users\\panky\\Desktop\\ebk-champions-hangover\\reports\\article_v07.html",
+    "report": "C:\\Users\\panky\\Desktop\\ebk-champions-hangover\\reports\\report_v05.html"
   },
-  "imported": "2026-10-05",
-  "assets": {}
+  "imported": "2026-10-08",
+  "assets": {
+    "../outputs/video/champagne-no-hangover_16x9.webm": "champagne-no-hangover_16x9.webm",
+    "../outputs/video/champagne-no-hangover_16x9_poster.jpg": "champagne-no-hangover_16x9_poster.jpg",
+    "../outputs/web/champagne-scene.js": "champagne-scene.js",
+    "../outputs/video/champagne-no-hangover_16x9.mp4": "champagne-no-hangover_16x9.mp4"
+  }
 }
