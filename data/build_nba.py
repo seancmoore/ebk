@@ -5,8 +5,11 @@ Source: sportsdataverse ESPN NBA player box scores (parquet, one file per
 season, 2002-present). Aggregated to player-season totals + per-game rates.
 Requires pandas + pyarrow (local build tool only; the shipped site stays static).
 
-Usage:  python build_nba.py            # full range
+Usage:  python fill_nba_gaps.py        # FIRST: patch games the source is missing or has hollow (see that file)
+        python build_nba.py            # full range
         python build_nba.py 2020 2026  # custom
+Then: node tools/build_grid_roster.cjs nba, python tools/build_stat_lab.py, node tools/solvable.cjs,
+and bump the ?v=N data version in public/js (game scripts + ebk-home-sections + ebk-rack + h2h).
 """
 import os, sys, json, urllib.request
 from datetime import date
@@ -81,7 +84,16 @@ def fetch(y):
         req = urllib.request.Request(URL.format(y=y), headers={"User-Agent": "ebk/1.0"})
         with urllib.request.urlopen(req, timeout=120) as r, open(cache, "wb") as f:
             f.write(r.read())
-    return pd.read_parquet(cache)
+    df = pd.read_parquet(cache)
+    # Games the source file is missing, fetched from ESPN by fill_nba_gaps.py (e.g. 55 games of 2022-23).
+    patch = os.path.join(RAW, f"player_box_{y}_patch.parquet")
+    if os.path.exists(patch):
+        p = pd.read_parquet(patch)
+        df = df[~df["game_id"].isin(p["game_id"])]   # the patch replaces missing AND hollow games
+        df = pd.concat([df, p.astype({c: df[c].dtype for c in p.columns if c in df.columns and c != "game_date"})],
+                       ignore_index=True)
+        df["game_date"] = df["game_date"].astype(str)
+    return df
 
 
 def build():
