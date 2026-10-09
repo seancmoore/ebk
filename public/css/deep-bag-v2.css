@@ -1,12 +1,14 @@
 /* EBK Deep Bag v2 · article system (docs/deep-bag-v2.md)
    Used when a study's <head> carries <meta name="deep-bag-version" content="2">.
    tools/build_deep_bag.py then renders the v2 chrome (body.dbx.dbv2), loads
-   Bricolage Grotesque (display), Schibsted Grotesk (text) and Martian Mono
-   (numerals) from Google Fonts, and this file styles every .v2-* piece.
+   Bricolage Grotesque (display), Inter (text) and Martian Mono (numerals)
+   from Google Fonts, and this file styles every .v2-* piece, plus the reading
+   type of the v2 /report pages (body.dbv2-rep).
 
    Look: deep navy, soft glow depth instead of hairlines, one accent
    (--v2-accent, set per study from its --accent; EBK green by default) used
-   only for the finding that matters. Desktop-first, calm centred column.
+   only for the finding that matters. Two designed reading layouts: desktop
+   (column + margins) and phone (gutters + edge-to-edge figures).
    Every animation here is off under prefers-reduced-motion. */
 
 body.dbv2 {
@@ -14,8 +16,12 @@ body.dbv2 {
   --v2-bg-2: #0b1022;
   --v2-ink: #eef1f8;
   --v2-ink-2: #cdd3e4;
-  --v2-muted: #8d98b8;
-  --v2-faint: #5c6789;
+  /* reading colours (2026-10-09 layout pass): body copy is near-white (15.9:1 on --v2-bg, AAA);
+     notes 11:1; captions and keys 8.5:1; source lines 5.3:1 (AA at their size) */
+  --v2-body: #e3e7f1;
+  --v2-note: #c3cadc;
+  --v2-muted: #a3adc9;
+  --v2-faint: #7a85a8;
   --v2-data: #8f9cc2;
   --v2-accent: #3ddc97;
   --v2-accent-ink: #052016;
@@ -30,20 +36,31 @@ body.dbv2 {
              0 0 120px -40px color-mix(in srgb, var(--v2-accent) 16%, transparent);
   --v2-r: 28px;
   --v2-r-sm: 16px;
-  --f-display: "Bricolage Grotesque", "Schibsted Grotesk", "Segoe UI", system-ui, sans-serif;
-  --f-text: "Schibsted Grotesk", "Segoe UI", system-ui, -apple-system, sans-serif;
+  /* Display: Bricolage Grotesque (headlines only). Text: Inter with its optical-size axis,
+     a screen face with a tall x-height, open forms and unambiguous numerals at 15 to 20px
+     (replaced Schibsted Grotesk, whose tighter apertures blurred at phone sizes).
+     Numerals: proportional in prose, tabular in charts, tables and stats. */
+  --f-display: "Bricolage Grotesque", "Inter", "Segoe UI", system-ui, sans-serif;
+  --f-text: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
   --f-num: "Martian Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
-  --measure: 34em;
-  --bleed: min(1140px, calc(100vw - 48px));
+  --measure: 37rem;                 /* 64-68 characters of 19px Inter */
+  --wide: min(760px, calc(100vw - 64px));
+  --bleed: min(1140px, calc(100vw - 96px));
+  --gut: 24px;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   background: var(--v2-bg);
   color: var(--v2-ink);
   font-family: var(--f-text);
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
 }
+body.dbv2 :focus-visible { outline: 2px solid var(--v2-accent); outline-offset: 3px; border-radius: 6px; }
+body.dbv2 .v2-fig, body.dbv2 .v2-bignum, body.dbv2 .v2-data, body.dbv2 .v2-tip,
+body.dbv2 .v2-3d-labels, body.dbv2 .v2-svg, body.dbv2 .cl-svg, body.dbv2 table { font-variant-numeric: tabular-nums; }
 body.dbv2 ::selection { background: color-mix(in srgb, var(--v2-accent) 35%, transparent); color: #fff; }
 
 /* the site's chrome pieces, re-dressed in v2 type */
@@ -155,36 +172,56 @@ body.dbv2 .dbx-study { overflow-x: clip; }
 @keyframes v2-bob { 50% { transform: translateY(4px); } }
 
 /* --------------------------------------------------------------- body -- */
+/* Two reading layouts. Desktop (this block + "desktop" below): a 66-character column of
+   19px text, notes in the right margin, charts and the clip breaking out wider, a quiet
+   section index in the left margin. Phone ("phone" below): 17.5px text in 20-22px gutters,
+   notes as callouts after their paragraph, charts and the clip edge to edge. */
 .v2-body {
   position: relative; z-index: 2;
   max-width: var(--measure); margin: 0 auto; padding: 24px 0 40px;
-  font-size: 1.25rem; line-height: 1.66; color: var(--v2-ink-2);
+  font-size: 1.1875rem; line-height: 1.68; color: var(--v2-body);
   font-feature-settings: "kern", "liga", "calt";
+  font-variant-numeric: proportional-nums;
   hanging-punctuation: first allow-end;
 }
-.v2-body p { margin: 0 0 1.15em; text-wrap: pretty; }
-.v2-body p strong { color: var(--v2-ink); font-weight: 650; }
+.v2-body p { margin: 0 0 1.2em; text-wrap: pretty; }
+.v2-body p strong, .v2-body p b { color: #fff; font-weight: 650; }
 .v2-body em { font-style: italic; }
-.v2-body a { color: var(--v2-ink); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--v2-accent) 60%, transparent);
-  text-decoration-thickness: 1.5px; text-underline-offset: 3px; transition: text-decoration-color .2s; }
+.v2-body a { color: #fff; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--v2-accent) 65%, transparent);
+  text-decoration-thickness: 1.5px; text-underline-offset: .2em; transition: text-decoration-color .2s; }
 .v2-body a:hover { text-decoration-color: var(--v2-accent); }
 .v2-body .num, .v2-num { font-family: var(--f-num); font-size: .82em; font-variation-settings: "wdth" 85; font-weight: 500;
   letter-spacing: -0.02em; color: var(--v2-ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .v2-body .hl { color: var(--v2-accent); }
 
 .v2-body h2 {
-  margin: 2.6em 0 .7em; color: #fff;
-  font: 700 clamp(1.75rem, 1.3rem + 1.4vw, 2.45rem)/1.06 var(--f-display);
-  font-variation-settings: "opsz" 60; letter-spacing: -0.03em; text-wrap: balance;
+  margin: 2.3em 0 .6em; color: #fff; scroll-margin-top: 32px;
+  font: 700 clamp(1.9rem, 1.1rem + 1.7vw, 2.7rem)/1.05 var(--f-display);
+  font-variation-settings: "opsz" 72; letter-spacing: -0.03em; text-wrap: balance;
 }
-.v2-body h3 { margin: 2em 0 .5em; color: var(--v2-ink); font: 650 1.2rem/1.25 var(--f-display); letter-spacing: -0.01em; }
+/* a short rule above each section heading: the section opening reads as a new spread */
+.v2-body > h2::before {
+  content: ""; display: block; width: 44px; height: 2px; margin: 0 0 .62em; border-radius: 2px;
+  background: color-mix(in srgb, var(--v2-ink) 30%, transparent);
+}
+.v2-body h3 { margin: 2em 0 .5em; color: #fff; font: 650 1.3rem/1.25 var(--f-display); letter-spacing: -0.012em; text-wrap: balance; }
+.v2-body h4 { margin: 1.8em 0 .4em; color: var(--v2-ink); font: 650 1rem/1.3 var(--f-text); text-wrap: balance; }
+.v2-body :is(ul, ol) { margin: 0 0 1.2em; padding-left: 1.2em; }
+.v2-body li { margin: 0 0 .45em; text-wrap: pretty; }
 
 /* the lede: first paragraph, set larger, with a drop cap */
-.v2-body .v2-lede { font-size: 1.36rem; line-height: 1.6; color: var(--v2-ink); }
+.v2-body .v2-lede { font-size: 1.375rem; line-height: 1.58; color: #fff; }
 .v2-body .v2-lede::first-letter {
   float: left; margin: .06em .1em 0 -.02em; padding: 0;
   font: 800 4.35em/.78 var(--f-display); font-variation-settings: "opsz" 96; letter-spacing: -0.04em;
   color: #fff; text-shadow: 0 0 40px color-mix(in srgb, var(--v2-accent) 28%, transparent);
+}
+@supports (initial-letter: 3) or (-webkit-initial-letter: 3) {
+  /* real drop cap: sits exactly on the third baseline, no float maths */
+  .v2-body .v2-lede::first-letter {
+    float: none; margin: 0 .09em 0 0; font-size: 1em; line-height: 1;
+    -webkit-initial-letter: 3; initial-letter: 3;
+  }
 }
 
 /* section break: three soft dots */
@@ -218,30 +255,35 @@ body.dbv2 .dbx-study { overflow-x: clip; }
   letter-spacing: -0.06em; color: var(--v2-accent); font-variant-numeric: tabular-nums;
   text-shadow: 0 0 50px color-mix(in srgb, var(--v2-accent) 35%, transparent);
 }
-.v2-bignum p { margin: 0; font-size: 1.04rem; line-height: 1.5; color: var(--v2-ink-2); }
+.v2-bignum p { margin: 0; font-size: 1.04rem; line-height: 1.5; color: var(--v2-body); text-wrap: pretty; }
 .v2-bignum p b { color: #fff; font-weight: 650; }
 
-/* margin notes: float into the right gutter on wide screens, inline aside below */
+/* margin notes: in the right margin on wide screens (deep-bag-v2.js lifts each one beside the
+   paragraph it follows), an inline callout after that paragraph everywhere else */
 .v2-note {
-  margin: 1.4em 0; padding: 16px 20px; border-radius: var(--v2-r-sm);
-  background: var(--v2-surface); box-shadow: 0 0 0 1px var(--v2-edge);
-  font-size: .9rem; line-height: 1.55; color: var(--v2-muted);
+  margin: -.2em 0 1.5em; padding: 15px 18px 16px; border-radius: var(--v2-r-sm);
+  background: var(--v2-surface); box-shadow: inset 2px 0 0 color-mix(in srgb, var(--v2-accent) 55%, transparent), 0 0 0 1px var(--v2-edge);
+  font-size: .9375rem; line-height: 1.58; color: var(--v2-note);
 }
-.v2-note b { display: block; margin-bottom: 4px; color: var(--v2-ink); font: 650 .9rem/1.3 var(--f-display); letter-spacing: -0.005em; }
+.v2-note b { display: block; margin-bottom: 5px; color: #fff; font: 650 .9375rem/1.3 var(--f-display); letter-spacing: -0.005em; }
 .v2-note p { margin: 0 0 .6em; }
 .v2-note p:last-child { margin: 0; }
-@media (min-width: 1240px) {
+@media (min-width: 1280px) {
   .v2-note {
-    float: right; clear: right; width: 236px; margin: .35em -292px 1em 0; padding: 4px 0 0 18px;
-    background: none; border-radius: 0; box-shadow: inset 2px 0 0 color-mix(in srgb, var(--v2-accent) 45%, transparent);
-    font-size: .86rem;
+    float: right; clear: right; width: 252px; margin: .3em calc(-252px - 64px) 1em 0; padding: 2px 0 2px 18px;
+    background: none; border-radius: 0; box-shadow: inset 2px 0 0 color-mix(in srgb, var(--v2-accent) 50%, transparent);
+    font-size: .9375rem; line-height: 1.55;
   }
-  .v2-note.is-left { float: left; clear: left; margin: .35em 0 1em -292px; }
+  .v2-note.is-left { float: left; clear: left; margin: .3em 0 1em calc(-252px - 64px); }
 }
 
 /* --------------------------------------------------------- figures -- */
 .v2-fig { margin: 2.2em 0 2.4em; }
 .v2-fig.v2-bleed { width: var(--bleed); margin-left: calc(50% - var(--bleed) / 2); clear: both; }
+/* desktop: every chart card breaks out of the text column (bleed ones further still) */
+@media (min-width: 1100px) {
+  .v2-fig:not(.v2-bleed):is(.v2-chart, :has(> .v2-fig-card)) { width: var(--wide); margin-left: calc(50% - var(--wide) / 2); clear: both; }
+}
 .v2-pull.is-wide, .v2-bignum { clear: both; }
 .v2-fig-card {
   position: relative; border-radius: var(--v2-r); padding: clamp(18px, 2.4vw, 34px);
@@ -253,16 +295,16 @@ body.dbv2 .dbx-study { overflow-x: clip; }
 .v2-fig-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 10px 20px; margin-bottom: 14px; }
 /* the title block shares the row with the view switch instead of growing to 100% and pushing it under */
 .v2-fig-head > div:not(.v2-views) { flex: 1 1 0; min-width: min(240px, 100%); }
-.v2-fig-title, .v2-body .v2-fig-title { margin: 0; max-width: 46ch; color: #fff; font: 650 clamp(1.05rem, .95rem + .4vw, 1.3rem)/1.25 var(--f-display); letter-spacing: -0.015em; }
-.v2-fig-sub { margin: 4px 0 0; color: var(--v2-muted); font-size: .86rem; line-height: 1.45; }
+.v2-fig-title, .v2-body .v2-fig-title { margin: 0; max-width: 46ch; color: #fff; font: 650 clamp(1.1rem, .95rem + .45vw, 1.35rem)/1.25 var(--f-display); letter-spacing: -0.015em; text-wrap: balance; }
+.v2-fig-sub, .v2-body .v2-fig-sub { margin: 6px 0 0; max-width: 60ch; color: var(--v2-muted); font-size: .9rem; line-height: 1.45; text-wrap: pretty; }
+/* captions sit under the text column, so the eye drops straight back into the story */
 .v2-fig figcaption, .v2-fig .v2-cap {
-  max-width: 62ch; margin: 16px auto 0; padding: 0 4px; text-align: left;
-  color: var(--v2-muted); font-size: .9rem; line-height: 1.55;
+  max-width: var(--measure); margin: 16px auto 0; padding: 0; text-align: left;
+  color: var(--v2-muted); font-size: .9375rem; line-height: 1.55; text-wrap: pretty;
 }
-.v2-fig.v2-bleed figcaption { max-width: var(--measure); }
-.v2-fig figcaption b { color: var(--v2-ink-2); font-weight: 600; }
+.v2-fig figcaption b { color: var(--v2-ink); font-weight: 600; }
 
-.v2-key { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 22px 0 0; color: var(--v2-muted); font-size: .78rem; line-height: 1.3; }
+.v2-key { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 22px 0 0; color: var(--v2-muted); font-size: .8125rem; line-height: 1.35; }
 .v2-key span { display: inline-flex; align-items: center; gap: 8px; }
 .v2-key i { display: inline-block; width: 16px; height: 10px; border-radius: 3px; }
 .v2-key .k-accent { background: var(--v2-accent); }
@@ -424,9 +466,25 @@ body.dbv2 .dbx-study { overflow-x: clip; }
 .v2-key i.k-accentdot { background: var(--v2-accent); height: 5px; border-radius: 3px; }
 
 /* data table: the accessible fallback, always in the DOM */
-.v2-data-wrap { margin-top: 6px; overflow-x: auto; border-radius: var(--v2-r-sm); }
-.v2-data { width: 100%; border-collapse: collapse; font-size: .82rem; line-height: 1.35; color: var(--v2-ink-2); }
-.v2-data caption { text-align: left; padding: 0 0 10px; color: var(--v2-muted); font-size: .8rem; caption-side: top; }
+.v2-data-wrap { margin-top: 6px; overflow-x: auto; overscroll-behavior-x: contain; } /* no radius: it would clip the caption */
+.v2-data { width: 100%; border-collapse: collapse; font-size: .84rem; line-height: 1.35; color: var(--v2-ink); }
+.v2-data caption { text-align: left; padding: 0 0 10px; color: var(--v2-muted); font-size: .84rem; line-height: 1.45; caption-side: top; white-space: normal; text-wrap: pretty; }
+
+/* any table or wide block that scrolls sideways inside its own box (deep-bag-v2.js marks it
+   .v2-scrolls and adds the hint): a fade on the side that has more, and a one-line hint */
+.v2-scrolls { --fade-r: 44px; --fade-l: 0px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent 100%); }
+.v2-scrolls.at-end { --fade-r: 0px; }
+.v2-scrolls.is-scrolled { --fade-l: 28px; }
+.v2-scroll-hint { display: flex; align-items: center; gap: 8px; margin: 8px 0 8px; color: var(--v2-muted);
+  font: 600 .78rem/1.2 var(--f-text); letter-spacing: .02em; }
+.v2-scroll-hint svg { width: 14px; height: 14px; flex: none; }
+.v2-scroll-hint[hidden] { display: none; }
+.v2-scroll-hint .cap { flex: 1 1 auto; color: var(--v2-muted); font: 400 .84rem/1.45 var(--f-text); letter-spacing: 0; }
+.v2-scroll-hint.has-cap { flex-wrap: wrap; row-gap: 4px; }
+.v2-scroll-hint.has-cap .cap { flex-basis: 100%; }
+.v2-scrolls.cap-out caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .v2-data th, .v2-data td { padding: 9px 10px; text-align: right; white-space: nowrap; }
 .v2-data th:first-child, .v2-data td:first-child { text-align: left; white-space: normal; }
 .v2-data thead th { color: var(--v2-muted); font-weight: 600; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; }
@@ -441,7 +499,7 @@ body.dbv2 .dbx-study { overflow-x: clip; }
 .v2-data tbody tr:last-child > *:first-child { border-bottom-left-radius: 10px; }
 .v2-data tbody tr:last-child > *:last-child { border-bottom-right-radius: 10px; }
 .v2-data tr.v2-grp th { background: none; padding-top: 14px; color: var(--v2-muted); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 650; }
-.v2-src { margin: 10px 0 0; color: var(--v2-faint); font-size: .72rem; line-height: 1.4; }
+.v2-src { margin: 12px 0 0; color: var(--v2-faint); font-size: .75rem; line-height: 1.45; text-wrap: pretty; }
 /* With JS the drawn chart replaces the table until "Table" is chosen. */
 .v2-js .v2-chart.is-drawn .v2-data-wrap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .v2-js .v2-chart.is-drawn.view-table .v2-data-wrap { position: static; width: auto; height: auto; overflow-x: auto; clip: auto; white-space: normal; }
@@ -460,11 +518,11 @@ body.dbv2 .dbx-study { overflow-x: clip; }
 
 /* colophon: methods + data in small type */
 .v2-colophon { margin: 3.4em 0 0; padding: 26px 28px; border-radius: var(--v2-r); background: var(--v2-surface); box-shadow: 0 0 0 1px var(--v2-edge);
-  color: var(--v2-muted); font-size: .86rem; line-height: 1.6; }
-.v2-colophon p { margin: 0 0 .7em; }
+  color: var(--v2-muted); font-size: .9rem; line-height: 1.62; }
+.v2-colophon p { margin: 0 0 .7em; text-wrap: pretty; }
 .v2-colophon p:last-child { margin: 0; }
-.v2-colophon b { color: var(--v2-ink-2); font-weight: 600; }
-.v2-colophon a { color: var(--v2-ink-2); }
+.v2-colophon b { color: var(--v2-ink); font-weight: 600; }
+.v2-colophon a { color: var(--v2-ink); }
 
 /* the sign-off line at the very end of the story */
 .v2-end-mark { display: inline-block; width: 10px; height: 10px; margin-left: 6px; border-radius: 3px; background: var(--v2-accent);
@@ -508,38 +566,151 @@ body.dbv2 .dbx-foot a { color: var(--v2-muted); }
 .v2-js .v2-pre { opacity: 0; transform: translateY(14px); }
 .v2-js .v2-in { opacity: 1; transform: none; transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); }
 
+/* ------------------------------------------- section index (desktop) -- */
+/* Built by deep-bag-v2.js from the h2s: section names only, in the left margin, shown once
+   the hero is gone, hidden while a wide figure passes underneath it. */
+.v2-toc {
+  position: fixed; z-index: 15; top: 50%; translate: 0 -50%;
+  left: max(20px, calc(50% - var(--measure) / 2 - 88px - 170px)); width: 170px;
+  margin: 0; padding: 0; list-style: none; font: 500 .8125rem/1.35 var(--f-text);
+  opacity: 0; visibility: hidden; transition: opacity .35s, visibility 0s .35s;
+}
+.v2-toc.is-on { opacity: 1; visibility: visible; transition: opacity .35s; }
+.v2-toc li { margin: 0; padding: 0; border: 0; list-style: none; }
+.v2-toc { border-left: 1px solid rgba(255, 255, 255, 0.09); }
+.v2-toc a {
+  position: relative; display: block; padding: 6px 0 6px 16px; color: var(--v2-faint); text-decoration: none; text-wrap: balance;
+  transition: color .2s;
+}
+.v2-toc a:hover { color: var(--v2-ink); }
+.v2-toc a[aria-current="true"] { color: #fff; }
+.v2-toc a[aria-current="true"]::before { content: ""; position: absolute; left: -1px; top: 4px; bottom: 4px; width: 2px; border-radius: 2px; background: var(--v2-accent); }
+@media (max-width: 1279px) { .v2-toc { display: none; } }
+
 /* ------------------------------------------------------------- phone -- */
 @media (max-width: 760px) {
-  body.dbv2 { --bleed: calc(100vw - 24px); }
+  body.dbv2 { --gut: clamp(20px, 5.6vw, 22px); --bleed: 100vw; }
   .v2-brand-sub, .v2-top span.v2-meta { display: none; }
-  .v2-hero { padding: 110px 16px 100px; min-height: 88vh; }
-  .v2-body { font-size: 1.1rem; line-height: 1.62; padding-inline: 16px; }
-  .v2-body .v2-lede { font-size: 1.18rem; }
-  .v2-fig.v2-bleed { width: var(--bleed); margin-left: calc(50% - var(--bleed) / 2); clear: both; }
-.v2-pull.is-wide, .v2-bignum { clear: both; }
-  .v2-fig-card { padding: 16px 14px; border-radius: 22px; }
-  .v2-bignum { grid-template-columns: 1fr; padding: 24px 22px; }
-  .v2-3d { height: 360px; }
-  .v2-report { grid-template-columns: 1fr; padding: 22px; }
+  body.dbv2 .dbx-progress { height: 3px; }
+
+  /* top bar: slim */
+  .v2-top { padding: calc(12px + var(--safe-t, 0px)) var(--gut) 0; }
+  .v2-top a.v2-pill { min-height: 40px; }
+
+  /* hero: left-aligned, title and dek on the first screen with the story peeking below */
+  .v2-hero { min-height: 0; min-height: min(92svh, 760px); padding: 92px var(--gut) 96px; place-items: end start; }
+  .v2-hero-in { text-align: left; width: 100%; }
+  .v2-hero-in::before { inset: -14% -12%; }
+  .v2-title { font-size: clamp(2.5rem, 1.25rem + 6.6vw, 3.5rem); line-height: .96; letter-spacing: -0.03em; }
+  .v2-standfirst { max-width: 36ch; margin: 20px 0 0; font-size: 1.125rem; line-height: 1.48; color: var(--v2-body); text-wrap: pretty; }
+  .v2-cue { bottom: 24px; left: var(--gut); translate: 0 0; }
+
+  /* body: 17.5px text, 1.62 leading, comfortable gutters */
+  .v2-body { font-size: 1.09375rem; line-height: 1.62; padding: 18px var(--gut) 36px; }
+  .v2-body p { margin-bottom: 1.05em; }
+  .v2-body .v2-lede { font-size: 1.1875rem; line-height: 1.55; }
+  .v2-body .v2-lede::first-letter { font-size: 3.35em; margin: .07em .09em 0 -.02em; }
+  @supports (initial-letter: 2) or (-webkit-initial-letter: 2) {
+    .v2-body .v2-lede::first-letter { font-size: 1em; margin: 0 .08em 0 0; -webkit-initial-letter: 2; initial-letter: 2; }
+  }
+  .v2-body h2 { margin: 2.1em 0 .5em; font-size: clamp(1.6rem, 1.15rem + 2.1vw, 1.9rem); line-height: 1.1; letter-spacing: -0.025em; }
+  .v2-body > h2::before { width: 32px; margin-bottom: .55em; }
+  .v2-body h3 { font-size: 1.15rem; }
+
+  /* notes: a callout right after the paragraph they belong to */
+  .v2-note { margin: -.15em 0 1.35em; padding: 14px 16px 15px; font-size: .9375rem; line-height: 1.55; border-radius: 14px;
+    background: rgba(255, 255, 255, 0.045); box-shadow: 0 0 0 1px var(--v2-edge); }
+
+  /* charts, study figures with a card, and the clip: edge to edge; words stay in the gutter */
+  .v2-fig:is(.v2-chart, .v2-film, .v2-bleed, :has(> .v2-fig-card)) { width: 100vw; margin-left: calc(50% - 50vw); }
+  .v2-fig-card { padding: 22px var(--gut) 20px; border-radius: 0;
+    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.06), 0 1px 0 rgba(255, 255, 255, 0.06); }
+  .v2-fig-card .v2-chart-stage { margin-inline: calc(12px - var(--gut)); }
+  .v2-fig figcaption, .v2-fig .v2-cap { padding-inline: var(--gut); font-size: .9rem; }
+  .v2-fig:not(:is(.v2-chart, .v2-film, .v2-bleed, :has(> .v2-fig-card))) figcaption { padding-inline: 0; }
+  .v2-film .v2-film-frame { border-radius: 0; box-shadow: none; }
+  .v2-film .v2-film-frame.is-tall-on-phone { aspect-ratio: 4 / 5; }  /* when the article ships a 4:5 phone source (docs/deep-bag-v3-requests.md) */
+  .v2-fig-head { gap: 12px; }
+  .v2-fig-head > div:not(.v2-views) { flex-basis: 100%; }
+  .v2-views { margin-left: 0; }
+  .v2-views button { min-height: 44px; min-width: 56px; padding: 0 16px; font-size: .84rem; }
+  .v2-key { font-size: .8125rem; gap: 8px 16px; }
+  /* tables scroll inside their own box, edge to edge, with the hint above */
+  .v2-data-wrap { margin-inline: calc(0px - var(--gut)); padding-inline: var(--gut); border-radius: 0; }
+  .v2-js .v2-chart.is-drawn:not(.view-table) .v2-data-wrap { padding: 0; margin: 0; }
+  .v2-data { width: auto; min-width: 100%; }
+  .v2-data th:first-child, .v2-data td:first-child { min-width: 9em; padding-right: 16px; }
+  .v2-data :is(th, td):last-child { padding-right: var(--gut); }
+  /* clip control: a small button in the top corner, where the clip has no words */
+  .v2-film .v2-film-btn { top: 8px; right: 8px; bottom: auto; width: 34px; height: 34px; }
+  .v2-film .v2-film-btn::before { content: ""; position: absolute; inset: -6px; }
+  .v2-3d { height: 340px; }
+
+  /* big number, pull quote: sized for a narrow column */
+  .v2-bignum { grid-template-columns: 1fr; gap: 10px; padding: 22px 20px; border-radius: 20px; }
+  .v2-bignum .v2-count, .v2-bignum .v2-bignum-n { font-size: clamp(2.4rem, 1.5rem + 4vw, 2.9rem); letter-spacing: -0.05em; }
+  .v2-bignum p { font-size: 1rem; }
+  .v2-pull { margin: 1.5em 0; font-size: clamp(1.35rem, 1.05rem + 1.4vw, 1.55rem); line-height: 1.24; }
+  .v2-break { margin: 2.4em auto; }
+
+  .v2-colophon { padding: 20px 18px; font-size: .9rem; }
+  .v2-end { padding: 26px var(--gut) 70px; }
+  .v2-report { grid-template-columns: 1fr; padding: 22px 20px; }
   .v2-report .v2-arrow { display: none; }
-  .v2-more a { grid-template-columns: 112px 1fr; gap: 14px; padding: 8px; }
-  .v2-more p { -webkit-line-clamp: 2; }
-  .v2-colophon { padding: 20px; }
+  .v2-more a { grid-template-columns: 104px 1fr; gap: 14px; padding: 8px 0; }
+  .v2-more h3 { font-size: 1.02rem; }
+  .v2-more p { -webkit-line-clamp: 2; font-size: .9rem; }
+  .v2-chip { min-height: 44px; }
+  .v2-btn { min-height: 48px; }
 }
 @media (max-width: 440px) {
   .v2-top-in { gap: 8px; }
-  .v2-top a.v2-pill { padding: 0 12px; font-size: .8rem; }
+  .v2-top a.v2-pill { padding: 0 14px; font-size: .84rem; }
   .v2-brand .wordmark { font-size: 1.3rem; }
   .v2-top .dbx-draft { display: none; }
+}
+
+/* --------------------------------------------- the nerd version (/report) -- */
+/* The report keeps its own skin (scoped to .dbx-study); these rules give it the story's
+   reading type: Inter body, near-white paragraphs, a real measure, roomier tables, and on
+   phones gutters, smaller headings and tables that scroll inside their own box. */
+body.dbv2-rep .dbx-study {
+  --font-ui: var(--f-text); --text: #eef1f8; --ink-2: var(--v2-body); --muted: var(--v2-muted); --faint: var(--v2-faint);
+  font-variant-numeric: proportional-nums;
+}
+body.dbv2-rep .dbx-study :is(p, li):not([class]) { font-size: 1.0625rem; line-height: 1.7; color: var(--v2-body); max-width: 40rem; text-wrap: pretty; }
+body.dbv2-rep .dbx-study :is(.callout, .note-open) { color: var(--v2-body); max-width: 42rem; }
+body.dbv2-rep .dbx-study :is(.callout, .note-open) :is(p, li) { font-size: 1rem; }
+body.dbv2-rep .dbx-study :is(.subtitle, .figcap, .cap, .section-note, .matrix-cap) { color: var(--v2-muted); text-wrap: pretty; }
+body.dbv2-rep .dbx-study :is(h2, h3) { text-wrap: balance; }
+body.dbv2-rep .dbx-study h2 { scroll-margin-top: 24px; line-height: 1.1; }
+body.dbv2-rep .dbx-study table { font-variant-numeric: tabular-nums; }
+body.dbv2-rep .dbx-study thead th { color: var(--v2-muted); font-size: 11px; }
+body.dbv2-rep .dbx-study dl.gloss dd { color: var(--v2-body); }
+body.dbv2-rep .dbx-study :is(.table-wrap, .fig-wrap, .matrix-wrap) { overscroll-behavior-x: contain; }
+@media (max-width: 760px) {
+  body.dbv2-rep .dbx-study { padding-left: var(--gut); padding-right: var(--gut); }
+  body.dbv2-rep .dbx-study h1 { font-size: clamp(1.75rem, 1.2rem + 3vw, 2.1rem); text-wrap: balance; }
+  body.dbv2-rep .dbx-study h2 { font-size: 1.4rem; }
+  body.dbv2-rep .dbx-study h3 { font-size: 1.08rem; }
+  body.dbv2-rep .dbx-study :is(p, li):not([class]) { font-size: 1.03125rem; line-height: 1.65; }
+  body.dbv2-rep .dbx-study :is(.callout, .note-open) :is(p, li) { font-size: .97rem; }
+  body.dbv2-rep .dbx-study :is(.table-wrap, .matrix-wrap) { margin-left: calc(0px - var(--gut)); margin-right: calc(0px - var(--gut)); border-radius: 0; }
+  body.dbv2-rep .dbx-study .table-wrap table { min-width: 600px; }
+  body.dbv2-rep .dbx-study .table-wrap :is(td, th):first-child { padding-left: var(--gut); }
+  body.dbv2-rep .dbx-study .table-wrap tbody td { white-space: nowrap; }
+  body.dbv2-rep .dbx-study .table-wrap tbody td:first-child { white-space: normal; min-width: 7.5em; }
+  body.dbv2-rep .dbx-study table.text tbody td { white-space: normal; min-width: 12em; }
+  body.dbv2-rep .dbx-study nav.toc a { min-height: 40px; display: inline-flex; align-items: center; }
 }
 
 /* ---------------------------------------------------- reduced motion -- */
 @media (prefers-reduced-motion: reduce) {
   .v2-js .v2-pre, .v2-js .v2-in { opacity: 1; transform: none; transition: none; }
   .v2-cue svg { animation: none; }
-  .v2-hero-scene, .v2-hero-fallback, .v2-report, .v2-chip, .v2-top a.v2-pill { transition: none; }
+  .v2-hero-scene, .v2-hero-fallback, .v2-report, .v2-chip, .v2-top a.v2-pill, .v2-toc, .v2-toc a, .v2-body a { transition: none; }
 }
 @media print {
-  .v2-top, .v2-hero-scene, .v2-hero-fallback, .v2-cue, .v2-end, .v2-views, .v2-film { display: none !important; }
+  .v2-top, .v2-hero-scene, .v2-hero-fallback, .v2-cue, .v2-end, .v2-views, .v2-film, .v2-toc, .v2-scroll-hint { display: none !important; }
   body.dbv2 { background: #fff; color: #111; }
 }

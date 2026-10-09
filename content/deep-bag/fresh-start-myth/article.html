@@ -9,14 +9,57 @@
 <meta property="og:description" content="We matched 243 NFL trades against similar players who stayed put. Those traded into a smaller role finished about 3.5 fantasy points a game behind them. The new city barely registered.">
 <style>
   :root { --accent: #3ddc97; }
+  /* trade-desk hero: the illustration runs to the bottom edge, so the melt into the page is shorter */
+  .td-hero::after { height: 12%; }
+  /* static hero (phones, reduced motion, no WebGL, data saver): stills rendered from the trade-desk scene */
+  .td-hero .td-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 70%; }
+  .td-hero .td-poster-tall { display: none; object-position: 50% 0; }
+  @media (max-width: 760px) { .td-hero .td-poster-wide { display: none; } .td-hero .td-poster-tall { display: block; } }
+  /* where the live scene is likely, hold the finished still back a moment so it does not flash before the scene's opening */
+  @media (prefers-reduced-motion: no-preference) and (pointer: fine) and (min-width: 761px) {
+    .td-hero .td-poster-wide { animation: td-fade .8s 1.8s both; }
+  }
+
+  /* depth-chart moment: Pickett's magnet crosses from Pittsburgh's chart to Philadelphia's */
+  .td-moment svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .td-moment .td-tall { display: none; max-width: 420px; margin: 0 auto; }
+  @media (max-width: 560px) { .td-moment .td-wide { display: none; } .td-moment .td-tall { display: block; } }
+  .td-moment .td-frame { fill: #2a3150; }
+  .td-moment .td-board { fill: #e6e9f0; }
+  .td-moment .td-city { fill: #18214a; font: 700 19px var(--f-display); letter-spacing: -0.01em; }
+  .td-moment .td-sub, .td-moment .td-rank { fill: #6b7597; font: 600 11.5px var(--f-num); letter-spacing: .08em; }
+  .td-moment .td-rule { fill: rgba(24, 33, 74, .5); }
+  .td-moment .td-mag rect { fill: #1d2758; }
+  .td-moment .td-mag text { fill: #f2f4fa; font: 600 14px var(--f-num); letter-spacing: .06em; }
+  .td-moment .td-mag.is-acc rect { fill: var(--v2-accent); }
+  .td-moment .td-mag.is-acc text { fill: var(--v2-accent-ink); }
+  .td-moment .td-slot { fill: none; stroke: #8f98b3; stroke-width: 1.5; stroke-dasharray: 6 5; }
+  .td-moment .td-slot-t { fill: #8f98b3; font: 600 11px var(--f-num); letter-spacing: .12em; }
+  .td-moment .td-trail { fill: none; stroke: var(--v2-accent); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; opacity: .45; }
+  .td-moment .td-note { fill: var(--v2-accent); font: 600 14px var(--f-text); }
+  .td-moment.is-armed .td-pk-w { transform: translate(-380px, -48px); }
+  .td-moment.is-armed .td-pk-t { transform: translate(0, -323px); }
+  .td-moment.is-armed .td-trail { stroke-dashoffset: 1; opacity: .7; }
+  .td-moment.is-armed .td-note { opacity: 0; }
+  .td-moment.is-run .td-pk-w { animation: td-hop-w 1.5s .35s cubic-bezier(.45, 0, .25, 1) both; }
+  .td-moment.is-run .td-pk-t { animation: td-hop-t 1.5s .35s cubic-bezier(.45, 0, .25, 1) both; }
+  .td-moment.is-run .td-trail { animation: td-trail 1.3s .45s cubic-bezier(.45, 0, .25, 1) both; }
+  .td-moment.is-run .td-note { animation: td-fade .6s 1.9s both; }
+  @keyframes td-hop-w { 0% { transform: translate(-380px, -48px); } 14% { transform: translate(-376px, -60px); }
+    55% { transform: translate(-190px, -128px); } 88% { transform: translate(0, 4px); } 94% { transform: translate(0, -3px); } 100% { transform: translate(0, 0); } }
+  @keyframes td-hop-t { 0% { transform: translate(0, -323px); } 14% { transform: translate(4px, -333px); }
+    55% { transform: translate(44px, -165px); } 88% { transform: translate(0, 4px); } 94% { transform: translate(0, -3px); } 100% { transform: translate(0, 0); } }
+  @keyframes td-trail { from { stroke-dashoffset: 1; opacity: .7; } 80% { stroke-dashoffset: 0; opacity: .7; } to { stroke-dashoffset: 0; opacity: .45; } }
+  @keyframes td-fade { from { opacity: 0; } to { opacity: 1; } }
+
 </style>
 </head>
 <body>
 
-<header class="v2-hero" data-scene="trade-field" data-scene-opts='{"arcs":5,"accentEvery":4}'>
-  <div class="v2-hero-fallback" aria-hidden="true"></div>
+<header class="v2-hero td-hero" data-scene="trade-desk" data-scene-src="/js/deep-bag-v2-scenes/trade-desk.js" data-scene-opts='{}'>
+  <div class="v2-hero-fallback is-custom" aria-hidden="true"><img class="td-poster td-poster-wide" src="../outputs/web/hero/trade-desk-wide.webp" alt="" loading="lazy" decoding="async"><img class="td-poster td-poster-tall" src="../outputs/web/hero/trade-desk-tall.webp" alt="" loading="lazy" decoding="async"></div>
   <div class="v2-hero-in">
-    <h1 class="v2-title">The Fresh-Start Myth</h1>
+    <h1 class="v2-title">The Fresh&#8209;Start Myth</h1>
     <p class="v2-standfirst">We matched 243 NFL trades against similar players who stayed put. The new city barely registered. Players handed a smaller job fell about 3.5 fantasy points a game behind, under every method we tried.</p>
   </div>
   <a class="v2-cue" href="#start" aria-label="Start reading"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -50,6 +93,16 @@
 <h2>What the depth chart knew</h2>
 
 <p>Every NFL team publishes a depth chart before Week 1. For a traded player it is the closest thing to the acquiring team&rsquo;s plan, written down before he has played a snap for them. We compared each player&rsquo;s spot on his new team&rsquo;s first regular-season depth chart with his spot on his old team&rsquo;s a year earlier and sorted every trade into three groups: acquired into a bigger job, the same job or a smaller one. Separately, the same trades were sorted by who actually got the touches once the season was played.</p>
+
+<p>Pickett, from the opening, is the template. Watch where his name sits on the two charts the method compares.</p>
+
+<figure class="v2-fig td-moment" aria-labelledby="td-m-c">
+  <p id="td-m-t" hidden>Kenny Pickett was first on Pittsburgh&rsquo;s Week 1 depth chart in 2023 and second, behind Jalen Hurts, on Philadelphia&rsquo;s in 2024.</p>
+  <svg class="td-wide" viewBox="0 0 720 300" role="img" aria-labelledby="td-m-t"><path class="td-trail" pathLength="1" d="M 220 98 Q 410 -10 598 146"/><rect x="20" y="30" width="300" height="225" rx="14" class="td-frame"/><rect x="26" y="36" width="288" height="213" rx="9" class="td-board"/><text x="42" y="68" class="td-city">Pittsburgh</text><text x="298" y="68" class="td-sub" text-anchor="end">WEEK 1 · 2023</text><rect x="42" y="80" width="256" height="2" class="td-rule"/><text x="50" y="120" class="td-rank">1ST</text><text x="50" y="168" class="td-rank">2ND</text><g class="td-mag"><rect x="98" y="146" width="200" height="34" rx="9"/><text x="198" y="168" text-anchor="middle">TRUBISKY</text></g><text x="50" y="216" class="td-rank">3RD</text><g class="td-mag"><rect x="98" y="194" width="200" height="34" rx="9"/><text x="198" y="216" text-anchor="middle">RUDOLPH</text></g><rect x="98" y="98" width="200" height="34" rx="9" class="td-slot"/><text x="198" y="120" class="td-slot-t" text-anchor="middle">TRADED</text><rect x="400" y="30" width="300" height="225" rx="14" class="td-frame"/><rect x="406" y="36" width="288" height="213" rx="9" class="td-board"/><text x="422" y="68" class="td-city">Philadelphia</text><text x="678" y="68" class="td-sub" text-anchor="end">WEEK 1 · 2024</text><rect x="422" y="80" width="256" height="2" class="td-rule"/><text x="430" y="120" class="td-rank">1ST</text><g class="td-mag"><rect x="478" y="98" width="200" height="34" rx="9"/><text x="578" y="120" text-anchor="middle">HURTS</text></g><text x="430" y="168" class="td-rank">2ND</text><text x="430" y="216" class="td-rank">3RD</text><g class="td-mag"><rect x="478" y="194" width="200" height="34" rx="9"/><text x="578" y="216" text-anchor="middle">MCKEE</text></g><rect x="478" y="146" width="200" height="34" rx="9" class="td-slot"/><g class="td-pk td-pk-w"><g class="td-mag is-acc"><rect x="478" y="146" width="200" height="34" rx="9"/><text x="578" y="168" text-anchor="middle">PICKETT</text></g></g><text class="td-note" x="678" y="289" text-anchor="end">1st to 2nd: a smaller job</text></svg>
+  <svg class="td-tall" viewBox="0 0 360 560" role="img" aria-labelledby="td-m-t"><path class="td-trail" pathLength="1" d="M 318 95 C 372 190 372 345 318 418"/><rect x="20" y="10" width="320" height="225" rx="14" class="td-frame"/><rect x="26" y="16" width="308" height="213" rx="9" class="td-board"/><text x="42" y="48" class="td-city">Pittsburgh</text><text x="318" y="48" class="td-sub" text-anchor="end">WEEK 1 · 2023</text><rect x="42" y="60" width="276" height="2" class="td-rule"/><text x="50" y="100" class="td-rank">1ST</text><text x="50" y="148" class="td-rank">2ND</text><g class="td-mag"><rect x="118" y="126" width="200" height="34" rx="9"/><text x="218" y="148" text-anchor="middle">TRUBISKY</text></g><text x="50" y="196" class="td-rank">3RD</text><g class="td-mag"><rect x="118" y="174" width="200" height="34" rx="9"/><text x="218" y="196" text-anchor="middle">RUDOLPH</text></g><rect x="118" y="78" width="200" height="34" rx="9" class="td-slot"/><text x="218" y="100" class="td-slot-t" text-anchor="middle">TRADED</text><rect x="20" y="285" width="320" height="225" rx="14" class="td-frame"/><rect x="26" y="291" width="308" height="213" rx="9" class="td-board"/><text x="42" y="323" class="td-city">Philadelphia</text><text x="318" y="323" class="td-sub" text-anchor="end">WEEK 1 · 2024</text><rect x="42" y="335" width="276" height="2" class="td-rule"/><text x="50" y="375" class="td-rank">1ST</text><g class="td-mag"><rect x="118" y="353" width="200" height="34" rx="9"/><text x="218" y="375" text-anchor="middle">HURTS</text></g><text x="50" y="423" class="td-rank">2ND</text><text x="50" y="471" class="td-rank">3RD</text><g class="td-mag"><rect x="118" y="449" width="200" height="34" rx="9"/><text x="218" y="471" text-anchor="middle">MCKEE</text></g><rect x="118" y="401" width="200" height="34" rx="9" class="td-slot"/><g class="td-pk td-pk-t"><g class="td-mag is-acc"><rect x="118" y="401" width="200" height="34" rx="9"/><text x="218" y="423" text-anchor="middle">PICKETT</text></g></g><text class="td-note" x="318" y="540" text-anchor="end">1st to 2nd: a smaller job</text></svg>
+  <figcaption id="td-m-c">Quarterbacks on the two Week 1 depth charts, as nflverse records them. The trade moved Pickett from the top line to the second.</figcaption>
+</figure>
+
 
 <div class="v2-bignum">
   <span class="v2-count" data-to="-3.5" data-dec="1">&minus;3.5</span>
@@ -87,8 +140,9 @@
 <p>The animation below rebuilds the main result in two beats: the three role groups on the two-season baseline, then the smaller-job gap redrawn under each of the five methods from the grid.</p>
 
 <figure class="v2-fig v2-bleed v2-film">
-  <div class="v2-film-frame">
+  <div class="v2-film-frame is-tall-on-phone">
     <video muted playsinline loop preload="none" poster="../outputs/video/fresh-start-myth_16x9_poster.jpg" aria-label="Animated summary: players traded into a smaller job finished about 3.5 fpts a game behind matched peers, and the gap held across five methods.">
+      <source media="(max-width: 760px)" src="../outputs/video/fresh-start-myth_4x5_web.mp4" type="video/mp4">
       <source src="../outputs/video/fresh-start-myth_16x9.webm" type="video/webm">
       <source src="../outputs/video/fresh-start-myth_16x9.mp4" type="video/mp4">
     </video>
@@ -157,5 +211,6 @@
 </footer>
 
 </article>
+<script src="../outputs/web/trade-moments.js" defer></script>
 </body>
 </html>

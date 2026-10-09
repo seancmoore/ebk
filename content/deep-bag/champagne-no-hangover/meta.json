@@ -13,14 +13,17 @@
     "nhl"
   ],
   "source": {
-    "article": "C:\\Users\\panky\\Desktop\\ebk-champions-hangover\\reports\\article_v07.html",
+    "article": "C:\\Users\\panky\\Desktop\\ebk-champions-hangover\\reports\\article_v09.html",
     "report": "C:\\Users\\panky\\Desktop\\ebk-champions-hangover\\reports\\report_v05.html"
   },
-  "imported": "2026-10-08",
+  "imported": "2026-10-09",
   "assets": {
-    "../outputs/video/champagne-no-hangover_16x9.webm": "champagne-no-hangover_16x9.webm",
+    "../outputs/web/cn-hero-wide.webp": "cn-hero-wide.webp",
+    "../outputs/video/champagne-no-hangover_4x5_web.mp4": "champagne-no-hangover_4x5_web.mp4",
+    "../outputs/video/champagne-no-hangover_16x9.mp4": "champagne-no-hangover_16x9.mp4",
+    "../outputs/web/cn-moments.js": "cn-moments.js",
     "../outputs/video/champagne-no-hangover_16x9_poster.jpg": "champagne-no-hangover_16x9_poster.jpg",
-    "../outputs/web/champagne-scene.js": "champagne-scene.js",
-    "../outputs/video/champagne-no-hangover_16x9.mp4": "champagne-no-hangover_16x9.mp4"
+    "../outputs/web/cn-hero-tall.webp": "cn-hero-tall.webp",
+    "../outputs/video/champagne-no-hangover_16x9.webm": "champagne-no-hangover_16x9.webm"
   }
 }

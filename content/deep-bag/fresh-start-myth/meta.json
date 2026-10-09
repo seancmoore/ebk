@@ -11,13 +11,17 @@
     "nfl"
   ],
   "source": {
-    "article": "C:\\Users\\panky\\Desktop\\ebk-trade-study\\reports\\article_v14.html",
+    "article": "C:\\Users\\panky\\Desktop\\ebk-trade-study\\reports\\article_v16.html",
     "report": "C:\\Users\\panky\\Desktop\\ebk-trade-study\\reports\\report_v13.html"
   },
-  "imported": "2026-10-08",
+  "imported": "2026-10-09",
   "assets": {
+    "../outputs/web/trade-moments.js": "trade-moments.js",
     "../outputs/video/fresh-start-myth_16x9.webm": "fresh-start-myth_16x9.webm",
-    "../outputs/video/fresh-start-myth_16x9.mp4": "fresh-start-myth_16x9.mp4",
-    "../outputs/video/fresh-start-myth_16x9_poster.jpg": "fresh-start-myth_16x9_poster.jpg"
+    "../outputs/video/fresh-start-myth_16x9_poster.jpg": "fresh-start-myth_16x9_poster.jpg",
+    "../outputs/web/hero/trade-desk-wide.webp": "trade-desk-wide.webp",
+    "../outputs/web/hero/trade-desk-tall.webp": "trade-desk-tall.webp",
+    "../outputs/video/fresh-start-myth_4x5_web.mp4": "fresh-start-myth_4x5_web.mp4",
+    "../outputs/video/fresh-start-myth_16x9.mp4": "fresh-start-myth_16x9.mp4"
   }
 }

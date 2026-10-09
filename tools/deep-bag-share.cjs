@@ -8,6 +8,8 @@
 //
 // --motif matches the study's hero scene: field (football, the default), stadium (revenge-game),
 // bubbles (champagne-no-hangover), ridges (the-cliff), plain (a dotted floor, any sport).
+// --art <image> instead puts a rendered still of the study's own hero behind the card (the-cliff
+// since 2026-10-09: ebk-age-cliff/outputs/hero/cliff_share_art.png).
 // Reliability: fonts are loaded with display=block and awaited (document.fonts.ready plus an
 // explicit load of each face), the page waits for network idle, every step has a long timeout,
 // and the whole render retries up to 3 times with a fresh browser. A card whose fonts did not
@@ -95,7 +97,14 @@ const PLAIN_CSS = `.field::before{content:"";position:absolute;left:-30%;right:-
  -webkit-mask-image:linear-gradient(180deg,transparent,#000 25%,#000 60%,transparent)}`;
 const art = {stadium: stadiumSVG, bubbles: bubblesSVG, ridges: ridgesSVG}[motif];
 const motifCSS = motif === 'field' ? FIELD_CSS : motif === 'plain' ? PLAIN_CSS : '';
-const fieldHTML = art ? `<div class="field">${art()}</div>` : '<div class="field"></div>';
+// --art <image>: a rendered still of the study's own hero (png/webp/jpg, ideally 2400x1260) fills the card
+// behind the text, darkened on the left so the title and line stay legible. It replaces --motif.
+const artFile = opt('art', '');
+const artURI = artFile ? `data:image/${path.extname(artFile).slice(1).replace('jpg', 'jpeg')};base64,${fs.readFileSync(artFile).toString('base64')}` : '';
+const ART_CSS = `.field .still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.field::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,9,21,.92) 0%,rgba(6,9,21,.78) 38%,rgba(6,9,21,.18) 62%,transparent 78%),linear-gradient(0deg,rgba(6,9,21,.55),transparent 30%)}`;
+const fieldHTML = artURI ? `<div class="field"><img class="still" src="${artURI}" alt=""></div>`
+  : art ? `<div class="field">${art()}</div>` : '<div class="field"></div>';
 
 const FONTS = 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Martian+Mono:wdth,wght@75..100,500..650&family=Schibsted+Grotesk:wght@400..600&display=block';
 const html = `<!doctype html><html><head><meta charset="utf-8">
@@ -106,7 +115,7 @@ html,body{width:1200px;height:630px;background:#080b17;overflow:hidden}
 .card{position:relative;width:1200px;height:630px;padding:64px 72px;color:#eef1f8;font-family:'Schibsted Grotesk',sans-serif;
  background:radial-gradient(70% 70% at 70% 30%,rgba(64,86,170,.28),transparent 70%),radial-gradient(50% 60% at 85% 95%,${accent}22,transparent 70%),linear-gradient(180deg,#060915,#080b17)}
 .field{position:absolute;inset:0;overflow:hidden;perspective:700px}
-${motifCSS}
+${artURI ? ART_CSS : motifCSS}
 .field .art{position:absolute;inset:0;width:100%;height:100%;mask-image:linear-gradient(90deg,transparent 42%,#000 64%),linear-gradient(180deg,transparent 6%,#000 22%,#000 52%,transparent 64%);mask-composite:intersect}
 .brand{position:relative;display:flex;align-items:center;gap:14px;font-weight:600;font-size:15px;letter-spacing:.22em;text-transform:uppercase;color:#8d98b8}
 .brand b{font-family:'Bricolage Grotesque';font-weight:800;font-size:28px;letter-spacing:-.01em;color:#fff;text-transform:none}
@@ -142,7 +151,7 @@ async function render(attempt) {
     const tmp = out + '.tmp.png';
     await page.screenshot({path: tmp, type: 'png'});
     fs.renameSync(tmp, out);
-    console.log(`wrote ${out} (motif ${motif}${attempt > 1 ? ', attempt ' + attempt : ''})`);
+    console.log(`wrote ${out} (${artFile ? "art " + path.basename(artFile) : "motif " + motif}${attempt > 1 ? ', attempt ' + attempt : ''})`);
   } finally { await browser.close().catch(() => {}); }
 }
 

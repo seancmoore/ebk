@@ -33,38 +33,74 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=Martian+Mono:wdth,wght@75..100,400..650&amp;family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..600&amp;display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=Inter:ital,opsz,wght@0,14..32,400..700;1,14..32,400..600&amp;family=Martian+Mono:wdth,wght@75..100,400..650&amp;display=swap" />
 <style>
 .dbx-study{--accent: #e5533f; --v2-accent-ink: #1c0603;}
-.dbx-study .v2-hero-fallback::before{left: -35%; right: -35%; top: 30%; height: 125%;
-    transform: rotateX(63deg);
-    background:
-      repeating-radial-gradient(ellipse 50% 50% at 50% 42%, transparent 0 17px, rgba(170, 186, 235, 0.15) 17px 19px),
-      radial-gradient(circle, rgba(168, 182, 228, 0.34) 1.1px, transparent 1.7px) 0 0 / 20px 20px;
-    -webkit-mask-image: radial-gradient(ellipse 48% 44% at 50% 42%, transparent 0 34%, #000 40%, #000 70%, transparent 100%);
-            mask-image: radial-gradient(ellipse 48% 44% at 50% 42%, transparent 0 34%, #000 40%, #000 70%, transparent 100%);}
+.dbx-study .rg-still img{position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%;
+    opacity: 0; animation: rg-still-in .9s ease 2.4s forwards;}
+.dbx-study .rg-still .rg-still-t{display: none; object-position: 50% 0%;}
+@media (max-aspect-ratio: 1/1){.dbx-study .rg-still .rg-still-w{display: none;}
+.dbx-study .rg-still .rg-still-t{display: block;}}
+@media (pointer: coarse), (prefers-reduced-motion: reduce){.dbx-study .rg-still img{animation: none; opacity: 1;}}
+@keyframes rg-still-in{ to { opacity: 1; } }
+.dbx-study .rg-board-frame{position: relative; padding: 30px clamp(14px, 4vw, 40px) 24px; border-radius: var(--v2-r, 28px);
+    background: radial-gradient(120% 90% at 50% 0%, #0d1328, #05070f 70%); box-shadow: var(--v2-glow); overflow: hidden;}
+.dbx-study .rg-board-frame::before{content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+    background: radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1.4px) 0 0 / 5px 5px;}
+.dbx-study .rg-board-cols{position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 3vw, 28px);}
+.dbx-study .rg-col{display: grid; justify-items: center; gap: 8px; padding: 18px 6px 16px; border-radius: 18px; background: rgba(255,255,255,.025);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);}
+.dbx-study .rg-lab{color: var(--v2-muted, #8d98b8); font: 600 .72rem/1 var(--f-text); letter-spacing: .18em; text-transform: uppercase; text-align: center;}
+.dbx-study .rg-num{display: inline-flex; align-items: baseline; color: #f4f1ea; font: 600 clamp(3rem, 1.6rem + 6vw, 6rem)/1 var(--f-num);
+    font-variation-settings: "wdth" 80; letter-spacing: -.06em; font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 22px rgba(255,236,210,.35), 0 0 2px rgba(255,236,210,.6);}
+.dbx-study .rg-num b{font-weight: inherit;}
+.dbx-study .rg-num .d{display: inline-block; transition: opacity .5s ease, transform .6s var(--ease-out), max-width .6s var(--ease-out); max-width: 3ch; overflow: hidden;}
+.dbx-study .rg-delta{min-height: 1.4em; color: var(--v2-accent); font: 600 1rem/1.4 var(--f-num); letter-spacing: -.02em; opacity: 0; transform: translateY(6px);
+    transition: opacity .4s ease, transform .5s var(--ease-out);}
+.dbx-study .rg-exact{color: var(--v2-muted, #8d98b8); font: 500 .8rem/1.3 var(--f-num); opacity: 0; transition: opacity .6s ease .3s;}
+.dbx-study .rg-board-foot{position: relative; display: flex; justify-content: center; gap: 10px; margin-top: 18px; color: var(--v2-muted, #8d98b8);
+    font: 600 .74rem/1 var(--f-text); letter-spacing: .14em; text-transform: uppercase;}
+.dbx-study .rg-board-foot i{font-style: normal; transition: color .4s ease, opacity .4s ease;}
+.dbx-study .rg-board-foot i.on{color: var(--v2-ink, #eef1f8);}
+.dbx-study .rg-board-foot i.off{opacity: .45;}
+.dbx-study .rg-board.is-up .rg-delta{opacity: 1; transform: none;}
+.dbx-study .rg-board.is-round .rg-num .d{opacity: 0; max-width: 0; transform: translateY(-.3em);}
+.dbx-study .rg-board.is-round .rg-exact{opacity: 1;}
+.dbx-study .rg-circles svg{display: block; width: 100%; height: auto;}
+.dbx-study .rg-circles .rg-ink{fill: none; stroke-linecap: round; stroke-linejoin: round;}
+.dbx-study .rg-circles .rg-ink.real{stroke: var(--v2-accent); stroke-width: 4.5; stroke-dasharray: 1000 1000; stroke-dashoffset: 1000;
+    transition: stroke-dashoffset 1.5s cubic-bezier(.5,0,.3,1);}
+.dbx-study .rg-circles .rg-ink.fake{stroke: #7d88a8; stroke-width: 3; stroke-dasharray: 4 9; opacity: 0; transition: opacity .9s ease 1.4s;}
+.dbx-study .rg-circles .rg-num2{opacity: 0; transition: opacity .5s ease;}
+.dbx-study .rg-circles.is-in .rg-ink.real{stroke-dashoffset: 0;}
+.dbx-study .rg-circles.is-in .rg-ink.fake{opacity: 1;}
+.dbx-study .rg-circles.is-in .rg-num2{opacity: 1;}
+.dbx-study .rg-circles.is-in .rg-num2.early{transition-delay: 1s;}
+.dbx-study .rg-circles.is-in .rg-num2.late{transition-delay: 2s;}
+@media (prefers-reduced-motion: reduce){.dbx-study .rg-num .d,.dbx-study .rg-delta,.dbx-study .rg-exact,.dbx-study .rg-circles .rg-ink,.dbx-study .rg-circles .rg-num2{transition: none !important;}}
 </style>
 <link rel="stylesheet" href="/css/deep-bag-article.css" />
-<link rel="stylesheet" href="/css/deep-bag-v2.css?v=2" />
+<link rel="stylesheet" href="/css/deep-bag-v2.css?v=3" />
 <script>document.documentElement.classList.add('v2-js')</script>
 <script src="/js/ebk-analytics.js" defer></script>
 <script src="/js/deep-bag-article.js" defer></script>
-<script src="/js/deep-bag-v2.js?v=2" defer></script>
+<script src="/js/deep-bag-v2.js?v=3" defer></script>
 </head>
 <body class="dbx dbv2 dbv2-art" style="--v2-accent: #e5533f">
 <a class="dbx-skip" href="#story">Skip to the story</a>
 <div class="dbx-progress" aria-hidden="true"></div>
 <header class="v2-top"><div class="v2-top-in"><a class="v2-brand" href="/" aria-label="EBK home"><span class="wordmark" aria-hidden="true">E<span>B</span>K</span><span class="v2-brand-sub">Deep Bag</span></a><div class="v2-top-r"><span class="v2-pill v2-meta">October 4, 2026 · 10 min read</span><a class="v2-pill is-accent" href="/deep-bag/revenge-game/report">Nerd version <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div></header>
 <main class="dbx-study" id="story">
-<header class="v2-hero" data-study-scene="return-bowl" data-study-scene-opts='{"arcs":2,"accentEvery":4}'>
-  <div class="v2-hero-fallback" aria-hidden="true"></div>
+<header class="v2-hero" data-scene="return-bowl" data-scene-data="rg-scene-data" data-scene-opts='{}'>
+  <div class="v2-hero-fallback is-custom rg-still" aria-hidden="true"><img class="rg-still-w" src="/deep-bag/revenge-game/assets/revenge-hero-wide-2x.webp" alt="" width="2880" height="1800" loading="lazy" decoding="async"><img class="rg-still-t" src="/deep-bag/revenge-game/assets/revenge-hero-tall-2x.webp" alt="" width="780" height="1520" loading="lazy" decoding="async"></div>
   <div class="v2-hero-in">
     <h1 class="v2-title">Payback Is a Rounding Error</h1>
     <p class="v2-standfirst">Across 1,547 NFL games against a former team, the revenge bump comes to about a third of a fantasy point. Home field is worth about the same.</p>
   </div>
   <a class="v2-cue" href="#start" aria-label="Start reading"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 </header>
-<!--scene-data--><script type="application/json" id="rg-scene-data">{"n":1547,"v":[-4.0,31.7,0.2,12.9,-4.3,1.0,17.6,-2.0,0.4,7.5,1.3,-2.2,7.1,-1.5,1.1,27.2,6.5,1.8,-0.3,2.8,-0.7,-2.6,5.9,1.5,-7.9,-0.4,-4.1,-2.6,0.4,0.1,9.3,-4.3,-3.2,0.5,-1.6,7.8,-1.0,-9.0,-2.6,3.7,-5.3,-2.2,-0.1,6.9,-0.2,0.1,-0.9,-4.7,0.1,5.9,16.5,-3.0,3.9,-3.4,-6.0,4.6,-0.3,8.4,-9.8,-4.3,-8.1,6.1,-4.2,0.7,1.2,-0.5,7.5,-2.7,-4.6,-0.1,0.4,0.0,-1.3,-4.4,2.4,5.4,-4.8,-7.4,20.4,-1.3,-2.7,-3.8,4.7,2.5,4.8,-2.0,-1.2,-3.0,-2.8,-1.1,-5.3,14.7,-1.8,-2.1,0.4,-4.9,5.9,-7.9,9.2,-1.9,15.8,0.3,-3.5,-0.4,14.3,-8.8,-5.1,-6.1,1.6,3.3,-1.1,5.5,-2.6,2.8,-5.0,8.7,-1.0,-8.3,9.4,-0.7,-4.0,-3.4,7.5,-3.5,18.4,-6.2,-7.0,-9.1,6.0,3.6,-2.1,0.2,-1.9,-0.6,-1.5,1.9,-5.4,-1.8,11.1,-0.2,-0.2,-5.8,4.7,-2.9,-7.0,0.5,1.5,-0.5,-6.6,-1.7,6.4,-0.8,-0.2,8.5,-4.3,-5.1,-4.7,12.0,3.2,2.3,-2.1,-5.2,8.8,4.8,14.0,-1.1,-3.9,-2.9,-0.3,17.1,0.9,4.0,-8.3,-3.9,-0.3,-1.3,5.0,-5.4,-5.8,-0.8,0.2,0.3,-3.3,1.6,4.8,2.3,-4.8,-3.6,-3.6,9.0,-9.0,7.6,-3.1,-7.7,-2.7,-2.6,2.6,-2.6,6.2,-0.2,-1.1,-2.7,-6.0,-2.0,4.3,-1.2,-11.1,5.0,3.2,8.2,7.4,1.5,-2.0,0.8,-4.2,-5.9,-5.3,13.6,-2.5,-0.6,-0.7,2.6,-0.2,3.9,0.9,3.7,-2.5,-2.3,5.6,2.1,-2.1,5.8,4.2,3.5,-0.2,-0.4,-0.2,-1.9,14.3,-1.8,-4.4,0.0,0.5,-2.8,-4.5,-3.7,-3.9,0.4,-2.6,0.2,-1.6,2.5,3.3,8.5,-0.4,-1.4,-5.5,8.0,-3.3,1.5,-0.6,2.3,-1.0,0.4,11.3,-11.3,0.9,2.4,5.4,-2.9,0.4,-2.7,3.6,10.8,-2.3,-2.3,-0.5,-8.3,-0.9,-1.6,5.0,1.9,-3.3,-2.6,-0.1,-4.4,-2.9,-3.0,-5.9,3.8,1.1,3.8,-1.5,-1.5,22.6,-2.9,3.8,-5.0,-6.3,3.9,0.5,2.8,-11.2,-0.8,6.0,11.2,-12.7,1.3,0.0,6.6,4.2,2.5,-1.3,-6.4,0.5,-4.2,-0.7,9.1,-1.0,0.9,9.2,-1.7,-5.5,-2.4,0.1,-1.8,0.8,4.1,1.6,4.1,-3.5,3.3,-0.2,-1.2,-1.6,-1.2,-4.0,2.5,-4.2,8.8,-1.8,1.0,0.2,14.6,-0.2,-3.8,8.3,0.5,-6.6,-2.0,3.5,-2.6,-1.6,-7.5,-0.2,8.3,-0.9,4.0,-1.8,0.2,2.2,0.1,2.3,-0.3,-0.6,-1.0,-0.6,6.9,-13.6,13.0,-10.4,0.8,5.5,6.1,-1.3,4.7,0.7,-2.5,11.7,0.2,-11.4,-9.3,-0.6,5.7,2.6,3.7,-3.7,-7.6,-8.6,-3.2,-0.3,-5.6,-5.1,-1.0,-4.2,-0.7,1.8,0.6,2.0,0.9,0.4,1.7,-5.8,-3.9,-1.8,-4.0,-7.9,-1.5,-0.7,18.7,-1.9,0.2,-2.1,-1.4,0.3,-4.7,-1.9,4.3,-0.1,13.7,-2.2,6.7,3.6,-1.5,7.0,5.2,5.9,0.0,3.4,8.7,6.0,-0.3,-0.8,5.4,8.6,-0.4,-1.4,-0.9,-4.8,0.7,-1.3,4.7,-1.2,1.1,0.1,-0.8,8.4,15.2,-2.4,-9.3,2.4,14.2,10.0,-1.4,1.5,14.2,1.1,10.5,-0.0,19.8,-0.3,-2.8,5.9,-1.8,-6.6,9.1,-4.7,1.2,9.3,-5.7,-4.5,-1.9,7.2,-6.0,-0.6,-0.2,-10.1,0.8,-0.9,1.0,-0.7,-3.6,-2.8,-2.6,1.3,-0.6,-1.5,-2.1,-6.0,-10.6,11.6,-2.0,-3.0,1.6,4.0,-8.4,3.5,-4.4,-5.8,1.1,7.5,-2.1,3.3,-3.4,1.3,6.5,-0.6,-1.2,-1.1,0.6,-1.7,-6.9,-2.6,-1.6,-10.5,4.1,-1.8,0.7,-2.7,-2.0,3.5,-2.8,-5.2,6.3,-7.2,3.7,3.4,-1.3,-3.6,-0.6,7.6,0.2,13.9,-2.0,12.2,-0.2,-2.6,-0.5,0.8,6.9,-2.0,-0.3,-4.0,-7.7,1.3,-0.8,11.8,11.4,-0.1,3.5,1.1,8.9,-7.2,-1.2,-2.2,-4.4,8.0,10.9,-2.2,6.9,-3.1,-1.4,-2.0,0.7,-0.3,-1.2,-2.0,6.1,-1.4,2.2,-3.5,-4.1,-3.9,-0.0,17.5,5.8,-0.8,-4.8,-1.9,-2.0,-9.2,-3.0,-3.9,3.2,-3.1,-0.1,-0.1,4.4,-2.7,-2.1,-2.9,4.2,-2.9,0.8,3.8,0.1,-7.6,8.5,1.3,-1.1,0.3,-0.9,3.0,-1.9,-7.7,0.6,4.7,10.6,4.4,-8.8,-4.6,-3.5,6.0,-2.3,9.7,7.5,4.1,-2.3,-0.9,-9.3,2.5,2.2,3.8,0.6,-3.1,6.3,7.0,-1.6,3.2,-3.6,-4.5,3.8,8.9,-1.4,-5.8,7.5,-2.7,9.3,-5.2,-5.0,-5.7,-0.4,-3.1,-0.3,-1.9,0.6,-6.4,-0.8,11.1,-1.4,7.0,8.9,-5.6,1.0,18.7,1.0,1.9,-1.2,-3.8,-0.6,0.3,-0.8,-1.9,-6.1,-2.6,3.3,12.5,-3.6,-5.7,3.6,4.0,-0.7,1.5,-1.1,-0.9,-7.3,5.4,7.1,-1.3,-6.7,-5.8,-0.9,-10.6,-10.2,-0.0,3.0,-3.4,-2.2,15.8,-1.8,4.1,-1.3,-2.4,10.8,-6.3,1.9,1.4,5.6,-2.6,-2.7,8.0,-2.1,1.9,-2.9,5.7,-3.0,5.5,-4.0,2.0,-6.1,3.6,-0.4,-3.6,0.8,-1.5,28.3,10.3,-4.0,6.5,5.0,-0.5,-2.1,-1.4,-1.7,-2.9,-0.4,-1.5,-8.5,5.4,6.2,14.7,-0.8,-9.1,-3.8,-5.8,-0.5,-2.9,-0.3,-4.3,-0.0,-0.3,5.4,22.6,10.5,0.1,-1.2,-2.6,0.3,16.2,-2.8,-3.2,-0.8,-3.3,-3.1,-3.8,-4.8,2.1,2.9,-1.4,13.7,-0.3,-0.6,-2.8,-0.3,0.0,5.1,-1.7,11.8,-4.3,-1.2,7.5,-0.3,2.2,-6.6,-3.7,-5.1,-5.7,-3.7,-1.8,6.2,-1.9,0.3,10.4,-0.3,-6.4,-0.4,2.8,3.6,12.1,-0.2,-5.9,-1.9,-0.6,1.0,2.9,-0.7,-3.9,2.1,-6.1,13.4,6.2,-1.8,2.8,3.6,5.2,-1.4,-0.2,2.6,0.4,-1.9,3.2,-3.7,-0.4,-5.1,-4.2,-5.2,-0.0,0.6,11.9,-12.7,-2.9,-0.3,-1.6,-2.3,20.6,-6.3,1.2,4.8,-0.4,-2.7,-3.8,-6.3,-3.0,-5.8,-2.4,0.6,4.5,12.8,1.3,-0.9,-1.2,-2.5,-2.3,7.2,3.8,2.9,3.7,-0.2,2.3,-0.9,-8.9,3.4,-0.4,9.9,9.0,-0.8,-1.8,-8.7,-2.6,0.2,0.9,-0.3,-0.0,-3.2,-0.8,-7.8,-5.4,2.3,0.3,3.4,5.0,-0.1,0.1,-3.2,-3.6,0.1,-3.5,1.2,3.9,5.2,7.8,-1.9,-1.7,11.3,7.4,-0.5,-12.7,9.7,-2.3,0.0,5.3,2.4,-1.9,-5.6,-4.6,-2.1,-11.4,15.3,-0.1,1.1,-1.4,-2.2,-6.9,20.4,-2.6,-0.5,-13.7,-0.6,2.3,-2.0,3.4,12.9,0.5,-6.3,6.8,0.9,-1.6,-1.7,3.7,1.4,-7.0,9.0,1.9,-1.0,12.4,-3.4,-1.8,-0.9,-5.5,8.1,5.1,3.8,4.0,11.7,-1.6,0.3,1.4,9.9,-2.5,-0.8,-5.1,0.2,-0.3,-1.5,6.5,-7.6,2.3,0.8,-3.0,5.2,3.9,-2.6,5.7,5.2,-1.5,-6.4,12.3,-6.4,-1.4,-3.8,-2.7,-6.4,-1.3,1.0,-7.3,3.1,2.5,2.7,-9.7,-0.1,-1.7,-1.8,-0.3,4.8,2.8,10.9,4.2,-0.9,7.6,0.7,4.1,20.4,0.9,-3.4,8.6,-6.2,-6.6,-1.3,1.4,-5.6,4.0,-0.2,-1.3,-2.4,0.5,7.9,-0.7,0.3,-0.2,0.2,3.5,-6.7,-2.5,15.5,-1.0,5.8,2.6,10.9,-7.2,1.0,7.2,-2.1,19.2,-6.7,14.4,-7.2,14.0,-10.7,-2.5,9.2,4.4,-1.3,-3.2,-2.6,8.0,1.3,2.7,-1.5,9.0,0.5,2.7,0.4,0.3,-3.4,-1.0,8.5,1.4,-0.4,-1.6,-6.2,-3.3,0.0,4.5,16.9,-1.9,8.3,-7.3,-4.2,-1.2,-4.1,-8.2,-4.7,-0.0,-7.9,3.5,6.5,-3.5,7.5,-4.2,3.3,-12.7,-9.7,-1.1,-0.6,7.1,16.4,7.8,-3.6,1.7,-0.2,6.5,3.2,-6.1,-14.7,-8.5,10.5,2.5,-0.2,-1.5,-2.6,-3.0,-0.2,-1.6,-5.4,-1.9,1.7,7.0,0.8,-1.8,-0.9,9.3,17.1,2.0,-4.9,-1.7,-1.3,-2.0,0.1,2.2,14.0,-1.0,-0.0,-2.9,-0.9,1.9,10.9,-1.8,0.7,0.3,6.1,-4.6,1.6,-3.8,4.4,0.4,0.3,-3.6,-2.0,-0.3,14.2,-9.3,-0.2,-4.0,-1.9,2.1,-7.6,-1.2,-4.4,-0.7,-6.0,-1.9,2.1,-5.4,-0.4,-8.1,5.3,-3.4,-11.9,0.9,2.6,5.4,-2.6,3.8,-5.2,3.5,9.3,0.8,-6.5,-4.6,-0.7,6.1,-7.7,20.7,-10.6,-2.5,-6.1,-1.1,5.5,-4.7,-1.9,2.3,-0.6,-4.4,-11.3,-0.3,-0.4,-4.0,8.7,-0.4,-0.4,-3.8,0.6,9.3,-13.2,-1.4,-2.9,-0.5,-2.9,-1.3,1.2,-2.5,-1.1,-4.0,-1.1,-4.2,3.3,-6.5,12.4,-2.4,4.1,0.7,13.6,-6.6,1.0,-0.6,3.0,-2.1,-11.0,0.0,3.4,-3.1,-1.6,-9.2,-0.0,12.1,12.8,-1.9,4.1,-0.6,-6.0,-4.0,-1.1,2.5,8.4,-1.6,-5.1,7.1,5.8,-2.7,12.5,-1.5,-2.3,1.4,-0.6,1.9,-3.5,-8.0,-6.5,-4.8,-2.2,-4.5,-4.6,2.2,-7.2,-0.5,10.3,-5.8,-7.4,3.3,-2.9,-0.6,3.1,-5.0,-0.4,5.9,-2.0,-3.5,5.0,3.5,-0.3,-0.2,3.0,9.8,-3.1,-3.9,-2.5,-4.5,2.2,9.1,-1.6,0.4,-1.7,11.8,1.4,3.1,4.5,-6.0,7.1,11.3,-0.1,-8.6,3.3,-3.1,0.4,-2.9,-1.0,4.2,-3.3,5.6,-4.0,-6.3,-2.3,12.1,-5.3,-5.4,-2.8,-1.6,6.9,-3.0,6.1,-0.7,5.4,-2.9,-4.7,-11.8,5.5,-1.7,4.5,-5.6,-1.7,12.0,-2.4,-1.2,5.0,-3.6,-1.9,-4.9,-2.6,0.4,-6.5,-2.5,-0.3,5.2,0.1,2.5,-2.8,-1.8,-0.7,-4.0,-2.2,-12.6,-8.6,-5.7,-0.8,-0.4,2.9,0.9,11.1,0.3,2.3,-1.5,1.1,1.6,-7.2,17.2,7.7,2.5,2.0,-0.4,-2.4,-3.8,0.1,2.4,0.2,4.4,-2.8,0.9,-1.7,1.6,4.8,0.8,-2.5,-4.1,-6.9,2.2,0.3,-1.4,2.9,4.2,-3.7,6.7,-0.9,0.0,21.7,7.5,-2.0,-0.5,-3.3,-10.0,-0.4,-2.8,11.9,3.4,-0.2,-2.9,3.3,-4.7,-4.0,0.3,2.3,8.6,-0.6,9.4,-2.8,-7.2,1.1,-2.5,-0.7,-2.7,-2.7,4.4,0.5,6.6,-0.3,-3.1,1.4,0.0,-1.2,-2.0,-0.3,-2.2,-1.6,-1.6,9.5,-8.7,-6.3,1.5,7.0,1.2,7.1,16.8,-1.9,-2.7,-1.6,7.1,-3.9,-0.6,-1.0,1.1,0.1,-2.9,-4.8,-2.7,-11.0,-7.3,-4.8,-4.4,0.1,-6.0,-4.7,2.2,-1.6,-1.2,-0.9,2.8,0.5,7.3,-2.2,-2.8,-5.1,-2.5,-0.4,-2.9,-1.8,3.6,2.7,-0.4,-4.8,-4.9,-3.0,-1.2,-0.2,-5.2,-4.4,-1.9,4.8,0.1,8.2,5.4,1.0,-0.5,-2.3,-2.8,-3.4,-0.6,-2.0,0.9,-0.2,-5.0,-4.1,-3.7,-7.2,-0.4,6.6,-2.1,1.5,4.1,-5.7,-1.7,-2.9,2.2,1.3,3.4,-4.4,-7.9,-1.1,-2.0,6.4,1.5,-3.3,0.3,-9.1,-1.8,4.1,1.8,6.9,-4.4,-3.0,-4.7,-2.0,-0.6,14.4,0.9,-1.1,-1.9,-3.3,-6.1,8.0,1.7,-2.5,7.6,-4.2,-2.9,10.6,-4.1,-3.6,14.4,-10.1,0.3,-1.5,-4.6,-7.9,-8.9,1.4,-9.2,-6.5,4.1,-9.2,0.8,-4.1,4.2,-1.2,-1.0,1.0,18.5,4.2,0.2,-2.2,0.7,1.7,-1.1,-5.6,-0.2,2.6,8.5,-2.4,-2.8]}</script><!--/scene-data-->
+<!--scene-data--><script type="application/json" id="rg-scene-data">{"n":1547,"est":0.35,"home":0.31}</script><!--/scene-data-->
 
 <article class="v2-body" id="start">
 
@@ -80,7 +116,20 @@
 
 <p>The hard part is the comparison. &ldquo;He scored 20 against his old team&rdquo; means nothing if he scores 20 every week, so each revenge game is measured against the same player&rsquo;s other games that season for the same team. The model also adjusts for four things that move every fantasy score: how generous the defense had been to his position, home or away, the Vegas total for his team, and whether it was a division game. What remains is the question people argue about on Sunday mornings. Did he do more than he would have in an ordinary game with the same setup?</p>
 
-<p>A third of a point is under 5% of a typical game in the sample, which averages 7.7 fpts once backups are counted. The chart below sets it beside the things fantasy players already weigh every week, plus one row they rarely look at: how far a player&rsquo;s score swings from one ordinary game to the next. That bottom row is the scale for everything above it.</p>
+<p>A third of a point is under 5% of a typical game in the sample, which averages 7.7 fpts once backups are counted. On a scoreboard that shows whole points, the difference disappears.</p>
+
+<figure class="v2-fig rg-moment rg-board">
+  <div class="rg-board-frame" role="img" aria-label="Scoreboard: a typical game of 7.70 fpts and the same game with the revenge bump, 8.05. Rounded to whole points, both read 8.">
+    <div class="rg-board-cols" aria-hidden="true">
+      <div class="rg-col"><span class="rg-lab">Ordinary game</span><span class="rg-num"><b class="i" data-r="8">7</b><b class="d">.70</b></span><span class="rg-delta">&nbsp;</span><span class="rg-exact">exact 7.70</span></div>
+      <div class="rg-col is-rev"><span class="rg-lab">Revenge game</span><span class="rg-num"><b class="i" data-r="8">7</b><b class="d">.70</b></span><span class="rg-delta">+0.35</span><span class="rg-exact">exact 8.05</span></div>
+    </div>
+    <div class="rg-board-foot" aria-hidden="true"><i class="rg-m1 on">Two decimals</i><span>&middot;</span><i class="rg-m2 off">Whole points</i></div>
+  </div>
+  <figcaption>The sample&rsquo;s typical game, 7.7 fpts, with and without the +0.35 revenge bump. Rounded the way a scoreboard rounds, both read 8.</figcaption>
+</figure>
+
+<p>The chart below sets it beside the things fantasy players already weigh every week, plus one row they rarely look at: how far a player&rsquo;s score swings from one ordinary game to the next. That bottom row is the scale for everything above it.</p>
 
 <figure class="v2-fig v2-chart" data-chart="factors">
 <!--chart:factors--><div class="v2-fig-card"><div class="v2-fig-head"><div><h3 class="v2-fig-title">Revenge is worth about as much as home field</h3><p class="v2-fig-sub">Effect on one game in PPR fantasy points (fpts), same model. Revenge: a former team he played 8+ games for. Defense: points allowed to his position.</p></div></div><div class="v2-chart-stage"></div><p class="v2-key"><span><i class="k-ci"></i>95% confidence interval</span></p><div class="v2-data-wrap"><table class="v2-data"><caption>Revenge is worth about as much as home field (fpts added to one game)</caption><thead><tr><th scope="col">Group</th><th scope="col">Value</th><th scope="col">95% CI</th><th scope="col">n</th><th scope="col">p</th></tr></thead><tbody><tr class="v2-grp"><th colspan="5" scope="rowgroup">Things fantasy players already weigh</th></tr><tr class=""><th scope="row">Vegas team total +7</th><td>+0.20</td><td>+0.10 to +0.32</td><td></td><td></td></tr><tr class=""><th scope="row">Home game</th><td>+0.31</td><td>+0.23 to +0.39</td><td></td><td></td></tr><tr class="is-emph"><th scope="row">Revenge game</th><td>+0.35</td><td>+0.03 to +0.68</td><td>1547</td><td>0.03</td></tr><tr class=""><th scope="row">Defense 1 SD softer</th><td>+0.39</td><td>+0.35 to +0.42</td><td></td><td></td></tr><tr class=""><th scope="row">Softest vs toughest D</th><td>+1.20</td><td>+1.08 to +1.31</td><td></td><td></td></tr><tr class="v2-grp"><th colspan="5" scope="rowgroup">The noise</th></tr><tr class=""><th scope="row">Ordinary swing (1 SD)</th><td>+5.87</td><td></td><td></td><td></td></tr></tbody></table></div><p class="v2-src">Source: nflverse, 1999 to 2025 seasons; EBK analysis of 124,476 player-games</p></div><script type="application/json" class="v2-chart-data">{"id":"factors","type":"hbar","title":"Revenge is worth about as much as home field","subtitle":"Effect on one game in PPR fantasy points (fpts), same model. Revenge: a former team he played 8+ games for. Defense: points allowed to his position.","decimals":2,"signed":true,"panels":[{"unit":"fpts added to one game","domain":[0,6.2],"groups":[{"label":"Things fantasy players already weigh","rows":[{"label":"Vegas team total +7","short":"Vegas total +7","v":0.2046,"lo":0.1012,"hi":0.3172,"sig":true},{"label":"Home game","short":"Home game","v":0.3096,"lo":0.2305,"hi":0.3876,"sig":true},{"label":"Revenge game","short":"Revenge game","v":0.3538,"lo":0.029,"hi":0.683,"sig":true,"emph":true,"n":1547,"p":0.0274},{"label":"Defense 1 SD softer","short":"Softer defense","v":0.3875,"lo":0.3476,"hi":0.4226,"sig":true},{"label":"Softest vs toughest D","short":"Softest vs toughest D","v":1.2018,"lo":1.0782,"hi":1.3108,"sig":true}]},{"label":"The noise","rows":[{"label":"Ordinary swing (1 SD)","short":"Ordinary swing (1 SD)","v":5.8654}]}]}],"source":"nflverse, 1999 to 2025 seasons; EBK analysis of 124,476 player-games"}</script><!--/chart:factors-->
@@ -121,7 +170,13 @@
 
 <p>If a third of a point is about revenge, it should vanish where revenge is impossible. There are two ways to fake it. One uses games against a team the player had not joined yet but later would: the same kind of tie to a franchise, with no grudge attached. The other hands every player a random &ldquo;former team&rdquo; he never played for and reruns the model, 1,000 times over.</p>
 
-<p>The random former teams behave. They center on zero (&minus;0.01), and only 2.9% of them produce a result as strong as the real one when measured on the same footing. Pooled, the future-team version is flat too: +0.02 across 2,921 games, against +0.35 for the real thing.</p>
+<p>The random former teams behave. They center on zero (&minus;0.01), and only 2.9% of them produce a result as strong as the real one when measured on the same footing. Pooled, the future-team version is flat too: +0.02 across 2,921 games, against +0.35 for the real thing. Circled on one schedule, the two look like this.</p>
+
+<figure class="v2-fig rg-moment rg-circles">
+  <svg viewBox="0 0 600 310" role="img" aria-label="A schedule with two games circled: at Riverton, the team he left, +0.35 fpts; at Harbor, a team he would join later, +0.02 fpts."><rect x="4" y="4" width="592" height="302" rx="18" fill="#e9e5dc"/><path d="M4 22 A18 18 0 0 1 22 4 H578 A18 18 0 0 1 596 22 V38 H4 Z" fill="#1b2440"/><text x="26" y="27" fill="#f2efe8" font-family="Schibsted Grotesk, sans-serif" font-weight="700" font-size="13" letter-spacing="2.6">SEASON SCHEDULE</text><text x="574" y="27" text-anchor="end" fill="rgba(242,239,232,.6)" font-family="Schibsted Grotesk, sans-serif" font-weight="600" font-size="12" letter-spacing="2">FICTIONAL TEAMS</text><rect x="16" y="40" width="568" height="50" fill="rgba(27,36,64,.045)"/><text x="30" y="71" fill="#56607a" font-family="Martian Mono, monospace" font-weight="600" font-size="16">04</text><text x="74" y="71" fill="#56607a" font-family="Schibsted Grotesk, sans-serif" font-weight="700" font-size="17">vs</text><text x="102" y="74" fill="#1b2440" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="26">LAKESHORE</text><text x="30" y="121" fill="#56607a" font-family="Martian Mono, monospace" font-weight="600" font-size="16">05</text><text x="74" y="121" fill="#56607a" font-family="Schibsted Grotesk, sans-serif" font-weight="500" font-size="17">at</text><text x="102" y="124" fill="#3a435e" font-family="Bricolage Grotesque, sans-serif" font-weight="650" font-size="26">RIVERTON</text><text x="262" y="121" fill="#56607a" font-family="Schibsted Grotesk, sans-serif" font-style="italic" font-weight="500" font-size="17">old team</text><path class="rg-ink real" d="M27.2 118.1 L23.8 116.2 L22.1 114.2 L22.4 112.1 L24.7 110.1 L29.1 108.1 L35.6 106.2 L44.1 104.5 L54.5 102.9 L66.5 101.4 L79.8 100.2 L94.1 99.2 L109.2 98.3 L124.9 97.7 L140.8 97.2 L157.0 96.8 L173.4 96.6 L189.9 96.5 L206.5 96.5 L223.4 96.6 L240.4 96.9 L257.6 97.3 L274.7 97.8 L291.6 98.6 L308.0 99.5 L323.6 100.6 L338.1 101.9 L351.1 103.4 L362.5 105.0 L371.9 106.8 L379.2 108.7 L384.4 110.7 L387.4 112.7 L388.4 114.7 L387.3 116.7 L384.3 118.7 L379.4 120.6 L372.8 122.5 L364.4 124.3 L354.5 126.1 L342.9 127.7 L329.9 129.2 L315.6 130.6 L300.1 131.8 L283.6 132.8 L266.3 133.6 L248.7 134.3 L230.8 134.7 L213.1 134.9 L195.6 134.9 L178.5 134.8 L162.1 134.5 L146.2 134.0 L130.9 133.4 L116.1 132.7 L101.9 131.9 L88.3 130.9 L75.3 129.8 L63.0 128.6 L51.6 127.2 L41.3 125.6 L32.5 123.8 L25.3 121.9 L20.1 119.9 L17.0 117.8 L16.2 115.6 L17.7 113.4 L21.5 111.2 L27.4 109.1 L35.2 107.1 L44.7 105.2 L55.7 103.5 L67.8 101.9 L81.0 100.5 L94.9 99.2 L109.5 98.0 L124.7 97.0 L140.5 96.2 L156.9 95.6 L173.8 95.1 L191.2 94.7 L209.0 94.6 L227.0 94.8 L245.0 95.1 L263.0 95.7 L280.5 96.5 L297.4 97.5 L313.5 98.8 L328.6 100.3 L342.5 101.9 L355.1 103.8 L366.4 105.7 L376.3 107.8 L384.6 110.0 L391.3 112.3 L396.3 114.7 L399.3 117.2 L400.4 119.7 L399.2 122.1 L395.8 124.6 L389.9 127.0 L381.7 129.3 L371.2 131.5 L358.7 133.5 L344.3 135.3 L328.4 136.9 L311.5 138.2 L293.8 139.2 L275.7 140.1 L257.5 140.7 L239.3 141.1 L221.4 141.3 L203.8 141.3 L186.5 141.2 L169.5 140.9 L152.7 140.5 L136.2 139.8 L120.0 139.0 L104.2 138.0 L89.1 136.8 L74.8 135.4" pathLength="1000"/><text class="rg-num2 early" x="574" y="126" text-anchor="end" fill="#e5533f" font-family="Martian Mono, monospace" font-weight="600" font-size="32" letter-spacing="-1.5">+0.35</text><rect x="16" y="140" width="568" height="50" fill="rgba(27,36,64,.045)"/><text x="30" y="171" fill="#56607a" font-family="Martian Mono, monospace" font-weight="600" font-size="16">06</text><text x="74" y="171" fill="#56607a" font-family="Schibsted Grotesk, sans-serif" font-weight="700" font-size="17">vs</text><text x="102" y="174" fill="#1b2440" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="26">CAPITOL</text><text x="30" y="221" fill="#56607a" font-family="Martian Mono, monospace" font-weight="600" font-size="16">07</text><text x="74" y="221" fill="#56607a" font-family="Schibsted Grotesk, sans-serif" font-weight="500" font-size="17">at</text><text x="102" y="224" fill="#3a435e" font-family="Bricolage Grotesque, sans-serif" font-weight="650" font-size="26">HARBOR</text><text x="262" y="221" fill="#56607a" font-family="Schibsted Grotesk, sans-serif" font-style="italic" font-weight="500" font-size="17">future team</text><path class="rg-ink fake" d="M33.4 217.9 L33.5 216.9 L34.0 215.8 L35.0 214.8 L36.4 213.7 L38.1 212.7 L40.2 211.8 L42.5 210.8 L45.3 209.8 L48.3 208.9 L51.6 208.0 L55.2 207.0 L59.2 206.2 L63.4 205.3 L68.0 204.4 L73.0 203.6 L78.3 202.8 L84.1 202.0 L90.2 201.3 L96.7 200.6 L103.6 199.9 L110.9 199.3 L118.5 198.8 L126.6 198.2 L134.9 197.8 L143.6 197.4 L152.6 197.0 L161.8 196.8 L171.2 196.5 L180.8 196.4 L190.5 196.3 L200.4 196.3 L210.3 196.3 L220.2 196.4 L230.1 196.6 L240.0 196.8 L249.9 197.1 L259.6 197.4 L269.2 197.8 L278.7 198.2 L288.0 198.7 L297.2 199.2 L306.1 199.8 L314.7 200.4 L323.0 201.1 L331.0 201.8 L338.6 202.6 L345.8 203.4 L352.5 204.3 L358.6 205.2 L364.2 206.2 L369.2 207.2 L373.4 208.2 L377.0 209.2 L379.9 210.3 L382.0 211.4 L383.3 212.5 L383.8 213.5 L383.6 214.6 L382.6 215.7 L380.8 216.8 L378.4 217.8 L375.3 218.9 L371.6 219.9 L367.3 220.8 L362.5 221.8 L357.2 222.7 L351.6 223.5 L345.6 224.4 L339.2 225.2 L332.6 226.0 L325.8 226.7 L318.7 227.5 L311.4 228.2 L303.9 228.8 L296.2 229.5 L288.3 230.1 L280.2 230.7 L271.9 231.3 L263.3 231.9 L254.6 232.4 L245.6 232.9 L236.4 233.3 L226.9 233.7 L217.3 234.1 L207.5 234.4 L197.6 234.6 L187.6 234.8 L177.5 234.9 L167.4 234.9 L157.4 234.9 L147.5 234.7 L137.7 234.5 L128.2 234.2 L119.0 233.9 L110.1 233.4 L101.6 232.9 L93.5 232.3 L85.9 231.7 L78.8 230.9 L72.2 230.2 L66.1 229.3 L60.5 228.5 L55.4 227.6 L50.8 226.6 L46.8 225.6 L43.2 224.6 L40.2 223.6 L37.6 222.6 L35.4 221.5 L33.7 220.4 L32.5 219.4 L31.7 218.3 L31.3 217.2 L31.4 216.0 L31.9 214.9 L32.9 213.8 L34.4 212.7 L36.3 211.6 L38.7 210.5 L41.7 209.4" pathLength="1000"/><text class="rg-num2 late" x="574" y="226" text-anchor="end" fill="#56607a" font-family="Martian Mono, monospace" font-weight="600" font-size="32" letter-spacing="-1.5">+0.02</text><rect x="16" y="240" width="568" height="50" fill="rgba(27,36,64,.045)"/><text x="30" y="271" fill="#56607a" font-family="Martian Mono, monospace" font-weight="600" font-size="16">08</text><text x="74" y="271" fill="#56607a" font-family="Schibsted Grotesk, sans-serif" font-weight="700" font-size="17">vs</text><text x="102" y="274" fill="#1b2440" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="26">BAYSIDE</text></svg>
+  <figcaption>The real grudge and the fake one, measured the same way: +0.35 fpts against a team the player had left (1,547 games), +0.02 against a team he would join later (2,921 games).</figcaption>
+</figure>
+
 
 <p>Split by timing, it stops looking flat. That cut was made after seeing the data, so it counts as a lead and nothing firmer. In the grid below each row pairs the real thing (teams a player had left) with the fake (teams he would join later). The front row holds every game, and the two rows behind it split them by how close the game came to the move. The back pair, games within a season of the move, is where the fake catches up.</p>
 
@@ -178,8 +233,9 @@
 <p>The 16-second clip below goes back to the NFL: the revenge bump against home field, the softest-to-toughest matchup gap and one ordinary week-to-week swing, then the estimate under all 14 versions of the model.</p>
 
 <figure class="v2-fig v2-bleed v2-film">
-  <div class="v2-film-frame">
+  <div class="v2-film-frame is-tall-on-phone">
     <video muted playsinline loop preload="none" poster="/deep-bag/revenge-game/assets/revenge-game_16x9_poster.jpg" aria-label="Animated summary: a revenge game adds 0.35 fpts, about the same as home field and a sliver of an ordinary week-to-week swing; fourteen versions of the estimate all land between +0.18 and +0.72.">
+      <source media="(max-width: 760px)" src="/deep-bag/revenge-game/assets/revenge-game_4x5_web.mp4" type="video/mp4">
       <source src="/deep-bag/revenge-game/assets/revenge-game_16x9.webm" type="video/webm">
       <source src="/deep-bag/revenge-game/assets/revenge-game_16x9.mp4" type="video/mp4">
     </video>
@@ -202,6 +258,42 @@
 </footer>
 
 </article>
+<script>
+/* revenge-game themed moments: the rounding scoreboard and the two circles (CSS draws, this only times). */
+(function () {
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function onView(el, cb, th) {
+    if (!el) return;
+    if (reduce || !("IntersectionObserver" in window)) { cb(true); return; }
+    var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); cb(false); } }, { threshold: th });
+    io.observe(el);
+  }
+  var board = document.querySelector(".rg-board");
+  onView(board, function (instant) {
+    var rev = board.querySelector(".is-rev .rg-num"), ri = rev.querySelector(".i"), rd = rev.querySelector(".d");
+    var ints = board.querySelectorAll(".rg-num .i");
+    function set(v) { var p = v.toFixed(2).split("."); ri.textContent = p[0]; rd.textContent = "." + p[1]; }
+    function round() {
+      board.classList.add("is-round");
+      for (var k = 0; k < ints.length; k++) ints[k].textContent = ints[k].getAttribute("data-r");
+      board.querySelector(".rg-m1").className = "rg-m1 off"; board.querySelector(".rg-m2").className = "rg-m2 on";
+    }
+    if (instant) { set(8.05); board.classList.add("is-up"); round(); return; }
+    var t0 = null;
+    setTimeout(function () {
+      requestAnimationFrame(function step(now) {
+        if (t0 === null) t0 = now;
+        var k = Math.min(1, (now - t0) / 1100), e = 1 - Math.pow(1 - k, 3);
+        set(7.70 + 0.35 * e);
+        if (k < 1) requestAnimationFrame(step);
+        else { board.classList.add("is-up"); setTimeout(round, 1600); }
+      });
+    }, 400);
+  }, 0.6);
+  onView(document.querySelector(".rg-circles"), function () { document.querySelector(".rg-circles").classList.add("is-in"); }, 0.5);
+})();
+</script>
+
 
 </main>
 <section class="v2-end" aria-label="After the story"><div class="v2-end-in"><a class="v2-report" href="/deep-bag/revenge-game/report"><div><h2>The nerd version</h2><p>Methods, every table, the robustness checks and the caveats behind this story.</p></div><span class="v2-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a><div class="v2-share"><span class="v2-label">Share</span><button type="button" class="v2-chip" data-share="copy">Copy link</button><button type="button" class="v2-chip" data-share="native" hidden>Share</button><a class="v2-chip" target="_blank" rel="noopener" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Feliteballknowledge.web.app%2Fdeep-bag%2Frevenge-game">LinkedIn</a><a class="v2-chip" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text=Payback%20Is%20a%20Rounding%20Error&amp;url=https%3A%2F%2Feliteballknowledge.web.app%2Fdeep-bag%2Frevenge-game">X</a><a class="v2-chip" target="_blank" rel="noopener" href="https://www.reddit.com/submit?url=https%3A%2F%2Feliteballknowledge.web.app%2Fdeep-bag%2Frevenge-game&amp;title=Payback%20Is%20a%20Rounding%20Error">Reddit</a></div><h2 class="v2-label">More from the Deep Bag</h2><ul class="v2-more"><li><a href="/deep-bag/fresh-start-myth"><img src="/deep-bag/fresh-start-myth/share.png" width="1200" height="630" loading="lazy" alt="" /><div><h3>The Fresh-Start Myth</h3><p>We matched 243 NFL trades against similar players who stayed put. The new city barely registered. Players handed a smaller job fell about 3.5 fantasy points a game behind, under every method we tried.</p></div></a></li><li><a href="/deep-bag/champagne-no-hangover"><img src="/deep-bag/champagne-no-hangover/share.png" width="1200" height="630" loading="lazy" alt="" /><div><h3>Champagne, No Hangover</h3><p>Champions get worse the year after a title, and so do the teams they most resemble. Across 352 title winners in four leagues, champions in the NBA and NHL, and probably the NFL, fell less far than equally good teams that didn’t win.</p></div></a></li><li><a href="/deep-bag/the-cliff"><img src="/deep-bag/the-cliff/share.png" width="1200" height="630" loading="lazy" alt="" /><div><h3>The Cliff</h3><p>Running backs go over it at 29. Hockey skaters hang on until 32 or later. Both ages come from rebuilding the aging curves for 14 position groups in four leagues, this time counting the players who quietly vanished from the data.</p></div></a></li></ul><div class="v2-ctas"><a class="v2-btn" href="/">Play EBK <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="v2-btn ghost" href="/deep-bag">All Deep Bag studies</a></div></div></section>

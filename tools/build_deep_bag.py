@@ -190,7 +190,7 @@ def parse_study(src):
         "css": css,
         "fonts": fonts,
         "body": body,
-        "title": first(r"<h1[^>]*>(.*?)</h1>") or first(r"<title>(.*?)</title>", head),
+        "title": (first(r"<h1[^>]*>(.*?)</h1>") or first(r"<title>(.*?)</title>", head)).replace("‑", "-"),
         "kicker": first(r'<div class="kicker">(.*?)</div>'),
         "dek": first(r'<p class="dek">(.*?)</p>') or first(r'<p class="v2-standfirst">(.*?)</p>'),
         "byline": first(r'<p class="byline">(.*?)</p>'),
@@ -525,10 +525,12 @@ def study_styles(info):
             + "</head>\n")
 
 
+# Text face: Inter with its optical-size axis (the 2026-10-09 reading pass replaced
+# Schibsted Grotesk; see the top of deep-bag-v2.css). Display and numerals unchanged.
 V2_FONTS = ("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800"
-            "&family=Martian+Mono:wdth,wght@75..100,400..650"
-            "&family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..600&display=swap")
-V2_VERSION = "2"   # bump to bust caches of the v2 css/js (deep-bag-v2.js passes it on to every module it loads)
+            "&family=Inter:ital,opsz,wght@0,14..32,400..700;1,14..32,400..600"
+            "&family=Martian+Mono:wdth,wght@75..100,400..650&display=swap")
+V2_VERSION = "3"   # bump to bust caches of the v2 css/js (deep-bag-v2.js passes it on to every module it loads)
 
 
 def study_styles_v2(info):

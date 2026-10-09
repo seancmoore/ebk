@@ -189,7 +189,7 @@ own. `caption` is shown under the standfirst only while the scene runs.
 | `trade-field` (built in) | fresh-start-myth | none | `arcs` 5, `accentEvery` 4, `surface` "football" / "plain", `color` |
 | `return-bowl` | revenge-game | `{n, v: [fpts vs expected per game]}` | `arcs` 2, `accentEvery` 4, `arcColor`, `caption` |
 | `champagne-bubbles` | champagne-no-hangover | `{c: [[league 0-3, season, zThis, zNext, zExp]]}` | `color`, `from`, `to`, `bubbles` |
-| `cliff-ridges` | the-cliff | `{rows: [{pts, n, emph}], xmin, xmax, cap, threshold}` | none |
+| `cliff-ridges` | the-cliff | v3 (2026-10-09, "the trail to the cliff": low-poly mesas whose rims are the RB / WR / NHL D curves, runners stepping off at the cliff age): `#cliff-edge-data` = `{v: 3, mesas: [{g, pts, n, fast, slow, peak}]}` from the study's `scripts/17_export_hero_v3.py`; the old `{rows, threshold}` still works | `freeze` (seconds, a still), `xs`/`ys`/`dist` (re-frame a still) |
 
 A new scene goes in `public/js/deep-bag-v2-scenes/<name>.js` (default export = build) and its name
 in `BUILT_IN_MODULES` in the core; or a study hosts it and points at it with `data-scene-src` (the

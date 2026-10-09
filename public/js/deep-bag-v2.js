@@ -487,8 +487,135 @@
     });
   }
 
+  /* ---------------------------------------------------------- layout -- */
+  // Margin notes. In the markup a note follows the paragraph it belongs to, which is
+  // where it reads best as an inline callout (phones, tablets). On wide screens it
+  // floats into the right margin, and a float lines up with what comes AFTER it, so
+  // the note is lifted to just before its paragraph there and put back below 1280px.
+  function initNotes() {
+    var notes = [].slice.call(doc.querySelectorAll(".v2-body > .v2-note"));
+    if (!notes.length || !window.matchMedia) return;
+    var wide = matchMedia("(min-width: 1280px)");
+    var homes = notes.map(function (n) { var m = doc.createComment("v2-note"); n.parentNode.insertBefore(m, n); return m; });
+    function place() {
+      notes.forEach(function (n, i) {
+        var home = homes[i], prev = home.previousElementSibling;
+        if (wide.matches && prev && prev.tagName === "P") prev.parentNode.insertBefore(n, prev);
+        else home.parentNode.insertBefore(n, home.nextSibling);
+      });
+    }
+    place();
+    if (wide.addEventListener) wide.addEventListener("change", place); else if (wide.addListener) wide.addListener(place);
+  }
+
+  // Section index in the left margin (desktop, 3+ sections): section names only. It
+  // shows once the hero is gone, hides at the colophon, and steps aside while a wide
+  // figure, pull quote or left note passes under it. Hidden by CSS below 1280px.
+  function initToc() {
+    var body = doc.querySelector(".v2-body");
+    if (!body || !doc.querySelector(".v2-hero")) return;
+    var hs = [].slice.call(body.querySelectorAll(":scope > h2"));
+    if (hs.length < 3 || !("IntersectionObserver" in window)) return;
+    var nav = doc.createElement("nav");
+    nav.setAttribute("aria-label", "Sections");
+    var ol = doc.createElement("ol");
+    ol.className = "v2-toc";
+    var links = hs.map(function (h, i) {
+      if (!h.id) h.id = (h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "section") + (doc.getElementById(h.id) ? "-" + i : "");
+      var li = doc.createElement("li"), a = doc.createElement("a");
+      a.href = "#" + h.id; a.textContent = h.textContent;
+      li.appendChild(a); ol.appendChild(li);
+      return a;
+    });
+    nav.appendChild(ol);
+    body.parentNode.insertBefore(nav, body);
+    var pastHero = false, beforeEnd = true, blocked = 0;
+    function sync() { ol.classList.toggle("is-on", pastHero && beforeEnd && blocked === 0); }
+    new IntersectionObserver(function (es) { pastHero = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync(); })
+      .observe(doc.querySelector(".v2-hero"));
+    var end = body.querySelector(".v2-colophon") || body.lastElementChild;
+    new IntersectionObserver(function (es) { beforeEnd = !(es[0].isIntersecting || es[0].boundingClientRect.top < 0); sync(); })
+      .observe(end);
+    // the band of the viewport the index occupies; anything wide crossing it hides it
+    var wideIO = null, inBand = new Set();
+    function watchWide() {
+      if (wideIO) wideIO.disconnect();
+      inBand.clear(); blocked = 0;
+      var r = ol.getBoundingClientRect(), vh = window.innerHeight;
+      if (!r.height) { r = { top: vh / 2 - 150, bottom: vh / 2 + 150 }; }
+      wideIO = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) inBand.add(e.target); else inBand.delete(e.target); });
+        blocked = inBand.size; sync();
+      }, { rootMargin: -Math.max(0, Math.round(r.top - 16)) + "px 0px " + -Math.max(0, Math.round(vh - r.bottom - 16)) + "px 0px" });
+      var tl = ol.getBoundingClientRect().right || 0;
+      body.querySelectorAll(":scope > *").forEach(function (n) {
+        if (n.matches(".v2-toc, nav")) return;
+        if (n.getBoundingClientRect().left < tl + 8) wideIO.observe(n);
+      });
+    }
+    var current = -1;
+    var tick = false;
+    function active() {
+      tick = false;
+      var y = window.innerHeight * 0.38, i = -1;
+      for (var k = 0; k < hs.length; k++) { if (hs[k].getBoundingClientRect().top < y) i = k; else break; }
+      if (i === current) return;
+      current = i;
+      links.forEach(function (a, k) { if (k === i) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
+    }
+    window.addEventListener("scroll", function () { if (!tick) { tick = true; requestAnimationFrame(active); } }, { passive: true });
+    var rt = null;
+    window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(watchWide, 200); });
+    // measure once fonts (and so the index's own height) have settled
+    ol.style.visibility = "hidden"; ol.style.display = "block";
+    (doc.fonts && doc.fonts.ready ? doc.fonts.ready : Promise.resolve()).then(function () {
+      ol.style.visibility = ""; ol.style.display = "";
+      watchWide(); active();
+    });
+  }
+
+  // Anything that scrolls sideways inside its own box (fallback tables, report tables
+  // and figure strips) gets a fade on the side with more and a one-line hint above it,
+  // only while it actually overflows (so a hidden or narrow table shows nothing).
+  var SCROLLERS = ".v2-data-wrap, .dbx-study .table-wrap, .dbx-study .fig-wrap, .dbx-study .matrix-wrap, .cliff-sheet-wrap";
+  var ARROW = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function initScrollers() {
+    doc.querySelectorAll(SCROLLERS).forEach(function (w) {
+      if (w.parentNode && w.parentNode.closest && w.parentNode.closest(SCROLLERS)) return;
+      var hint = doc.createElement("div");
+      hint.className = "v2-scroll-hint"; hint.hidden = true;
+      hint.innerHTML = '<span class="go">' + (w.matches(".fig-wrap") ? "Swipe sideways to see the whole figure" : "Swipe the table sideways for more") + "</span>" + ARROW;
+      // an overflowing table's caption would scroll away with it: show it above instead
+      var cap = w.querySelector(":scope > table > caption");
+      if (cap) {
+        var c = doc.createElement("span");
+        c.className = "cap"; c.setAttribute("aria-hidden", "true"); c.textContent = cap.textContent;
+        hint.insertBefore(c, hint.firstChild); hint.classList.add("has-cap");
+      }
+      w.parentNode.insertBefore(hint, w);
+      function check() {
+        // a fallback table hidden behind its chart is clipped to 1px: never hint at it
+        var over = w.clientWidth > 120 && w.scrollWidth > w.clientWidth + 4;
+        w.classList.toggle("v2-scrolls", over);
+        w.classList.toggle("cap-out", over && !!cap);
+        hint.hidden = !over;
+        if (!over) return;
+        w.classList.toggle("is-scrolled", w.scrollLeft > 4);
+        w.classList.toggle("at-end", w.scrollLeft + w.clientWidth >= w.scrollWidth - 4);
+      }
+      w.addEventListener("scroll", check, { passive: true });
+      if ("ResizeObserver" in window) new ResizeObserver(check).observe(w);
+      var t = w.querySelector("table, img, svg");
+      if (t && "ResizeObserver" in window) new ResizeObserver(check).observe(t);
+      check();
+    });
+  }
+
   function go() {
+    initNotes();
+    initToc();
     doc.querySelectorAll(".v2-chart").forEach(initChart);
+    initScrollers();
     initLegacyCharts();
     initHero();
     initFilm();
