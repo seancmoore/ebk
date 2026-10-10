@@ -197,6 +197,9 @@ OFFICIAL_FIXES = {
     # Adewale Ogunleye 2003 MIA: 15 sacks, led the AFC (nflverse 16). ESPN + https://en.wikipedia.org/wiki/Adewale_Ogunleye
     ("00-0019246", "2003"): {"def_sacks": 15},
 }
+# ESPN reconciliation of early-era defensive rows (see build_espn_overlay.py)
+_OV = os.path.join(RAW_DIR, "espn_def_overlay.json")
+ESPN_OVERLAY = json.load(open(_OV)) if os.path.exists(_OV) else {}
 # fantasy points per unit, keeps fantasy_points(_ppr) consistent with a pinned stat
 FIX_FANTASY = {"passing_yards": 0.04, "rushing_yards": 0.1, "receiving_yards": 0.1}
 # Defense in depth for years we haven't individually audited: across the
@@ -515,6 +518,12 @@ def build():
                 continue
 
             games = to_num(row.get("games")) or 0
+            ov = ESPN_OVERLAY.get("%s|%s" % key)
+            if ov:      # ESPN reconciliation (build_espn_overlay.py); OFFICIAL_FIXES below still win
+                for col, val in ov.items():
+                    if col != "tackles":
+                        row[col] = str(val)
+                games = to_num(row.get("games")) or 0
             fix = OFFICIAL_FIXES.get(key)
             if fix:
                 dfp = sum((fix[c] - (to_num(row.get(c)) or 0)) * w for c, w in FIX_FANTASY.items() if c in fix)
@@ -532,6 +541,8 @@ def build():
             row["tackles"] = (to_num(row.get("def_tackles_solo")) or 0) + \
                              (to_num(row.get("def_tackles_with_assist")) or 0) + \
                              (to_num(row.get("def_tackle_assists")) or 0)
+            if ov and "tackles" in ov:
+                row["tackles"] = ov["tackles"]
             if fix and "tackles" in fix:      # pinned official total
                 row["tackles"] = fix["tackles"]
 

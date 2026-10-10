@@ -83,3 +83,22 @@ build_players.py, build_soccer.py, build_cfb.py run one at a time from cached ra
 - Browser smoke (tools/smoke.cjs adapted to playwright-core + Edge, as the repo version needs full playwright): nfl 100%, soccer + cfb 25/25 assertions green.
 - tools/deep-cut-smoke.cjs: 420 days decode; the same 6 home CUT chip / streak chip UI failures as before (pre-existing, unrelated).
 - `python tools/build_deep_cuts.py --check`: 420 valid.
+
+---
+# Third pass: ESPN reconciliation of NFL defensive rows (owner approved)
+
+Pipeline: `tools/espn_def_fetch.cjs` caches ESPN athlete stats (https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/{espn_id}/stats, defensive table) for all 5,571 defensive players with an ESPN id into `data/raw/espn_def/` (throttled 0.25 s/request, 2 workers, 5,571 files, 1 transient failure retried). `data/build_espn_overlay.py` compares every defensive player-season to nflverse and writes `data/raw/espn_def_overlay.json` (accepted) and `data/raw/espn_def_needs_decision.json` (not applied). `build_players.py` applies the overlay and then `OFFICIAL_FIXES` (pins, including Carter, Strahan, Ogunleye, Lewis, Smith, Brees, still win).
+
+## Key finding: the games undercount is not an early-era problem
+nflverse `games` for defenders counts games with a recorded stat, so part-time players are short in EVERY season. ESPN shows more games for 61-69% of defensive rows in each of 1999-2025 (ESPN fewer in under 0.5%). Example: Sam Eguavoen 2022 MIA data 2 games, ESPN 17. So the overlay covers all 27 seasons, not just 1999-2005. (The earlier 7/30 estimate understated it; that sample was star-heavy.) ESPN's multi-team seasons include a "<year> Totals" row; the overlay uses that alone (summing every row double counted).
+
+## Applied (change within +-2 games, +-10% tackles, +-2 sacks/INT, <= 16 games pre-2021 / 17 after)
+9,211 defensive player-seasons changed (of 24,499 compared): games 7,429, tackles 2,612, sacks 554, interceptions 16. Only these four fields moved. Verified by diff of old vs new players.json: same 40,154 rows, same keys, 0 offensive rows changed, no team/pos/name/headshot changes, no other stat fields changed. Tackle changes concentrate in 1999-2009 (ESPN early-era vs nflverse), sack changes in 2000-2009 (about 520 of 554; e.g. Strahan 2003 18.5, Ogunleye 2003 15 agree with Wikipedia). Interception changes: 16 rows.
+
+## Needs decision (NOT applied; second source required)
+8,219 defensive player-seasons where ESPN differs by more than the thresholds, listed in `data/raw/espn_def_needs_decision.json` (id, name, season, team, nflverse values, ESPN values). By cause: games (ESPN more than 2 higher) about 8,000 rows, mostly +3 to +8 for role players (distribution: +3 2,271; +4 1,735; +5 1,301; +6 982; +7 686; +8 427; larger tail up to +15); tackles more than 10% apart about 1,280 rows (some are rows where ESPN has real extra tackles, some tiny-count rows); sacks more than 2 apart 58 rows; interceptions 15 rows. No second programmatic source exists (PFR is blocked, Wikipedia cannot be queried at this scale), so these stay as nflverse has them. Recommendation: accept ESPN games for all, since the cause is definitional (games with a stat vs games played) and ESPN never exceeds the team schedule in the overlay; spot-check the tackle and sack outliers.
+
+## Rebuild and tests
+- Rebuilt: build_players.py (one run, 52 s), `tools/build_grid_roster.cjs` (all 5 sports, 30/30 boards identical), `tools/build_stat_lab.py`. Cache-buster `?v=10` -> `?v=11` in game.js, h2h.js, stat-line.js, team.js, career-path.js, player-grid.js, ebk-rack.js, ebk-home-sections.js (DATA_V).
+- `node tools/solvable.cjs` (all sports, today): 0 errors, 0 cells with 1-2 answers; NFL also clean on 5 other dates.
+- NFL browser smoke (smoke.cjs on playwright-core + Edge): 25/25 assertions green (grid, Higher/Lower, Career Path, Stat Line).
