@@ -6,8 +6,8 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=9";
-  const ROSTER_URL = (SPORT === "nfl" ? "/data/grid-roster.json" : "/data/" + SPORT + "/grid-roster.json") + "?v=9";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=10";
+  const ROSTER_URL = (SPORT === "nfl" ? "/data/grid-roster.json" : "/data/" + SPORT + "/grid-roster.json") + "?v=10";
   const BEST_KEY = SPORT === "nfl" ? "ebk_grid_best" : "ebk_grid_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "player-grid", score); } catch (e) {} };
@@ -15,7 +15,7 @@
 
   // Each achievement: [key, label, statColumn, threshold].
   //   ach        = single-season marks   (labelled "(season)")
-  //   careerAch  = career totals in our data window (labelled "(career)")
+  //   careerAch  = career totals in our data window (labelled "(since YYYY)")
   // Career totals only span the seasons present in the dataset.
   const CFG = {
     nfl: {
@@ -34,12 +34,12 @@
         ["ff4",      "4+ Forced Fum (season)",   "def_fumbles_forced", 4],
       ],
       careerAch: [
-        ["cpass20k", "20,000+ Pass Yds (career)", "passing_yards", 20000],
-        ["cptd150",  "150+ Pass TD (career)",     "passing_tds",   150],
-        ["crush6k",  "6,000+ Rush Yds (career)",  "rushing_yards", 6000],
-        ["crec6k",   "6,000+ Rec Yds (career)",   "receiving_yards", 6000],
-        ["crec400",  "400+ Catches (career)",     "receptions",    400],
-        ["csack50",  "50+ Sacks (career)",        "def_sacks",     50],
+        ["cpass20k", "20,000+ Pass Yds (since 1999)", "passing_yards", 20000],
+        ["cptd150",  "150+ Pass TD (since 1999)",     "passing_tds",   150],
+        ["crush6k",  "6,000+ Rush Yds (since 1999)",  "rushing_yards", 6000],
+        ["crec6k",   "6,000+ Rec Yds (since 1999)",   "receiving_yards", 6000],
+        ["crec400",  "400+ Catches (since 1999)",     "receptions",    400],
+        ["csack50",  "50+ Sacks (since 1999)",        "def_sacks",     50],
       ],
       positions: [["QB", "QB"], ["RB", "RB"], ["WR", "WR"], ["TE", "TE"],
                   ["DL", "D-Line"], ["LB", "Linebacker"], ["DB", "Def. Back"]],
@@ -57,12 +57,12 @@
         ["s120", "120+ Steals (season)",   "stl", 120],
       ],
       careerAch: [
-        ["c10k", "10,000+ Points (career)", "pts", 10000],
-        ["c5kr", "5,000+ Rebounds (career)", "reb", 5000],
-        ["c3ka", "3,000+ Assists (career)",  "ast", 3000],
-        ["c1k3", "1,000+ 3PM (career)",      "tpm", 1000],
-        ["c1ks", "1,000+ Steals (career)",   "stl", 1000],
-        ["c1kb", "1,000+ Blocks (career)",   "blk", 1000],
+        ["c10k", "10,000+ Points (since 2002)", "pts", 10000],
+        ["c5kr", "5,000+ Rebounds (since 2002)", "reb", 5000],
+        ["c3ka", "3,000+ Assists (since 2002)",  "ast", 3000],
+        ["c1k3", "1,000+ 3PM (since 2002)",      "tpm", 1000],
+        ["c1ks", "1,000+ Steals (since 2002)",   "stl", 1000],
+        ["c1kb", "1,000+ Blocks (since 2002)",   "blk", 1000],
       ],
       positions: [["G", "Guard"], ["F", "Forward"], ["C", "Center"]],
       flags: [],
@@ -81,12 +81,12 @@
         ["sv30",  "30+ Saves (season)",   "sv",  30],
       ],
       careerAch: [
-        ["c200hr", "200+ HR (career)",     "hr",  200],
-        ["c1krbi", "1,000+ RBI (career)",  "rbi", 1000],
-        ["c1500h", "1,500+ Hits (career)", "hits", 1500],
-        ["c200sb", "200+ SB (career)",     "sb",  200],
-        ["c100w",  "100+ Wins (career)",   "w",   100],
-        ["c1500k", "1,500+ K (career)",    "k",   1500],
+        ["c200hr", "200+ HR (since 2000)",     "hr",  200],
+        ["c1krbi", "1,000+ RBI (since 2000)",  "rbi", 1000],
+        ["c1500h", "1,500+ Hits (since 2000)", "hits", 1500],
+        ["c200sb", "200+ SB (since 2000)",     "sb",  200],
+        ["c100w",  "100+ Wins (since 2000)",   "w",   100],
+        ["c1500k", "1,500+ K (since 2000)",    "k",   1500],
       ],
       positions: [["P", "Pitcher"], ["C", "Catcher"], ["1B", "1B"], ["2B", "2B"],
                   ["3B", "3B"], ["SS", "SS"], ["OF", "Outfield"]],
@@ -101,10 +101,10 @@
         ["w35", "35+ Wins (season)", "w", 35], ["so6", "6+ Shutouts (season)", "so", 6],
       ],
       careerAch: [
-        ["c200g", "200+ Goals (career)",   "g",   200],
-        ["c400a", "400+ Assists (career)", "a",   400],
-        ["c600p", "600+ Points (career)",  "pts", 600],
-        ["c150w", "150+ Wins (career)",    "w",   150],
+        ["c200g", "200+ Goals (since 2001)",   "g",   200],
+        ["c400a", "400+ Assists (since 2001)", "a",   400],
+        ["c600p", "600+ Points (since 2001)",  "pts", 600],
+        ["c150w", "150+ Wins (since 2001)",    "w",   150],
       ],
       positions: [["F", "Forward"], ["D", "Defense"], ["G", "Goalie"]],
       flags: [],
@@ -113,15 +113,15 @@
     soccer: {
       ach: [
         ["g15", "15+ Goals (season)", "goals", 15], ["g20", "20+ Goals (season)", "goals", 20],
-        ["a10", "10+ Assists (season)", "assists", 10], ["cs15", "15+ Clean Sheets (season)", "cs", 15],
+        ["a10", "10+ FPL Assists (season)", "assists", 10], ["cs15", "15+ Clean Sheets (season, GK/DEF)", "cs", 15],
         ["sv100", "100+ Saves (season)", "saves", 100], ["pts150", "150+ FPL Pts (season)", "pts", 150],
         ["min3000", "3,000+ Minutes (season)", "minutes", 3000],
       ],
       careerAch: [
-        ["c40g",  "40+ Goals (career)",      "goals",   40],
-        ["c30a",  "30+ Assists (career)",    "assists", 30],
-        ["c500p", "500+ FPL Pts (career)",   "pts",     500],
-        ["c50cs", "50+ Clean Sheets (career)", "cs",    50],
+        ["c40g",  "40+ Goals (since 2016)",      "goals",   40],
+        ["c30a",  "30+ FPL Assists (since 2016)", "assists", 30],
+        ["c500p", "500+ FPL Pts (since 2016)",   "pts",     500],
+        ["c50cs", "50+ Clean Sheets (since 2016, GK/DEF)", "cs",    50],
       ],
       positions: [["GK", "Keeper"], ["DEF", "Defender"], ["MID", "Midfielder"], ["FWD", "Forward"]],
       flags: [],
@@ -388,8 +388,9 @@
       if (p.headshot && !a.headshot) a.headshot = p.headshot;
       if (p.name && p.name !== a.name) a.alts.add(p.name);
       if (p.aka) a.alts.add(p.aka);
-      for (const [key, , col, thr] of ACH) if ((p.stats[col] || 0) >= thr) a.ach.add(key);
-      for (const col of CAREER_COLS) a.career[col] = (a.career[col] || 0) + (p.stats[col] || 0);
+      const csOk = (col) => col !== "cs" || p.grp === "GK" || p.grp === "DEF"; // outfield cs = team clean sheets
+            for (const [key, , col, thr] of ACH) if (csOk(col) && (p.stats[col] || 0) >= thr) a.ach.add(key);
+      for (const col of CAREER_COLS) if (csOk(col)) a.career[col] = (a.career[col] || 0) + (p.stats[col] || 0);
     }
     for (const a of byId.values()) {
       for (const [key, , col, thr] of CAREER) if ((a.career[col] || 0) >= thr) a.ach.add(key);
@@ -751,6 +752,9 @@
   // Total out of 900 — higher is better. Shares reflect today's picks so far.
   async function finishDaily() {
     const pts = Array(9).fill(0);
+    // lock in "played today" before any network wait: closing the tab while the
+    // community stats load must not leave an unfinished, replayable snapshot
+    saveLocalPlay({ cells: serializeCells(), board: boardKeys(), score: S.score, done: true, ts: Date.now() });
     try {
       try { await Promise.allSettled(S.recPs); } catch (e) {}
       let stats = [];

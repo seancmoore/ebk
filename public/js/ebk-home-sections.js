@@ -33,7 +33,7 @@
   function ballOf(k) { return { nfl: "football", cfb: "football", nba: "basketball", mlb: "baseball", nhl: "hockey", soccer: "soccer" }[k]; }
   function helper(k) { return window[HELPER[k]] || null; }
   // stat-lab files are rebuilt from players.json: keep ?v=N in step with DATA_URL in the game scripts
-  var DATA_V = "?v=9";
+  var DATA_V = "?v=10";
   function getJSON(url) { return fetch(url).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
   function ls(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
   function etDate() { return window.EBKDaily ? EBKDaily.etDate() : new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York" }).format(new Date()); }

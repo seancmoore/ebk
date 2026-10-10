@@ -18,8 +18,14 @@ TEAMS_JS = os.path.normpath(os.path.join(HERE, "..", "public", "js", "soccer-tea
 BASE = "https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data"
 
 POS = {"1": "GK", "2": "DEF", "3": "MID", "4": "FWD"}
+# Owner-approved pins to the official figure (audit 2026-10-10, docs/data-audit-20261010.md).
+# Keyed by (FPL player code, season). FPL "pts" is left as FPL computed it.
+OFFICIAL_FIXES = {
+    # Harry Kane 2017-18: 30 PL goals (FPL credits 29). https://en.wikipedia.org/wiki/2017%E2%80%9318_Premier_League
+    ("78830", "2017-18"): {"goals": 30},
+}
 CATEGORIES = [
-    ("goals", "Goals", 0, "⚽"), ("assists", "Assists", 0, "\U0001F170️"),
+    ("goals", "Goals", 0, "⚽"), ("assists", "FPL Assists", 0, "\U0001F170️"),
     ("minutes", "Minutes", 0, "⏱️"), ("cs", "Clean Sheets", 0, "\U0001F9E4"),
     ("saves", "Saves", 0, "\U0001F9F1"), ("gc", "Goals Conceded", 0, "\U0001F945"),
     ("bonus", "Bonus Points", 0, "⭐"), ("pts", "FPL Points", 0, "\U0001F3C6"),
@@ -136,6 +142,9 @@ def build():
                 "saves": num(p["saves"]), "gc": num(p["goals_conceded"]),
                 "bonus": num(p["bonus"]), "pts": num(p["total_points"]),
             }
+            fix = OFFICIAL_FIXES.get((p["code"], season))
+            if fix:
+                stats.update(fix)
             for k in stats:
                 cat_counts[k] += 1
             name = (p.get("first_name", "") + " " + p.get("second_name", "")).strip() or p.get("web_name")

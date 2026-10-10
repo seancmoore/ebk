@@ -416,7 +416,7 @@
     ],
     "hints": [
       "He was from Sweden.",
-      "Fans voted him to the 1986 All-Star Game after his death, a first for a major North American sport."
+      "Fans voted him to the 1986 All-Star Game after his death."
     ],
     "fact": "Pelle Lindbergh won the 1985 Vezina and helped Philadelphia reach that year's Final. He was only 26.",
     "source": "https://en.wikipedia.org/wiki/Pelle_Lindbergh",
@@ -651,7 +651,7 @@
     "sport": "nhl",
     "type": "player-season",
     "difficulty": 3,
-    "q": "Who led the NHL in goals in 1993-94 with 60, ahead of Sergei Fedorov's 56?",
+    "q": "Who led the NHL in goals in 1993-94 with 60, ahead of Brett Hull's 57?",
     "answer": "Pavel Bure",
     "kind": "text",
     "num": null,
@@ -1288,7 +1288,7 @@
       "It's a tool.",
       "You'd use it to drive a nail."
     ],
-    "fact": "Dave 'The Hammer' Schultz wrapped his hands in tape to fight, which led to the so-called Schultz Rule banning it. He won two Cups with the Broad Street Bullies.",
+    "fact": "Dave 'The Hammer' Schultz wrapped his hands in boxing wraps to fight, which led to the so-called Schultz Rule banning it. He won two Cups with the Broad Street Bullies.",
     "source": "https://en.wikipedia.org/wiki/Dave_Schultz_(ice_hockey)",
     "verified": true
   }

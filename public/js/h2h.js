@@ -51,7 +51,7 @@
   const dataCache = {};
   async function loadData(sport) {
     if (dataCache[sport]) return dataCache[sport];
-    const url = (sport === "nfl" ? "/data/players.json" : "/data/" + sport + "/players.json") + "?v=9";
+    const url = (sport === "nfl" ? "/data/players.json" : "/data/" + sport + "/players.json") + "?v=10";
     const res = await fetch(url, { cache: "force-cache" });
     if (!res.ok) throw new Error("data " + res.status);
     dataCache[sport] = EBKD.inflate(await res.json());

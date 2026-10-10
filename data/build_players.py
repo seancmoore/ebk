@@ -183,7 +183,22 @@ BROKEN_WEEK_YEARS = {2001, 2002}
 OFFICIAL_FIXES = {
     # Drew Brees 2011: NFL/PFR official 468/657, 5,476 yds (nflverse: 471/660, 5,535)
     ("00-0020531", "2011"): {"completions": 468, "attempts": 657, "passing_yards": 5476},
+    # --- 2026-10-10 audit (docs/data-audit-20261010.md); owner approved ---
+    # Jamal Lewis 2003: 2,066 rush yds (nflverse 2,063). ESPN athlete stats + Wikipedia
+    # https://en.wikipedia.org/wiki/2003_Baltimore_Ravens_season
+    ("00-0019693", "2003"): {"rushing_yards": 2066},
+    # Kevin Smith 2008: 976 rush yds (nflverse 975). ESPN athlete stats.
+    ("00-0026204", "2008"): {"rushing_yards": 976},
+    # Kevin Carter 1999 STL: 17 sacks (led NFL), 16 games, 34 total tackles (nflverse 15 / 14 / 30).
+    # ESPN athlete stats + https://en.wikipedia.org/wiki/Kevin_Carter_(American_football)
+    ("00-0002742", "1999"): {"def_sacks": 17, "games": 16, "tackles": 34},
+    # Michael Strahan 2003 NYG: 18.5 sacks (nflverse 18). ESPN + https://en.wikipedia.org/wiki/Michael_Strahan
+    ("00-0015795", "2003"): {"def_sacks": 18.5},
+    # Adewale Ogunleye 2003 MIA: 15 sacks, led the AFC (nflverse 16). ESPN + https://en.wikipedia.org/wiki/Adewale_Ogunleye
+    ("00-0019246", "2003"): {"def_sacks": 15},
 }
+# fantasy points per unit, keeps fantasy_points(_ppr) consistent with a pinned stat
+FIX_FANTASY = {"passing_yards": 0.04, "rushing_yards": 0.1, "receiving_yards": 0.1}
 # Defense in depth for years we haven't individually audited: across the
 # other 25 seasons (1999-2025 minus the two above), the real single-season
 # max is 3 different teams (e.g. Randy Moss's NE->MIN->TEN 2010). Anything
@@ -502,12 +517,13 @@ def build():
             games = to_num(row.get("games")) or 0
             fix = OFFICIAL_FIXES.get(key)
             if fix:
-                dy = fix.get("passing_yards", to_num(row.get("passing_yards")) or 0) - (to_num(row.get("passing_yards")) or 0)
+                dfp = sum((fix[c] - (to_num(row.get(c)) or 0)) * w for c, w in FIX_FANTASY.items() if c in fix)
                 for col in ("fantasy_points", "fantasy_points_ppr"):
                     if row.get(col) not in (None, ""):
-                        row[col] = str((to_num(row.get(col)) or 0) + dy * 0.04)
+                        row[col] = str((to_num(row.get(col)) or 0) + dfp)
                 for col, val in fix.items():
                     row[col] = str(val)
+                games = to_num(row.get("games")) or 0
             # synthesize total tackles. nflverse splits tackle credit three
             # ways: solo, "with assist" (made the tackle, a teammate helped)
             # and assist. ESPN/PFR totals are all three (T.J. Watt 2021:
@@ -516,6 +532,8 @@ def build():
             row["tackles"] = (to_num(row.get("def_tackles_solo")) or 0) + \
                              (to_num(row.get("def_tackles_with_assist")) or 0) + \
                              (to_num(row.get("def_tackle_assists")) or 0)
+            if fix and "tackles" in fix:      # pinned official total
+                row["tackles"] = fix["tackles"]
 
             # which stat areas was this player-season active in?
             active = {

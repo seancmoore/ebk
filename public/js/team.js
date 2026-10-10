@@ -10,7 +10,7 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=9";
+  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=10";
 
   const CFG = {
     nfl: {
@@ -96,7 +96,7 @@
     soccer: {
       seasons: "2016–2026",
       groups: ["all", "GK", "DEF", "MID", "FWD"],
-      labels: { goals: "G", assists: "A", minutes: "Min", cs: "CS", saves: "Sv",
+      labels: { goals: "G", assists: "FPL A", minutes: "Min", cs: "CS", saves: "Sv",
                 gc: "GC", bonus: "Bns", pts: "Pts" },
       dec: {},
       colsets: {

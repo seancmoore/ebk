@@ -559,3 +559,6 @@
   .clue, .gcell.just { animation: none; }
   .opt, .gcell, .gbtn { transition: none; }
 }
+
+/* Headshot focus (face-fix): MLB portraits (479x720, cap + face in the middle band) need a mid object-position; top-center cut the chin. ESPN/NFL/NHL cutouts are face-centred already; PL portraits are best top-aligned. */
+img[src*="mlb-photos"] { object-position: 50% 47% !important; }

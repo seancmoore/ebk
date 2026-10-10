@@ -211,10 +211,11 @@
   var warmed = {};
   function warm(href) {
     if (!href || warmed[href]) return; warmed[href] = 1;
+    if (navigator.connection && navigator.connection.saveData) return;   // Data Saver: no speculative multi-MB prefetch
     var add = function (url, as) { var l = document.createElement("link"); l.rel = "prefetch"; l.href = url; if (as) l.as = as; document.head.appendChild(l); };
     add(href);
     var key = href.replace(/^\//, "").split("/")[0];
-    if (key) add((key === "nfl" ? "/data/players.json" : "/data/" + key + "/players.json") + "?v=9", "fetch");
+    if (key) add((key === "nfl" ? "/data/players.json" : "/data/" + key + "/players.json") + "?v=10", "fetch");
   }
 
   function wireCards(grid) {

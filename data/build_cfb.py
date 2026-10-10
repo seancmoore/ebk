@@ -31,6 +31,13 @@ CATEGORIES = [
     ("rectd", "Receiving TDs", 0, "\U0001F525"), ("tkl", "Tackles", 0, "\U0001F6D1"),
     ("sk", "Sacks", 1, "\U0001F4A5"),
 ]
+# Owner-approved pins to the official figure (audit 2026-10-10, docs/data-audit-20261010.md).
+# Keyed by (CFBD/ESPN playerId, season). Cite the source next to each entry.
+OFFICIAL_FIXES = {
+    # Max Duggan 2020 TCU: 1,795 pass yds, 10 TD, 116 car, 526 rush yds (CFBD 1,764 / 9 / 114 / 547).
+    # ESPN athlete stats + https://en.wikipedia.org/wiki/Max_Duggan
+    ("4427105", 2020): {"pyd": 1795, "ptd": 10, "car": 116, "ryd": 526},
+}
 INT_KEYS = {"pyd", "ptd", "pint", "ryd", "rtd", "car", "recyd", "rectd", "rec", "tkl", "tfl"}
 
 
@@ -106,6 +113,9 @@ def build():
     for (pid, y), e in rec.items():
         if not e["stats"]:
             continue
+        fix = OFFICIAL_FIXES.get((str(pid), y))
+        if fix:
+            e["stats"].update(fix)
         for k in e["stats"]:
             cat_counts[k] += 1
         players.append({
