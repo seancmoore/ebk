@@ -215,7 +215,7 @@
     var add = function (url, as) { var l = document.createElement("link"); l.rel = "prefetch"; l.href = url; if (as) l.as = as; document.head.appendChild(l); };
     add(href);
     var key = href.replace(/^\//, "").split("/")[0];
-    if (key) add((key === "nfl" ? "/data/players.json" : "/data/" + key + "/players.json") + "?v=12", "fetch");
+    if (key) add((key === "nfl" ? "/data/players.json" : "/data/" + key + "/players.json") + "?v=13", "fetch");
   }
 
   function wireCards(grid) {

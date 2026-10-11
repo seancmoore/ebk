@@ -23,11 +23,15 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PLAYERS = os.path.normpath(os.path.join(HERE, "..", "public", "data", "players.json"))
 CACHE = os.path.join(HERE, "raw", "espn_def")
 OUT = os.path.join(HERE, "raw", "espn_def_overlay.json")
+OFF_BASE = os.path.join(HERE, "raw", "espn_off_baseline.json")   # offensive rows before any ESPN overlay (frozen 2026-10-10)
+OFF_CACHE = os.path.join(HERE, "raw", "espn_off")
 BASE = os.path.join(HERE, "raw", "espn_def_baseline.json")   # nflverse defensive rows before any ESPN overlay (frozen 2026-10-10)
 ND = os.path.join(HERE, "raw", "espn_def_needs_decision.json")
 ACCEPT = os.path.join(HERE, "raw", "espn_def_accept.json")   # verified rows: {"id|season": ["def_sacks"]}; "*tackles": true accepts all tackle drift
 SEASONS = None   # filled below from CLI/overlay config
 CFG = os.path.join(HERE, "raw", "espn_def_seasons.json")
+TACKLE_ESPN_THROUGH = 2003
+SACK_ESPN_THROUGH = 2012
 
 
 def load_espn():
@@ -54,6 +58,33 @@ def load_espn():
             a[0] += g("gamesPlayed"); a[1] += g("totalTackles"); a[2] += g("sacks"); a[3] += g("interceptions")
         out[os.path.basename(f)[:-5]] = per
     return out
+
+
+def offense():
+    """Offensive games: nflverse counts a game only if the player recorded a stat in it (blockers, backups,
+    special teamers are short). ESPN gamesPlayed (max across stat tables, "<year> Totals" row when traded)
+    is applied as max(nflverse, ESPN) up to the weeks in the season. Writes into the same overlay file."""
+    base = json.load(open(OFF_BASE, encoding="utf8"))
+    ov = json.load(open(OUT)) if os.path.exists(OUT) else {}
+    n = 0
+    stats = defaultdict(lambda: [0, 0, 0])
+    for k, v in base.items():
+        i, y = k.split("|"); y = int(y)
+        f = os.path.join(OFF_CACHE, i + ".json")
+        if not os.path.exists(f):
+            continue
+        j = json.load(open(f))
+        gp = (j.get("gp") or {}).get(str(y))
+        if gp is None:
+            continue
+        gp = int(gp); cap = 18 if y >= 2021 else 17
+        stats[y][0] += 1
+        if gp > v[0]:
+            stats[y][1] += 1
+            if gp <= cap:
+                ov.setdefault(k, {})["games"] = gp; n += 1
+    json.dump(ov, open(OUT, "w"), separators=(",", ":"))
+    print("offense games overlay rows", n)
 
 
 def main():
@@ -95,26 +126,38 @@ def main():
         if new == old:
             continue
         key = "%s|%s" % (r["id"], r["season"])
-        cap = 17 if r["season"] >= 2021 else 16      # every club played this many regular-season games
+        # most weeks a player can appear in: 17 weeks through 2020 (16 games + bye), 18 from 2021.
+        # A mid-season trade across a bye can put a player in more games than either club played (audit: Harrison 2018 = 17).
+        cap = 18 if r["season"] >= 2021 else 17
         held = {}
         use = {}
-        # games: ESPN games played. Accepted whenever it fits the schedule (nflverse counts only games with a stat).
-        if new["games"] != old["games"]:
+        verified = acc.get(key, [])
+        # games: ESPN games played (nflverse counts only games with a recorded stat). Validated against ESPN game logs.
+        # ESPN with zero tackles where nflverse has some = ESPN has no defensive line for that season (early special
+        # teamers): treat its tackle/sack/INT values as missing, not as zeros.
+        espn_blank = new["tackles"] == 0 and old["tackles"] > 0
+        if new["games"] > old["games"]:      # never reduce: nflverse counted at least that many games with a stat
             if new["games"] <= cap:
                 use["games"] = new["games"]
             else:
-                held["games"] = "exceeds %d-game schedule" % cap
-        # tackles / sacks / INT: small drift accepted; big drift held unless verified (ACCEPT file)
-        verified = acc.get(key, [])
-        for f, big in (("tackles", abs(new["tackles"] - old["tackles"]) > 0.10 * max(old["tackles"], 1)),
-                       ("def_sacks", abs(new["def_sacks"] - old["def_sacks"]) > 2),
-                       ("def_interceptions", abs(new["def_interceptions"] - old["def_interceptions"]) > 2)):
-            if new[f] == old[f]:
+                held["games"] = "exceeds %d weeks" % cap
+        # tackles: decided per era from 6,477 Statscrew-matched rows (docs/data-audit-20261010.md).
+        #   1999-2003, ESPN differs >10%: ESPN as close or closer than nflverse in 93% -> apply
+        #   every other case: ESPN not better (2004-2012 ESPN closer 28%, 2013+ 62% on tiny diffs) -> keep nflverse
+        if new["tackles"] != old["tackles"] and not espn_blank:
+            big = abs(new["tackles"] - old["tackles"]) > 0.10 * max(old["tackles"], 1)
+            if "def_tackles" in verified or (r["season"] <= TACKLE_ESPN_THROUGH and big):
+                use["tackles"] = new["tackles"]
+            elif big:
+                held["tackles"] = "kept nflverse"
+        # sacks / INT: ESPN exact vs Statscrew in 98-100% of 1999-2012 differences (215 + 5 rows)
+        for f in ("def_sacks", "def_interceptions"):
+            if new[f] == old[f] or espn_blank:
                 continue
-            if not big or f in verified or ("tackles" == f and acc.get("*tackles")):
+            if r["season"] <= SACK_ESPN_THROUGH or f in verified:
                 use[f] = new[f]
             else:
-                held[f] = "big drift"
+                held[f] = "2013+ untested (5-row sample)"
         if use:
             overlay[key] = use
         if held:
@@ -127,3 +170,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+    if "--no-offense" not in sys.argv and os.path.isdir(OFF_CACHE):
+        offense()
