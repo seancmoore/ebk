@@ -237,3 +237,47 @@ solvable.cjs: all five grid sports 0 errors and 0 cells with 1-2 answers (today 
 - NHL: WHA seasons are not NHL data; Billy Smith 1978-79 GP 39 vs 40.
 - Soccer: 1992-93 to 2015-16 goals and minutes only; players never in the 2016+ data are not added; multi-club season order is by appearances (the API has no dates).
 - NBA: pool is players still active in 2001-02 or later; Anthony Miller 2000-01 lists ATL, HOU (Houston stint unconfirmed).
+
+---
+# Eighth pass: NFL pre-1999 careers completed and reconciled (owner approved)
+
+## Method
+- **Independent complete list**: Statscrew NFL team-season ROSTER pages (https://www.statscrew.com/football/roster/t-{TEAM}/y-{YEAR}: every player who dressed, with games played and games started per club and birth date) and STATS pages (sack, interception, tackle tables) for all clubs, 1983-1998 (928 pages, `tools/statscrew_nfl_fetch.py`, parsed by `data/statscrew_nfl_parse.py`). Players were matched to our 1,168 pre-1999 players by name plus birth date (fallbacks: last name + first initial + exact birth date; full name + 2 of 3 birth-date components; roster entries without a birth date only when ESPN shows the same club that year or next to it). 1,142 players now have pre-1999 rows (was 1,086).
+- **Game logs**: ESPN game logs (`data/nfl_gamelog_order.py`) give the date order of clubs in traded seasons (49 of the 59 multi-club rows have a log).
+- `data/reconcile_nfl_career.py` merges these with the ESPN rows (`raw/career/nfl_espn.json`, still built by `build_nfl_career.py`) into the shipped `raw/career/nfl.json`; `raw/career/nfl_sources.json` records the source, games started (GS) and notes per row. Games started is kept there only (the record schema has no GS field).
+
+## What changed
+| Item | Count |
+|---|---|
+| Rows added because ESPN had no row (tackle-only defenders, special teamers, players ESPN 404s) | 287 (team, games; sacks/INT from the Statscrew tables; tackles stay absent) |
+| Rows total / players | 4,925 (was 4,638) / 1,142 (was 1,086) |
+| Games played corrected to the Statscrew total | 45 rows (ESPN agreed on 99% of the 4,612 overlapping rows; the misses are mostly traded players, e.g. Kerry Collins 1998 14 -> 11, Lawrence Phillips 1997 4 -> 12) |
+| Club sets corrected (ESPN missed a club or listed one the player never played for) | 25 rows |
+| Club order of traded seasons fixed from game-log dates | 12 rows (e.g. J.J. McCleskey 1996 NO then ARI); 3 rows keep an unknown order (Junkin 1984, Oldham 1991, Harris 1992, Blackmon 1998 flagged order_unknown) |
+| ESPN rows not on any Statscrew roster (kept as ESPN had them) | 26 |
+Caps: per club at most the team schedule (16; 15 in the 1987 strike year), total at most the schedule, or schedule + 1 for a player traded in 1990 or later (bye weeks). Single-club vs two-club false merges (two Brian Mitchells, same-name players) are blocked by the birth-date and position-group rules; position changers with an exact birth date (Junkin, Hallock, Crawford) are kept.
+
+## Verification (fresh, independent, 95 careers / about 675 player-seasons)
+Sample: 28 famous careers (Reggie White, Bruce Smith, Deion Sanders, Junior Seau, Jerry Rice, Emmitt Smith, Dan Marino, Warren Moon, Brett Favre, Peyton Manning, Ray Lewis, Rod Woodson, Darrell Green...), the 6 previously failing players (Lawrence Phillips, Joey Galloway, Ty Detmer, Troy Drayton, Todd Collins), 42 players with changed or added rows (28 defense, 14 offense) and 22 unchanged players. Sources: Wikipedia season tables, NFL.com, ProFootballArchives, jt-sw.com (PFR and footballdb return 403).
+| Field | Checked | Mismatched |
+|---|---|---|
+| Seasons present | about 675 | 0 |
+| Club sets | about 675 | 1 (McCleskey 1996 order; fixed afterwards from the game log) |
+| Games played | about 640 | 0 (every conflict between sources resolved in our favour) |
+| Games started (provenance file only) | about 470 | 4 (Joe Phillips 1991 16 vs 15, Marquez Pope 1995 16 vs 15, Mike D. Jones 1993 3 vs 2, Aaron Pierce 1996 4 vs 3) |
+| Stat cells (yards, TDs, sacks, INT) | about 1,800 | 3 hard (Vrabel 1998 sacks 2.5 vs Wikipedia 3.5, Bryan Cox 1993 sacks 5 vs 4, Marino 1987 rushing TD 1 vs 0 where our career sum matches PFR) + 2 pass-defended (Ray Lewis 1996, 1997, field not shipped) |
+Rows added from Statscrew: about 70 checked, 69 fully correct (season, club, games); Stewart 1997 DET (8 games) unverified. The previously failing players are all right now (Phillips 1997 STL 10 + MIA 2 = 12 games; Galloway; Detmer 1996 rushing 59; Drayton 1996 STL 3 + MIA 10; Collins). Overall error rate: about 0% on games played, about 1% on games started, about 0.3% of all checked cells (and those cells are ESPN-sourced values that Wikipedia contradicts; left unchanged, listed here).
+
+## Size
+career.json (NFL) brotli 52 KB -> 54 KB (437 KB raw). First-load files unchanged; grid-roster.json 1.19 MB (same). Cache version ?v=16.
+
+## Tests
+solvable.cjs: all sports 0 errors, 0 cells with 1-2 answers (today plus 6 more dates; NFL thinnest cell 19); roster boards 30/30 identical for every sport; browser smoke cfb, nfl, nba, mlb, nhl, soccer 77/77 green; Career Path loads career.json (HTTP 200) for all five sports that have one.
+
+## Still missing / open
+- Games started in the career rows are provenance only; Seau 1991-98, Darrell Green and Kevin Greene 1988-98 were not verifiable for GS.
+- ESPN-sourced pass-defended / forced-fumble columns (1993-98) were not verified (Ray Lewis 1996 and 1997 differ by 1 from Wikipedia).
+- Tackles before 1999 stay absent by design (unofficial); the Statscrew tackle column is kept only in nfl_sources.json.
+- 26 rows exist only in ESPN (players not found on Statscrew rosters, e.g. Michael Brooks, Dexter Davis), 3-4 traded rows have an unknown club order, and 5 game-log club sets disagree with Statscrew (kept Statscrew; see nfl_sources.json).
+- Players with no ESPN id (36) and ESPN 404s (90) get rows only from Statscrew (team, games, sacks/INT for defenders, yards/TDs for offense per the addendum below); check `src` in nfl_sources.json.
+Addendum: the 28 offense rows for 18 players ESPN has no data for (Tommy Maddox, Charles Johnson, Stoney Case, Albert Connell, ...) now carry passing/rushing/receiving yards and TDs from the Statscrew stats tables (e.g. Maddox 1992 DEN 757 yds, 5 TD). Those cells were not part of the 95-career sample; Maddox 1992 matches his known line.

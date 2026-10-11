@@ -11,7 +11,7 @@ window.EBKD = {
   // Where a sport's player dataset lives. MLB and NHL ship a compact v4 copy (tools/slim_v4.py);
   // the other sports are served as the builders wrote them. Bump v with every data rebuild.
   dataUrl: function (sport) {
-    var v = "?v=15";
+    var v = "?v=16";
     if (sport === "nfl") return "/data/players.json" + v;
     return "/data/" + sport + "/players" + (sport === "mlb" || sport === "nhl" ? ".slim" : "") + ".json" + v;
   },
@@ -19,7 +19,7 @@ window.EBKD = {
   // the main file: a veteran's FULL career for Career Path, team history and career-total grid
   // categories. Fetched lazily by those pages only; Higher/Lower, Stat Line and Team Study never load it.
   careerUrl: function (sport) {
-    return (sport === "nfl" ? "/data/career.json" : "/data/" + sport + "/career.json") + "?v=15";
+    return (sport === "nfl" ? "/data/career.json" : "/data/" + sport + "/career.json") + "?v=16";
   },
   loadCareer: function (sport) {
     if (!/^(nfl|nba|mlb|nhl|soccer)$/.test(sport)) return Promise.resolve(null);    // CFB has no pre-2014 data
