@@ -51,7 +51,7 @@
   const dataCache = {};
   async function loadData(sport) {
     if (dataCache[sport]) return dataCache[sport];
-    const url = (sport === "nfl" ? "/data/players.json" : "/data/" + sport + "/players.json") + "?v=13";
+    const url = EBKD.dataUrl(sport);
     const res = await fetch(url, { cache: "force-cache" });
     if (!res.ok) throw new Error("data " + res.status);
     dataCache[sport] = EBKD.inflate(await res.json());
@@ -398,7 +398,7 @@
     M._cat = (M.data.categories || []).find((c) => c.key === room.cat) || { key: room.cat, label: room.cat, decimals: 0 };
     // same eligibility rule as solo play; deterministic given identical data,
     // so both clients still generate the identical sequence from the seed
-    const pool = M.data.players.filter((p) => EBKD.hlEligible(p, room.cat, M._cat.label));
+    const pool = M.data.players.filter((p) => EBKD.hlEligible(p, room.cat, M._cat.label, room.sport || M.sport));
     const chain = []; let prev = null, prevVal = null;
     for (let i = 0; i < SEQ_MAX + 1 && pool.length; i++) {
       // ties are unanswerable (higher/lower only): bounded retries, then a

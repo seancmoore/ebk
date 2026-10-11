@@ -8,8 +8,33 @@
    pools depend on the difference. Idempotent; safe on unslimmed files too.
    Lives here because this file is in the <head> of every page. */
 window.EBKD = {
+  // Where a sport's player dataset lives. MLB and NHL ship a compact v4 copy (tools/slim_v4.py);
+  // the other sports are served as the builders wrote them. Bump v with every data rebuild.
+  dataUrl: function (sport) {
+    var v = "?v=14";
+    if (sport === "nfl") return "/data/players.json" + v;
+    return "/data/" + sport + "/players" + (sport === "mlb" || sport === "nhl" ? ".slim" : "") + ".json" + v;
+  },
   inflate: function (d) {
     if (!d || d.__inflated) return d;
+    if (d.v === 4 && d.p) {
+      var n = d.n, PT = d.ptab, HP = d.hsPrefix || "", SC = d.statCols, F = d.f, FK = Object.keys(F), out = new Array(n);
+      for (var i = 0; i < n; i++) {
+        var pt = PT[d.p[i]], r = { id: pt[0], name: pt[1] };
+        for (var j = 0; j < FK.length; j++) { var v = F[FK[j]][i]; if (v != null) r[FK[j]] = v; }
+        var h = d.hs[i];
+        if (h == null) h = pt[2];
+        if (h) r.headshot = HP + h;
+        var s = {};
+        for (var c = 0; c < SC.length; c++) { var x = d.st[c][i]; if (x != null) s[SC[c]] = x; }
+        r.stats = s;
+        out[i] = r;
+      }
+      d.players = out; d.people = {};
+      delete d.p; delete d.f; delete d.hs; delete d.st; delete d.ptab;
+      d.__inflated = true;
+      return d;
+    }
     var pre = d.hsPrefix || "";
     var cols = d.statCols || [];
     (d.players || []).forEach(function (r) {
@@ -28,9 +53,13 @@ window.EBKD = {
   // and both H2H clients agree): the stat must have applied AND be meaningful
   // — nonzero everywhere, and at least 10 for yardage categories so trick-play
   // passing lines etc. don't enter the pool.
-  hlEligible: function (p, key, label) {
+  hlEligible: function (p, key, label, sport) {
     var v = p.stats[key];
     if (v == null || v <= 0) return false;
+    // notability floor for the deep hockey/baseball pools: no 3-game call-ups or 1-AB "hitters"
+    var g = p.games || 0, gr = p.grp;
+    if (sport === "nhl") { if (gr === "G" ? g < 15 : g < 20) return false; }
+    else if (sport === "mlb") { if (gr === "P" ? g < 20 : g < 50) return false; }
     // the yardage floor is per category: test it once per key, not per record
     // (this runs categories x players times while the start screen builds)
     var m = HL_MIN[key];

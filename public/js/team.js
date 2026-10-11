@@ -10,7 +10,7 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=13";
+  const DATA_URL = EBKD.dataUrl(SPORT);
 
   const CFG = {
     nfl: {

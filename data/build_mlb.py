@@ -12,7 +12,7 @@ import csv, hashlib, os, re, sys, json, unicodedata, urllib.request
 from collections import defaultdict
 from datetime import date
 
-FIRST, LAST = 2000, 2026
+FIRST, LAST = 1990, 2026
 LAHMAN_LAST = 2021      # the databank fork stops here; the Stats API covers the rest
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAW = os.path.join(HERE, "raw", "mlb")

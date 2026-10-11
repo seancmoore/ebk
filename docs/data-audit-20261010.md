@@ -169,3 +169,38 @@ Diff of the new players.json against the pre-ESPN baseline: same 40,154 rows, sa
 ## Remaining held / open
 - 131 tackle rows (2004+, > 10% apart) and 11 sack rows (2013+) stay as nflverse (`data/raw/espn_def_needs_decision.json`).
 - ESPN games rest on ESPN alone (validated on 7 game logs plus the weeks cap); no second bulk source exists for games.
+
+---
+# Sixth pass: NHL back to 1979-80, MLB back to 1990 (owner approved)
+
+## What was built
+- **NHL**: `data/build_nhl.py` FIRST 2001 -> 1980 (1979-80). 40,652 player-seasons (was 24,746; +15,906 from 1979-80..1999-00). Same NHL stats API fields; shots, plus/minus and power-play goals are all present for 1979-80 on. Old franchise codes folded into today's clubs in `public/js/nhl-teams.js`: WIN->ARI, HFD->CAR, QUE->COL, MNS->DAL, CLR->NJD, AFM->CGY (ATL Thrashers->WPG and PHX->ARI were already folded). A Hockey-Reference cross-check confirmed each continuity.
+- **MLB**: `data/build_mlb.py` FIRST 2000 -> 1990. 46,862 player-seasons (was 35,904; +10,958 from 1990-1999, Lahman). All 2000+ rows byte-identical to the previous build. Relocations already fold through Lahman franchID (Expos->WSN, Marlins FLA, Devil Rays TBD, Angels ANA); no new team codes were needed.
+- **Labels** (`public/js/player-grid.js`): NHL "(since 1979-80)", MLB "(since 1990)".
+- **Headshots**: NHL `data/nhl_headshots.py`: for every player with a pre-2001 row, HEAD the NHL mug URL for his own season/team (then `mugs/nhl/latest/{id}.png`); 200 = real mug, 302 = default placeholder. 3,105 players, 15,905 of 15,906 pre-2001 rows have a verified mug (URL id = NHL playerId, 0 id mismatches); 1 row dropped. MLB `data/mlb_headshots.py`: Chadwick register id checked against the MLB Stats API person (same surname, debut not after the season) AND the plain static URL must return 200 (MLB answers 404 when it has no photo; the generic-fallback URL would paint a silhouette). 2,805 pre-2000 players probed: 498 verified photos (3,059 rows), 2,304 no photo, 3 name-mismatch; 7,899 rows lose the headshot field and the UI shows initials. Never a wrong photo.
+
+## Payload (first-load Higher/Lower file, brotli q9)
+| Sport | Today (raw players.json) | Now (players.slim.json) | Change |
+|---|---|---|---|
+| MLB | 720 KB (11.6 MB raw) | 658 KB (4.3 MB raw), 46,862 rows | -62 KB (budget was +150) |
+| NHL | 531 KB (6.6 MB raw) | 643 KB (4.8 MB raw), 40,652 rows | +112 KB |
+New lossless columnar format "v4" (`tools/slim_v4.py`): per-player table once, per-record columns, stats as aligned columns (null = key absent, so key presence is preserved), headshot suffixes. `EBKD.inflate` (ebk-loader.js) rebuilds the exact records; round-trip test of every record vs the full file: 0 differences for both sports (`name` spelling variants kept as per-record overrides). The full `players.json` stays in the repo for the tools and the video studio, and is excluded from Hosting (`firebase.json` ignore). Row order is unchanged, so seeded daily grid boards are unaffected. Grid page roster files: MLB 2.0 MB, NHL 1.0 MB (were 1.8 / 0.66).
+All game pages now get their URL from `EBKD.dataUrl(sport)` with one version string (`?v=14`).
+
+## Higher/Lower notability
+`EBKD.hlEligible(p, key, label, sport)` now has games floors for NHL (skaters 20, goalies 15) and MLB (hitters 50, pitchers 20); the same function is used by solo play and head-to-head. With the floors the pre-extension share of each pool matches its share of seasons (NHL 39% of seasons are 1979-2000; MLB 23-27% are 1990-99); NHL pool for Goals 26,219 seasons, MLB Home Runs 14,454. (This also drops 1-AB "hitters" and 2-game goalies that used to produce .1000 averages and 27.00 GAA draws in all years.)
+
+## Verification
+- **MLB vs MLB Stats API (independent of Lahman), 1990-1999, every player with a unique name**: 12,111 stat lines compared (hitters HR/RBI/H/R/SB, pitchers W/K/SV); 10 mismatches (0.08%): six 1-unit Lahman/API differences (e.g. Eddie Williams 1995 RBI 47 vs 48) and four same-name collisions (Pedro Martinez the pitcher vs the hitter, not data errors). Record lines all correct: HR McGwire 70 (1998), Sosa 66; RBI Manny Ramirez 165 (1999); hits Lance Johnson 227 (1996); runs Biggio 146 (1997); SB Grissom 78 (1992); wins Welch 27 (1990); K Randy Johnson 364 (1999); saves Thigpen 57 (1990); avg Walker .379 (1999); ERA Wetteland 1.37 (1993).
+- **NHL vs Hockey-Reference (and Wikipedia plus/minus table)**: 54 stratified pre-2001 rows (46 skaters incl. 10 multi-team players and 8 goalies; 1979-84, 85-89, 90-94, 95-00): 0 mismatches. Every record line verified: goals 92/87/86 (Gretzky, Gretzky, Hull), assists 163, points 215/212/208, points per game 2.77, power-play goals Kerr 34, shutouts Hasek 13 (1997-98), wins 48, saves Luongo 2,303; plus/minus Gretzky +100 (1984-85), Howe +87, McCrimmon +86 match Hockey-Reference (some other sites print +98/+85; kept the API/HR values). Not verified: GAA and some save-percentage leaders (HR rate-limited) and skater shot totals (HR season pages do not list shots).
+- Multi-team primary team: Mark Taylor 1984-85 lists WSH (NHL API's last club) while PIT had more games; the `teams` list has both, only the cosmetic `team` differs.
+- Mighty Ducks 1993-95 appear as ANA (franchise key).
+
+## Tests
+`node tools/solvable.cjs` all sports: 0 errors, 0 cells with 1-2 answers (NHL thinnest 6, MLB thinnest 14); NHL+MLB on 40 dates (every 2 days): 0 errors and no thin cells. Browser smoke (playwright-core + Edge copy of smoke.cjs): NBA, NFL, CFB, soccer 51/51; NHL and MLB (grid, Higher/Lower, Career Path, Stat Lab pages): 43/43 with nba listed first (one run showed the known first-sport connection-refused race). Stat Lab rebuilt (35,749 players, 1980-2026). Cache version ?v=14.
+
+## Held / open
+- Career Path and the grid's "(since ...)" totals truncate careers that began before the window (e.g. a pre-1990 MLB star "starts" in 1990). Labelled for the grid; Career Path shows "career from 1990".
+- 7,899 old-MLB rows show initials instead of a photo (no verified photo exists).
+- GAA/save% leader lines for NHL and skater shots (see above) were not independently re-verified.
+- The old `tools/slim_players.py` pruning slimmer is superseded by `tools/slim_v4.py` and not used.

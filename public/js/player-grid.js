@@ -6,8 +6,8 @@
 
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
-  const DATA_URL = (SPORT === "nfl" ? "/data/players.json" : "/data/" + SPORT + "/players.json") + "?v=13";
-  const ROSTER_URL = (SPORT === "nfl" ? "/data/grid-roster.json" : "/data/" + SPORT + "/grid-roster.json") + "?v=13";
+  const DATA_URL = EBKD.dataUrl(SPORT);
+  const ROSTER_URL = (SPORT === "nfl" ? "/data/grid-roster.json" : "/data/" + SPORT + "/grid-roster.json") + "?v=14";
   const BEST_KEY = SPORT === "nfl" ? "ebk_grid_best" : "ebk_grid_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "player-grid", score); } catch (e) {} };
@@ -81,12 +81,12 @@
         ["sv30",  "30+ Saves (season)",   "sv",  30],
       ],
       careerAch: [
-        ["c200hr", "200+ HR (since 2000)",     "hr",  200],
-        ["c1krbi", "1,000+ RBI (since 2000)",  "rbi", 1000],
-        ["c1500h", "1,500+ Hits (since 2000)", "hits", 1500],
-        ["c200sb", "200+ SB (since 2000)",     "sb",  200],
-        ["c100w",  "100+ Wins (since 2000)",   "w",   100],
-        ["c1500k", "1,500+ K (since 2000)",    "k",   1500],
+        ["c200hr", "200+ HR (since 1990)",     "hr",  200],
+        ["c1krbi", "1,000+ RBI (since 1990)",  "rbi", 1000],
+        ["c1500h", "1,500+ Hits (since 1990)", "hits", 1500],
+        ["c200sb", "200+ SB (since 1990)",     "sb",  200],
+        ["c100w",  "100+ Wins (since 1990)",   "w",   100],
+        ["c1500k", "1,500+ K (since 1990)",    "k",   1500],
       ],
       positions: [["P", "Pitcher"], ["C", "Catcher"], ["1B", "1B"], ["2B", "2B"],
                   ["3B", "3B"], ["SS", "SS"], ["OF", "Outfield"]],
@@ -101,10 +101,10 @@
         ["w35", "35+ Wins (season)", "w", 35], ["so6", "6+ Shutouts (season)", "so", 6],
       ],
       careerAch: [
-        ["c200g", "200+ Goals (since 2001)",   "g",   200],
-        ["c400a", "400+ Assists (since 2001)", "a",   400],
-        ["c600p", "600+ Points (since 2001)",  "pts", 600],
-        ["c150w", "150+ Wins (since 2001)",    "w",   150],
+        ["c200g", "200+ Goals (since 1979-80)",   "g",   200],
+        ["c400a", "400+ Assists (since 1979-80)", "a",   400],
+        ["c600p", "600+ Points (since 1979-80)",  "pts", 600],
+        ["c150w", "150+ Wins (since 1979-80)",    "w",   150],
       ],
       positions: [["F", "Forward"], ["D", "Defense"], ["G", "Goalie"]],
       flags: [],

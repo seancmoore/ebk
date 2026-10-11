@@ -45,7 +45,7 @@ node tools/solvable.cjs
 
 The grid page loads the small `grid-roster.json` next to each `players.json` instead of the whole dataset (it falls back to `players.json` if the roster is missing). `solvable.cjs` fails while a roster is stale.
 
-When a season ends, raise `LAST` in that sport's builder (`SEASONS` for soccer), rebuild, and bump the `?v=N` on `DATA_URL` (and `ROSTER_URL` in `player-grid.js`) in the game scripts, plus `DATA_V` in `ebk-home-sections.js` and the prefetch in `ebk-rack.js`, so browsers pick up the new data. Ship the output as-is - `tools/slim_players.py` prunes the low-stat and traded stints the Player Grid needs.
+When a season ends, raise `LAST` in that sport's builder (`SEASONS` for soccer), rebuild, then bump the single version in `EBKD.dataUrl` (`public/js/ebk-loader.js`), `ROSTER_URL` in `player-grid.js` and `DATA_V` in `ebk-home-sections.js`, so browsers pick up the new data. Ship the output as-is for NFL, CFB, NBA and soccer. MLB (1990-) and NHL (1979-80-) are served to browsers as a compact lossless copy: after `build_mlb.py` / `build_nhl.py` (and `data/mlb_headshots.py` / `data/nhl_headshots.py` for the pre-2000/2001 photos) run `python tools/slim_v4.py`, which writes `players.slim.json` next to the full `players.json`; `EBKD.inflate` restores the exact records. The full file stays in the repo for the tools and the video studio and is excluded from Hosting. `tools/slim_players.py` (old pruning slimmer) is not used.
 
 ## Running it locally
 

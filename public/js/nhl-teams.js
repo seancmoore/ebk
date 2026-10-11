@@ -1,16 +1,17 @@
-/* NHL franchise helper + ESPN logos (canonicalizes PHX->ARI, ATL->WPG). */
+/* NHL franchise helper + ESPN logos. Canonicalizes relocated clubs to the franchise that exists today:
+   PHX/WIN->ARI, ATL(Thrashers)->WPG, AFM(Atlanta Flames)->CGY, HFD->CAR, QUE->COL, MNS->DAL, CLR(Colorado Rockies)->NJD. */
 window.NHL = (function () {
   "use strict";
   const F = [
-    ["ANA", "Ducks", "ana", ["ANA"]], ["ARI", "Coyotes", "ari", ["ARI", "PHX"]],
+    ["ANA", "Ducks", "ana", ["ANA"]], ["ARI", "Coyotes", "ari", ["ARI", "PHX", "WIN"]],
     ["BOS", "Bruins", "bos", ["BOS"]], ["BUF", "Sabres", "buf", ["BUF"]],
-    ["CGY", "Flames", "cgy", ["CGY"]], ["CAR", "Hurricanes", "car", ["CAR"]],
-    ["CHI", "Blackhawks", "chi", ["CHI"]], ["COL", "Avalanche", "col", ["COL"]],
-    ["CBJ", "Blue Jackets", "cbj", ["CBJ"]], ["DAL", "Stars", "dal", ["DAL"]],
+    ["CGY", "Flames", "cgy", ["CGY", "AFM"]], ["CAR", "Hurricanes", "car", ["CAR", "HFD"]],
+    ["CHI", "Blackhawks", "chi", ["CHI"]], ["COL", "Avalanche", "col", ["COL", "QUE"]],
+    ["CBJ", "Blue Jackets", "cbj", ["CBJ"]], ["DAL", "Stars", "dal", ["DAL", "MNS"]],
     ["DET", "Red Wings", "det", ["DET"]], ["EDM", "Oilers", "edm", ["EDM"]],
     ["FLA", "Panthers", "fla", ["FLA"]], ["LAK", "Kings", "la", ["LAK"]],
     ["MIN", "Wild", "min", ["MIN"]], ["MTL", "Canadiens", "mtl", ["MTL"]],
-    ["NSH", "Predators", "nsh", ["NSH"]], ["NJD", "Devils", "nj", ["NJD"]],
+    ["NSH", "Predators", "nsh", ["NSH"]], ["NJD", "Devils", "nj", ["NJD", "CLR"]],
     ["NYI", "Islanders", "nyi", ["NYI"]], ["NYR", "Rangers", "nyr", ["NYR"]],
     ["OTT", "Senators", "ott", ["OTT"]], ["PHI", "Flyers", "phi", ["PHI"]],
     ["PIT", "Penguins", "pit", ["PIT"]], ["SJS", "Sharks", "sj", ["SJS"]],

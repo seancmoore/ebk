@@ -12,7 +12,9 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**",
-      "**/.drafts/**"
+      "**/.drafts/**",
+      "data/mlb/players.json",
+      "data/nhl/players.json"
     ],
     "rewrites": [
       { "source": "/deep-bag/**", "destination": "/deep-bag/post/index.html" }
@@ -29,7 +31,7 @@
         ]
       },
       {
-        "source": "**/@(players|grid-roster).json",
+        "source": "**/@(players|players.slim|grid-roster).json",
         "headers": [
           { "key": "Cache-Control", "value": "public, max-age=86400" }
         ]
