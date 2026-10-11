@@ -23,7 +23,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PLAYERS = os.path.normpath(os.path.join(HERE, "..", "public", "data", "players.json"))
 CACHE = os.path.join(HERE, "raw", "espn_def")
 OUT = os.path.join(HERE, "raw", "espn_def_overlay.json")
+BASE = os.path.join(HERE, "raw", "espn_def_baseline.json")   # nflverse defensive rows before any ESPN overlay (frozen 2026-10-10)
 ND = os.path.join(HERE, "raw", "espn_def_needs_decision.json")
+ACCEPT = os.path.join(HERE, "raw", "espn_def_accept.json")   # verified rows: {"id|season": ["def_sacks"]}; "*tackles": true accepts all tackle drift
 SEASONS = None   # filled below from CLI/overlay config
 CFG = os.path.join(HERE, "raw", "espn_def_seasons.json")
 
@@ -56,8 +58,13 @@ def load_espn():
 
 def main():
     espn = load_espn()
-    rows = json.load(open(PLAYERS, encoding="utf8"))["players"]
-    rows = [r for r in rows if r["grp"] in ("DL", "LB", "DB") and "tackles" in r["stats"]]
+    # compare against the frozen nflverse baseline (players.json already contains the previous overlay)
+    base = json.load(open(BASE, encoding="utf8"))
+    rows = []
+    for k, v in base.items():
+        i, y = k.split("|")
+        rows.append({"id": i, "season": int(y), "games": v[0], "name": v[4], "team": v[5], "grp": v[6],
+                     "stats": {"tackles": v[1], "def_sacks": v[2], "def_interceptions": v[3]}})
     # measure undercount rate per season
     stat = defaultdict(lambda: [0, 0, 0])   # n compared, n games short, n games over
     for r in rows:
@@ -75,6 +82,7 @@ def main():
         return
     seasons = set(json.load(open(CFG))["seasons"])
     overlay, nd = {}, []
+    acc = json.load(open(ACCEPT)) if os.path.exists(ACCEPT) else {}
     for r in rows:
         if r["season"] not in seasons:
             continue
@@ -86,16 +94,32 @@ def main():
         old = {"games": r["games"], "tackles": s["tackles"], "def_sacks": s["def_sacks"], "def_interceptions": s["def_interceptions"]}
         if new == old:
             continue
-        big = (abs(new["games"] - old["games"]) > 2
-               or abs(new["tackles"] - old["tackles"]) > 0.10 * max(old["tackles"], 1)
-               or abs(new["def_sacks"] - old["def_sacks"]) > 2
-               or abs(new["def_interceptions"] - old["def_interceptions"]) > 2
-               or new["games"] > (17 if r["season"] >= 2021 else 16))
         key = "%s|%s" % (r["id"], r["season"])
-        if big:
-            nd.append({"id": r["id"], "name": r["name"], "season": r["season"], "team": r["team"], "data": old, "espn": new})
-            continue
-        overlay[key] = {k: new[k] for k in new if new[k] != old[k]}
+        cap = 17 if r["season"] >= 2021 else 16      # every club played this many regular-season games
+        held = {}
+        use = {}
+        # games: ESPN games played. Accepted whenever it fits the schedule (nflverse counts only games with a stat).
+        if new["games"] != old["games"]:
+            if new["games"] <= cap:
+                use["games"] = new["games"]
+            else:
+                held["games"] = "exceeds %d-game schedule" % cap
+        # tackles / sacks / INT: small drift accepted; big drift held unless verified (ACCEPT file)
+        verified = acc.get(key, [])
+        for f, big in (("tackles", abs(new["tackles"] - old["tackles"]) > 0.10 * max(old["tackles"], 1)),
+                       ("def_sacks", abs(new["def_sacks"] - old["def_sacks"]) > 2),
+                       ("def_interceptions", abs(new["def_interceptions"] - old["def_interceptions"]) > 2)):
+            if new[f] == old[f]:
+                continue
+            if not big or f in verified or ("tackles" == f and acc.get("*tackles")):
+                use[f] = new[f]
+            else:
+                held[f] = "big drift"
+        if use:
+            overlay[key] = use
+        if held:
+            nd.append({"id": r["id"], "name": r["name"], "season": r["season"], "team": r["team"],
+                       "data": old, "espn": new, "held": held})
     json.dump(overlay, open(OUT, "w"), separators=(",", ":"))
     json.dump(nd, open(ND, "w", encoding="utf8"), indent=0, ensure_ascii=False)
     print("overlay rows", len(overlay), "needs decision", len(nd))

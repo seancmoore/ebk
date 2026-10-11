@@ -102,3 +102,24 @@ nflverse `games` for defenders counts games with a recorded stat, so part-time p
 - Rebuilt: build_players.py (one run, 52 s), `tools/build_grid_roster.cjs` (all 5 sports, 30/30 boards identical), `tools/build_stat_lab.py`. Cache-buster `?v=10` -> `?v=11` in game.js, h2h.js, stat-line.js, team.js, career-path.js, player-grid.js, ebk-rack.js, ebk-home-sections.js (DATA_V).
 - `node tools/solvable.cjs` (all sports, today): 0 errors, 0 cells with 1-2 answers; NFL also clean on 5 other dates.
 - NFL browser smoke (smoke.cjs on playwright-core + Edge): 25/25 assertions green (grid, Higher/Lower, Career Path, Stat Line).
+
+---
+# Fourth pass: needs-decision rows resolved (owner approved)
+
+## Correction to the third pass
+The third-pass counts of held rows (8,219; sacks 58; INT 15; tackles ~1,280) came from a first run that still counted multi-team rows twice; after the "<year> Totals" fix the held set was smaller. Also, `build_espn_overlay.py` originally compared ESPN to the current players.json, which already contained the overlay. It now compares to a frozen pre-overlay snapshot, `data/raw/espn_def_baseline.json` (24,499 defensive rows), so rebuilds are reproducible and idempotent.
+
+## Games (rule: accept ESPN games if <= schedule length, 16 through 2020, 17 from 2021; every club played the same number of games)
+Applied to 15,559 defensive player-seasons (7,429 of them already in the third pass, 8,130 new). Held: 3 rows whose ESPN games exceed the schedule: Will Allen 2013 (nflverse 13, ESPN 17), Leonard Williams 2023 (17 vs 18), Dre'Mont Jones 2025 (17 vs 18). Unrelated pre-existing oddity: Will Witherspoon 2009, Damon Harrison 2018 and Emmanuel Sanders 2019 show 17 games and Rashid Shaheed 2025 shows 18 in nflverse itself (traded players double counted); not changed.
+
+## Tackles (>10% apart, 696 rows): NOT applied
+Independent check of 46 rows (44 tackle rows stratified across 1999-2025 plus the 2 sack rows) against Statscrew team-season pages (solo + assisted), with Wikipedia, NFL.com and footballdb for a few. PFR, footballdb pages and Statmuse were blocked. Result: ESPN agrees with the third source on 24 of 46 (52%), nflverse on 17 (37%), neither on 10. By era: 1999-2003 ESPN better (16 ESPN vs 3 nflverse of 26), 2004 onward nflverse better (9 nflverse vs 3 ESPN of 20). That is far below the 90% bar, so the 696 big tackle differences stay as nflverse has them (small drift of +-10% was already accepted in the third pass: 3,183 rows). Era split suggests a possible future rule: accept ESPN for 1999-2003 big differences only; not applied, needs decision. Held list: `data/raw/espn_def_needs_decision.json` ("held" field).
+
+## Sacks and interceptions
+After the Totals fix only 2 sack rows and 0 interception rows differ by more than 2. Both verified and applied (list in `data/raw/espn_def_accept.json`): Trace Armstrong 2000 MIA 13 -> 16.5 (https://statscrew.com/football/stats/t-MIA/y-2000), Jevon Kearse 2003 TEN 7 -> 9.5 (https://statscrew.com/football/stats/t-TEN/y-2003 and the footballdb Titans single-season sacks leaders). Smaller sack drift: 677 rows applied in total (incl. Seymour 2009 2 -> 4 and Moss 2010 2 -> 1, which a third source confirmed).
+
+## Final numbers vs the original nflverse build
+17,344 defensive player-seasons changed (games 15,559; tackles 3,183; sacks 679; INT 22); 699 rows held (696 tackles, 3 games; the 2 big sack rows were verified and applied). Diff of old vs new players.json: same 40,154 rows; no offensive row changed; no team, position, name, headshot or grp change; no stat field other than games, tackles, def_sacks and def_interceptions changed; OFFICIAL_FIXES pins intact (Carter 1999 17 sacks/16 g/34 tackles, Strahan 2003 18.5, Ogunleye 2003 15, Lewis, Smith, Brees verified in output).
+
+## Rebuild and tests
+build_players.py (one run), build_grid_roster.cjs (30/30 boards identical, all sports), build_stat_lab.py; cache-buster ?v=11 -> ?v=12 in the same eight scripts. `node tools/solvable.cjs` all sports: 0 errors (NFL also on 4 more dates). NFL browser smoke (playwright-core + Edge copy of smoke.cjs): 25/25 green (the first sport in a run fails with a connection refused race on server start, so a throwaway sport is listed first).
