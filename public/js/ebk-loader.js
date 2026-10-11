@@ -11,9 +11,28 @@ window.EBKD = {
   // Where a sport's player dataset lives. MLB and NHL ship a compact v4 copy (tools/slim_v4.py);
   // the other sports are served as the builders wrote them. Bump v with every data rebuild.
   dataUrl: function (sport) {
-    var v = "?v=14";
+    var v = "?v=15";
     if (sport === "nfl") return "/data/players.json" + v;
     return "/data/" + sport + "/players" + (sport === "mlb" || sport === "nhl" ? ".slim" : "") + ".json" + v;
+  },
+  // Pre-window seasons (data/raw/career -> tools/slim_v4.py --career) for players who also have a row in
+  // the main file: a veteran's FULL career for Career Path, team history and career-total grid
+  // categories. Fetched lazily by those pages only; Higher/Lower, Stat Line and Team Study never load it.
+  careerUrl: function (sport) {
+    return (sport === "nfl" ? "/data/career.json" : "/data/" + sport + "/career.json") + "?v=15";
+  },
+  loadCareer: function (sport) {
+    if (!/^(nfl|nba|mlb|nhl|soccer)$/.test(sport)) return Promise.resolve(null);    // CFB has no pre-2014 data
+    return fetch(EBKD.careerUrl(sport)).then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { return j ? EBKD.inflate(j) : null; }).catch(function () { return null; });
+  },
+  // appends the career rows (flagged pre:true) AFTER the main rows, so first-appearance order is unchanged
+  mergeCareer: function (data, car) {
+    if (!data || !car || !car.players || data.__merged) return data;
+    var out = data.players, pre = car.players;
+    for (var i = 0; i < pre.length; i++) { pre[i].pre = true; out.push(pre[i]); }
+    data.__merged = true;
+    return data;
   },
   inflate: function (d) {
     if (!d || d.__inflated) return d;

@@ -215,7 +215,11 @@ def primary_pos(field, skip=()):
 
 
 def build():
-    start, end = (int(sys.argv[1]), int(sys.argv[2])) if len(sys.argv) == 3 else (FIRST, LAST)
+    career = "--career" in sys.argv
+    argv = [a for a in sys.argv[1:] if not a.startswith("--")]
+    start, end = (int(argv[0]), int(argv[1])) if len(argv) == 2 else (FIRST, LAST)
+    if career:      # pre-window seasons (Lahman only) for players who have a row in the main file
+        start, end = 1871, FIRST - 1
     to_mlbam, to_bbref = register_maps()
     print(f"Chadwick register: {len(to_mlbam):,} bbref<->MLBAM ids")
 
@@ -283,6 +287,24 @@ def build():
         players.append(rec)
 
     players.sort(key=lambda r: (r["season"], r["name"], r["id"]))
+    if career:
+        main = json.load(open(OUT, encoding="utf-8"))["players"]
+        ids = {r["id"] for r in main}
+        main_name = {}
+        for r in main:
+            main_name.setdefault(r["id"], r)
+        keep = []
+        for r in players:
+            if r["id"] in ids:
+                r.pop("headshot", None)
+                r["name"] = main_name[r["id"]]["name"]
+                keep.append(r)
+        cdir = os.path.join(HERE, "raw", "career")
+        os.makedirs(cdir, exist_ok=True)
+        with open(os.path.join(cdir, "mlb.json"), "w", encoding="utf-8") as f:
+            json.dump({"sport": "mlb", "through": FIRST - 1, "players": keep}, f, ensure_ascii=False, separators=(",", ":"))
+        print(f"career: {len(keep):,} pre-{FIRST} rows for {len({r['id'] for r in keep}):,} of {len(ids):,} players in the main file")
+        return
     out = {
         "generated": date.today().isoformat(),
         "source": "Lahman / Chadwick baseball databank (through 2021) + MLB Stats API",

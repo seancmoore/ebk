@@ -31,7 +31,7 @@
         ]
       },
       {
-        "source": "**/@(players|players.slim|grid-roster).json",
+        "source": "**/@(players|players.slim|career|grid-roster).json",
         "headers": [
           { "key": "Cache-Control", "value": "public, max-age=86400" }
         ]

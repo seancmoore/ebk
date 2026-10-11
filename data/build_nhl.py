@@ -43,7 +43,11 @@ def allteams(s):
 
 
 def build():
-    start, end = (int(sys.argv[1]), int(sys.argv[2])) if len(sys.argv) == 3 else (FIRST, LAST)
+    career = "--career" in sys.argv
+    argv = [a for a in sys.argv[1:] if not a.startswith("--")]
+    start, end = (int(argv[0]), int(argv[1])) if len(argv) == 2 else (FIRST, LAST)
+    if career:      # pre-window seasons (1917-18 .. FIRST-1) for players who have a row in the main file
+        start, end = 1918, FIRST - 1
     players = []
     for y in range(start, end + 1):
         sid = f"{y-1}{y}"
@@ -92,6 +96,24 @@ def build():
         print(f"  {label}: {len(sk)} skaters + {len(go)} goalies")
 
     players.sort(key=lambda r: (r["season"], r["name"] or ""))
+    if career:
+        main = json.load(open(OUT, encoding="utf-8"))["players"]
+        first = {}
+        for r in main:
+            first.setdefault(r["id"], r)
+        keep = []
+        for r in players:
+            m = first.get(r["id"])
+            if m:
+                r.pop("headshot", None)
+                r["name"] = m["name"]
+                keep.append(r)
+        cdir = os.path.join(HERE, "raw", "career")
+        os.makedirs(cdir, exist_ok=True)
+        with open(os.path.join(cdir, "nhl.json"), "w", encoding="utf-8") as f:
+            json.dump({"sport": "nhl", "through": FIRST - 1, "players": keep}, f, ensure_ascii=False, separators=(",", ":"))
+        print(f"career: {len(keep):,} pre-{FIRST} rows for {len({r['id'] for r in keep}):,} of {len(first):,} players in the main file")
+        return
     out = {
         "generated": date.today().isoformat(), "source": "NHL stats API",
         "sport": "nhl", "seasons": [start, end],

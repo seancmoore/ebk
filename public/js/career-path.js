@@ -166,6 +166,8 @@
       const res = await fetch(DATA_URL);
       if (!res.ok) throw new Error("HTTP " + res.status);
       const data = EBKD.inflate(await res.json());
+      // pre-window seasons of the same players, so a career starts at his real debut
+      EBKD.mergeCareer(data, await EBKD.loadCareer(SPORT));
       const people = data.people || {};
       if (collP) S.colleges = (await collP) || {};
 
@@ -218,7 +220,7 @@
     return path;
   }
 
-  const teamTag = (k) => `<img class="tlogo" src="${LEAGUE.logo(k)}" alt="" /> ${LEAGUE.name(k)}`;
+  const teamTag = (k) => (LEAGUE.logo(k) ? `<img class="tlogo" src="${LEAGUE.logo(k)}" alt="" /> ` : "") + LEAGUE.name(k);
   const collegeTag = (name) => { if (!name) return "Unknown"; const u = S.colleges[name]; return u ? `<img class="tlogo" src="${u}" alt="" /> ${name}` : name; };
 
   // "2000-01 to 2013-14 · 13 seasons" as two mono LED chips and a count,

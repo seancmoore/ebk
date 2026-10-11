@@ -25,9 +25,15 @@ ROOT = Path(__file__).resolve().parent.parent
 SCALARS = ("season", "seasonLabel", "pos", "grp", "team", "games", "teams", "poss")   # + name when it differs from ptab
 
 
-def slim(sport):
-    src = ROOT / "public" / "data" / sport / "players.json"
-    dst = ROOT / "public" / "data" / sport / "players.slim.json"
+def slim(sport, career=False):
+    if career:      # pre-window seasons: raw data/raw/career/<sport>.json -> public/data/[<sport>/]career.json
+        src = ROOT / "data" / "raw" / "career" / (sport + ".json")
+        dst = ROOT / "public" / "data" / ("career.json" if sport == "nfl" else sport + "/career.json")
+        if not src.exists():
+            return
+    else:
+        src = ROOT / "public" / "data" / sport / "players.json"
+        dst = ROOT / "public" / "data" / sport / "players.slim.json"
     raw = src.read_bytes()
     d = json.loads(raw)
     recs = d["players"]
@@ -86,5 +92,10 @@ def slim(sport):
 
 
 if __name__ == "__main__":
-    for s in (sys.argv[1:] or ["mlb", "nhl"]):
-        slim(s)
+    names = [a for a in sys.argv[1:] if not a.startswith("--")]
+    if "--career" in sys.argv:       # python tools/slim_v4.py --career [nfl nba mlb nhl soccer]
+        for s in (names or ["nfl", "nba", "mlb", "nhl", "soccer"]):
+            slim(s, career=True)
+    else:
+        for s in (names or ["mlb", "nhl"]):
+            slim(s)

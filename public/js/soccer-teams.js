@@ -37,7 +37,8 @@ window.SOCCER=(function(){
     {key:"39",name:"Wolves",logo:"https://resources.premierleague.com/premierleague/badges/100/t39.png"}
   ];
   var byKey={};F.forEach(function(f){byKey[f.key]=f;});
+  var HIST={"47":"Portsmouth","111":"Wigan Athletic","30":"Bolton Wanderers","108":"Reading","52":"Queens Park Rangers","41":"Birmingham City","33":"Charlton Athletic","5":"Blackburn Rovers","92":"Blackpool","24":"Derby County"};  /* pre-2016 clubs that never appear in the 2016+ data: named in Career Path, no grid axis */
   return {franchises:F, keyOf:function(a){return a;},
-    name:function(a){return byKey[a]?byKey[a].name:a;},
+    name:function(a){return byKey[a]?byKey[a].name:(HIST[a]||a);},
     logo:function(a){return byKey[a]?byKey[a].logo:'';}};
 })();

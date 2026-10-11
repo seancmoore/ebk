@@ -81,7 +81,12 @@ function engine(sport, src) {
 
   const file = src === "roster" ? ROSTER_FILE(sport) : DATA_FILE(sport);
   const input = JSON.parse(fs.readFileSync(file, "utf8"));
-  if (src !== "roster") inflate(input);
+  if (src !== "roster") {
+    inflate(input);
+    // full careers: pre-window rows of players already in the dataset (data/raw/career/<sport>.json)
+    const cf = path.join(ROOT, "data", "raw", "career", sport + ".json");
+    if (fs.existsSync(cf)) for (const r of JSON.parse(fs.readFileSync(cf, "utf8")).players) { r.pre = true; input.players.push(r); }
+  }
 
   const body = `
     const SPORT = ${JSON.stringify(sport)};

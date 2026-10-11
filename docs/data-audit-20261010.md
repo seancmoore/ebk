@@ -204,3 +204,36 @@ All game pages now get their URL from `EBKD.dataUrl(sport)` with one version str
 - 7,899 old-MLB rows show initials instead of a photo (no verified photo exists).
 - GAA/save% leader lines for NHL and skater shots (see above) were not independently re-verified.
 - The old `tools/slim_players.py` pruning slimmer is superseded by `tools/slim_v4.py` and not used.
+
+---
+# Seventh pass: full careers (pre-window seasons) for every sport that has a source
+
+## Design
+Each sport has a raw side file `data/raw/career/<sport>.json` (records in the main shape, pre-window seasons only, ONLY players that already have a row in the window, no headshots) built by its own builder, then shipped as `public/data/[<sport>/]career.json` (slim v4 columnar, lazy). `EBKD.loadCareer` + `EBKD.mergeCareer` (public/js/ebk-loader.js) append the rows flagged `pre:true` after the main rows, in Career Path and in the grid's no-roster fallback. Higher/Lower, Stat Line, Team Study, daily stat pools and the Stat Lab never load it. `tools/solvable.cjs` and `build_grid_roster.cjs` merge the raw file, so `grid-roster.json` already holds full careers. No new players enter any pool (MLB 9,069 and NHL 6,717 players both before and after). Row order of the main data is unchanged, so seeded boards use the same player order (today's boards still differ because careers add valid answers).
+
+## Coverage, size and accuracy
+| Sport | Pre-window source | Players / rows | career.json brotli | Verified sample | Error rate |
+|---|---|---|---|---|---|
+| MLB (before 1990) | Lahman (back to 1871) | 926 players, 4,930 rows | 70 KB | ALL 926 careers vs MLB Stats API yearByYear: 4,930 seasons, 24,833 stat cells | 5 cells (0.02%, all 1-unit); 0 seasons missing or extra |
+| NHL (before 1979-80) | NHL stats API 1917-18..1978-79 | 474 players, 2,271 rows | 35 KB | 68 careers / 506 seasons vs Wikipedia + Hockey-Reference + StatsCrew | 1 row: Billy Smith 1978-79 GP 39 in data vs 40 on Wikipedia and StatsCrew (left unchanged, needs decision); 0 season/team errors |
+| NBA (before 2001-02) | ESPN athlete stats, 1985-2001 | 390 players, 2,171 rows | 39 KB | 61 careers / about 355 seasons vs Basketball-Reference (25) and Wikipedia (26) plus Garnett, Kidd by hand; the 2002 row of 440 players recomputed from the same cache equals the box-score build exactly | 0 of about 355 seasons on seasons, team, pts, reb, ast; 1 disputed games cell (Jabari Smith 2000-01, believed right) |
+| NFL (before 1999) | ESPN athlete stats cache plus a 473-player offense fetch, 1983-1998 | 1,086 players, 4,638 rows | 52 KB | 73 careers / about 520 seasons vs Wikipedia | passing, rushing, receiving, sacks, INT: 0-1 errors per ~170-210 values per field; 6 of 73 players miss a tackle-only season; games 0.4% |
+| Soccer (before 2016-17) | premierleague.com stats API via curl, goals + minutes only | 511 players, 1,966 rows | 16 KB | about 25 careers season by season plus 75 club-total checks vs Wikipedia | about 3% on the clean sample, all Wikipedia-side disagreements; no API error found |
+
+First-load files are unchanged (MLB 658 KB, NHL 643 KB brotli); the career files are fetched only by Career Path. grid-roster.json grew by under 3% raw (MLB 2.03 MB, NHL 1.00 MB, NFL 1.18 MB, NBA 0.27 MB, soccer 0.18 MB; brotli 210 / 169 / 242 / 58 / 44 KB).
+
+## Labels
+NFL, NBA, MLB and NHL career-total categories now read "(career)". Soccer: "40+ Goals (since 1992-93)" (Premier League goals), "30+ FPL Assists (since 2016)", "500+ FPL Pts (since 2016)" and "50+ Clean Sheets (since 2016, GK/DEF)" keep the caveat because those are FPL concepts that do not exist earlier. Pre-2016 soccer rows carry goals and minutes only (assists would mix official PL assists with FPL's inflated ones).
+
+## History-only clubs
+NHL: Oakland Seals, California Golden Seals and Cleveland Barons are named in Career Path with no logo and no grid axis (Kansas City Scouts folds into NJD with the Rockies). Soccer: Portsmouth, Wigan, Bolton, Reading, QPR, Birmingham, Charlton, Blackburn, Blackpool and Derby are named through `HIST` in the generated soccer-teams.js (written by build_soccer.py from raw/career/soccer_hist_clubs.json), with no axis.
+
+## Tests
+solvable.cjs: all five grid sports 0 errors and 0 cells with 1-2 answers (today plus 15 more dates; soccer on 30 dates; thinnest cell NFL 18, NBA 28, MLB 17, NHL 6, soccer 4). Browser smoke (playwright-core + Edge copy of smoke.cjs) for cfb, nfl, nba, mlb, nhl, soccer: all green (77 assertions; CFB skips the career fetch). Career Path pages for all six sports load career.json with HTTP 200 (CFB has none) and clean consoles. Cache version ?v=15 (EBKD.dataUrl, EBKD.careerUrl, ROSTER_URL, DATA_V). deep-cut-smoke: same 6 pre-existing home-chip failures.
+
+## Still truncated / open
+- CFB: window 2014, no pre-2014 source was attempted.
+- NFL: ESPN has no row for tackle-only pre-1993 seasons; traded-season games and clubs are unreliable on about 30 rows (Lawrence Phillips 1997 etc.); position taken from the earliest window row; fantasy points and tackles absent pre-1999 by design.
+- NHL: WHA seasons are not NHL data; Billy Smith 1978-79 GP 39 vs 40.
+- Soccer: 1992-93 to 2015-16 goals and minutes only; players never in the 2016+ data are not added; multi-club season order is by appearances (the API has no dates).
+- NBA: pool is players still active in 2001-02 or later; Anthony Miller 2000-01 lists ATL, HOU (Houston stint unconfirmed).
