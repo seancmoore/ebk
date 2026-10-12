@@ -1,6 +1,29 @@
 {
- "generated": "2026-10-09",
+ "generated": "2026-10-11",
  "articles": [
+  {
+   "slug": "home-field-advantage",
+   "title": "Home Court Is Shrinking. Denver Still Has One.",
+   "dek": "On a straight line through the seasons, NBA home teams won 61.7% of games in 2002 and 55.3% in 2026. The NFL slide could be noise, the empty arenas of 2020-21 took the edge away, and Denver, a mile above sea level, still has the biggest one.",
+   "kicker": "",
+   "byline": "",
+   "date": "2026-10-11",
+   "tags": [
+    "home-field",
+    "crowds",
+    "altitude",
+    "betting"
+   ],
+   "sports": [
+    "nfl",
+    "nba"
+   ],
+   "readMins": 13,
+   "accent": "#ffc247",
+   "bg": "#0a0e1c",
+   "report": true,
+   "image": "/deep-bag/home-field-advantage/share.png"
+  },
   {
    "slug": "fresh-start-myth",
    "title": "The Fresh-Start Myth",

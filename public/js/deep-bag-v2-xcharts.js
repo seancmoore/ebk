@@ -210,7 +210,7 @@ function drawAgecurve(stage, spec) {
   for (let a = Math.ceil(xd[0]); a <= xd[1]; a++) ages.push(a);
   function at(a, cx, cy) {
     guide.setAttribute("x1", sx(a)); guide.setAttribute("x2", sx(a)); guide.setAttribute("opacity", 1);
-    let h = `<b>Age ${a}</b>`;
+    let h = `<b>${esc(spec.x.tipLabel || "Age")} ${a}</b>`;
     spec.series.forEach((s, i) => {
       const p = s.points.find(q => q.x === a);
       if (!p) { hot[i].setAttribute("opacity", 0); return; }

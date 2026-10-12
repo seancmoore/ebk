@@ -129,7 +129,7 @@ were born with; `deep-bag-v2.css` styles them (series colours `s-ink`, `s-ink2`,
 
 | `type` | Fields | Renders |
 |---|---|---|
-| `agecurve` | `x{domain, ticks, label}`, `y{domain, ticks}`, `yfmt` ("pct" / "sd"), `series[{key, label, short?, cls, gaps?, points[{x, v, n?, thin?}]}]`, `band{lo, hi, from?, label}`, `bars{label, points[{x, v}], accentFrom?}`, `hlines[{v, label, cls?}]`, `marks[{series, x, label?, below?}]`, or `panels[...]` + `panelGroups` for small multiples | numeric-x lines that draw on scroll, end labels with collision nudging, a hatched band, dashed thin ages, count bars, a hover crosshair (arrow keys too). |
+| `agecurve` | `x{domain, ticks, label}`, `y{domain, ticks}`, `yfmt` ("pct" / "sd"), `series[{key, label, short?, cls, gaps?, points[{x, v, n?, thin?}]}]`, `band{lo, hi, from?, label}`, `bars{label, points[{x, v}], accentFrom?}`, `hlines[{v, label, cls?}]`, `marks[{series, x, label?, below?}]` (a mark with no label is a bare ring), `x.tipLabel` (hover heading word, default "Age"; home-field-advantage uses "Season"), or `panels[...]` + `panelGroups` for small multiples | numeric-x lines that draw on scroll, end labels with collision nudging, a hatched band, dashed thin ages, count bars, a hover crosshair (arrow keys too). |
 | `rangeplot` | `x{domain, ticks}`, `groups[{label, rows[{label, short?, emph?, value?, note?, segs[{a, b, cls, label?}], marks[{v, cls, label}]}]}]`, `ref{v, label}`, `legend[{cls, label}]`, `labelW` [narrow, wide] | rows of ranges and markers on one axis (dumbbells, prime/slide/cliff timelines). |
 | `ridge3d` | `x{domain, ticks}`, `y{cap, threshold}`, `rows[{label, short, emph?, fe[{x, v, n?, thin?}], delta[...], fast, slow, end}]`, `flat` (an agecurve spec for the Flat view), `view{theta, phi, thetaNarrow, phiNarrow}` | one curtain per row, value hanging down, a glass waterline at `threshold`; 3D / Flat / Table. |
 
@@ -190,6 +190,7 @@ own. `caption` is shown under the standfirst only while the scene runs.
 | `return-bowl` | revenge-game | `{n, v: [fpts vs expected per game]}` | `arcs` 2, `accentEvery` 4, `arcColor`, `caption` |
 | `champagne-bubbles` | champagne-no-hangover | `{c: [[league 0-3, season, zThis, zNext, zExp]]}` | `color`, `from`, `to`, `bubbles` |
 | `cliff-ridges` | the-cliff | v3 (2026-10-09, "the trail to the cliff": low-poly mesas whose rims are the RB / WR / NHL D curves, runners stepping off at the cliff age): `#cliff-edge-data` = `{v: 3, mesas: [{g, pts, n, fast, slow, peak}]}` from the study's `scripts/17_export_hero_v3.py`; the old `{rows, threshold}` still works | `freeze` (seconds, a still), `xs`/`ys`/`dist` (re-frame a still) |
+| `arena-bowl` | home-field-advantage | none (nothing is data) | `crowd` (peak fraction of seats filled, 1), `cycle` (22 s loop: full, thins out, empty, refills), `layout` "wide" / "tall", `freeze` `{t, crowd}` (stills), `cam` `[x,y,z,lx,ly,lz]`. Hosted with `data-scene-src="/js/deep-bag-v2-scenes/arena-bowl.js"` like trade-desk. Phone stills `outputs/hero/arena-{wide,tall}.webp` (2880x1800, 780x1520) are rendered from it with `freeze`. |
 
 A new scene goes in `public/js/deep-bag-v2-scenes/<name>.js` (default export = build) and its name
 in `BUILT_IN_MODULES` in the core; or a study hosts it and points at it with `data-scene-src` (the

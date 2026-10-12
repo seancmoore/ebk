@@ -1,0 +1,252 @@
+<meta name="deep-bag-version" content="2">
+<title>Home-Field Advantage in the NFL and NBA: A Technical Report</title>
+<style>
+
+  /* Deep Bag v2 report skin: same type and ground as the story (Bricolage Grotesque,
+     Schibsted Grotesk, Martian Mono on deep navy), soft glow instead of hairlines.
+     One accent (gold), used for the finding.
+     The matplotlib figures are light, so they sit on rounded paper cards. */
+  :root {
+    --bg: #080b17; --surface: rgba(255,255,255,0.035); --surface-2: rgba(255,255,255,0.06); --line: rgba(255,255,255,0.07);
+    --text: #e6eaf4; --muted: #8d98b8; --faint: #5c6789;
+    --sig: #ffc247; --marg: #d6b77a; --nonsig: #6b7699;
+    --accent: #ffc247;
+    --font-ui: 'Schibsted Grotesk', 'Segoe UI', system-ui, sans-serif;
+    --font-display: 'Bricolage Grotesque', 'Schibsted Grotesk', system-ui, sans-serif;
+    --font-mono: 'Martian Mono', ui-monospace, Consolas, monospace;
+    --glow: 0 0 0 1px rgba(255,255,255,0.05), 0 30px 80px -40px rgba(0,0,0,0.8);
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-ui); margin: 0; padding: 0 22px 90px; font-size: 16px; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 940px; margin: 0 auto; }
+  ::selection { background: rgba(255,194,71,0.3); }
+
+  header.head { padding: 34px 0 28px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; }
+  .doc-kicker { font-family: var(--font-ui); font-weight: 600; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  h1 { font-family: var(--font-display); font-size: clamp(30px, 4.4vw, 46px); font-weight: 700; line-height: 1.02; margin: 0 0 14px; letter-spacing: -0.028em; color: #fff; }
+  .subtitle { color: var(--muted); font-size: 16px; line-height: 1.55; max-width: 62ch; margin: 0; }
+  .doc-meta { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); text-align: right; line-height: 1.8; white-space: nowrap; }
+
+  .stat-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: 10px 0 0; }
+  .stat-strip > div { background: var(--surface); border-radius: 18px; padding: 16px 18px; box-shadow: var(--glow); }
+  .stat-strip .v { font-family: var(--font-mono); font-weight: 600; font-size: 22px; letter-spacing: -0.03em; color: #fff; }
+  .stat-strip .k { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  nav.toc { display: flex; flex-wrap: wrap; gap: 8px; padding: 22px 0 8px; font-size: 13px; }
+  nav.toc a { color: var(--muted); text-decoration: none; padding: 7px 13px; border-radius: 999px; background: var(--surface); box-shadow: 0 0 0 1px var(--line); }
+  nav.toc a:hover { color: #fff; box-shadow: 0 0 0 1px rgba(255,194,71,0.5); }
+
+  section { padding: 38px 0 18px; }
+  h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 10px; display: flex; align-items: baseline; gap: 12px; color: #fff; }
+  h2 .sec-no { font-family: var(--font-mono); color: var(--faint); font-weight: 500; font-size: 14px; }
+  h3 { font-family: var(--font-display); font-size: 17px; font-weight: 650; margin: 30px 0 10px; color: #fff; }
+  .section-note { color: var(--muted); font-size: 14px; margin: 0 0 20px; max-width: 72ch; }
+  p { line-height: 1.68; font-size: 15.5px; max-width: 74ch; margin: 0 0 14px; color: #cdd3e4; }
+  p b, li b { color: #fff; }
+  a { color: #fff; text-decoration-color: rgba(255,194,71,0.6); text-underline-offset: 3px; }
+  code { font-family: var(--font-mono); background: var(--surface-2); padding: 2px 6px; border-radius: 6px; font-size: 0.82em; color: #dfe4f2; }
+
+  .funnel { display: flex; align-items: stretch; gap: 18px; margin: 20px 0 10px; flex-wrap: wrap; }
+  .funnel-step { background: var(--surface); border-radius: 18px; padding: 14px 18px; text-align: center; position: relative; flex: 1; min-width: 120px; box-shadow: var(--glow); }
+  .funnel-step:not(:last-child)::after { content: "\2192"; position: absolute; right: -14px; top: 50%; transform: translateY(-50%); color: var(--faint); z-index: 1; font-size: 13px; }
+  .funnel-step .v { font-family: var(--font-mono); font-weight: 600; font-size: 20px; color: #fff; }
+  .funnel-step .k { font-size: 11.5px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+
+  .table-wrap { overflow-x: auto; border-radius: 18px; background: var(--surface); box-shadow: var(--glow); margin: 18px 0; }
+  table { border-collapse: collapse; width: 100%; min-width: 560px; font-family: var(--font-mono); font-size: 12px; }
+  thead th { text-align: right; font-weight: 600; color: var(--muted); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; padding: 12px 14px; background: rgba(255,255,255,0.03); font-family: var(--font-ui); }
+  thead th:first-child { text-align: left; }
+  tbody td { text-align: right; padding: 9px 14px; border-top: 1px solid rgba(255,255,255,0.04); font-variant-numeric: tabular-nums; color: #dfe4f2; }
+  tbody td.lbl { text-align: left; font-family: var(--font-ui); font-weight: 600; font-size: 13px; color: #fff; }
+  tbody tr:nth-child(even) { background: rgba(255,255,255,0.018); }
+  .p-sig { color: var(--sig); font-weight: 600; }
+  .p-marg { color: var(--marg); font-weight: 600; }
+  .p-nonsig { color: var(--nonsig); }
+
+  .legend-row { display: flex; gap: 20px; font-family: var(--font-ui); font-size: 12.5px; color: var(--muted); margin: 6px 0 22px; flex-wrap: wrap; }
+  .legend-row span { display: inline-flex; align-items: center; gap: 7px; }
+  .legend-row i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+  .matrix-wrap { overflow-x: auto; margin: 16px 0 22px; }
+  table.matrix { border-collapse: separate; border-spacing: 6px; font-family: var(--font-mono); font-size: 12.5px; width: auto; min-width: 0; }
+  table.matrix th, table.matrix td { padding: 12px 18px; text-align: center; border-radius: 12px; background: var(--surface); }
+  table.matrix th { font-family: var(--font-ui); font-weight: 600; font-size: 11.5px; color: var(--muted); background: transparent; }
+  table.matrix td.diag { background: rgba(143,156,194,0.12); }
+  table.matrix td.up { background: rgba(255,194,71,0.13); }
+  table.matrix td.down { background: rgba(214,183,122,0.13); }
+  table.matrix td .sub { color: var(--muted); font-size: 10.5px; }
+  .matrix-cap { font-size: 13px; color: var(--muted); margin-top: 8px; }
+
+  .case-box { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; }
+  .case-col { padding: 18px 20px; background: var(--surface); border-radius: 18px; box-shadow: var(--glow); }
+  .case-col h4 { margin: 0 0 10px; font-size: 12px; font-family: var(--font-ui); text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+  .case-row { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 12.5px; padding: 6px 0; border-bottom: 1px dashed rgba(255,255,255,0.07); }
+  .case-row:last-child { border-bottom: none; }
+  .case-row b { font-weight: 600; color: #fff; }
+  @media (max-width: 640px) { .case-box { grid-template-columns: 1fr; } }
+
+  .callout { background: var(--surface); border-radius: 18px; padding: 16px 20px; margin: 18px 0; font-size: 15px; line-height: 1.6; max-width: 74ch; box-shadow: inset 3px 0 0 var(--accent), var(--glow); color: #cdd3e4; }
+  .callout b { color: var(--accent); }
+  .note-open { background: rgba(214,183,122,0.06); border-radius: 18px; padding: 16px 20px; margin: 20px 0 16px; font-size: 15px; line-height: 1.6; max-width: 74ch; box-shadow: inset 3px 0 0 var(--marg); color: #cdd3e4; }
+  .note-open b { color: var(--marg); }
+  .footnote-aside { color: var(--muted); font-size: 0.92em; }
+
+  ul.limits, ol.limits { margin: 0; padding-left: 20px; max-width: 74ch; }
+  ul.limits li, ol.limits li { font-size: 15px; line-height: 1.65; margin-bottom: 12px; color: #cdd3e4; }
+
+  footer.colophon { padding-top: 28px; font-family: var(--font-ui); font-size: 13px; color: var(--muted); line-height: 1.8; }
+
+  .fig { width: 100%; height: auto; display: block; background: #fff; border-radius: 20px; padding: 10px; margin: 14px 0 8px; box-shadow: var(--glow); }
+  .figcap { font-size: 13.5px; color: var(--muted); margin: 6px 0 24px; max-width: 78ch; line-height: 1.55; }
+  .kv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+  .kv div { background: var(--surface); border-radius: 14px; padding: 12px 14px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+  .kv b { display: block; font-size: 17px; color: #fff; }
+  @media (max-width: 640px) { header.head { grid-template-columns: 1fr; } .doc-meta { text-align: left; white-space: normal; } .stat-strip { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 480px) { body { padding: 0 14px 70px; } .stat-strip { grid-template-columns: repeat(2, 1fr); } .stat-strip > div:last-child { grid-column: 1 / -1; } .kv { grid-template-columns: 1fr 1fr; } }
+
+</style>
+<div class="wrap">
+<header class="head"><div>
+  <div class="doc-kicker">The technical report behind the home-field study</div>
+  <h1>Home-Field Advantage in the NFL and NBA: A Technical Report</h1>
+  <p class="subtitle">The method, tables and checks behind the story. Plain-language results come first, then how the data was built, the models, the 2020-21 natural experiment and the limits. Every figure is produced by a numbered, rerunnable script and traced in a numbers register.</p>
+</div><div class="doc-meta">v1 &middot; 2026-10-11<br>NFL 1999 to 2025 &middot; NBA 2002 to 2026<br>Plain-language results first,<br>then the method</div></header>
+
+<div class="stat-strip">
+  <div><div class="v">6,901</div><div class="k">NFL games</div></div>
+  <div><div class="v">29,947</div><div class="k">NBA games</div></div>
+  <div><div class="v">574</div><div class="k">NBA games with zero fans</div></div>
+  <div><div class="v">56.5%</div><div class="k">NFL home win rate</div></div>
+  <div><div class="v">58.6%</div><div class="k">NBA home win rate</div></div>
+</div>
+<nav class="toc"><a href="#s0">Summary</a><a href="#t1-1-data-and-constructio">1 Data</a><a href="#t2-2-per-season-edge-and-">2 Seasons</a><a href="#t3-3-quality-control-06-q">3 Quality</a><a href="#t4-4-natural-experiment-0">4 2020-21</a><a href="#t5-5-team-and-venue-edges">5 Teams</a><a href="#t6-6-through-line-case-09">6 Denver</a><a href="#t7-7-fan-section-10-fan-t">7 Fans</a><a href="#t8-8-verification-11-veri">8 Checks</a><a href="#t9-9-limitations">9 Limits</a><a href="#t10-10-file-map">10 Files</a><a href="#q1-how-big-is-the-edge-">Trend</a><a href="#q2-is-the-edge-real-onc">Real edge</a><a href="#q3-the-2020-21-natural-">Natural experiment</a><a href="#q4-which-teams-and-venu">Teams</a><a href="#q5-through-line-case-th">Denver case</a><a href="#q6-so-what-for-a-fan">For fans</a><a href="#caveats">Caveats</a><a href="#cannot">Not done</a><a href="#rederive">Re-derivation</a><a href="#chartdata">Chart data</a></nav>
+
+<section id="s0"><h2>Summary of findings</h2>
+
+<p><b>The NBA home edge has really shrunk, roughly halving in points over 24 years; the NFL edge has probably slipped a little but could be noise; the 2020-21 empty arenas show the crowd is a big part of the edge; and the biggest lasting home edges belong to Denver and Utah, though even theirs has shrunk.</b></p>
+<p>Sports covered: <b>NFL (1999-2025) and NBA (2002-2026).</b> MLB and NHL were left out because the data on disk cannot support them honestly (see "What we could not do").</p>
+<h3>Key numbers</h3>
+<ol class="limits"><li><b>NBA: the home edge is clearly falling.</b> A straight line through the seasons goes from a 61.7% home win rate in 2002 to 55.3% in 2026. Out of every 82 home games, the home team now wins about <b>5.2 fewer</b> than at the start (95% interval 2.0 to 8.4); for one team&rsquo;s 41 home games that is 2.6 fewer wins a season. In points, the home edge went from about 3.65 to 1.87 (a change of −1.78, interval −3.04 to −0.56). The share of resamples in which the trend slopes downward is 99.9%.</li><li><b>NFL: a slide, but the data cannot prove it.</b> The line goes from 58.3% to 54.6% (about −1.4 points of win rate per decade, interval −3.3 to 0.5, which includes zero). That is 0.63 fewer home wins per 17 home games, or 0.31 per team-season (interval for the 17-game version −0.23 to 1.47; a negative number would mean MORE home wins, so zero is inside the interval). In points: 2.83 down to 1.87, interval for the change −2.57 to 0.68. Recent seasons (2021-2025) average 2.06 points and a 53.9% home win rate.</li><li><b>It is real, and not just better teams happening to be at home.</b> After controlling for team quality the home edge is <b>2.36 points in the NFL</b> (interval 2.04 to 2.68) and <b>2.78 points in the NBA</b> (interval 2.66 to 2.90). It shows up for every kind of matchup: the NFL edge is positive for big home underdogs (1.8 points) and for big home favourites (2.9) alike.</li><li><b>Empty arenas took the NBA edge away.</b> In the 574 NBA games of 2020-21 played with zero fans, home teams won <b>50.5%</b> (290 of 574) with an average margin of −0.10 points. That is −2.8 points of edge compared with each team&rsquo;s own normal (interval −4.0 to −1.6). NFL 2020 looks similar: a 50.4% home win rate and a 0.14 point margin, −1.75 points versus each team&rsquo;s own 2015-19 norm (interval −3.43 to −0.07).</li><li><b>Team-by-team differences are real in the NBA and invisible in the NFL.</b> NBA franchises differ in home edge by more than luck (p = 0.0002), and the same teams tend to be big in both eras (correlation 0.49, interval 0.09 to 0.74). NFL franchises do not: the spread of NFL team edges is what luck alone would produce (p = 0.65), and the early-era leaders were not leaders later (correlation −0.29, interval −0.58 to 0.09).</li><li><b>The biggest persistent home edges: Denver and Utah.</b> Denver +2.1 points above the league&rsquo;s typical home edge (interval 0.9 to 3.3), Utah +2.0 (interval 0.8 to 3.3), first and second of 30. After shrinking for luck, the best guess is about +1.1 each.</li><li><b>No betting angle.</b> NFL home teams covered the closing spread 49.0% of the time over 6,712 games (interval 47.8 to 50.2); break-even at standard prices is 52.4%. The market already knows about home field.</li><li><b>What home field is worth.</b> Two evenly matched teams: the home side wins 58.7% of NFL games and 59.4% of NBA games. In the most recent five NBA seasons it is 56.0% (interval 53.1 to 58.7). Home games gave an NBA team about 4.3 extra wins a season in the first ten seasons and 2.7 in the last ten.</li></ol>
+<div class="callout"><b>Reading the ranges.</b> Every &ldquo;interval&rdquo; here is a 95% interval: the span the true value would land in about 95 times out of 100 if the whole study were repeated. They come from redrawing whole home teams within each season (4,000 times for the season trends, 10,000 for the natural-experiment comparisons), so one great home team cannot make a result by itself. An interval that includes zero means the data cannot tell the effect from no effect.</div>
+</section>
+
+<section id="t1-1-data-and-constructio"><h2>1. Data and construction</h2>
+
+<p><b>NFL</b> (<code>01_build_nfl_games.py</code>): nflverse <code>games.csv</code>, 1999-2025 (the 2026 season has only two played games and is excluded). Home edge is measured on regular-season games with <code>location == Home</code> (6,901 games). Neutral-site games (Super Bowls, international games, the 2020 relocated 49ers games) are flagged and excluded. Ties count as half a win. <code>spread_line</code> is positive when the home team is favoured and contains the market&rsquo;s own home allowance. Franchise moves are merged (OAK to LV, SD to LAC, STL to LA).</p>
+<p><b>NBA</b> (<code>02</code>, <code>03</code>, <code>04</code>): two sources. (a) ESPN box-score parquet files collapse to one row per game (<code>02</code>). (b) Cached ESPN team-schedule JSON (<code>03</code>) lists every regular-season game with scores, attendance, neutral-site flag and venue; each game appears in both teams&rsquo; files and the copies agree on score and attendance. The base table is the schedule (<code>04</code>) because the box-score files miss 64 completed regular-season games (55 in 2022-23, which is the incompleteness flagged by <code>ebkdata.incomplete_seasons</code>) and tag All-Star games and the play-in as season types. The two sources agree on 30,005 games with 1 disagreement (CHI v POR, 2014-12-12: the box <code>team_score</code> is 96, the player rows sum to 106, the schedule says 106). One DAL v MIA record is final at 0-0 with an empty box score (the raw ESPN game summary is identical) and is dropped. Excluded: 88 bubble seeding games (venue ESPN Wide World of Sports, Jul 30 to Aug 14 2020; the schedule does not flag them as neutral so they are identified by venue) and 34 neutral-site games. Season key is the year the season ends. NBA 2022-23 is therefore included at full strength rather than excluded. Final: 29,947 games.</p>
+<p><b>Left out:</b> MLB (Lahman <code>Teams.csv</code> has <code>Ghome</code> but no home wins or losses; <code>statsapi</code> files are player seasons) and NHL (player season JSONs only). Neither has game results on disk.</p>
+<p><b>Seasons with abnormal crowds:</b> NFL 2020 and NBA 2020-21 are excluded from trend fits and always shown separately. NBA 2019-20 keeps its pre-bubble games (full crowds).</p>
+</section>
+
+<section id="t2-2-per-season-edge-and-"><h2>2. Per-season edge and trend</h2>
+<p class="section-note">Scripts: <code>05_season_edges.py</code></p>
+<p>For each sport-season: home win rate, average home margin, and 95% intervals from a <b>cluster bootstrap</b> (4,000 draws): within each season resample the home-team clusters with replacement and recompute the mean. The clustering unit is the home team because a team&rsquo;s home games share a venue, a crowd and team-specific effects.</p>
+<p>Trend: ordinary least squares slope of the season values on season, excluding abnormal-crowd seasons, with the slope&rsquo;s interval taken from the same bootstrap draws (so it carries the within-season clustering). Also reported: first-ten versus last-ten seasons (games-weighted), a pre-2020-only slope, and a Theil-Sen median-of-pairwise-slopes check. Everyday units: win-rate change times 82 (NBA) or 17 (NFL) home games; times 41 or 8.5 for one team&rsquo;s home slate. "Extra wins a season" in the fan section is home games times (home win rate minus 0.5).</p>
+</section>
+
+<section id="t3-3-quality-control-06-q"><h2>3. Quality control</h2>
+<p class="section-note">Scripts: <code>06_quality_control.py</code>, <code>nba_ratings.py</code></p>
+<p><b>NFL:</b> quality = closing spread centred within the season (the season mean spread is the market&rsquo;s home allowance). Per season: margin = a + b x quality, <code>a</code> = controlled edge. Mean slope b = 1.05, i.e. the market is well calibrated.</p>
+<p><b>NBA:</b> ridge regression per season, margin = H + r_home - r_away, penalty lambda = 10 on team ratings (not on H), chosen by minimising leave-one-out prediction error over all seasons (grid 0.5 to 320). <b>Exact leave-one-out ratings</b> use the closed-form ridge downdate beta_(-i) = beta - A^−1 x_i e_i / (1 - h_ii), so the game being predicted never enters the ratings applied to it. Verified against brute-force refits on 80 games (largest gap 8e-15 points). Stage two: margin = a + b x (leave-one-out rating gap, centred). Robustness: the same with previous-season full-season ratings (no leakage at all, noisier because rosters change; slope b is attenuated to about 0.7).</p>
+<p><b>What the control does and does not do:</b> with the quality gap centred, <code>a</code> equals the raw mean margin by construction in balanced schedules; the gains are (1) per-season interval half-width falls from 1.82 to 0.59 points (NBA, leave-one-out) and from 2.47 to 1.61 (NFL); (2) the matchup-quality tables show the edge is the same sign and similar size for underdogs and favourites (NFL 1.8 to 2.9 points; NBA 2.3 to 3.0); (3) NFL market comparison. The controlled intervals take the ratings as fixed (a known limitation: they understate uncertainty).</p>
+<p>Controlled trend per decade: NFL −0.37 (interval −0.78 to 0.04); NBA leave-one-out −0.74 (interval −0.91 to −0.57); NBA previous-season −0.76 (interval −1.21 to −0.31).</p>
+</section>
+
+<section id="t4-4-natural-experiment-0"><h2>4. Natural experiment</h2>
+<p class="section-note">Scripts: <code>07_natural_experiment.py</code></p>
+<p>Per-game outcome r = margin minus centred quality gap. A team&rsquo;s home edge in a season is the mean r over its home games. <b>Change estimate</b> for a focus season: for each team, (mean r in its focus-season home games) minus (mean r in its home games over the five baseline seasons 2015-19), averaged over teams; interval from 10,000 resamples of teams (team-clustered, each team counts once). Wider baselines (NFL 2009-19, NBA 2012-19) give the same story (−2.24 NFL 2020; −1.77 NBA 2020-21).</p>
+<p><b>Placebo in time:</b> the standard deviation of (a season&rsquo;s league edge minus the mean of the previous five normal seasons) is 0.88 points (NFL) and 0.33 (NBA). NBA 2020-21 (−1.67) is far outside that; NFL 2020 (−1.75) is about two such wobbles.</p>
+<p><b>NBA dose-response:</b> ESPN per-game attendance (zero in 53% of 1,080 2020-21 games; the attendance field is treated as truly zero only in that season, elsewhere zero means missing). Outcome y = r minus the home team&rsquo;s own 2015-19 average r. Predictor = attendance as a share of that team&rsquo;s 2015-19 average crowd (mean 8%). Reported as bins and as a same-month comparison (month-balanced difference, weights = the smaller group size in each month, team-clustered bootstrap, 3,000 draws) to strip out the calendar trend within the season.</p>
+<p><b>Bubble placebo:</b> ratings from the pre-bubble 2019-20 games rate the 88 seeding games; the nominal home team&rsquo;s controlled edge is +1.65 points (interval −1.1 to 4.4; underpowered).</p>
+</section>
+
+<section id="t5-5-team-and-venue-edges"><h2>5. Team and venue edges, persistence</h2>
+<p class="section-note">Scripts: <code>08_teams_persistence.py</code></p>
+<p>Team edge u = (mean team-perspective margin at home minus on the road) minus the same league figure. Quality cancels from a home-minus-road difference. NFL primary version uses margin minus spread, so a team&rsquo;s habit of beating or missing the market also cancels (a first draft using home games only against the spread ranked franchises by overall quality and was dropped). NFL check: raw margin version.</p>
+<p>Minimum games: 90 NFL / 400 NBA home games (all franchises pass; relocations are one franchise). Heterogeneity: Cochran&rsquo;s Q across franchises (NBA p = 0.0002; NFL p = 0.65); method-of-moments true spread tau = sqrt(variance of observed edges minus mean squared standard error), floored at 0 (NBA 0.67, NFL 0.00).</p>
+<p>Persistence: split the seasons into early/late era (NFL 1999-2012 v 2013-2025; NBA 2002-2013 v 2014-2026) and odd/even seasons. Pearson and Spearman correlations of franchise edges across halves, permutation p-value (20,000 label shuffles, one-sided), team-bootstrap interval (5,000), and a carry-over slope. Results: NBA era 0.49 (interval 0.09 to 0.74, p = 0.003), odd/even 0.46; NFL era −0.29 (interval −0.58 to 0.09), odd/even −0.08. The NFL spread-free check agrees in sign (no persistence).</p>
+<p>Venue tables use the arena/stadium a team played most home games in each season, with each season&rsquo;s home-minus-road contrast as the unit (NBA at least 10 seasons, NFL at least 8). They are descriptive; NFL venue values are noisy.</p>
+</section>
+
+<section id="t6-6-through-line-case-09"><h2>6. Through-line case</h2>
+<p class="section-note">Scripts: <code>09_throughline_denver.py</code></p>
+<p>Denver and Utah rank first and second of 30 NBA franchises in the pooled-game estimator (script 08) and in the team-season average estimator; the "top two" statistic is 2.01 versus 1.12 when team labels are permuted across team-seasons (p about 0.0005). The altitude link was noticed after ranking (post hoc). Mechanism check (visitors on a back-to-back at Denver or Utah, differences-in-differences against all other arenas, home team rested, 2020-21 excluded) gives 0.7 points (interval −0.7 to 2.0): inconclusive. The empty-arena season check for Denver compares 13-9 zero-fan games with every other team&rsquo;s zero-fan games: +1.6 points (interval −3.6 to 6.8). Selection of the featured games follows the stated rules in <code>outputs/tables/throughline_games.csv</code>.</p>
+</section>
+
+<section id="t7-7-fan-section-10-fan-t"><h2>7. Fan section</h2>
+<p class="section-note">Scripts: <code>10_fan_take.py</code></p>
+<p>Equal-team games: NFL |centred spread| at most 3 points; NBA the middle fifth of leave-one-out rating gaps; Wilson intervals. Against the spread: pushes dropped, binomial/Wilson intervals, break-even 52.4% at −110 pricing. NFL playoffs: true home games only; no NBA line exists on disk.</p>
+</section>
+
+<section id="t8-8-verification-11-veri"><h2>8. Verification</h2>
+<p class="section-note">Scripts: <code>11_verify.py</code></p>
+<p>(V1) NFL season home margins and win rates recomputed with the csv module (identical to machine precision), linregress slope −1.4 per decade. (V2) NBA win rates recomputed from the box-score parquet files: slope −2.6 per decade, largest season gap to the schedule table 0.34 points. (V3) Zero-fan 2020-21 games re-parsed from raw JSON: 574 games, 50.5% home win rate, confirmed against box-score home/away flags. (V4) Closed-form leave-one-out ratings versus brute force. (V5) Denver 2022-23 from the box-score file (which is missing a few games) gives 33-7 at home and 19-19 on the road, never more than the schedule-based 34-7 home and 19-22 road.</p>
+</section>
+
+<section id="t9-9-limitations"><h2>9. Limitations</h2>
+
+<ul class="limits"><li>Cluster-by-home-team intervals ignore shared opponents and travel; seasons are treated as independent.</li><li>NBA controlled intervals treat ratings as known.</li><li>NFL attendance is not on disk, so the NFL natural experiment is whole-season.</li><li>Multiple comparisons: two sports, several windows, several tables. Only effects large relative to their intervals are headline findings.</li><li>The 2022-23 NBA postseason is not in the box-score files; the schedule cache is regular-season only.</li><li>Team edges are home-minus-road contrasts, which also absorb road-specific effects (travel, rest) of a team&rsquo;s own away games.</li></ul>
+</section>
+
+<section id="t10-10-file-map"><h2>10. File map</h2>
+
+<div class="table-wrap"><table><thead><tr><th>Path</th><th>Content</th></tr></thead><tbody><tr><td class="lbl"><code>scripts/01</code> to <code>scripts/12</code></td><td style="text-align:left">numbered pipeline; <code>run_all.py</code> runs them in order; <code>13_write_docs.py</code> renders the documents</td></tr><tr><td class="lbl"><code>data/processed/</code></td><td style="text-align:left"><code>nfl_games.csv</code>, <code>nba_schedule_espn.csv</code>, <code>nba_games_box.csv</code>, <code>nba_games.csv</code>, <code>*_quality.csv</code>, <code>nba_team_season_contrast.csv</code>, <code>nba_2021_dose.csv</code></td></tr><tr><td class="lbl"><code>outputs/tables/</code></td><td style="text-align:left">every result table and <code>results_*.json</code></td></tr><tr><td class="lbl"><code>outputs/charts/</code></td><td style="text-align:left">chart-ready CSV/JSON and <code>manifest.json</code></td></tr></tbody></table></div>
+</section>
+
+<section id="q1-how-big-is-the-edge-"><h2>Results: 1. How big is the edge each season, and is there a downward trend?</h2>
+
+<ul class="limits"><li>Over all normal seasons NFL home teams win 56.5% and outscore visitors by 2.36 points a game (6,901 games). NBA home teams win 58.6% and outscore visitors by 2.78 (29,947 games). Season-by-season values are in <code>outputs/tables/nfl_season_edges.csv</code> and <code>nba_season_edges.csv</code>.</li><li><b>NBA trend:</b> −2.7 percentage points of win rate per decade (interval −4.3 to −1.0), a fitted fall of −6.4 points over 24 years (interval −10.2 to −2.4). First ten normal seasons 60.4%, last ten 56.7%: a difference of −3.7 points (interval −6.4 to −1.1). The margin went from 3.29 to 2.27 points (−1.02, interval −1.85 to −0.23).</li><li><b>NFL trend:</b> −1.4 points per decade (interval −3.3 to 0.5); first ten seasons 57.3%, last ten 55.0% (−2.3 points, interval −5.6 to 1.1). The share of resamples with a downward slope is 93.0%, so a decline is likely but not established.</li><li><b>Honest uncertainty.</b> The NBA decline is strong over the whole period but milder if you stop at 2019: −1.7 points of win rate per decade with an interval of −4.3 to 0.9, which includes zero. Much of the drop is the lower level since 2020 (55.3% in 2022-2026). The NFL&rsquo;s low point came before COVID: 2019 was already 52.0% with a margin of −0.05 points. The NBA also became a higher-variance game: the typical margin spread rose from 12.8 to 14.6 points between the first and last ten seasons, which is one reason a given point edge wins fewer games.</li></ul>
+</section>
+
+<section id="q2-is-the-edge-real-onc"><h2>Results: 2. Is the edge real once team quality is controlled?</h2>
+
+<ul class="limits"><li>NFL control: the closing point spread (the market&rsquo;s view of the matchup). NBA control: a team rating built from every other game of that season, so the game being predicted never helps rate its own teams (an exact leave-one-out fit, checked by brute force). A second NBA check uses last season&rsquo;s ratings and agrees: 2.75 points (interval 2.42 to 3.06).</li><li><b>Result:</b> 2.36 points NFL, 2.78 points NBA. The control does not move the average (schedules are balanced, so "the better team happened to be home" cancels out), but it tightens the season-by-season intervals a lot (NBA half-width 1.82 points raw versus 0.59 controlled) and it answers the real objection: the edge is there for underdogs and favourites alike (NFL 1.8 to 2.9 points across five matchup groups, NBA 2.3 to 3.0).</li><li><b>The trend survives the control.</b> Controlled NBA edge changes −0.74 points per decade (interval −0.91 to −0.57). Controlled NFL edge changes −0.37 per decade (interval −0.78 to 0.04), borderline.</li><li><b>The market adapted.</b> Oddsmakers&rsquo; own home-field allowance fell from 2.51 points (1999-2009) to 1.63 (2021-2025). The real edge fell from 2.59 to 2.06. Since 1999 the average gap between actual margin and the spread is +0.07 points (standard error 0.16), which is no gap.</li></ul>
+</section>
+
+<section id="q3-the-2020-21-natural-"><h2>Results: 3. The 2020-21 natural experiment</h2>
+
+<p>Plain-language method: for each team we compare its home edge that season with the same team&rsquo;s own average over the five normal seasons before (2015-19), then re-run the whole thing 10,000 times resampling teams, so each team counts once and one great home team cannot fake a result.</p>
+<ul class="limits"><li><b>NBA 2020-21:</b> home edge 0.94 points versus a 2.62 baseline, a change of <b>−1.67</b> (interval −2.55 to −0.81). A normal season-to-season wobble is only 0.33 points (standard deviation), so this is far outside normal.</li><li><b>Dose-response inside the season</b> (real per-game attendance from ESPN): games with zero fans, −2.8 points versus the team&rsquo;s own normal (interval −4.0 to −1.6). Games with some fans were back near normal: under 10% of a normal crowd +0.5 (93 games), 10-25% −0.7 (366 games), 25-50% +0.7 (46 games), all with wide intervals. Comparing fan games with no-fan games inside the same calendar month, which removes the "later in the season" effect, fans were worth +2.9 points of edge (interval 1.0 to 5.0). Reading: it looks more like "any crowd versus no crowd" than a smooth dial, but the bins are too noisy to be sure.</li><li><b>Bounce back (NBA):</b> 2021-22 was still −0.89 (interval −1.49 to −0.32; arenas averaged 17,171 fans versus 18,077 the next year), 2022-23 was back to −0.10 (interval −0.80 to 0.60), and then 2023-24 to 2025-26 slipped again to −0.76 (interval −1.31 to −0.27). So the empty-arena hit reversed, but the longer decline did not.</li><li><b>NFL 2020:</b> edge 0.01 points versus 1.76, a change of <b>−1.75</b> (interval −3.43 to −0.07; with a wider 2009-19 baseline −2.24, interval −3.89 to −0.63). The market also cut its own home allowance to 1.08 points that year. The interval for the 2020 margin alone is −2.3 to 2.6, so one NFL season is noisy; the typical NFL year-to-year wobble is 0.88 points. NFL 2021 was −0.28 (interval −1.65 to 1.09) and 2021-2025 together +0.30 (interval −0.38 to 0.98): the edge came back.</li><li><b>Bubble placebo:</b> the 88 2019-20 bubble seeding games (a nominal home team, no crowd, no travel) show +1.65 points for the "home" team (interval −1.1 to 4.4). That test is too small to say anything; it is consistent with zero and with a normal edge.</li><li><b>Not measured:</b> NFL attendance is not on disk. 2020 was mostly empty stadiums with limited crowds at some venues late in the year (general knowledge, not measured here), so the NFL result is "2020 as a whole". Other things changed in 2020-21 too (compressed schedules, COVID absences), so "fans" is the leading explanation, not the only one.</li></ul>
+</section>
+
+<section id="q4-which-teams-and-venu"><h2>Results: 4. Which teams and venues, and is it persistent?</h2>
+
+<ul class="limits"><li>Rule: franchises only enter a ranking with at least 90 NFL or 400 NBA home games (every franchise qualifies; moved franchises are tracked as one franchise). Team edge = (how much better a team does at home than on the road) minus (the same for the league), so team quality drops out. A first draft that looked only at home games against the spread just rediscovered which franchises are good, so it was discarded.</li><li><b>NBA, biggest:</b> DEN, UTAH, IND, POR, LAL (Denver +2.1, Utah +2.0, Indiana +1.5, Portland +1.2). <b>Smallest:</b> BOS, BKN, PHI, NY, CHI (Boston −1.4, Brooklyn −1.3, Philadelphia −1.2, New York −1.2). The estimated true spread of NBA franchise edges is 0.67 points (observed 0.91, typical noise per team 0.62); p = 0.0002 that all franchises are really the same.</li><li><b>NBA persistence:</b> early era (2002-2013) versus late era (2014-2026), correlation 0.49 (interval 0.09 to 0.74, permutation p = 0.003); odd versus even seasons 0.46 (interval 0.13 to 0.70). The five biggest early-era franchises averaged +1.9 points then and +0.7 later; the five smallest −1.5 then and −0.6 later. About 0.39 of an early-era gap carries into the next era. The gaps are also shrinking: estimated true spread 0.84 points early, 0.16 late.</li><li><b>NFL:</b> the largest measured edge is MIN +2.0 (95% interval −0.5 to 4.4), the smallest NYG −2.7 (95% interval −5.3 to −0.1), but the intervals all overlap. Estimated true spread: 0.00 points; typical noise on one franchise is 1.29 (observed spread 1.21). <b>Persistence:</b> early versus late era correlation −0.29 (interval −0.58 to 0.09), odd versus even seasons −0.08 (interval −0.40 to 0.27). <b>A big NFL home edge is mostly noise.</b> The five franchises that looked best early (+3.5 points) averaged −1.9 later. Do not tell a "fortress" story about any NFL stadium on this data. (Venue-level tables, including stadium moves, are in <code>outputs/tables/</code> and are just as noisy.)</li><li><b>Sacramento, the edge that vanished:</b> +1.2 points at Arco/Sleep Train Arena (2002-2016) versus −1.7 at Golden 1 Center (2017-2026), p = 0.006.</li></ul>
+</section>
+
+<section id="q5-through-line-case-th"><h2>Results: 5. Through-line case: the Denver Nuggets, the mile-high edge</h2>
+
+<p>Why Denver: +2.1 points above the league&rsquo;s typical home edge (interval 0.9 to 3.3), best of 30 franchises, with Utah (also high altitude) its twin at +2.0. If team labels were shuffled at random, the top two teams would average 1.12 points; Denver and Utah averaged 2.01 (chance of that by luck about 0.0005). Denver&rsquo;s swing beat the league&rsquo;s in 17 of 24 seasons. Early era +2.4, later era +1.6: smaller but still positive. Caution: we spotted the altitude link after ranking, so "thin air is the reason" is a plausible story, not something this data can prove. A back-to-back test (visitors on the second night of a back-to-back lose by 0.7 more points at Denver or Utah versus elsewhere, interval −0.7 to 2.0, over 457 games) is inconclusive.</p>
+<p><b>The data-supported story in beats, with the real games</b> (home edge = how much better Denver did at home than on the road, compared with the league):</p>
+<ol class="limits"><li><b>2007-08, the fortress years.</b> Denver went 33-8 at home and 17-24 on the road. Average margin 10.5 at home, −3.1 away, a swing 6.7 points above the league&rsquo;s typical home-minus-road swing (league home margin that year 3.4). Game to pull: <b>2008-03-16, vs Seattle SuperSonics (franchise now OKC), Denver 168, OKC 116 (margin +52), 19,155 fans</b>, the largest Denver home margin in the 25 seasons.</li><li><b>2018-19, 34-7 at home.</b> Home 34-7, road 20-21; margins 10.5 at home and −2.6 away, swing 7.7 above the league&rsquo;s. The season ended with a home loss in Game 7: <b>2019-05-12, vs Portland Trail Blazers, Denver 96, POR 100 (margin −4), no attendance in source</b>.</li><li><b>2020-21, the empty building.</b> Denver played its first home game with no fans on <b>2020-12-23, vs Sacramento Kings, Denver 122, SAC 124 (margin −2), zero fans</b>, a home loss, and still finished 13-9 in zero-fan home games. Footage with a silent arena: <b>2021-02-10, vs Cleveland Cavaliers, Denver 133, CLE 95 (margin +38), zero fans</b>.</li><li><b>2022-23, the biggest swing.</b> Home 34-7, road 19-22; margins 9.8 at home and −3.1 away. The 7.9-point swing above the league&rsquo;s is the largest of Denver&rsquo;s 24 seasons in this data (league home margin that year 2.5).</li><li><b>Reality check, it is not a guarantee.</b> Home Game 7 loss in 2024: <b>2024-05-19, vs Minnesota Timberwolves, Denver 90, MIN 98 (margin −8), no attendance in source</b>. Largest Denver home loss in the data: <b>2026-03-06, vs New York Knicks, Denver 103, NY 142 (margin −39), 19,807 fans</b>.</li></ol>
+<p>How Denver did in the empty-arena season: 13-9 at home with zero fans, an average margin of 5.8, +1.5 points over what the ratings predicted (standard error 2.7); versus every other team&rsquo;s zero-fan edge, +1.6 (interval −3.6 to 6.8). Inconclusive: 22 games cannot separate altitude from crowd. Other teams won 50.2% of their zero-fan home games.</p>
+<p>Footage notes: the 2022-23 playoffs (Denver&rsquo;s title season) are missing from the box-score files on disk, so no playoff game from that run is quoted. All dates are Eastern-time game dates. ESPN labels the 2008 visitor "OKC" because it is the same franchise as the Seattle SuperSonics. Playoff scores come from the box-score file (no attendance).</p>
+</section>
+
+<section id="q6-so-what-for-a-fan"><h2>Results: 6. So what for a fan</h2>
+
+<ul class="limits"><li><b>Wins:</b> home games are worth less than they used to be. NBA team: 4.3 extra wins a season (first ten seasons), 2.7 (last ten), 2.2 (latest five). NFL: 0.62, 0.43, 0.34 per 8.5-game home slate. ("Extra wins" means home games times (home win rate minus 50%).)</li><li><b>Evenly matched teams:</b> the home side wins 58.7% in the NFL (2,285 games, interval 56.6 to 60.7) and 59.4% in the NBA (5,773 games, interval 58.1 to 60.6); latest five seasons 57.6% NFL (interval 53.0 to 62.0) and 56.0% NBA (interval 53.1 to 58.7).</li><li><b>Betting:</b> home teams cover 49.0% (away 51.0%; break-even 52.4%); home underdogs cover 50.2% over 2,353 games; in 2021-2025 home teams covered 49.3%. No money in a blanket home or away bet.</li><li><b>Playoffs:</b> NFL home teams won 64.4% of 281 playoff games and beat the spread by +0.70 points on average (standard error 0.80): the 4.6-point average line already reflected it. There is no NBA betting line on disk and the 2022-23 NBA playoffs are missing from the box-score files, so we make no NBA playoff or seeding claim.</li></ul>
+</section>
+
+<section id="caveats"><h2>Caveats and honesty notes</h2>
+
+<ul class="limits"><li>NBA "controlled" intervals treat the leave-one-out ratings as known, so they are narrower than they would be if the rating noise were fully carried through. The raw intervals are the conservative ones.</li><li>Intervals resample whole home teams within a season; they do not model shared opponents or travel. Seasons are treated as independent.</li><li>NBA data: the base table is the ESPN schedule results (complete). It matched the box-score files on 30,005 games with 1 disagreement (a box-score typo; player points sum to the schedule score). 64 games (55 in 2022-23) exist only in the schedule file, which is why 2022-23 is usable. One record (DAL v MIA, 2002-03-02) is marked final at 0-0 with an empty box score and was dropped. 88 bubble games and 34 neutral-site games were excluded.</li><li>The NBA trend is robust across measures but the pre-2020 slope alone is not significant; the post-2020 level is the main driver.</li><li>Several comparisons were run (two sports, several windows, team tables). The headline findings are large relative to their intervals; the small ones (single NFL seasons, the bubble, per-team NFL rankings) should not be quoted as findings.</li><li>The Denver and Utah altitude explanation is a hypothesis; the through-line case is chosen because it is the biggest persistent edge in the data, not because the data proves a cause.</li></ul>
+</section>
+
+<section id="cannot"><h2>What we could not do</h2>
+
+<ul class="limits"><li><b>MLB:</b> the Lahman Teams file has home games played (Ghome) but no home wins and losses, and the MLB StatsAPI files on disk are player season stats. There are no game results, so no honest MLB home edge. Left out.</li><li><b>NHL:</b> the files on disk are player season JSONs only (skaters and goalies). No team game results. Left out.</li><li><b>NFL attendance:</b> not on disk, so no dose-response for NFL 2020.</li><li><b>NBA playoffs:</b> the 2022-23 postseason is absent from the box-score files and the schedule cache covers the regular season only, so no NBA playoff analysis was attempted.</li></ul>
+</section>
+
+<section id="rederive"><h2>Re-derivation check: headline numbers, a second way</h2>
+
+<ul class="limits"><li>NFL win-rate trend recomputed from raw games.csv with the csv module and scipy: −1.4 points per decade (matches −1.4); the ordinary p-value of 0.031 ignores team clustering and is optimistic, which is why the clustered interval is the one we report.</li><li>NBA win-rate trend recomputed from the box-score parquet files (a different source): −2.6 points per decade (matches −2.7); largest season gap between the two sources 0.34 points.</li><li>NBA 2020-21 empty arenas re-parsed from the raw JSON: 574 games, 50.5% home win rate (box scores agree game by game).</li><li>Bonus: closed-form leave-one-out ratings versus brute-force refits on 80 games, largest gap 8e-15 points.</li></ul>
+</section>
+
+<section id="chartdata"><h2>Chart-ready data</h2>
+
+<p><code>outputs/charts/</code> (CSV and JSON, with <code>manifest.json</code>): home edge by season with empty-stadium years flagged, controlled edge by season, team edges ranked, persistence scatters, the Denver timeline, the 2020-21 attendance dose-response, the through-line games. <code>preview.png</code> is a sanity sketch only.</p>
+</section>
+
+<footer class="colophon">Data: nflverse game results with closing point spreads (NFL 1999 to 2025); ESPN box scores and ESPN team schedules with per-game attendance (NBA 2002 to 2026). Working research document; the public-facing story is written separately from the same tables. Every figure is traceable in <code>NUMBERS.md</code> in the study folder.</footer>
+</div>

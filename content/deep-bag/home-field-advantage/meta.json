@@ -1,0 +1,24 @@
+{
+  "slug": "home-field-advantage",
+  "status": "published",
+  "date": "2026-10-11",
+  "tags": [
+    "home-field",
+    "crowds",
+    "altitude",
+    "betting"
+  ],
+  "sports": [
+    "nfl",
+    "nba"
+  ],
+  "source": {
+    "article": "C:\\Users\\panky\\Desktop\\ebk-home-field\\reports\\article_v1.html",
+    "report": "C:\\Users\\panky\\Desktop\\ebk-home-field\\reports\\report_v1.html"
+  },
+  "assets": {
+    "../outputs/hero/arena-wide.webp": "arena-wide.webp",
+    "../outputs/hero/arena-tall.webp": "arena-tall.webp"
+  },
+  "imported": "2026-10-11"
+}
