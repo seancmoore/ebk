@@ -281,3 +281,34 @@ solvable.cjs: all sports 0 errors, 0 cells with 1-2 answers (today plus 6 more d
 - 26 rows exist only in ESPN (players not found on Statscrew rosters, e.g. Michael Brooks, Dexter Davis), 3-4 traded rows have an unknown club order, and 5 game-log club sets disagree with Statscrew (kept Statscrew; see nfl_sources.json).
 - Players with no ESPN id (36) and ESPN 404s (90) get rows only from Statscrew (team, games, sacks/INT for defenders, yards/TDs for offense per the addendum below); check `src` in nfl_sources.json.
 Addendum: the 28 offense rows for 18 players ESPN has no data for (Tommy Maddox, Charles Johnson, Stoney Case, Albert Connell, ...) now carry passing/rushing/receiving yards and TDs from the Statscrew stats tables (e.g. Maddox 1992 DEN 757 yds, 5 TD). Those cells were not part of the 95-career sample; Maddox 1992 matches his known line.
+
+---
+# Ninth pass: college football pre-window and 2014-15 seasons (owner approved)
+
+## What was wrong
+The CFB window is 2014-2025 (data/build_cfb.py, CollegeFootballData), and CFBD has offense only from 2008 and NO defensive stats before 2016. So (a) careers of players with a window row started too late (Baker Mayfield's 2013 Texas Tech season, Jameis Winston's 2013), and (b) the shipped file has almost no 2014-15 defenders: 240 defender rows against 5,239 rows in those two seasons.
+
+## Method
+ESPN's college athlete stats (tools/espn_cfb_fetch.cjs, cached in data/raw/espn_cfb/, 15,855 players = every player whose first window row is 2018 or earlier; CFBD player ids are ESPN ids, so no name matching) list every season with team id, position and the passing, rushing, receiving and defensive tables. `data/build_cfb_career.py` writes `data/raw/career/cfb.json`: ONLY ids already in public/data/cfb/players.json, ONLY seasons that player has no row for, seasons <= 2015, FBS schools only (ESPN team id = CFBD team id, names from the CFBD /teams/fbs?year= lists, cached in data/raw/cfb_pre and data/raw/cfb), same key names as the main file (pyd/ptd/pint, car/ryd/rtd, rec/recyd/rectd, tkl, sk; ESPN has no tackles for loss so tfl is absent), `games` 0 like every CFB row. Shipped lazily as `public/data/cfb/career.json` (slim v4) and merged only by Career Path via `EBKD.loadCareer` (rows flagged `pre:true`). Higher/Lower, Stat Line, Team Study and Stat Lab never load it. CFB has no Player Grid, so there are no "(since ...)" labels to change. Cache version ?v=17.
+
+## Coverage and size
+| | |
+|---|---|
+| Added rows / players | 8,367 / 4,864 (2015: 2,833; 2014: 1,696; 2013: 2,321; 2012: 1,024; 2011: 418; 2010 and earlier: 75) |
+| of which 2014-15 defender rows (DL/LB/DB) | 4,021 rows for 2,725 players, all for players that already have a later window row, so no new pool members |
+| Added multi-school seasons / players with no ESPN record / non-FBS school rows skipped | 9 / 297 / 169 |
+| career.json | 0.89 MB raw, about 119 KB brotli (q9; 125 KB at q5) |
+| first-load cfb/players.json | unchanged, about 21 MB raw, 1.6 MB brotli (q5) |
+Mayfield now shows 2013 Texas Tech 2,315 pass yds, Winston 2013 Florida State 4,057.
+
+## Accuracy
+- **ESPN-derived rows vs CollegeFootballData, 2008-2013 offense (independent, same player-season-school):** 12,774 cells compared, 47 mismatched (0.37%), mostly 2011 receivers (Chandler Worthy rec 22 vs 18).
+- **ESPN vs the shipped window rows (2014-2025):** 131,871 cells where both have a value: receiving 2.5% differ (39,240 cells), rushing 4.2% (31,047), passing 3.6% (10,386), defensive 5.8% (51,198); 1,070 cells (0.8%) differ by more than 5 and 10%. The window rows were left as CFBD has them (no third source decides in bulk).
+- **Independent sample (82 careers, Wikipedia, school bios, CFBD for offense; Sports-Reference 403, cfbstats gone, CFBD key exhausted midway):** seasons and schools: 0 missing or extra seasons (transfers Mayfield, Murray, Burrow, Hurts, Fields and 8 others confirmed; Goodley 2011 and a possible missing Nick Harvey 2017 unconfirmed). Added rows: 143 offense cells all correct (111 confirmed by CFBD), defender cells 9 wrong of 57 (16%): Myles Garrett tkl 52 vs 53 and 58 vs 59, T.J. Neal 2014 tkl 7 (correct 98), 2015 tkl 46 (correct 109) and sk 1.0 (correct 2), McDowell 13 vs 15, Gentry 34 vs 38, Abston 1 vs 2 and 8 vs 9. Window rows: 10 of 339 cells wrong (2.9%): Haskins 2018 pyd 4,751 vs 4,831, Murray 2018 pyd 4,364 vs 4,361, Burrow 2018 pyd 2,893 vs 2,894 and 2019 ryd 369 vs 368, Hutchinson 2018 tkl 12 vs 15 and 2020 tkl 6 vs 15, Chase Young 2018 sk 9.5 vs 10.5, Richard Moore 2018 tkl 80 vs 92. Overall 19 of 539 checked cells (3.5%). Not changed: needs a decision whether to pin the larger misses (Neal, Haskins, Hutchinson, Moore) in OFFICIAL_FIXES.
+
+## Still truncated / open
+- **games** is 0 on every CFB row: ESPN's college tables have no games column and a per-season game log is one call per player-season (about 100k calls); no cheap source.
+- Defensive stats before 2016 exist only in the added rows (ESPN tackles/sacks), and the 2014-15 defenders who have no later window row are not in the dataset at all (about 2,725 defenders' seasons are now attached to players with a later row; players who only played 2014-15 on defense are absent, unquantified).
+- Non-FBS seasons (FCS transfers) are skipped as in the main file; seasons before ESPN's coverage and before 2004 are not attempted; ESPN defender tackle totals are the weakest column (16% of sampled defender cells off, usually by 1 to 3).
+- Cosmetic source defect: CFBD's school name "San Jos? State" (replacement character) appears in the main file, cfb-teams.js and the added rows alike; left consistent.
+- Tests: smoke cfb, nba, nfl, mlb, nhl, soccer 77/77 green; Career Path loads career.json (HTTP 200) for all six sports.

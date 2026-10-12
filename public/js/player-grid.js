@@ -7,7 +7,7 @@
   const SPORT = document.body.dataset.sport || "nfl";
   const LEAGUE = window[SPORT.toUpperCase()] || window.NFL;
   const DATA_URL = EBKD.dataUrl(SPORT);
-  const ROSTER_URL = (SPORT === "nfl" ? "/data/grid-roster.json" : "/data/" + SPORT + "/grid-roster.json") + "?v=16";
+  const ROSTER_URL = (SPORT === "nfl" ? "/data/grid-roster.json" : "/data/" + SPORT + "/grid-roster.json") + "?v=17";
   const BEST_KEY = SPORT === "nfl" ? "ebk_grid_best" : "ebk_grid_" + SPORT + "_best";
   (function () { if (!window.EBKF) { var s = document.createElement("script"); s.src = "/js/ebk-firebase.js"; document.head.appendChild(s); } })();
   const ebkRecord = (score) => { try { window.EBKF && EBKF.recordScore(SPORT, "player-grid", score); } catch (e) {} };

@@ -93,8 +93,8 @@ def slim(sport, career=False):
 
 if __name__ == "__main__":
     names = [a for a in sys.argv[1:] if not a.startswith("--")]
-    if "--career" in sys.argv:       # python tools/slim_v4.py --career [nfl nba mlb nhl soccer]
-        for s in (names or ["nfl", "nba", "mlb", "nhl", "soccer"]):
+    if "--career" in sys.argv:       # python tools/slim_v4.py --career [nfl nba mlb nhl soccer cfb]
+        for s in (names or ["nfl", "nba", "mlb", "nhl", "soccer", "cfb"]):
             slim(s, career=True)
     else:
         for s in (names or ["mlb", "nhl"]):
