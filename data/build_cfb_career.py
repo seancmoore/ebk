@@ -19,7 +19,7 @@ Output: data/raw/career/cfb.json {"sport":"cfb","through":2015,"players":[record
 """
 import glob, json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from build_cfb import grp_of
+from build_cfb import grp_of, OFFICIAL_FIXES
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PLAYERS = os.path.normpath(os.path.join(HERE, "..", "public", "data", "cfb", "players.json"))
@@ -90,6 +90,13 @@ def main():
         if by:
             stat["players"] += 1
         for y, e in sorted(by.items()):
+            fix = OFFICIAL_FIXES.get((pid, y))       # shared with build_cfb.py: confirmed figures, None drops a cell
+            if fix:
+                for k, v in fix.items():
+                    if v is None:
+                        e["stats"].pop(k, None)
+                    else:
+                        e["stats"][k] = v
             pos = e["pos"] or first[pid]["pos"]
             rec = {"id": pid, "name": first[pid]["name"], "pos": pos, "grp": grp_of(pos), "season": y,
                    "team": e["teams"][-1], "games": 0, "stats": e["stats"]}
@@ -97,6 +104,26 @@ def main():
                 rec["teams"] = e["teams"]
             rows.append(rec)
             stat["seasons"] += 1
+    # Implausible ESPN defender tackles: ESPN's tables have holes (T.J. Neal 2014 lists 7 tackles in 1 game; the Illinois
+    # bio says 98). A season whose tackles are at most a quarter of an adjacent season's 45+ (window rows included) is
+    # not trusted: its tkl/sk cells are dropped, the season and school stay for the career path. Pinned rows are exempt.
+    allseasons = {}
+    for r in d:
+        allseasons.setdefault(r["id"], {})[r["season"]] = r["stats"].get("tkl")
+    for r in rows:
+        allseasons.setdefault(r["id"], {})[r["season"]] = r["stats"].get("tkl")
+    dropped = 0
+    for r in rows:
+        t = r["stats"].get("tkl")
+        if t is None or r["grp"] not in ("DL", "LB", "DB") or (r["id"], r["season"]) in OFFICIAL_FIXES:
+            continue
+        nb = [allseasons[r["id"]].get(z) for z in (r["season"] - 1, r["season"] + 1)]
+        nb = [x for x in nb if x is not None]
+        if nb and max(nb) >= 45 and t <= 0.25 * max(nb):
+            r["stats"].pop("tkl", None)
+            r["stats"].pop("sk", None)
+            dropped += 1
+    stat["implausible_tackle_rows_dropped"] = dropped
     rows.sort(key=lambda r: (r["season"], r["name"], r["id"]))
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     json.dump({"sport": "cfb", "through": THROUGH, "players": rows}, open(OUT, "w", encoding="utf8"),

@@ -37,6 +37,39 @@ OFFICIAL_FIXES = {
     # Max Duggan 2020 TCU: 1,795 pass yds, 10 TD, 116 car, 526 rush yds (CFBD 1,764 / 9 / 114 / 547).
     # ESPN athlete stats + https://en.wikipedia.org/wiki/Max_Duggan
     ("4427105", 2020): {"pyd": 1795, "ptd": 10, "car": 116, "ryd": 526},
+    # --- 2026-10-12: every wrong cell of the 82-career verification (docs/data-audit-20261010.md, ninth pass).
+    # A value of None means "drop this cell": the sources disagree or give no exact figure, so nothing is shipped.
+    # Window rows (CFBD):
+    # Kyler Murray 2018 OU: 4,361 pass yds (CFBD 4,364). https://en.wikipedia.org/wiki/Kyler_Murray
+    ("3917315", 2018): {"pyd": 4361},
+    # Joe Burrow 2018 LSU: 2,894 pass yds (CFBD 2,893); 2019 LSU: 368 rush yds (CFBD 369). https://en.wikipedia.org/wiki/Joe_Burrow
+    ("3915511", 2018): {"pyd": 2894},
+    ("3915511", 2019): {"ryd": 368},
+    # Dwayne Haskins 2018 OSU: 4,831 pass yds, 50 TD (CFBD 4,751 / 49). https://cfbstats.com/2018/player/518/1080293/index.html and https://en.wikipedia.org/wiki/Dwayne_Haskins
+    ("4040616", 2018): {"pyd": 4831, "ptd": 50},
+    # Aidan Hutchinson Michigan: 2018 15 tackles (CFBD 12); 2020 dropped (Wikipedia 13 in 3 games, Lions bio 15, CFBD 6).
+    # https://en.wikipedia.org/wiki/Aidan_Hutchinson
+    ("4372099", 2018): {"tkl": 15},
+    ("4372099", 2020): {"tkl": None},
+    # Chase Young 2018 OSU: 10.5 sacks, 34 tackles (CFBD 9.5 / 33). https://en.wikipedia.org/wiki/Chase_Young
+    ("4241986", 2018): {"sk": 10.5, "tkl": 34},
+    # Richard Moore 2018 SMU: 92 tackles (CFBD 80). https://smumustangs.com/roster.aspx?rp_id=9738
+    ("3895858", 2018): {"tkl": 92},
+    # Added (ESPN-derived) rows, applied by build_cfb_career.py:
+    # Myles Garrett 2014 and 2015 Texas A&M: 53 and 59 tackles (ESPN 52 / 58). https://en.wikipedia.org/wiki/Myles_Garrett
+    ("3122132", 2014): {"tkl": 53},
+    ("3122132", 2015): {"tkl": 59},
+    # T.J. Neal Illinois: 98 tackles 2014, 109 tackles and 2 sacks 2015 (ESPN 7 / 46 / 1). Illinois roster bio https://fightingillini.com/roster.aspx?rp_id=2218
+    ("530682", 2014): {"tkl": 98},
+    ("530682", 2015): {"tkl": 109, "sk": 2.0},
+    # Malik McDowell 2014 Michigan State: 15 tackles (ESPN 13). https://msuspartans.com/roster.aspx?rp_id=1875
+    ("3134681", 2014): {"tkl": 15},
+    # Mason Gentry 2014 SMU: 38 tackles (ESPN 34). https://smumustangs.com/sports/football/roster/mason-gentry/1249
+    ("545340", 2014): {"tkl": 38},
+    # Justin Abston Southern Miss: 2013 tackles dropped (source says "at least 2", no exact figure); 2015 9 tackles (ESPN 8).
+    # https://southernmiss.com/sports/football/roster/justin-abston/1631
+    ("557879", 2013): {"tkl": None},
+    ("557879", 2015): {"tkl": 9},
 }
 INT_KEYS = {"pyd", "ptd", "pint", "ryd", "rtd", "car", "recyd", "rectd", "rec", "tkl", "tfl"}
 
@@ -115,7 +148,11 @@ def build():
             continue
         fix = OFFICIAL_FIXES.get((str(pid), y))
         if fix:
-            e["stats"].update(fix)
+            for k, v in fix.items():
+                if v is None:
+                    e["stats"].pop(k, None)          # dropped cell (no confirmable figure)
+                else:
+                    e["stats"][k] = v
         for k in e["stats"]:
             cat_counts[k] += 1
         players.append({

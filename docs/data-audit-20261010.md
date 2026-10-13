@@ -312,3 +312,28 @@ Mayfield now shows 2013 Texas Tech 2,315 pass yds, Winston 2013 Florida State 4,
 - Non-FBS seasons (FCS transfers) are skipped as in the main file; seasons before ESPN's coverage and before 2004 are not attempted; ESPN defender tackle totals are the weakest column (16% of sampled defender cells off, usually by 1 to 3).
 - Cosmetic source defect: CFBD's school name "San Jos? State" (replacement character) appears in the main file, cfb-teams.js and the added rows alike; left consistent.
 - Tests: smoke cfb, nba, nfl, mlb, nhl, soccer 77/77 green; Career Path loads career.json (HTTP 200) for all six sports.
+
+---
+# Tenth pass: CFB pins and implausible added tackles (owner approved, 2026-10-12)
+
+## Pinned (OFFICIAL_FIXES in data/build_cfb.py, shared with data/build_cfb_career.py; source beside each entry)
+Window rows (8 rows, 10 cells; verified by diff: nothing else in the 83,852 rows changed):
+- Kyler Murray 2018 pass yds 4,364 -> 4,361 (Wikipedia)
+- Joe Burrow 2018 pass yds 2,893 -> 2,894; 2019 rush yds 369 -> 368 (Wikipedia)
+- Dwayne Haskins 2018 pass yds 4,751 -> 4,831, TD 49 -> 50 (cfbstats 2018 player page and Wikipedia)
+- Aidan Hutchinson 2018 tackles 12 -> 15 (Wikipedia college table)
+- Chase Young 2018 sacks 9.5 -> 10.5, tackles 33 -> 34 (Wikipedia)
+- Richard Moore (SMU) 2018 tackles 80 -> 92 (SMU roster bio)
+Added (ESPN-derived) rows:
+- Myles Garrett 2014 tackles 52 -> 53, 2015 58 -> 59 (Wikipedia)
+- T.J. Neal 2014 tackles 7 -> 98, 2015 46 -> 109 and sacks 1 -> 2 (Illinois roster bio; ESPN's own game log lists 1 game for 2014)
+- Malik McDowell 2014 tackles 13 -> 15 (Michigan State bio), Mason Gentry 2014 34 -> 38 (SMU bio), Justin Abston 2015 8 -> 9 (Southern Miss bio)
+Dropped (a value of None in the dict removes the cell): Hutchinson 2020 tackles (Wikipedia 13 in 3 games, Lions bio 15, CFBD 6: no confirmable figure) and Abston 2013 tackles (source says only "at least 2").
+Not changed: Chase Young 2018 tackles for loss 14 vs 14.5 and the conflicts the verifier noted but did not count (Watson 2015, Fournette 2015, Winston 2013 rushing, Patterson 2015, Ware 2017, Gross 2012).
+
+## Implausible ESPN defender tackles
+ESPN's tables have holes (T.J. Neal 2014). Any added defender season whose tackles are at most a quarter of an adjacent season's 45+ tackles (adjacent season taken from window or added rows, after pins) now has its tkl/sk cells dropped; the season and school stay for the career path, pinned rows exempt: 299 rows. This favours missing over wrong data; some are genuine injury seasons.
+
+## Sizes and tests
+career.json 8,367 rows, 0.89 MB raw, 119 KB brotli (q9; 126 KB at q5, was 119 / 125). First-load cfb/players.json unchanged in size (21 MB raw, 1.6 MB brotli q5). Stat Lab rebuilt. Cache version ?v=18. solvable.cjs 0 errors, 0 cells with 1-2 answers. Smoke: cfb, nba, nfl, mlb, nhl, soccer all green (the first sport of a run can hit the known connection-refused race; rerun with cfb first: 25/25).
+Incident: a PowerShell Get-Content/Set-Content pass briefly re-encoded ebk-loader.js, player-grid.js and ebk-home-sections.js (mojibake plus BOM); reversed byte-exactly and re-checked (no BOM, no mojibake, solvable passes).
