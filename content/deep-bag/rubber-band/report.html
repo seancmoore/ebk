@@ -1,0 +1,221 @@
+<meta name="deep-bag-version" content="2">
+<title>The Rubber Band in the NFL and NBA: A Technical Report</title>
+<style>
+
+  /* Deep Bag v2 report skin: same type and ground as the story (Bricolage Grotesque,
+     Schibsted Grotesk, Martian Mono on deep navy), soft glow instead of hairlines.
+     One accent (rose), used for the finding.
+     The matplotlib figures are light, so they sit on rounded paper cards. */
+  :root {
+    --bg: #080b17; --surface: rgba(255,255,255,0.035); --surface-2: rgba(255,255,255,0.06); --line: rgba(255,255,255,0.07);
+    --text: #e6eaf4; --muted: #8d98b8; --faint: #5c6789;
+    --sig: #ff7fae; --marg: #e6a3c0; --nonsig: #6b7699;
+    --accent: #ff7fae;
+    --font-ui: 'Schibsted Grotesk', 'Segoe UI', system-ui, sans-serif;
+    --font-display: 'Bricolage Grotesque', 'Schibsted Grotesk', system-ui, sans-serif;
+    --font-mono: 'Martian Mono', ui-monospace, Consolas, monospace;
+    --glow: 0 0 0 1px rgba(255,255,255,0.05), 0 30px 80px -40px rgba(0,0,0,0.8);
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-ui); margin: 0; padding: 0 22px 90px; font-size: 16px; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 940px; margin: 0 auto; }
+  ::selection { background: rgba(255,127,174,0.3); }
+
+  header.head { padding: 34px 0 28px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; }
+  .doc-kicker { font-family: var(--font-ui); font-weight: 600; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  h1 { font-family: var(--font-display); font-size: clamp(30px, 4.4vw, 46px); font-weight: 700; line-height: 1.02; margin: 0 0 14px; letter-spacing: -0.028em; color: #fff; }
+  .subtitle { color: var(--muted); font-size: 16px; line-height: 1.55; max-width: 62ch; margin: 0; }
+  .doc-meta { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); text-align: right; line-height: 1.8; white-space: nowrap; }
+
+  .stat-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: 10px 0 0; }
+  .stat-strip > div { background: var(--surface); border-radius: 18px; padding: 16px 18px; box-shadow: var(--glow); }
+  .stat-strip .v { font-family: var(--font-mono); font-weight: 600; font-size: 22px; letter-spacing: -0.03em; color: #fff; }
+  .stat-strip .k { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  nav.toc { display: flex; flex-wrap: wrap; gap: 8px; padding: 22px 0 8px; font-size: 13px; }
+  nav.toc a { color: var(--muted); text-decoration: none; padding: 7px 13px; border-radius: 999px; background: var(--surface); box-shadow: 0 0 0 1px var(--line); }
+  nav.toc a:hover { color: #fff; box-shadow: 0 0 0 1px rgba(255,127,174,0.5); }
+
+  section { padding: 38px 0 18px; }
+  h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 10px; display: flex; align-items: baseline; gap: 12px; color: #fff; }
+  h2 .sec-no { font-family: var(--font-mono); color: var(--faint); font-weight: 500; font-size: 14px; }
+  h3 { font-family: var(--font-display); font-size: 17px; font-weight: 650; margin: 30px 0 10px; color: #fff; }
+  .section-note { color: var(--muted); font-size: 14px; margin: 0 0 20px; max-width: 72ch; }
+  p { line-height: 1.68; font-size: 15.5px; max-width: 74ch; margin: 0 0 14px; color: #cdd3e4; }
+  p b, li b { color: #fff; }
+  a { color: #fff; text-decoration-color: rgba(255,127,174,0.6); text-underline-offset: 3px; }
+  code { font-family: var(--font-mono); background: var(--surface-2); padding: 2px 6px; border-radius: 6px; font-size: 0.82em; color: #dfe4f2; }
+
+  .funnel { display: flex; align-items: stretch; gap: 18px; margin: 20px 0 10px; flex-wrap: wrap; }
+  .funnel-step { background: var(--surface); border-radius: 18px; padding: 14px 18px; text-align: center; position: relative; flex: 1; min-width: 120px; box-shadow: var(--glow); }
+  .funnel-step:not(:last-child)::after { content: "\2192"; position: absolute; right: -14px; top: 50%; transform: translateY(-50%); color: var(--faint); z-index: 1; font-size: 13px; }
+  .funnel-step .v { font-family: var(--font-mono); font-weight: 600; font-size: 20px; color: #fff; }
+  .funnel-step .k { font-size: 11.5px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+
+  .table-wrap { overflow-x: auto; border-radius: 18px; background: var(--surface); box-shadow: var(--glow); margin: 18px 0; }
+  table { border-collapse: collapse; width: 100%; min-width: 560px; font-family: var(--font-mono); font-size: 12px; }
+  thead th { text-align: right; font-weight: 600; color: var(--muted); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; padding: 12px 14px; background: rgba(255,255,255,0.03); font-family: var(--font-ui); }
+  thead th:first-child { text-align: left; }
+  tbody td { text-align: right; padding: 9px 14px; border-top: 1px solid rgba(255,255,255,0.04); font-variant-numeric: tabular-nums; color: #dfe4f2; }
+  tbody td.lbl { text-align: left; font-family: var(--font-ui); font-weight: 600; font-size: 13px; color: #fff; }
+  tbody tr:nth-child(even) { background: rgba(255,255,255,0.018); }
+  .p-sig { color: var(--sig); font-weight: 600; }
+  .p-marg { color: var(--marg); font-weight: 600; }
+  .p-nonsig { color: var(--nonsig); }
+
+  .legend-row { display: flex; gap: 20px; font-family: var(--font-ui); font-size: 12.5px; color: var(--muted); margin: 6px 0 22px; flex-wrap: wrap; }
+  .legend-row span { display: inline-flex; align-items: center; gap: 7px; }
+  .legend-row i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+  .matrix-wrap { overflow-x: auto; margin: 16px 0 22px; }
+  table.matrix { border-collapse: separate; border-spacing: 6px; font-family: var(--font-mono); font-size: 12.5px; width: auto; min-width: 0; }
+  table.matrix th, table.matrix td { padding: 12px 18px; text-align: center; border-radius: 12px; background: var(--surface); }
+  table.matrix th { font-family: var(--font-ui); font-weight: 600; font-size: 11.5px; color: var(--muted); background: transparent; }
+  table.matrix td.diag { background: rgba(143,156,194,0.12); }
+  table.matrix td.up { background: rgba(255,127,174,0.13); }
+  table.matrix td.down { background: rgba(214,183,122,0.13); }
+  table.matrix td .sub { color: var(--muted); font-size: 10.5px; }
+  .matrix-cap { font-size: 13px; color: var(--muted); margin-top: 8px; }
+
+  .case-box { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; }
+  .case-col { padding: 18px 20px; background: var(--surface); border-radius: 18px; box-shadow: var(--glow); }
+  .case-col h4 { margin: 0 0 10px; font-size: 12px; font-family: var(--font-ui); text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+  .case-row { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 12.5px; padding: 6px 0; border-bottom: 1px dashed rgba(255,255,255,0.07); }
+  .case-row:last-child { border-bottom: none; }
+  .case-row b { font-weight: 600; color: #fff; }
+  @media (max-width: 640px) { .case-box { grid-template-columns: 1fr; } }
+
+  .callout { background: var(--surface); border-radius: 18px; padding: 16px 20px; margin: 18px 0; font-size: 15px; line-height: 1.6; max-width: 74ch; box-shadow: inset 3px 0 0 var(--accent), var(--glow); color: #cdd3e4; }
+  .callout b { color: var(--accent); }
+  .note-open { background: rgba(214,183,122,0.06); border-radius: 18px; padding: 16px 20px; margin: 20px 0 16px; font-size: 15px; line-height: 1.6; max-width: 74ch; box-shadow: inset 3px 0 0 var(--marg); color: #cdd3e4; }
+  .note-open b { color: var(--marg); }
+  .footnote-aside { color: var(--muted); font-size: 0.92em; }
+
+  ul.limits, ol.limits { margin: 0; padding-left: 20px; max-width: 74ch; }
+  ul.limits li, ol.limits li { font-size: 15px; line-height: 1.65; margin-bottom: 12px; color: #cdd3e4; }
+
+  footer.colophon { padding-top: 28px; font-family: var(--font-ui); font-size: 13px; color: var(--muted); line-height: 1.8; }
+
+  .fig { width: 100%; height: auto; display: block; background: #fff; border-radius: 20px; padding: 10px; margin: 14px 0 8px; box-shadow: var(--glow); }
+  .figcap { font-size: 13.5px; color: var(--muted); margin: 6px 0 24px; max-width: 78ch; line-height: 1.55; }
+  .kv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+  .kv div { background: var(--surface); border-radius: 14px; padding: 12px 14px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+  .kv b { display: block; font-size: 17px; color: #fff; }
+  @media (max-width: 640px) { header.head { grid-template-columns: 1fr; } .doc-meta { text-align: left; white-space: normal; } .stat-strip { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 480px) { body { padding: 0 14px 70px; } .stat-strip { grid-template-columns: repeat(2, 1fr); } .stat-strip > div:last-child { grid-column: 1 / -1; } .kv { grid-template-columns: 1fr 1fr; } }
+
+</style>
+<div class="wrap">
+<header class="head"><div>
+  <div class="doc-kicker">The technical report behind the rubber-band study</div>
+  <h1>The Rubber Band in the NFL and NBA: A Technical Report</h1>
+  <p class="subtitle">The method, tables and checks behind the story. Plain-language results come first, then how the data and the fake league were built, the core tests, the play-calling evidence, the placebo and the limits. Every figure is produced by a numbered, rerunnable script and traced in a numbers register.</p>
+</div><div class="doc-meta">v1 &middot; 2026-10-12<br>NFL 1999 to week 5 of 2026 &middot; NBA 2003 to 2026<br>Plain-language results first,<br>then the method</div></header>
+
+<div class="stat-strip">
+  <div><div class="v">7,026</div><div class="k">NFL games</div></div>
+  <div><div class="v">28,505</div><div class="k">NBA games</div></div>
+  <div><div class="v">160,000</div><div class="k">fake NFL games</div></div>
+  <div><div class="v">228,040</div><div class="k">fake NBA games</div></div>
+  <div><div class="v">&minus;1.52 / &minus;3.37</div><div class="k">points given back, NFL 8+ / NBA 15+</div></div>
+</div>
+<nav class="toc"><a href="#s0">Summary</a><a href="#t1-1-question-and-definit">1 Question</a><a href="#t2-2-data">2 Data</a><a href="#t3-3-the-fake-league-null">3 Fake league</a><a href="#t4-4-core-results">4 Core results</a><a href="#t5-5-mechanisms">5 Mechanisms</a><a href="#t6-6-robustness">6 Checks</a><a href="#t7-7-answered-runs-script">7 Runs</a><a href="#t8-8-giants-hook-and-spot">8 Giants and games</a><a href="#t9-9-limitations-what-we-">9 Limits</a><a href="#t10-10-reproducibility">10 Files</a><a href="#real">Real vs illusion</a><a href="#subs">Robustness</a><a href="#giants">Giants game</a><a href="#caveats">Caveats</a><a href="#chartdata">Chart data</a></nav>
+
+<section id="s0"><h2>Summary of findings</h2>
+
+<p><b>Yes, leads really do shrink, and by more than team strength explains. But it is two different stories. In the NFL it is almost all the last five minutes, and it lines up with play-calling (leaders run and kneel, trailers throw and hurry), not momentum. In the NBA it leaks out all game long, even in the first half, and it takes the two teams on the floor interacting to produce it. The popular "they always answer a run" story gets only a small push beyond plain arithmetic.</b></p>
+<p>Sports covered: <b>NFL (1999 to week 5 of 2026, 7,026 regular-season games) and NBA (2003 to 2026, 28,505 regular-season games).</b> MLB and NHL are left out: there is no play-by-play or scoring-by-period data for them on this machine, and building it honestly (one request per game, tens of thousands of games) did not fit this study.</p>
+<h3>What we measured</h3>
+<p>At every 5-minute mark of an NFL game (4-minute mark in the NBA) we took the team that was ahead and asked: from here to the end of regulation, who scores more, and by how much? We compared that with two yardsticks. Yardstick 1: what pregame strength alone predicts (the Vegas spread in the NFL, a leave-one-out team rating in the NBA, scaled by time left). Yardstick 2: a <b>fake league</b> of 160,000 simulated NFL games and 228,040 simulated NBA games in which scoring never reacts to the score (no momentum, no clock management, no garbage time), built to match real scoring, real strength gaps and real pace. A lead that shrinks by more than the fake league&rsquo;s lead shrinks is the rubber band.</p>
+<h3>Key numbers</h3>
+<ol class="limits"><li><b>Leaders get outscored in real games; in a no-reaction world they would not.</b> NFL, leads of 8 or more (28,477 snapshots from 5,808 games): over the rest of regulation the leader&rsquo;s margin over the trailer averages −0.55 points (interval −0.79 to −0.32), where the fake league gives 0.85 and strength alone says 1.06. Gap to the fake league: <b>−1.52 points</b> (interval −1.76 to −1.31); the leader&rsquo;s win probability sits −1.95 percentage points from the fake league&rsquo;s (negative = lower; interval −2.6 to −1.4). NBA, leads of 15 or more (45,901 snapshots from 13,989 games): the leader&rsquo;s margin over the trailer averages −2.08 (fake league 1.27, strength alone 1.36), a gap of <b>−3.37 points</b> (interval −3.52 to −3.24). Caveat: a negative average means the trailer wins the remainder on average; it does not mean most leaders blow it (see item 8).</li><li><b>The bigger the lead, the more it shrinks.</b> Points the leader gives back beyond the fake league. NFL: leads of 1-3 −0.39, 8-10 −1.19, 15-21 −1.69, 22 or more −1.82 (interval −2.17 to −1.48). NBA: leads of 1-4 −0.69, 10-14 −2.60, 20 or more −3.62 (interval −3.78 to −3.41). Caveat: part of this in the NFL is garbage time, see item 3.</li><li><b>NFL: it is the last five minutes.</b> Teams up 8 or more at halftime (3,175 games) give back −1.32 points by the end of regulation beyond the fake league (interval −1.62 to −1.02). The third quarter contributes 0.11 (interval −0.12 to 0.32, indistinguishable from zero), the rest of the fourth quarter −0.27, and the <b>last five minutes −1.16</b> (interval −1.32 to −1.00), which is 88% of the total. The same picture shows quarter to quarter: winning a quarter beyond expectation predicts −0.029 points in the next quarter for Q1 to Q2, 0.002 for Q2 to Q3 (nothing), and −0.139 for Q3 to Q4 (fake league −0.030). Caveat: this is the average over 8-point-plus leads; individual games vary hugely.</li><li><b>NFL: the playbook explains it.</b> In the last 5 minutes a team up 8-14 throws 19% of the time and takes 22 seconds between snaps; a team down 8-14 throws 93% of the time, runs the no-huddle on 20% of plays and takes 14 seconds (the gap in seconds per play is 10.4, interval 9.9 to 10.8; 8,256 and 16,794 plays). 49% of drives that start in the last 5 minutes with a lead of 8 or more include a kneel-down (vs 18% when the game is tied or within 3). Leaders&rsquo; drives there are worth 0.43 points, versus 2.02 for leaders earlier in the game. In the first half teams up and down 8-14 play almost the same (61% vs 66% passes). Splitting the shrink for 8-point-plus leads exactly (total −1.46, interval −1.65 to −1.27): −1.07 comes from the leader&rsquo;s drives being worth less, −0.54 from the trailer&rsquo;s drives being worth more, and only 0.15 from the number of drives (interval 0.11 to 0.17, slightly in the leader&rsquo;s favour). So it is what teams do on each drive, not who gets more possessions. Caveat: strategy is what we can see; whether some of it is also "the trailer playing with more urgency" is not separable here.</li><li><b>NBA: it leaks all game long.</b> Teams up 15 or more at halftime (4,222 games) give back −4.51 points (interval −4.80 to −4.17): −1.70 in the third quarter, −1.32 in the fourth until the last 4 minutes, −1.49 in the last 4 minutes. Winning any quarter predicts losing ground in the next: −0.153 per point (Q1 to Q2, interval −0.167 to −0.139), −0.120 (Q2 to Q3), −0.150 (Q3 to Q4), and −0.270 from first half to second half (interval −0.282 to −0.258); the fake league gives about −0.010. A game&rsquo;s final margin is also less spread out than independent scoring would give (variance ratio 0.75 real vs 0.99 fake; NFL 0.89 vs 0.99). It is there in competitive stretches (−1.52, interval −1.59 to −1.46, 205,678 snapshots) and in garbage time (−2.63); with ESPN&rsquo;s own pregame spread as the strength yardstick (2020 to 2026, 16,767 snapshots of leads of 15 or more) the gap is −3.45 (interval −3.74 to −3.19). Fouling is clearly strategy: in the last 2 minutes of games within 10 points the trailing team commits 2.22 times as many fouls as the leader (0.91 in the first half; 18,210 games), and trailing teams take 34.4% of their shots from three in the last 4 minutes vs 31.4% for leaders. But in the first half, up 15 or more and down 15 or more score about the same per 100 possessions (116 vs 115), so we cannot point at a visible cause for the early leak. Caveat: rotations, substitution patterns and coaching adjustments are plausible causes we cannot observe (no lineup data), and "momentum" or "complacency" cannot be separated from them.</li><li><b>It takes the two teams actually playing each other.</b> If we keep each team&rsquo;s real scoring timeline but pair it with the opponent timeline from a different game (so neither team can react to the other), the shrink mostly disappears: NFL leads of 8 or more −0.53 (interval −0.64 to −0.42) vs −1.52 in real games; NBA leads of 15 or more −0.61 (interval −0.71 to −0.53) vs −3.37. Caveat: for the very largest NFL leads (22 or more) the placebo still shows −1.37, so part of the biggest NFL shrinks comes from how one team plays when it is far ahead, not from the opponent.</li><li><b>"Do runs get answered?" Barely, beyond arithmetic.</b> After a big run ends, the run team usually loses the next stretch even in the fake league, because a run ends when the other team scores. NBA 10-0 or longer runs (31,244 real runs): in the next 3 minutes the run team&rsquo;s margin changes −1.72 in real games and −1.20 in the fake league, a difference of −0.48 points (interval −0.55 to −0.41). The other side outscores the run team in 62% of real cases vs 57% in the fake league. For 15-0 or longer runs the difference is −0.12 (interval −0.41 to 0.17), no different from zero. NFL runs of 14 or more unanswered points (4,583 runs), next 10 minutes: −0.27 points (interval −0.41 to −0.14); the other side outscores the run team in 63% of real cases and 63% in the fake league. Caveat: real NBA games have 110 10-point runs per 100 games and the fake league only 35 (real basketball gives one team several possessions in a row, the fake league alternates strictly), so run frequency is not interpreted and the after-run comparison is a bit generous to the fake league&rsquo;s arithmetic.</li><li><b>The typical lead does not collapse.</b> The share of leaders who get outscored in the rest of regulation: NFL 46.8% (fake league 42.1%); NBA 52.6% (fake 44.6%), and 58.9% for NBA leads of 15 or more (fake 40.6%). The average gap is a few points. Fans remember the games where it was all of them.</li></ol>
+<div class="callout"><b>Reading the ranges.</b> Every &ldquo;interval&rdquo; here is a 95% interval from redrawing whole games (a game-cluster bootstrap): the span the true value would land in about 95 times out of 100 if the whole study were repeated. They treat games as independent, although snapshots within a game overlap. An interval that includes zero means the data cannot tell the effect from no effect. &ldquo;Fake league&rdquo; means simulated games in which scoring never reacts to the score.</div>
+</section>
+
+<section id="t1-1-question-and-definit"><h2>1. Question and definition</h2>
+
+<p>"Rubber band" is read as: the team that is ahead loses ground in the remainder of the game by more than pregame team strength and mechanical scoring arithmetic would predict. For every game, every mark m (NFL: 55:00, 50:00, ..., 5:00 left; NBA: 44:00, 40:00, ..., 4:00 left) at which one team leads by L points, define from the leader&rsquo;s side:</p>
+<ul class="limits"><li>R = (leader&rsquo;s points minus trailer&rsquo;s points from m to the end of regulation) = final regulation margin minus L.</li><li>E = pregame expected margin for the leader times (time left / game length). NFL: the closing Vegas spread (nflverse <code>spread_line</code>, positive = home favoured). NBA: leave-one-out ridge-regression team ratings plus a home term, fit on each season&rsquo;s final regulation margins, so the game itself never rates its own teams (exact closed-form leave-one-out; ridge lambda 6 chosen by leave-one-out error).</li><li><b>Definition A</b> = R minus E. <b>Definition B</b> = R minus the average R of the fake league at the same mark, same exact lead (capped at 30 NFL, 40 NBA) and same strength band of the leader (5 bands of the leader&rsquo;s spread). Definition B is the headline because the strength-only yardstick is slightly biased by the straight-line-in-time assumption (bias in the fake league: −0.12 points NFL, −0.06 NBA, all leads).</li><li><b>Definition C</b> (win version) = leader&rsquo;s win indicator (a tie counts half) minus the fake league&rsquo;s win rate in the same cell, in percentage points.</li><li><b>Definition D</b> (quarter links) = strength-adjusted margin of one stretch regressed on the previous stretch (Q1 to Q2, Q2 to Q3, Q3 to Q4, first half to second half). Needs no marks and no lead bins.</li></ul>
+<p>Regulation only (overtime points are excluded), regular season only.</p>
+</section>
+
+<section id="t2-2-data"><h2>2. Data</h2>
+
+<ul class="limits"><li>NFL: nflverse play-by-play 1999 to 2026 (2026 through week 5, 78 games), downloaded from the nflverse release files (<code>play_by_play_YYYY.parquet</code>). 7,026 games after dropping 16 whose scores run backwards or past the final (almost all 2001-02 Jacksonville home games). Score at each mark = score at the start of the first play whose clock is at or below the mark. Drives = nflverse <code>fixed_drive</code>; points for and against in a drive = score change from the drive&rsquo;s first scrimmage play to the next drive&rsquo;s.</li><li>NBA: hoopR / ESPN play-by-play (sportsdataverse release <code>espn_nba_pbp</code>), 2003 to 2026, 28,505 games. 2002 was dropped (the feed holds only a fraction of that season). Score at each mark = score after the last play finished at or before the mark. Events = scoring plays; strategy tests use shot, free-throw, turnover, foul and rebound rows.</li><li>ESPN&rsquo;s pregame spread is also in the NBA feed; its sign is only trustworthy from 2020 (2013-19 values correlate negatively with results, so they are not used). From 2020 on we use it as a second strength yardstick (correlation with our ratings 0.81).</li><li>All raw downloads sit in <code>~/.cache/ebk-rubber-band</code> and are trimmed to the columns used; <code>data/processed/</code> holds only small derived tables.</li></ul>
+</section>
+
+<section id="t3-3-the-fake-league-null"><h2>3. The fake league (null model)</h2>
+
+<p><b>Why:</b> conditioning on the current lead creates reversal that has nothing to do with behaviour (a run ends because the other team scored; leaders are the stronger team; scores arrive in lumps). The fake league reproduces all of that and nothing else, so the same pipeline can be run on both.</p>
+<ul class="limits"><li><b>NFL (160,000 games).</b> Each game takes a real spread from the real list. Possessions alternate; each drive is drawn at random from the pool of real completed drives (length in seconds, points for, points against), re-weighted by an exponential tilt so the better offence scores a little more per drive. Tilt strength is calibrated so the average margin equals the spread (slope of margin on spread 1.02) and a level term is calibrated so total points match real (43.97 vs 43.95). A drive that would run past the end of the half scores only with probability equal to the share of it that fits. Nothing depends on the score.</li><li><b>NBA (228,040 games, 8 per real game, season by season).</b> Possessions alternate with a random starter; each possession scores 0, 1, 2 or 3 with probabilities solved to match the season&rsquo;s points per possession and a per-possession variance chosen (two pilot passes) so final margins have the same spread around the prediction as real games (average 13.07 vs real 12.38 points); the better team is tilted so the average margin equals the leave-one-out prediction (slope 1.00). Possession counts match each season&rsquo;s pace. Strict alternation is a known simplification (real teams sometimes keep the ball after an offensive rebound), which is why real NBA games have more long runs than the fake league (110 vs 35 10-point runs per 100 games).</li><li><b>Validation.</b> Total points and slope match by construction; the margin spread around the prediction is somewhat larger in the fake NFL league (14.27 vs 13.16 points). Variance ratio (variance of final margin over the sum of the two halves&rsquo; variances): real 0.89 NFL and 0.75 NBA vs 0.99 and 0.99 in the fake leagues; a value below 1 means the halves lean against each other.</li><li><b>Second placebo (script 07).</b> Real timelines with the cross-team link broken: the home side&rsquo;s scoring timeline from game i is paired with the away side&rsquo;s from a random other game of the same season (20 pairings per game NFL, 6 NBA). Expected strength = average of the two games&rsquo; pregame margins. Compared against the fake-league cells (definition B).</li></ul>
+</section>
+
+<section id="t4-4-core-results"><h2>4. Core results</h2>
+
+<p>NFL leads of 8 or more: R −0.55 (interval −0.79 to −0.32) vs fake 0.85, strength-only E 1.06; A −1.62 (−1.85 to −1.40); B −1.52 (−1.76 to −1.31); C −1.95 points (−2.6 to −1.4). All NFL leads: B −1.00 (−1.18 to −0.83), 64,607 snapshots, 7,023 games. NBA leads of 15 or more: R −2.08 (interval −2.25 to −1.95) vs fake 1.27, E 1.36; A −3.44 (−3.60 to −3.31); B −3.37 (−3.52 to −3.24); C −2.61 points (−2.9 to −2.4). All NBA leads: B −1.81 (−1.88 to −1.74), 277,243 snapshots, 28,505 games.</p>
+<p>By lead size (B, interval): NFL 1-3 −0.39 (−0.61 to −0.16); 4-7 −0.71 (−0.93 to −0.50); 8-10 −1.19 (−1.48 to −0.87); 11-14 −1.54 (−1.86 to −1.24); 15-21 −1.69 (−1.99 to −1.34); 22+ −1.82 (−2.17 to −1.48). NBA 1-4 −0.69 (−0.76 to −0.62); 5-9 −1.85 (−1.96 to −1.74); 10-14 −2.60 (−2.75 to −2.46); 15-19 −3.17 (−3.31 to −2.99); 20+ −3.62 (−3.78 to −3.41). Full table with lead-by-time cells, n and games per cell: <code>outputs/tables/nfl_core_table.csv</code>, <code>nba_core_table.csv</code>.</p>
+<p>Where the shrink happens (script 10): halftime leaders, NFL 8+ (3,175 games) total −1.32 (−1.62 to −1.02): third quarter 0.11 (−0.12 to 0.32), fourth until the last 5 minutes −0.27 (−0.48 to −0.06), last 5 minutes −1.16 (−1.32 to −1.00). End-of-Q1 NFL leaders (1,283 games, wide intervals): total −0.67 (−1.34 to 0.02), of which the last 5 minutes −1.03 (−1.27 to −0.80). NBA 15+ at halftime (4,222 games) total −4.51 (−4.80 to −4.17): −1.70 (−1.96 to −1.43), −1.32 (−1.52 to −1.11), −1.49 (−1.64 to −1.36); end of Q1 (791 games): second quarter alone −2.10 (−2.70 to −1.50).</p>
+<p>Quarter links (script 08, slope per point won beyond strength): NFL Q1 to Q2 −0.029 (−0.056 to −0.001), Q2 to Q3 0.002 (−0.018 to 0.022), Q3 to Q4 −0.139 (−0.162 to −0.117), halves −0.100 (−0.121 to −0.076); fake NFL halves −0.009. NBA −0.153 (−0.167 to −0.139), −0.120 (−0.132 to −0.108), −0.150 (−0.160 to −0.138), halves −0.270 (−0.282 to −0.258); fake NBA halves −0.010. (7,026 NFL and 28,505 NBA games.)</p>
+</section>
+
+<section id="t5-5-mechanisms"><h2>5. Mechanisms</h2>
+
+<p><b>NFL play calling</b> (script 09, scrimmage run and pass plays, kneels and spikes excluded from pass rate). Last 5 minutes: team up 8-14 throws 19%, 22 seconds per snap, no-huddle 0%; team down 8-14 throws 93%, 14 seconds, no-huddle 20%. Up 15+: 14% throws, 30 seconds; down 15+: 84%, 17. First half up vs down 8-14: 61% vs 66% throws, 26 vs 26 seconds. Kneel-downs appear in 49% of drives started in the last 5 minutes by a team up 8+ (4,187 drives) vs 18% when within 3 (4,350). Points per drive started in the last 5 minutes: up 8+ 0.43, down 8+ 1.45; up 8+ earlier in the game 2.02.</p>
+<p><b>Possession accounting</b> (exact split, leads of 8+, drives starting after the mark, real vs fake cell averages): leader drives 1.40 net points each (fake 1.65); trailer drives 1.54 (fake 1.41). Total −1.46 (−1.65 to −1.27) = drive counts 0.15 (0.11 to 0.17) + leader&rsquo;s drives −1.07 (−1.21 to −0.92) + trailer&rsquo;s drives −0.54 (−0.69 to −0.37). For the 10 to 5 minute marks: total −1.44, counts 0.16, leader −1.18, trailer −0.42. Reading: the clock enters through what each drive is worth (run, kneel, hurry-up, no-huddle), not through the number of drives.</p>
+<p><b>NBA</b> (script 12, descriptive only, no fake-league counterpart because the fake league has no shots). Foul ratio trailing-to-leading team in the last 2 minutes of games within 10: 2.22 (18,210 games; first half 0.91). Three-point share of attempts in the last 4 minutes: down 8+ 34.4%, up 8+ 31.4%; first half 28.0% and 30.2%. Points per 100 possessions, first half: up 15+ 116, down 15+ 115; last 4 minutes 104 and 121. (The lead used is the lead before the play; the stored score includes a made shot and would otherwise fake a link between leading and shooting well.)</p>
+</section>
+
+<section id="t6-6-robustness"><h2>6. Robustness</h2>
+
+<ul class="limits"><li>Competitive vs garbage time (fake-league win probability under or over 95% in the same cell, applied to both): NFL −0.76 (−0.94 to −0.60, 48,853 snapshots) vs −1.73 (−1.96 to −1.48); NFL competitive 8+ leads −1.26 (−1.53 to −0.97). NBA −1.52 (−1.59 to −1.46) vs −2.63 (−2.74 to −2.53). (NBA competitive leads of 15+ are rare and early: −4.76, 2,576 snapshots.) An nflverse win-probability cut gives the same ordering (table).</li><li>Eras (all leads, B): NFL −0.83, −1.06, −1.16; NBA −1.77, −1.85, −1.81. First vs second half marks: NFL −0.54 vs −1.29; NBA −1.91 vs −1.74.</li><li>Leader home/road and favourite/underdog: NFL −1.14, −0.82, −1.09, −0.88; NBA −1.59, −2.09, −1.63, −2.10.</li><li>Second strength measure (NBA 2020 to 2026, ESPN spread, leads of 15+): −3.45 (−3.74 to −3.19, 16,767 snapshots) vs −3.25 with our ratings on the same snapshots.</li><li>Placebo (real timelines paired across games): NFL 8+ −0.53 (−0.64 to −0.42), all leads −0.25 (−0.33 to −0.17), 22+ −1.37; NBA 15+ −0.61 (−0.71 to −0.53), all leads −0.24 (−0.30 to −0.19), 20+ −0.81.</li><li>Time left (all leads, B): NFL −0.50, −1.00, −1.39, −1.32; NBA −1.72, −2.12, −1.94, −1.25.</li></ul>
+</section>
+
+<section id="t7-7-answered-runs-script"><h2>7. "Answered" runs (script 11)</h2>
+
+<p>A run = consecutive scoring by one side with the other scoring nothing, measured at its end, then the next 3 minutes (NBA) or 10 minutes (NFL) from the run team&rsquo;s side minus strength-expected, real vs fake league. NBA 10+: real −1.72 (beyond strength −1.81, interval −1.86 to −1.77), fake −1.20 (−1.33, interval −1.38 to −1.28); difference −0.48 (−0.55 to −0.41, intervals combined in quadrature); other side outscores run team 62% real vs 57% fake; 31,244 real runs. NBA 15+: difference −0.12 (−0.41 to 0.17). NFL 14+: real −3.79, fake −3.53, difference −0.27 (−0.41 to −0.14); 63% vs 63%; 4,583 runs. Fake-league runs are drawn from a subset of the fake games (NBA 1,500 per season, NFL 30,000 games).</p>
+</section>
+
+<section id="t8-8-giants-hook-and-spot"><h2>8. Giants hook and spotlight games (script 13)</h2>
+
+<p>The Giants-Commanders facts come from ESPN&rsquo;s public summary JSON (event id in <code>results_13_hook.json</code>) and are cross-checked with nflverse 2026 play-by-play. Spotlight comebacks are games where the regulation winner&rsquo;s biggest deficit (from the play-by-play score) was largest, plus regulation ties after big deficits; each is matched against ESPN&rsquo;s scoreboard by date and by regulation score from the four quarter line scores (unmatched games are not listed). "Least likely lost leads" are leader snapshots at the 5-minute or 4-minute marks with the highest fake-league win probability for the leader, in games the leader lost.</p>
+</section>
+
+<section id="t9-9-limitations-what-we-"><h2>9. Limitations (what we cannot conclude)</h2>
+
+<ul class="limits"><li>Nothing here separates "momentum", "complacency", "coaching adjustments" and "rotation patterns" in the NBA; only that the leak exists, needs both teams, and is not visible in per-possession scoring in the first half.</li><li>The fake league is a model: strict possession alternation (NBA), no turnovers or field position chains (NFL), and a somewhat larger margin spread than real football. Findings that depend on its absolute level (definition B, C) should be read together with the placebo and quarter-link results, which do not use it.</li><li>Strength yardsticks are noisy; a hidden-strength bias would work against finding a rubber band.</li><li>Regulation only, regular season only; NFL 2026 is five weeks; NBA 2003 is partial; the first two NBA seasons rely on partial feeds.</li><li>No claim about playoffs, college, or other sports (MLB and NHL not studied for lack of honest on-disk data).</li><li>Many comparisons were run (lead bins, eras, subgroups). The headline gaps are large relative to their intervals; the small subgroup differences (home vs road, favourite vs underdog) should not be quoted.</li></ul>
+</section>
+
+<section id="t10-10-reproducibility"><h2>10. Reproducibility</h2>
+
+<p><code>python scripts/run_all.py</code> runs scripts 00 to 15 one at a time (0 download and trim; 1-2 build tables; 3-4 fake leagues; 5-6 core tests; 7 placebo; 8 quarter links; 9-10 NFL mechanisms and where the shrink happens; 11 runs; 12 NBA mechanisms; 13 hook and spotlights; 14 charts; 15 numbers and documents). Random seeds are fixed in <code>common.py</code>. Timing per step is written to <code>outputs/run_all_timing.json</code>.</p>
+</section>
+
+<section id="real"><h2>Real versus illusion</h2>
+
+<ul class="limits"><li><b>Real:</b> leads shrink more than strength and arithmetic explain (items 1 and 2). In the NFL that is end-game strategy (items 3 and 4); in the NBA it is a steady leak, partly end-game fouling and three-point volume, partly something we cannot see (item 5).</li><li><b>Real but not "momentum":</b> the NFL pattern lines up with play-calling. Halftime leaders give back nothing measurable in the third quarter (0.11) and almost all of it in the last five minutes (−1.16).</li><li><b>Illusion:</b> "the team that got ahead goes flat, the team behind gets hot" as a general force. The cross-game placebo in item 6 shows it needs the actual opponent, and the runs test in item 7 shows runs are answered only slightly more than a no-reaction world would answer them. The classic trap is also real: even a fake league with no reaction at all "answers" about 57% of NBA runs, simply because a run ends when the other side scores.</li><li><b>Strength is not the explanation:</b> leaders are usually the stronger team, so strength pushes the other way (leaders are expected to outscore the trailer by 1.06 in the NFL and 1.36 in the NBA for the groups above), which makes our estimate conservative on that count.</li></ul>
+</section>
+
+<section id="subs"><h2>Subgroups and robustness</h2>
+
+<ul class="limits"><li>Two definitions of the effect agree: points beyond strength (−1.62 NFL leads of 8+, −3.44 NBA leads of 15+) and points beyond the fake league (−1.52, −3.37); a third, quarter-to-quarter links, agrees in direction (item 3 and 5). The fake league&rsquo;s own result on the strength-only yardstick is −0.12 (NFL) and −0.06 (NBA), the small bias of the method, which is why the fake-league comparison is the headline.</li><li>Eras: NFL −0.83 (1999-2009), −1.06, −1.16; NBA −1.77, −1.85, −1.81. No sign it is going away.</li><li>Home or road: NFL leaders at home −1.14, on the road −0.82; NBA −1.59 and −2.09. Favourite or underdog leaders: NFL −1.09 and −0.88; NBA −1.63 and −2.10.</li><li>Garbage time: NFL competitive stretches (win probability under 95% in the fake league) −0.76 vs garbage time −1.73; NBA −1.52 vs −2.63. In the NFL the shrink is bigger once the game is "decided", which fits the strategy story.</li><li>Time left, all leads: NFL −0.50 (55 to 40 minutes left), −1.00, −1.39, −1.32; NBA −1.72, −2.12, −1.94, −1.25.</li></ul>
+</section>
+
+<section id="giants"><h2>The Giants hook, verified</h2>
+
+<p>Sunday, October 11, 2026, Giants at Commanders (Northwest Stadium, attendance 64,195). Source: ESPN&rsquo;s public game summary, cross-checked against nflverse 2026 play-by-play (regulation score 27-27 Washington-Giants, overtime flag 1, Washington&rsquo;s largest lead 14). Result: <b>Washington Commanders 27, New York Giants 27 (Final/OT)</b>, a tie. Pregame line WSH −3.5. ESPN&rsquo;s model peaked at 97.9% for Washington. Scoring:</p>
+<ul class="limits"><li>Q1 13:00: WSH rushing touchdown (Jacory Croskey-Merritt 33 Yd Rush (Drew Stevens PAT Failed)), score NYG 0, WSH 6</li><li>Q1 0:55: NYG field goal good (Dominic Zvada 51 Yd Field Goal), score NYG 3, WSH 6</li><li>Q2 8:57: WSH field goal good (Drew Stevens 28 Yd Field Goal), score NYG 3, WSH 9</li><li>Q2 1:02: WSH field goal good (Drew Stevens 40 Yd Field Goal), score NYG 3, WSH 12</li><li>Q3 10:54: NYG field goal good (Dominic Zvada 56 Yd Field Goal), score NYG 6, WSH 12</li><li>Q3 7:47: WSH rushing touchdown (Jayden Daniels 38 Yd Rush (Drew Stevens Kick)), score NYG 6, WSH 19</li><li>Q3 0:44: NYG passing touchdown (Isaiah Likely 3 Yd pass from Jameis Winston (Dominic Zvada Kick)), score NYG 13, WSH 19</li><li>Q4 11:05: WSH rushing touchdown (Jayden Daniels 26 Yd Rush (Jayden Daniels Pass to Terry McLaurin for T), score NYG 13, WSH 27</li><li>Q4 7:20: NYG passing touchdown (Isaiah Likely 17 Yd pass from Jameis Winston (Dominic Zvada Kick)), score NYG 20, WSH 27</li><li>Q4 1:43: NYG passing touchdown (Malik Nabers 17 Yd pass from Jameis Winston (Dominic Zvada Kick)), score NYG 27, WSH 27</li></ul>
+<p>The flow: Washington led 27-13 with 11:05 left after a 26-yard Daniels run and a two-point conversion. The Giants then scored on two long drives (Likely 17 yards, Nabers 17 yards with 1:43 left) to tie, and overtime was scoreless. From the 27-13 moment the Giants ran 19 scrimmage plays, 95% of them passes, at 24 seconds a snap; Washington ran 8 scrimmage plays, 88% of them passes, at 32 seconds (nflverse). Note what the leader did NOT do: it did not run the clock out. What we could not verify: whether highlights are up yet (the game is one day old), who called what, and anything about injuries or why. This game is one illustration of the NFL pattern (a trailing team throwing its way back in the last 11 minutes), not evidence of momentum.</p>
+</section>
+
+<section id="caveats"><h2>Caveats and honesty notes</h2>
+
+<ul class="limits"><li>"Beyond strength" depends on the strength yardstick. NFL: the Vegas spread (market, includes home field). NBA: a leave-one-out ridge rating from the same season (lambda 6, correlation with ESPN&rsquo;s own spread 0.81 in 2020 to 2026), which uses games played after the one being predicted. Hidden strength (injuries, rest) that shows up during the game would push our estimate toward zero, not away from it.</li><li>The fake league is a model. It matches real total scoring (NFL 43.97 vs 43.95 points a game), strength (slope of margin on spread 1.02 NFL, 1.00 NBA) and pace, but its margins are more spread out than real ones around the prediction (NFL 14.27 vs 13.16 points, NBA 13.07 vs 12.38). That gap is itself part of the effect (real games are more tightly bunched), but it means the fake league is not a perfect twin.</li><li>Intervals are game-cluster bootstrap intervals and treat games as independent. Snapshots within a game overlap.</li><li>Causal words ("because", "explains") describe what the data support: in the NFL the timing and the play-calling match, in the NBA nothing we observe explains the early leak. No experiment was possible.</li><li>Data holes: NFL 16 games dropped for impossible scores (mostly 2001-02), and 2026 covers 78 games through week 5. NBA: the ESPN play-by-play feed misses whole games in some seasons (2002 held only a fraction of the games and was dropped; 2003 is partial), and the known EBK gap in 2022-23 box scores does not affect this feed. No playoffs, no overtime points (regulation only).</li><li>Left out: MLB and NHL (no honest data on disk, see top), a season-level "does a big winner regress next game" test (skipped, it would dilute the study), and NBA bench-time and lineup tests (no lineup data in the feed).</li></ul>
+</section>
+
+<section id="chartdata"><h2>Chart-ready data</h2>
+
+<p><code>outputs/charts/</code> (PNG, CSV and JSON for each chart, with <code>manifest.json</code>): C1 leaders vs no-effect world, C2 where leads get lost, C3 winning-a-quarter link, C4 NFL end-game playbook, C5 only the real game does it, C6 are runs answered. Tables behind every number are in <code>outputs/tables/</code>.</p>
+</section>
+
+<footer class="colophon">Data: nflverse play-by-play with closing point spreads (NFL 1999 to week 5 of 2026); ESPN play-by-play through hoopR (NBA 2003 to 2026); ESPN public game summary for the Giants-Commanders facts. Working research document; the public-facing story is written separately from the same tables. Every figure is traceable in <code>NUMBERS.md</code> in the study folder.</footer>
+</div>

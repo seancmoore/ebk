@@ -1,0 +1,24 @@
+{
+  "slug": "rubber-band",
+  "status": "published",
+  "date": "2026-10-12",
+  "tags": [
+    "rubber-band",
+    "momentum",
+    "play-calling",
+    "comebacks"
+  ],
+  "sports": [
+    "nfl",
+    "nba"
+  ],
+  "source": {
+    "article": "C:\\Users\\panky\\Desktop\\ebk-rubber-band\\reports\\article_v1.html",
+    "report": "C:\\Users\\panky\\Desktop\\ebk-rubber-band\\reports\\report_v1.html"
+  },
+  "assets": {
+    "../outputs/hero/rubber-wide.webp": "rubber-wide.webp",
+    "../outputs/hero/rubber-tall.webp": "rubber-tall.webp"
+  },
+  "imported": "2026-10-12"
+}

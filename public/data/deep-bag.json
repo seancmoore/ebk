@@ -1,6 +1,29 @@
 {
- "generated": "2026-10-11",
+ "generated": "2026-10-12",
  "articles": [
+  {
+   "slug": "rubber-band",
+   "title": "The Rubber Band Is Real. It Just Isn’t Magic.",
+   "dek": "Leaders in real NFL and NBA games give back more than team strength explains, and more than a simulated league that ignores the score does. In football it is the last five minutes. In basketball it never stops.",
+   "kicker": "",
+   "byline": "",
+   "date": "2026-10-12",
+   "tags": [
+    "rubber-band",
+    "momentum",
+    "play-calling",
+    "comebacks"
+   ],
+   "sports": [
+    "nfl",
+    "nba"
+   ],
+   "readMins": 14,
+   "accent": "#ff7fae",
+   "bg": "#0a0e1c",
+   "report": true,
+   "image": "/deep-bag/rubber-band/share.png"
+  },
   {
    "slug": "home-field-advantage",
    "title": "Home Court Is Shrinking. Denver Still Has One.",
